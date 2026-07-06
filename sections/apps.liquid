@@ -1,0 +1,35 @@
+<div class="{{ section.settings.width }}" data-section-type="{{ section.id }}" data-section-type="apps">
+  {%- for block in section.blocks -%}
+    {% render block %}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Apps",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "container-wrap",
+      "options": [
+        {"value": "container-wrap", "label": "Full-width"},
+        {"value": "container", "label": "Full-width padded"},
+        {"value": "container-narrow", "label": "Narrow"}
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Apps"
+    }
+  ]
+}
+{% endschema %}

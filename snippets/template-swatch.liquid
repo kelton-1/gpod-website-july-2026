@@ -1,0 +1,10 @@
+{%- if settings.swatches_type == 'theme' -%}
+  <template data-swatch-template>
+    <div class="swatch__element" data-swatch-button data-value>
+      <div class="swatch__label" data-swatch data-swatch-variant>
+        <span class="swatch__color" data-swatch-color></span>
+      </div>
+      <a href class="swatch__link" data-swatch-link></a>
+    </div>
+  </template>
+{%- endif -%}

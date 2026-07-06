@@ -1,0 +1,50 @@
+{% comment %} Settings {% endcomment %}
+{%- assign custom_code = section.settings.custom_code -%}
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+{%- if custom_code != blank-%}
+  <section class="custom-code-section section-padding" data-section-id="{{ section.id }}" data-section-type="custom-code">
+    <div class="custom-code">
+      <div class="{{ section.settings.width }}">
+        <div class="row">
+          <div class="custom-code__inner">
+            {{ custom_code }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Custom Code",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_code",
+      "label": "Custom code",
+      "info": "Add app snippets or other Liquid code to create advanced customizations."
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "container-wrap",
+      "options": [
+        {"value": "container-wrap", "label": "Full-width"},
+        {"value": "container", "label": "Full-width padded"}
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Text",
+      "name": "Custom Code"
+    }
+  ]
+}
+{% endschema %}

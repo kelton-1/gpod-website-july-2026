@@ -1,0 +1,645 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product",
+      "blocks": {
+        "price-and-title": {
+          "type": "price-and-title",
+          "settings": {
+            "show_vendor": true,
+            "padding_bottom": 20
+          }
+        },
+        "fera_product_reviews_summary_acGGHL": {
+          "type": "shopify://apps/fera/blocks/product_reviews_summary/2fbfcfa7-8a04-479f-89a8-0621fa099c51",
+          "settings": {
+            "star_color": "#000000",
+            "size": 16,
+            "show_count": true,
+            "show_avg_rating": false,
+            "alignment": "left",
+            "hide_when_no_reviews": true
+          }
+        },
+        "form": {
+          "type": "form",
+          "settings": {
+            "show_quantity": true,
+            "enable_payment_button": true,
+            "show_gift_card_recipient": false,
+            "padding_bottom": 20
+          }
+        },
+        "one_click_upsell_on_page_h96tkz": {
+          "type": "shopify://apps/one-click-upsell/blocks/on-page/bfe6e378-b73a-4871-b8d3-7d6ede22678e",
+          "settings": {}
+        },
+        "hype_discounts_campaigns_ui_tiered_cart_progress_bar_FmXYWE": {
+          "type": "shopify://apps/hype-discounts/blocks/ui-tiered-cart-progress-bar/dad89215-8ec1-431c-8488-2e358677b8c3",
+          "settings": {
+            "identifier": "Hype-WQTHBHE1-tiered-cart-progress-bar",
+            "font_size": 18,
+            "font_weight": "bold",
+            "header_bg_color": "#1eff00",
+            "header_text_color": "#000000",
+            "body_bg_color": "#ffffff",
+            "body_text_color": "#000000",
+            "product_bg_color": "#ffffff",
+            "max_width": 100,
+            "custom_css": "",
+            "custom_js": ""
+          }
+        },
+        "product-description": {
+          "type": "product-description",
+          "settings": {
+            "padding_bottom": 20
+          }
+        },
+        "complementary_products_HBRVTW": {
+          "type": "complementary-products",
+          "disabled": true,
+          "settings": {
+            "padding_bottom": 20
+          }
+        }
+      },
+      "block_order": [
+        "price-and-title",
+        "fera_product_reviews_summary_acGGHL",
+        "form",
+        "one_click_upsell_on_page_h96tkz",
+        "hype_discounts_campaigns_ui_tiered_cart_progress_bar_FmXYWE",
+        "product-description",
+        "complementary_products_HBRVTW"
+      ],
+      "settings": {
+        "product_layout": "scrollable",
+        "image_size": "large",
+        "lightbox": true,
+        "show_cart_bar": true,
+        "enable_video_looping": false,
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "1763423954672c8f0a": {
+      "type": "apps",
+      "settings": {
+        "width": "container-wrap"
+      }
+    },
+    "section_icons_row_Yk6GXG": {
+      "type": "section-icons-row",
+      "blocks": {
+        "text_aNWEFR": {
+          "type": "text",
+          "settings": {
+            "icon_name": "award",
+            "title": "Trusted On Tour",
+            "text": "<p>You'll find GPOD In countless bags on the PGA Tour from pros to coaches and creators.</p>"
+          }
+        },
+        "text_Jc9f8K": {
+          "type": "text",
+          "settings": {
+            "icon_name": "lock",
+            "title": "Lifetime Warranty",
+            "text": "<p>We guarantee that your GPOD will last as long as you need It to.</p>"
+          }
+        },
+        "text_4RhtaA": {
+          "type": "text",
+          "settings": {
+            "icon_name": "shop",
+            "title": "Premium Build",
+            "text": "<p>Always crafted using lightweight carbon-fiber for maximum strength and dependability.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_aNWEFR",
+        "text_Jc9f8K",
+        "text_4RhtaA"
+      ],
+      "disabled": true,
+      "settings": {
+        "alignment": "center",
+        "color_icons_bg": "#8cc662",
+        "color_icons_text": "#333333",
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "ss_comparison_table_6_WTXV4b": {
+      "type": "ss-comparison-table-6",
+      "blocks": {
+        "list_item_hhpn6e": {
+          "type": "list_item",
+          "settings": {
+            "text": "1-YEAR WARRANTY"
+          }
+        },
+        "list_item_mxwtc8": {
+          "type": "list_item",
+          "settings": {
+            "text": "PREMIUM MATERIALS"
+          }
+        },
+        "list_item_jfdVEN": {
+          "type": "list_item",
+          "settings": {
+            "text": "TRUSTED BY THE PROS"
+          }
+        },
+        "list_item_7UJUw8": {
+          "type": "list_item",
+          "settings": {
+            "text": "UNPARALLELED CONVENIENCE"
+          }
+        },
+        "table_row_EfyGBe": {
+          "type": "table_row",
+          "settings": {
+            "row_heading": "360° Adjustable Magnetic Head",
+            "first_column": "",
+            "first_column_icon": "check",
+            "second_column": "",
+            "second_column_icon": "cross",
+            "third_column": "",
+            "third_column_icon": "none",
+            "four_column": "",
+            "four_column_icon": "none"
+          }
+        },
+        "table_row_YhMjaF": {
+          "type": "table_row",
+          "settings": {
+            "row_heading": "Lightweight Carbon Fiber",
+            "first_column": "",
+            "first_column_icon": "check",
+            "second_column": "",
+            "second_column_icon": "cross",
+            "third_column": "",
+            "third_column_icon": "none",
+            "four_column": "",
+            "four_column_icon": "none"
+          }
+        },
+        "table_row_xi67iC": {
+          "type": "table_row",
+          "settings": {
+            "row_heading": "Aluminum Alloy Components",
+            "first_column": "",
+            "first_column_icon": "check",
+            "second_column": "",
+            "second_column_icon": "cross",
+            "third_column": "",
+            "third_column_icon": "none",
+            "four_column": "",
+            "four_column_icon": "none"
+          }
+        },
+        "table_row_qAhAmt": {
+          "type": "table_row",
+          "settings": {
+            "row_heading": "Rare-earth Neodymium Magnets",
+            "first_column": "",
+            "first_column_icon": "check",
+            "second_column": "",
+            "second_column_icon": "cross",
+            "third_column": "",
+            "third_column_icon": "none",
+            "four_column": "",
+            "four_column_icon": "none"
+          }
+        },
+        "table_row_bqHHRc": {
+          "type": "table_row",
+          "settings": {
+            "row_heading": "Wind-Resistant Stability",
+            "first_column": "",
+            "first_column_icon": "check",
+            "second_column": "",
+            "second_column_icon": "cross",
+            "third_column": "",
+            "third_column_icon": "none",
+            "four_column": "",
+            "four_column_icon": "none"
+          }
+        },
+        "table_row_FcQPXp": {
+          "type": "table_row",
+          "settings": {
+            "row_heading": "Unparalleled Convenience",
+            "first_column": "",
+            "first_column_icon": "check",
+            "second_column": "",
+            "second_column_icon": "cross",
+            "third_column": "",
+            "third_column_icon": "none",
+            "four_column": "",
+            "four_column_icon": "none"
+          }
+        }
+      },
+      "block_order": [
+        "list_item_hhpn6e",
+        "list_item_mxwtc8",
+        "list_item_jfdVEN",
+        "list_item_7UJUw8",
+        "table_row_EfyGBe",
+        "table_row_YhMjaF",
+        "table_row_xi67iC",
+        "table_row_qAhAmt",
+        "table_row_bqHHRc",
+        "table_row_FcQPXp"
+      ],
+      "settings": {
+        "body_gap": 32,
+        "body_gap_mobile": 32,
+        "content_horizontal_align": "start",
+        "content_horizontal_align_mobile": "center",
+        "heading": "<p><em><strong>THE BREAKDOWN</strong></em></p>",
+        "heading_custom": false,
+        "heading_font": "josefin_sans_i7",
+        "heading_size": 52,
+        "heading_size_mobile": 32,
+        "heading_height": 150,
+        "text": "<p>We've spent countless hours laboring over every painstaking detail to provide you with the best possible magnetic phone mount on the market.</p>",
+        "text_custom": false,
+        "text_font": "josefin_sans_n4",
+        "text_size": 18,
+        "text_size_mobile": 18,
+        "text_height": 150,
+        "text_mt": 4,
+        "list_mt": 50,
+        "list_mt_mobile": 32,
+        "list_gap": 30,
+        "list_gap_mobile": 30,
+        "list_hide_mobile": true,
+        "icon_size": 28,
+        "icon_size_mobile": 28,
+        "icon_margin_right": 16,
+        "list_text_custom": false,
+        "list_text_font": "josefin_sans_n4",
+        "list_text_size": 20,
+        "list_text_size_mobile": 18,
+        "list_text_height": 150,
+        "button": "GET YOURS NOW",
+        "button_url": "",
+        "button_custom": false,
+        "button_font": "josefin_sans_n4",
+        "button_size": 18,
+        "button_size_mobile": 18,
+        "button_height": 100,
+        "button_width": 305,
+        "button_mt": 50,
+        "button_mt_mobile": 32,
+        "button_padding_vertical": 16,
+        "button_padding_vertical_mobile": 16,
+        "button_padding_horizontal": 48,
+        "button_padding_horizontal_mobile": 48,
+        "button_radius": 100,
+        "button_border_thickness": 0,
+        "button_style": "non_outline",
+        "button_position_mobile": "bottom",
+        "table_columns": 2,
+        "table_mt_mobile": 32,
+        "table_column_active": "1",
+        "table_radius": 16,
+        "table_border_thickness": 1,
+        "table_heading_image_size": 100,
+        "table_heading_image_size_mobile": 80,
+        "first_heading": "SECTION STORE",
+        "first_heading_image": "shopify://shop_images/GPOD_logo.png",
+        "second_heading": "Others",
+        "third_heading": "Third",
+        "four_heading": "Fourth",
+        "table_heading_custom": false,
+        "table_heading_font": "assistant_n4",
+        "table_heading_size": 20,
+        "table_heading_size_mobile": 16,
+        "table_heading_height": 100,
+        "table_heading_align": "center",
+        "table_heading_padding_horizontal": 18,
+        "table_heading_padding_horizontal_mobile": 18,
+        "table_heading_padding_vertical": 18,
+        "table_heading_padding_vertical_mobile": 18,
+        "table_row_padding_horizontal": 14,
+        "table_row_padding_horizontal_mobile": 14,
+        "table_row_padding_vertical": 16,
+        "table_row_padding_vertical_mobile": 16,
+        "table_row_heading_width_mobile": 66,
+        "table_row_heading_custom": false,
+        "table_row_heading_font": "assistant_n4",
+        "table_row_heading_size": 16,
+        "table_row_heading_size_mobile": 16,
+        "table_row_heading_height": 130,
+        "table_row_heading_align": "left",
+        "table_row_text_custom": false,
+        "table_row_text_font": "assistant_n4",
+        "table_row_text_size": 20,
+        "table_row_text_size_mobile": 16,
+        "table_row_text_height": 130,
+        "table_row_text_align": "center",
+        "table_row_image_size": 24,
+        "table_row_image_size_mobile": 24,
+        "heading_color": "#8cc662",
+        "text_color": "#ffffff",
+        "icon_color": "#8cc662",
+        "list_text_color": "#ffffff",
+        "button_color": "#000000",
+        "button_hover_color": "#ffffff",
+        "button_bg_color": "#ffffff",
+        "button_bg_hover_color": "#8cc662",
+        "button_border_color": "#16142b",
+        "button_border_hover_color": "#16142b",
+        "table_border_color": "#ffffff",
+        "table_active_border_color": "#8cc662",
+        "table_heading_color": "#ffffff",
+        "table_heading_active_color": "#ffffff",
+        "table_heading_bg_active_color": "#ffffff",
+        "table_column_active_bg_color": "#ffffff",
+        "table_row_heading_color": "#ffffff",
+        "table_row_text_color": "#8cc662",
+        "table_row_active_text_color": "#ffffff",
+        "background_color": "#000000",
+        "background_gradient": "",
+        "border_color": "rgba(0,0,0,0)",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "padding_horizontal": 5,
+        "padding_horizontal_mobile": 1.5,
+        "full_width": false,
+        "content_width": 130,
+        "border_thickness": 0,
+        "lazy": true
+      }
+    },
+    "ss_text_block_pro_WbzFYf": {
+      "type": "ss-text-block-pro",
+      "blocks": {
+        "title_wEVwUG": {
+          "type": "title",
+          "settings": {
+            "title": "TRUSTED BY 75,000+ GOLFERS",
+            "title_custom": false,
+            "title_font": "assistant_n4",
+            "title_size": 40,
+            "title_height": 100,
+            "title_align": "center",
+            "title_mt": 12,
+            "title_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "title_wEVwUG"
+      ],
+      "name": "SS - Text Block Pro",
+      "settings": {
+        "image_width": 20,
+        "image_custom": false,
+        "image_height_desktop": 400,
+        "image_height_mobile": 200,
+        "image_radius": 12,
+        "image_ration": "none",
+        "image_location": "row",
+        "image_location_mobile": "column",
+        "content_padding_horizontal": 40,
+        "content_padding_vertical": 40,
+        "content_radius": 40,
+        "gap": 30,
+        "gap_mobile": 15,
+        "background_color": "#8cc662",
+        "background_gradient": "",
+        "border_color": "#000000",
+        "content_bg": "",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_horizontal": 5,
+        "padding_horizontal_mobile": 1.5,
+        "content_width": 120,
+        "border_thickness": 0
+      }
+    },
+    "1742914022b79f91bc": {
+      "type": "apps",
+      "blocks": {
+        "fera_product_reviews_rhfFBL": {
+          "type": "shopify://apps/fera/blocks/product_reviews/2fbfcfa7-8a04-479f-89a8-0621fa099c51",
+          "settings": {
+            "heading": "Product Reviews",
+            "layout": "masonry",
+            "star_color": "#000000",
+            "when_no_reviews": "show_from_related"
+          }
+        }
+      },
+      "block_order": [
+        "fera_product_reviews_rhfFBL"
+      ],
+      "settings": {
+        "width": "container-wrap"
+      }
+    },
+    "section_product_features_6FAzHV": {
+      "type": "section-product-features",
+      "blocks": {
+        "text_z4QGtf": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "360° ROTATING HEAD",
+            "description": "<p>360-degree adjustable mag-safe magnetic head allows you to capture your swing from any angle, including overhead putting views.</p>",
+            "image": "shopify://shop_images/GPOD_Rotating_Head.gif",
+            "image_position": "right",
+            "image_link": "",
+            "button_text": "",
+            "button_link": "",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        },
+        "text_A7rcUT": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "PREMIUM MATERIALS",
+            "description": "<p>Crafted with light-weight carbon fiber, for exceptional strength, durability, and dependability.</p>",
+            "image": "shopify://shop_images/GPOD_Gif.gif",
+            "image_position": "left",
+            "image_link": "",
+            "button_text": "",
+            "button_link": "",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        },
+        "text_9cYQHt": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "UNIVERSAL COMPATABILITY",
+            "description": "<p> Works with all iPhones, other smartphones (using the included metal plates with 3M® Adhesive), and cameras with a 1/4\" thread, including GoPro.</p>",
+            "image": "shopify://shop_images/CloseupMagSafeMagnetGPODCarbonFiberPhoneHolder_c7e9548e-704d-4070-a575-4836ad1f954d.jpg",
+            "image_position": "right",
+            "image_link": "",
+            "button_text": "",
+            "button_link": "",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        }
+      },
+      "block_order": [
+        "text_z4QGtf",
+        "text_A7rcUT",
+        "text_9cYQHt"
+      ],
+      "settings": {
+        "blocks_alignment": "center",
+        "image_aspect_ratio": 1,
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "faq": {
+      "type": "section-faq",
+      "blocks": {
+        "item-1": {
+          "type": "item",
+          "settings": {
+            "title": "Question",
+            "answer": "<p>Use this answer block to discuss some commonly asked questions you've discovered from your customers interactions. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your product or collection. This section will appear across all products.</p>"
+          }
+        },
+        "item-2": {
+          "type": "item",
+          "settings": {
+            "title": "Question",
+            "answer": "<p>Use this answer block to discuss some commonly asked questions you've discovered from your customers interactions. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your product or collection. This section will appear across all products.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item-1",
+        "item-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "FAQ",
+        "subheading": "Questions and Answers",
+        "layout_split": true,
+        "width": "container",
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "section_faq_h3p3ep": {
+      "type": "section-faq",
+      "blocks": {
+        "item_EpJQ98": {
+          "type": "item",
+          "settings": {
+            "title": "What is so special about the GPOD?",
+            "answer": "<p>The GPOD is the lightest and strongest magnetic phone holder for filming sports motion and personal content. The body is made of carbon fiber that is 10x stronger and 5x lighter than steel. Each GPOD is equipped with a super user friendly adjustable magnetic head. No more flimsy plastic clamps!</p>"
+          }
+        },
+        "item_UMTALX": {
+          "type": "item",
+          "settings": {
+            "title": "What is the difference between the GPOD X and the GPOD Magsafe?",
+            "answer": "<p>The <a href=\"https://gpodgolf.com/collections/frontpage/products/gpodx\">GPOD X</a>is a collapsible and extendable version of the GPOD. It can collapse to 20\" and extend to 51\" allowing the user to store in smaller bags and carry ons as well as film at different heights. The original <a href=\"https://gpodgolf.com/collections/frontpage/products/gpodmagsafe\" target=\"_blank\">GPOD for Magsafe </a>is one universal length at 41\". It was specifically engineered to meet most peoples' hand heights at address for optimal swing videos. The original GPOD requires minimal setup which makes it the easiest tool to film your game and content.  </p>"
+          }
+        },
+        "item_qCUXAX": {
+          "type": "item",
+          "settings": {
+            "title": "What is the difference between the GPOD and the GPOD mini?",
+            "answer": "<p>The <a href=\"https://www.gpodgolf.com/products/gpod-mini\" target=\"_blank\">GPOD mini </a>is a magnetic clamp that attaches to an alignment stick. The GPOD has the same magnetic head, however it comes equipped with a carbon fiber body that can be inserted into the ground. The GPOD also has a 360 adjustable mount allowing one to film and view their device at any angle. The magnetic head is attached by a universal 1/4\" screw, which makes the GPOD compatible with all cameras including GoPros.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_EpJQ98",
+        "item_UMTALX",
+        "item_qCUXAX"
+      ],
+      "disabled": true,
+      "name": "FAQ",
+      "settings": {
+        "title": "FAQ'S",
+        "subheading": "YOU'VE GOT QUESTIONS, WE'VE GOT ANSWERS",
+        "layout_split": true,
+        "width": "container",
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "1745947916937339e6": {
+      "type": "apps",
+      "blocks": {
+        "instagram_feed_mp_instagram_block_kyHd8P": {
+          "type": "shopify://apps/mp-instagram-feed/blocks/mp_instagram_block/2e85b90f-5da9-4654-967e-051f1942340c",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "instagram_feed_mp_instagram_block_kyHd8P"
+      ],
+      "settings": {
+        "width": "container-wrap"
+      }
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "related_products_enable": true,
+        "title": "Related products",
+        "padding_top": 50,
+        "padding_bottom": 0
+      }
+    },
+    "recent": {
+      "type": "section-recently-viewed-products",
+      "disabled": true,
+      "settings": {
+        "title": "Recently viewed products",
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1763423954672c8f0a",
+    "section_icons_row_Yk6GXG",
+    "ss_comparison_table_6_WTXV4b",
+    "ss_text_block_pro_WbzFYf",
+    "1742914022b79f91bc",
+    "section_product_features_6FAzHV",
+    "faq",
+    "section_faq_h3p3ep",
+    "1745947916937339e6",
+    "related",
+    "recent"
+  ]
+}

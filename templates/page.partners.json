@@ -1,0 +1,417 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_page_title": true,
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "section_image_with_text_overlay_TgLTGr": {
+      "type": "section-image-with-text-overlay",
+      "blocks": {
+        "heading_3iYciN": {
+          "type": "heading",
+          "settings": {
+            "title": "OUR PARTNERS"
+          }
+        },
+        "button_EFgzdT": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_text": "BECOME A PARTNER",
+            "button_link": "",
+            "btn_type": "btn--secondary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        }
+      },
+      "block_order": [
+        "heading_3iYciN",
+        "button_EFgzdT"
+      ],
+      "name": "Image with text overlay",
+      "settings": {
+        "banner_image": "shopify://shop_images/Pauly_P_Homepage_1.png",
+        "height": "five-fifty-height-hero",
+        "banner_image_mobile": "shopify://shop_images/Pauly_P_Homepage_1.png",
+        "height_mobile": "five-fifty-height-hero--mobile",
+        "text_position": "center",
+        "color_text": "#ffffff",
+        "color_overlay": "#333333",
+        "overlay_opacity": 0
+      }
+    },
+    "section_logo_list_nCNfkq": {
+      "type": "section-logo-list",
+      "blocks": {
+        "item_logo_zJRcQm": {
+          "type": "item_logo",
+          "settings": {
+            "logo_image": "shopify://shop_images/Sportsbox_AI_39a63c3d-eeec-4c6d-adbd-3866dae70a99.png",
+            "logo_width": 180,
+            "logo_url": ""
+          }
+        },
+        "item_logo_fCqNzg": {
+          "type": "item_logo",
+          "settings": {
+            "logo_image": "shopify://shop_images/TOURSTRIKER.png",
+            "logo_width": 180,
+            "logo_url": ""
+          }
+        },
+        "item_logo_FK3h8P": {
+          "type": "item_logo",
+          "settings": {
+            "logo_image": "shopify://shop_images/TheStack.png",
+            "logo_width": 180,
+            "logo_url": ""
+          }
+        },
+        "item_logo_zYA7mW": {
+          "type": "item_logo",
+          "settings": {
+            "logo_image": "shopify://shop_images/Rapsodo.png",
+            "logo_width": 180,
+            "logo_url": ""
+          }
+        },
+        "item_logo_yRX6zN": {
+          "type": "item_logo",
+          "settings": {
+            "logo_image": "shopify://shop_images/MustardGolf.png",
+            "logo_width": 180,
+            "logo_url": ""
+          }
+        },
+        "item_logo_jWVxGL": {
+          "type": "item_logo",
+          "settings": {
+            "logo_image": "shopify://shop_images/FlightScope.png",
+            "logo_width": 180,
+            "logo_url": ""
+          }
+        },
+        "item_logo_PbC7tr": {
+          "type": "item_logo",
+          "settings": {
+            "logo_image": "shopify://shop_images/Netreturn.png",
+            "logo_width": 180,
+            "logo_url": ""
+          }
+        },
+        "item_logo_7qgF9r": {
+          "type": "item_logo",
+          "settings": {
+            "logo_image": "shopify://shop_images/5i_Logo.png",
+            "logo_width": 180,
+            "logo_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_logo_zJRcQm",
+        "item_logo_fCqNzg",
+        "item_logo_FK3h8P",
+        "item_logo_zYA7mW",
+        "item_logo_yRX6zN",
+        "item_logo_jWVxGL",
+        "item_logo_PbC7tr",
+        "item_logo_7qgF9r"
+      ],
+      "name": "Logo list",
+      "settings": {
+        "color_logos_bg": "",
+        "padding_top": 25,
+        "padding_bottom": 25
+      }
+    },
+    "ss_text_block_pro_NUaMnP": {
+      "type": "ss-text-block-pro",
+      "blocks": {
+        "subtitle_DtfexH": {
+          "type": "subtitle",
+          "disabled": true,
+          "settings": {
+            "subtitle": "",
+            "subtitle_custom": false,
+            "subtitle_font": "assistant_n4",
+            "subtitle_size": 20,
+            "subtitle_height": 100,
+            "subtitle_align": "center",
+            "subtitle_mt": 0,
+            "subtitle_color": "#000000"
+          }
+        },
+        "title_wn3c6d": {
+          "type": "title",
+          "settings": {
+            "title": "INTERESTED IN PARTNERING WITH US?",
+            "title_custom": false,
+            "title_font": "assistant_n4",
+            "title_size": 40,
+            "title_height": 100,
+            "title_align": "center",
+            "title_mt": 12,
+            "title_color": "#000000"
+          }
+        },
+        "text_rELRKU": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Or <a href=\"https://af.uppromote.com/gpodgolf/register\" target=\"_blank\" title=\"https://af.uppromote.com/gpodgolf/register\">click here</a> to become a GPOD Affiliate Partner and/or Ambassador.</p>",
+            "text_custom": false,
+            "text_font": "assistant_n4",
+            "text_size": 20,
+            "text_height": 130,
+            "text_align": "center",
+            "text_mt": 16,
+            "text_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "subtitle_DtfexH",
+        "title_wn3c6d",
+        "text_rELRKU"
+      ],
+      "name": "SS - Text Block Pro",
+      "settings": {
+        "image_width": 20,
+        "image_custom": false,
+        "image_height_desktop": 400,
+        "image_height_mobile": 200,
+        "image_radius": 12,
+        "image_ration": "none",
+        "image_location": "row",
+        "image_location_mobile": "column",
+        "content_padding_horizontal": 40,
+        "content_padding_vertical": 40,
+        "content_radius": 40,
+        "gap": 30,
+        "gap_mobile": 15,
+        "background_color": "rgba(0,0,0,0)",
+        "background_gradient": "",
+        "border_color": "#000000",
+        "content_bg": "",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_horizontal": 5,
+        "padding_horizontal_mobile": 1.5,
+        "content_width": 120,
+        "border_thickness": 0
+      }
+    },
+    "174674331097dffcc7": {
+      "type": "apps",
+      "blocks": {
+        "forms_inline_rwGiha": {
+          "type": "shopify://apps/forms/blocks/inline/8744a304-fcb1-4347-b211-bb6b4759a76a",
+          "settings": {
+            "form_id": "452795",
+            "text_color": "#202020",
+            "button_background_color": "#202020",
+            "button_label_color": "#ffffff",
+            "links_color": "#1878b9",
+            "errors_color": "#e02229",
+            "text_alignment": "center",
+            "form_alignment": "center",
+            "padding_top": 0,
+            "padding_bottom": 64,
+            "padding_right": 0,
+            "padding_left": 0
+          }
+        }
+      },
+      "block_order": [
+        "forms_inline_rwGiha"
+      ],
+      "settings": {
+        "width": "container-wrap"
+      }
+    },
+    "section_product_features_p4d7rQ": {
+      "type": "section-product-features",
+      "blocks": {
+        "text_Wn7zDA": {
+          "type": "text",
+          "settings": {
+            "title": "FIVE IRON GOLF",
+            "description": "<p>Blurring the lines between indoor golf and entertainment.</p>",
+            "image": "shopify://shop_images/5i_Logo.png",
+            "image_position": "left",
+            "image_link": "",
+            "button_text": "VISIT SITE",
+            "button_link": "https://fiveirongolf.com/",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        },
+        "text_bH9Gzw": {
+          "type": "text",
+          "settings": {
+            "title": "THE NET RETURN",
+            "description": "<p>The #1 golf and multi-sport net</p>",
+            "image": "shopify://shop_images/Netreturn.png",
+            "image_position": "right",
+            "image_link": "",
+            "button_text": "VISIT SITE",
+            "button_link": "https://www.thenetreturn.com/",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        },
+        "text_CLXgWR": {
+          "type": "text",
+          "settings": {
+            "title": "FLIGHT SCOPE GOLF",
+            "description": "<p>Accurate, portable, and affordable launch monitor</p>",
+            "image": "shopify://shop_images/FlightScope.png",
+            "image_position": "left",
+            "image_link": "",
+            "button_text": "VISIT SITE",
+            "button_link": "https://flightscope.com/",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        },
+        "text_FCRGWJ": {
+          "type": "text",
+          "settings": {
+            "title": "MUSTARD GOLF",
+            "description": "<p>Use this text to share information about the point put forth above. Describe a product, your brand, or what makes you special.</p>",
+            "image": "shopify://shop_images/MustardGolf.png",
+            "image_position": "right",
+            "image_link": "",
+            "button_text": "VISIT SITE",
+            "button_link": "",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        }
+      },
+      "block_order": [
+        "text_Wn7zDA",
+        "text_bH9Gzw",
+        "text_CLXgWR",
+        "text_FCRGWJ"
+      ],
+      "disabled": true,
+      "name": "Product features",
+      "settings": {
+        "blocks_alignment": "center",
+        "image_aspect_ratio": 1,
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "section_product_features_TQ7Ukq": {
+      "type": "section-product-features",
+      "blocks": {
+        "text_UzbiNF": {
+          "type": "text",
+          "settings": {
+            "title": "SPORTSBOX AI",
+            "description": "<p>Use this text to share information about the point put forth above. Describe a product, your brand, or what makes you special.</p>",
+            "image": "shopify://shop_images/Sportsbox_AI_39a63c3d-eeec-4c6d-adbd-3866dae70a99.png",
+            "image_position": "left",
+            "image_link": "",
+            "button_text": "VISIT SITE",
+            "button_link": "",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        },
+        "text_bMP4Da": {
+          "type": "text",
+          "settings": {
+            "title": "RAPSODO GOLF",
+            "description": "<p>Use this text to share information about the point put forth above. Describe a product, your brand, or what makes you special.</p>",
+            "image": "shopify://shop_images/Rapsodo.png",
+            "image_position": "left",
+            "image_link": "",
+            "button_text": "VISIT SITE",
+            "button_link": "",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        },
+        "text_Xx9Wqp": {
+          "type": "text",
+          "settings": {
+            "title": "THE STACK",
+            "description": "<p>Use this text to share information about the point put forth above. Describe a product, your brand, or what makes you special.</p>",
+            "image": "shopify://shop_images/TheStack.png",
+            "image_position": "left",
+            "image_link": "",
+            "button_text": "VISIT SITE",
+            "button_link": "",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        },
+        "text_XXgb8E": {
+          "type": "text",
+          "settings": {
+            "title": "TOUR STRIKER",
+            "description": "<p>Use this text to share information about the point put forth above. Describe a product, your brand, or what makes you special.</p>",
+            "image": "shopify://shop_images/TOURSTRIKER.png",
+            "image_position": "left",
+            "image_link": "",
+            "button_text": "VISIT SITE",
+            "button_link": "",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        }
+      },
+      "block_order": [
+        "text_UzbiNF",
+        "text_bMP4Da",
+        "text_Xx9Wqp",
+        "text_XXgb8E"
+      ],
+      "disabled": true,
+      "name": "Product features",
+      "settings": {
+        "blocks_alignment": "center",
+        "image_aspect_ratio": 1,
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    }
+  },
+  "order": [
+    "main",
+    "section_image_with_text_overlay_TgLTGr",
+    "section_logo_list_nCNfkq",
+    "ss_text_block_pro_NUaMnP",
+    "174674331097dffcc7",
+    "section_product_features_p4d7rQ",
+    "section_product_features_TQ7Ukq"
+  ]
+}

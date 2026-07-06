@@ -1,0 +1,22 @@
+{% comment %}
+  Set collectionBlock size classes
+  These are applied in the collection-grid__block.liquid file
+{% endcomment %}
+{%- liquid
+  assign products_rows = settings.products_rows | plus: 0
+  assign products_columns = settings.products_columns | plus: 0
+  assign products_columns_mobile = settings.products_columns_mobile | plus: 0
+  assign products_limit = products_columns | times: products_rows
+-%}
+
+{%- capture style -%}
+  {{ style }}
+  --COLUMNS: {{ products_columns }};
+  --COLUMNS-MEDIUM: {{ products_columns | at_most: 3 }};
+  --COLUMNS-SMALL: {{ products_columns_mobile }};
+  --COLUMNS-MOBILE: {{ products_columns_mobile }};
+{%- endcapture -%}
+
+<div data-api-content>
+  {%- render 'product-grid-item', product: product -%}
+</div>

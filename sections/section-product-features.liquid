@@ -1,0 +1,214 @@
+{% comment %} Product features {% endcomment %}
+{%- liquid
+  assign blocks_alignment = section.settings.blocks_alignment
+  assign image_height = section.settings.image_aspect_ratio | times: 100 | append: '%'
+-%}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+{%- if section.blocks.size > 0 -%}
+  <section class="product-features--container section-padding"
+    data-section-id="{{ section.id }}"
+    data-section-type="product-features"
+    style="{{ style}}"
+  >
+    <div class="container">
+      <div class="row">
+        {%- for block in section.blocks -%}
+          {%- render 'product-features-item', block: block, image_height: image_height, blocks_alignment: blocks_alignment -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product features",
+  "max_blocks": 4,
+  "class": "shopify-section--product-features product-features",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Blocks Alignment"
+    },
+    {
+      "type": "select",
+      "id": "blocks_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "top",
+          "label": "Top"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "image_aspect_ratio",
+      "label": "Image aspect ratio",
+      "min": 0.5,
+      "max": 1.5,
+      "step": 0.1,
+      "unit": ":1",
+      "default": 1.0
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Product feature",
+      "type": "text",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Text"
+        },
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "Heading",
+          "default": "Product feature"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Use this text to share information about the point put forth above. Describe a product, your brand, or what makes you special.</p>"
+        },
+        {
+          "type":"header",
+          "content":"Images"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image position",
+          "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "left"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Image link"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "btn_type",
+          "label": "Color",
+          "default": "btn--primary",
+          "options": [
+            { "label": "Primary", "value": "btn--primary" },
+            { "label": "Secondary", "value": "btn--secondary" },
+            { "label": "White", "value": "btn--white" },
+            { "label": "Black", "value": "btn--black" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "btn_size",
+          "label": "Size",
+          "default": "",
+          "options": [
+            { "label": "Small", "value": "btn--small" },
+            { "label": "Medium", "value": "" },
+            { "label": "Large", "value": "btn--large" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "btn_style",
+          "label": "Style",
+          "default": "btn--solid",
+          "options": [
+            { "label": "Solid", "value": "btn--solid" },
+            { "label": "Outline", "value": "btn--outline" },
+            { "label": "Text", "value": "btn--text" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Text",
+      "name": "Product features",
+      "blocks": [
+        {
+          "type": "text"
+        },
+        {
+          "type": "text",
+          "settings": {
+            "image_position": "right"
+          }
+        },
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

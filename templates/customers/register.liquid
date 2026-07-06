@@ -1,0 +1,49 @@
+{%- comment -%} /templates/customers/register.liquid {%- endcomment -%}
+<section class="account-page">
+  <div class="container">
+    <div class="row inline u-center">
+      <div class="account-page__register-form account-form">
+        <p class="size--heading-1">{{ 'customer.register.title' | t }}</p>
+        {%- form 'create_customer' -%}
+          <div class="account-page__register row inline">
+            <div class="p error-msg c-error">
+              {{- form.errors | default_errors -}}
+            </div>
+
+            <div class="input-group">
+              <label for="FirstName" class="c-gray">{{ 'customer.register.first_name' | t }}</label>
+
+              <input type="text" name="customer[first_name]" id="FirstName" class="input-full" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus>
+            </div>
+
+            <div class="input-group">
+              <label for="LastName" class="c-gray">{{ 'customer.register.last_name' | t }}</label>
+
+              <input type="text" name="customer[last_name]" id="LastName" class="input-full" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocapitalize="words">
+            </div>
+
+            <div class="input-group">
+              <label for="Email" class="c-gray">{{ 'customer.register.email' | t }}</label>
+
+              <input type="email" name="customer[email]" id="Email" class="input-full{% if form.errors contains 'email' %} error{% endif %}" {% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
+            </div>
+
+            <div class="input-group">
+              <label for="CreatePassword" class="c-gray">{{ 'customer.register.password' | t }}</label>
+
+              <input type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}">
+            </div>
+          </div>
+
+          <div class="row inline">
+            <button type="submit" class="account-form__submit btn btn--solid btn--primary">{{ 'customer.register.submit' | t }}</button>
+
+            <div class="account-form__links row inline">
+              <a href="{{ shop.url }}" class="account-form__link">{{ 'customer.register.cancel' | t }}</a>
+            </div>
+          </div>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,277 @@
+{%- comment -%}
+  Renders banner section
+
+  Accepts:
+  - image: {Image} Banner image,
+  - mobile_image: {Image} Banner image on mobile,
+  - desktop_height: {String} Banner height class,
+  - mobile_height: {String} Banner height class on mobile,
+  - transparent_header: {Boolean},
+  - subheading: {String} Subheading text,
+  - heading: {String} Heading text,
+  - text: {String} Content text,
+  - text_position: {String} Text position,
+  - image_position: {String} Image position,
+  - color_text: {Color} Text color,
+  - color_overlay: {Color} Overlay color,
+  - overlay_opacity: {Number} Overlay opacity,
+  - unique: {String} Section id
+  - blocks: {Array} Section blocks
+  - loading: {String} 'lazy' or 'eager' (Default: 'lazy')
+
+  Usage:
+  {% render 'banner',
+    image: section.settings.banner_image,
+    mobile_image: section.settings.mobile_image,
+    desktop_height: section.settings.height,
+    mobile_height: section.settings.mobile_height,
+    transparent_header: true,
+    subheading: section.settings.subheading,
+    heading: section.settings.title,
+    text: section.settings.text,
+    text_position: section.settings.text_position,
+    image_position: section.settings.image_position,
+    color_text: section.settings.color_text,
+    color_overlay: section.settings.color_overlay,
+    overlay_opacity: section.settings.overlay_opacity,
+    unique: section.id,
+    blocks: section.blocks,
+    loading: loading
+  %}
+{%- endcomment -%}
+
+{%- liquid
+  assign banner_content = ''
+  assign transition_text = settings.transition_text
+  assign animation_delay = 0
+  assign animation_anchor = '#Banner--' | append: unique
+
+  if image
+    assign image_aspect_ratio = image.aspect_ratio
+    assign mobile_image_aspect_ratio = image.aspect_ratio
+  else
+    assign image_aspect_ratio = mobile_image.aspect_ratio | default: 2.63
+  endif
+
+  if mobile_image
+    assign mobile_image_aspect_ratio = mobile_image.aspect_ratio
+  endif
+-%}
+
+{%- capture padding_style -%}
+  {%- if section.settings.padding_top != 0 -%}
+    --PT: {{ section.settings.padding_top }}px;
+  {%- endif -%}
+
+  {%- if section.settings.padding_bottom != 0 -%}
+    --PB: {{ section.settings.padding_bottom }}px;
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- style -%}
+  #Banner--{{ unique }} {
+    {%- unless color_overlay == 'rgba(0,0,0,0)' or overlay_opacity == 0 -%}
+      --overlay-color: {{ color_overlay }};
+      --overlay-opacity: {{ overlay_opacity | times: 0.01 | round: 2 }};
+    {%- endunless -%}
+
+    {%- if color_text != 'rgba(0,0,0,0)' and color_text != '' -%}
+      --text: {{ color_text }};
+    {%- endif -%}
+  }
+
+  {%- if desktop_height == 'image-height' -%}
+    @media screen and (min-width: 768px) {
+      #Banner--{{ unique }} { padding-top: {{ 100 | divided_by: image_aspect_ratio | append: '%' }}; }
+    }
+  {%- endif -%}
+
+  {%- if mobile_height == 'image-height--mobile' -%}
+    @media screen and (max-width: 767px) {
+      #Banner--{{ unique }} { padding-top: {{ 100 | divided_by: mobile_image_aspect_ratio | append: '%' }}; }
+    }
+  {%- endif -%}
+
+  {%- comment -%} Styles for Collection template only {%- endcomment -%}
+  {%- if template == 'collection' -%}
+    {%- if settings.color_header_bg_home == 'rgba(0,0,0,0)' -%}
+      .site-header:not(.header--megamenu-visible):not(.header--has-scrolled) {
+        --text: {{ color_text }};
+      }
+    {%- endif -%}
+
+    .logo__image .logo__image--transparent { position: relative; visibility: visible; }
+    .logo__image .logo__image--default:not(.logo__image--single) { position: absolute; visibility: hidden; }
+  {%- endif -%}
+{%- endstyle -%}
+
+{%- capture banner_content -%}
+  {%- if blocks.size > 0 -%}
+    {%- for block in blocks -%}
+      {%- case block.type -%}
+        {%- when 'subheading' -%}
+          {%- assign subheading = block.settings.subheading -%}
+
+          {%- if subheading != blank -%}
+            <p class="page-title__subheading subheading-text"
+              {% if transition_text %}
+                data-aos="fade-up"
+                data-aos-delay="{{ animation_delay }}"
+                data-aos-anchor="{{ animation_anchor }}"
+              {% endif %}
+              {{ block.shopify_attributes }}
+            >
+              {{- subheading -}}
+            </p>
+            
+            {%- assign animation_delay = animation_delay | plus: 250 -%}
+          {%- endif -%}
+
+        {%- when 'heading' -%}
+          {%- assign heading = block.settings.title -%}
+
+          {%- if heading != blank -%}
+            <h1 class="page-title__heading"
+              {% if transition_text %}
+                data-aos="fade-up"
+                data-aos-delay="{{ animation_delay }}"
+                data-aos-anchor="{{ animation_anchor }}"
+              {% endif %}
+              {{ block.shopify_attributes }}
+            >
+              {{- heading -}}
+            </h1>
+
+            {%- assign animation_delay = animation_delay | plus: 250 -%}
+          {%- endif -%}
+
+        {%- when 'text' -%}
+          {%- assign text = block.settings.text -%}
+
+          {%- if text != blank -%}
+            <div class="page-title__text"
+              {% if transition_text %}
+                data-aos="fade-up"
+                data-aos-delay="{{ animation_delay }}"
+                data-aos-anchor="{{ animation_anchor }}"
+              {% endif %}
+              {{ block.shopify_attributes }}
+            >
+              {{- text -}}
+            </div>
+
+            {%- assign animation_delay = animation_delay | plus: 250 -%}
+          {%- endif -%}
+        
+        {%- when 'button' -%}
+          {%- liquid
+            assign btn_text = block.settings.button_text
+            assign btn_link = block.settings.button_link | default: '#'
+            assign btn_style = block.settings.btn_style
+            assign btn_type = block.settings.btn_type
+            assign btn_size = block.settings.btn_size
+          -%}
+
+          {%- if btn_text != blank -%}
+            <div class="button-wrapper"
+              {% if transition_text %}
+                data-aos="fade-up"
+                data-aos-delay="{{ animation_delay }}"
+                data-aos-anchor="{{ animation_anchor }}"
+              {% endif %}
+              {{ block.shopify_attributes }}
+            >
+              <a href="{{ btn_link }}" class="btn {{ btn_style }} {{ btn_type }} {{ btn_size }}" title="{{ btn_text }}" aria-label="{{ btn_text }}" tabindex="0">{{ btn_text }}</a>
+            </div>
+
+            {%- assign animation_delay = animation_delay | plus: 250 -%}
+          {%- endif -%}
+      {%- endcase -%}
+    {%- endfor -%}
+  {%- elsif heading != blank or subheading != blank or text != blank -%}
+    {%- if subheading != blank -%}
+      <p class="page-title__subheading subheading-text"
+        {% if transition_text %}
+          data-aos="fade-up"
+          data-aos-delay="{{ animation_delay }}"
+          data-aos-anchor="{{ animation_anchor }}"
+        {% endif %}
+      >{{ subheading }}</p>
+
+      {%- assign animation_delay = animation_delay | plus: 250 -%}
+    {%- endif -%}
+    {%- if heading != blank -%}
+      <h1 class="page-title__heading"
+        {% if transition_text %}
+          data-aos="fade-up"
+          data-aos-delay="{{ animation_delay }}"
+          data-aos-anchor="{{ animation_anchor }}"
+        {% endif %}
+      >{{ heading }}</h1>
+
+      {%- assign animation_delay = animation_delay | plus: 250 -%}
+    {%- endif -%}
+    {%- if text != blank -%}
+      <div class="page-title__text"
+        {% if transition_text %}
+          data-aos="fade-up"
+          data-aos-delay="{{ animation_delay }}"
+          data-aos-anchor="{{ animation_anchor }}"
+        {% endif %}
+      >{{ text }}</div>
+
+      {%- assign animation_delay = animation_delay | plus: 250 -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+<section class="section-padding" style="{{ padding_style }}">
+  <div id="Banner--{{ unique }}"
+    class="banner {{ desktop_height }} {{ mobile_height }}{% if transparent_header %} banner--transparent-header{% endif %}"
+    {% if transparent_header %}
+      data-header-style="transparent"
+    {% endif %}
+    data-banner-container>
+    <div class="banner__inner banner__inner--text-{{ text_position }}">
+      {%- if image or mobile_image -%}
+        {%- liquid
+          if image != blank
+            capture modifier
+              echo 'banner__image banner__image--desktop'
+
+              if mobile_image == blank
+                echo ' banner__image--single'
+              endif
+            endcapture
+
+            render 'image-hero' image: image, aspect_ratio: image_aspect_ratio, modifier: modifier, loading: loading
+          endif
+
+          if mobile_image != blank
+            capture modifier
+              echo 'banner__image banner__image--mobile'
+
+              if image == blank
+                echo ' banner__image--single'
+              endif
+            endcapture
+
+            render 'image-hero' image: mobile_image, aspect_ratio: mobile_image_aspect_ratio, modifier: modifier, loading: loading
+          endif
+        -%}
+      {%- else -%}
+        <div class="banner__image banner__image--placeholder svg-placeholder">
+          {{- 'lifestyle-1' | placeholder_svg_tag -}}
+        </div>
+      {%- endif -%}
+
+      {%- if banner_content != '' -%}
+        <div class="page-title" data-banner-content>
+          <div class="container">
+            {{ banner_content }}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>

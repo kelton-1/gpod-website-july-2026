@@ -1,0 +1,98 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "announcement": {
+      "type": "announcement",
+      "blocks": {
+        "text_TyGbDr": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "target_url_enabled": false,
+            "target_url": "",
+            "target_referrer_enabled": false,
+            "target_referrer": "",
+            "target_device_enabled": false,
+            "target_device": "mobile"
+          }
+        }
+      },
+      "block_order": [
+        "text_TyGbDr"
+      ],
+      "disabled": true,
+      "settings": {
+        "bg_color": "#8cc662",
+        "color": "#ffffff",
+        "layout": "slider",
+        "speed": 7
+      }
+    },
+    "176342457536086886": {
+      "type": "apps",
+      "blocks": {
+        "hype_discounts_campaigns_ui_free_gift_banner_jXdNDV": {
+          "type": "shopify://apps/hype-discounts/blocks/ui-free-gift-banner/dad89215-8ec1-431c-8488-2e358677b8c3",
+          "disabled": true,
+          "settings": {
+            "identifier": "Hype Free Gift Banner",
+            "font_size": 21,
+            "font_weight": "bold",
+            "header_bg_color": "#000",
+            "header_text_color": "#fff",
+            "body_bg_color": "#fff",
+            "body_text_color": "#000",
+            "product_bg_color": "#fff",
+            "max_width": 100,
+            "custom_css": "",
+            "custom_js": ""
+          }
+        }
+      },
+      "block_order": [
+        "hype_discounts_campaigns_ui_free_gift_banner_jXdNDV"
+      ],
+      "settings": {
+        "width": "container-wrap"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "header_sticky": true,
+        "logo": "shopify://shop_images/GPOD_logo.png",
+        "logo_max_width": 220,
+        "menu_list": "main-menu",
+        "style": "logo-center-links-left",
+        "image_aspect_ratio": 1,
+        "meganav_image_heading": "",
+        "meganav_image_link": "",
+        "header_transparent": false,
+        "text_color": "#ffffff",
+        "logo_transparent": "shopify://shop_images/GPOD_logo.png"
+      }
+    },
+    "1753803424e831e175": {
+      "type": "apps",
+      "settings": {
+        "width": "container-wrap"
+      }
+    }
+  },
+  "order": [
+    "announcement",
+    "176342457536086886",
+    "header",
+    "1753803424e831e175"
+  ]
+}

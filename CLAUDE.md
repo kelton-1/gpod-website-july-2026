@@ -1,0 +1,77 @@
+# CLAUDE.md — GPOD Golf Website Redesign (July 2026)
+
+## What this project is
+
+Ground-up redesign of **gpodgolf.com** (Shopify store "GPOD GOLF"). GPOD sells magnetic phone monopods/tripods and accessories for filming golf swings. Everything is on the table: home page, collection pages, PDPs, navigation, support content, information architecture.
+
+This repo contains a **Shopify Online Store 2.0 theme** at the root (standard Shopify CLI layout: `assets/`, `config/`, `layout/`, `locales/`, `sections/`, `snippets/`, `templates/`).
+
+## Current state
+
+- The initial commit imports the **live theme as of 2026-07-06** (theme export "Copy of Modular- Paul Dev") as the working baseline. Base theme: **Modular v4.1.3 by Presidio Creative**.
+- Nothing in the baseline is sacred — it exists so we can run/preview immediately and replace it piece by piece.
+- Development branch: `claude/gpod-golf-redesign-dmyfe9`. Never push directly elsewhere.
+
+### Decision log (append, never delete)
+
+| Date | Decision |
+|---|---|
+| 2026-07-06 | Repo initialized from live theme export; redesign requirements derived from customer inquiries (see `docs/customer-insights.md`). |
+
+## The "why" behind the redesign — read this first
+
+`docs/customer-insights.md` analyzes ~30 real customer inquiries. The dominant findings, which every page we build must answer to:
+
+1. **Customers can't tell products apart** (GPOD vs GPOD X vs Pauly P; Travel vs Studio; bundle differences). We need comparison tables, full specs (weight, lengths, shaft diameter, stability, bag-fit), and a product finder — surfaced prominently, not buried.
+2. **PDPs don't answer pre-purchase blockers**: phone compatibility (MagSafe vs Android plates, thick cases, iPad, GoPro), what's in the box, how the twist-lock extension works, what the remote does.
+3. **No support/guides hub**: setup videos, remote pairing, troubleshooting (stuck lower extension is the #1 complaint), Sportsbox subscription redemption, replacement parts.
+4. **Navigation should also be use-case driven**: on-course / indoor & sim / coaching & studio / travel — customers describe situations, not product types.
+
+When designing any page, ask: *does this help a confused customer choose the right product and use it successfully?*
+
+## Store facts
+
+- Domain: gpodgolf.com · Currency: USD · Platform: Shopify (Shopify plan)
+- ~17 active products: 3 monopods (GPOD $109.99, GPOD X $129.99, Pauly P $159.99), 2 tripods (Travel $74.99, Studio 2.0 $199.99), Base 2.0, accessories (GPUCK, Connect 2.0, Caddy, G Plate, Mini), 3 G-Bundles, a Sportsbox bundle, "Pocket G" coming soon.
+- Full catalog table with handles/prices: `docs/customer-insights.md` (bottom).
+- The Shopify MCP tools in Claude sessions can query the live store (products, orders, collections) — prefer live data over assumptions when specifics matter.
+
+## Repo structure
+
+```
+CLAUDE.md              ← you are here; keep it current
+docs/                  ← project docs, research, decisions
+  customer-insights.md ← FAQ analysis + catalog snapshot + redesign priorities
+assets/ config/ layout/ locales/ sections/ snippets/ templates/   ← the theme
+```
+
+## Baseline theme notes (technical debt inherited from live)
+
+- **PageFly pollution**: `sections/pf-*.liquid`, `templates/page.pf-*.json`, `layout/theme.pagefly.liquid`, `assets/pagefly-*.css` are app-generated PageFly pages (incl. the product-finder quiz). **Do not build new work with PageFly** — rebuild those experiences as native sections, then delete the pf-* files.
+- One-off/seasonal templates exist (`page.fathers-day.json`, `page.fourth-july.json`, `cart.discountyard.liquid`, giveaway/landing pages) — candidates for removal during redesign.
+- `assets/theme.css` (~426KB) and `theme.js`/`theme.dev.js` are the Modular theme's compiled bundle — there is no source/build pipeline in this repo. Small tweaks: prefer new, separate CSS/JS assets or section-scoped `{% style %}`/`{% javascript %}` over editing the compiled bundle.
+- Sections named `section-*.liquid` are Modular's reusable homepage-style sections; `ss-*.liquid` are third-party ("Section Store") add-ons.
+
+## Conventions
+
+- **Online Store 2.0 patterns**: JSON templates + sections with `{% schema %}`; merchant-editable settings over hardcoded content wherever a non-developer might reasonably want to change copy/images.
+- New sections: `kebab-case.liquid`, prefixed by area when specific (e.g. `pdp-compatibility.liquid`, `home-hero.liquid`); shared partials go in `snippets/`.
+- Keep Liquid logic light; no external CDNs for critical assets; images via Shopify CDN with responsive `image_url` sizes.
+- Copywriting: plain answers to real customer questions (see insights doc); always use canonical product names (it's "Pauly P", never "Pauly D"/"Paulie").
+- Accessibility and mobile-first are non-negotiable — most golf-course traffic is on phones.
+
+## Workflow
+
+- Branch: work on `claude/gpod-golf-redesign-dmyfe9`; commit in small, described steps; push with `git push -u origin <branch>`.
+- Local preview (when Shopify CLI + store auth are available): `shopify theme dev`. Lint with `shopify theme check` if installed.
+- Big design directions (IA changes, template rewrites, visual language): document the decision in the log above **before** the implementing commit.
+
+## Maintaining this file (required)
+
+CLAUDE.md is the project's source of truth for context and conventions. Whenever you (human or Claude):
+- make an architectural/design decision → append to the decision log;
+- add/remove/restructure major files → update *Repo structure*;
+- change a convention → update *Conventions*;
+- learn something new about customers or the catalog → update `docs/customer-insights.md` and, if it changes priorities, the summary here.
+
+Keep this file under ~150 lines: link out to `docs/` for depth instead of growing it.

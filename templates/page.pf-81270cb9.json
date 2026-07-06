@@ -1,0 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "pf-81270cb9": {
+      "type": "pf-81270cb9",
+      "settings": {
+        "pf_c2737cf1_value": "<span style=\"color: rgb(255, 255, 255);\"></span><b><span style=\"color: rgb(255, 255, 255);\"></span><span style=\"color: rgb(255, 255, 255);\"></span>ENJOY 10% OFF ON ALL PRODUCTS WITH CODE: COACHNOW</b>",
+        "pf_3cdded2b_value": "Simply stick your smartphone or iPad to the patented magnetic mount",
+        "pf_1c6187e7_value": "Record the video in-App or outside and import",
+        "pf_ca2e63c6_value": "Swing freely and analyze&nbsp;",
+        "pf_cb643c51_value": "Elevate your videos with GPOD",
+        "pf_767064be_value": "RECOMMENDED PRODUCTS&nbsp;",
+        "pf_1f7d76ca_value": "Swing it",
+        "pf_64782b3c_value": "Stick it",
+        "pf_101f881c_value": "Film it"
+      }
+    }
+  },
+  "order": [
+    "pf-81270cb9"
+  ]
+}

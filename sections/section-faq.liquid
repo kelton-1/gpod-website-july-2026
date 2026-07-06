@@ -1,0 +1,256 @@
+{%- liquid
+  assign width = section.settings.width
+  assign layout_split = section.settings.layout_split
+  assign heading = section.settings.title
+  assign subheading = section.settings.subheading
+  assign faq_title = 'onboarding.faq_title' | t
+  assign first_accordion_index = 0
+
+  for block in section.blocks
+    if block.type == 'item'
+      assign first_accordion_index = forloop.index0
+      break;
+    endif
+  endfor
+-%}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+<section class="faq-section section-padding"
+  data-section-id="{{ section.id }}"
+  data-section-type="faq"
+  style="{{ style }}"
+>
+  <div class="{{ width }}">
+    {%- unless heading == blank and subheading == blank -%}
+      <div class="page-title">
+        {%- if heading != blank -%}
+          <h2 class="page-title__heading">{{ heading }}</h2>
+        {%- endif -%}
+
+        {%- if subheading != blank -%}
+          <p class="page-title__subheading subheading-text">{{ subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign question = block.settings.title
+        assign answer = block.settings.answer
+        assign index = forloop.index0
+        assign is_active = false
+
+        if first_accordion_index == index and layout_split
+          assign is_active = true
+        endif
+      -%}
+
+      {%- capture nav -%}
+        {{- nav -}}
+
+        {%- if block.type == 'heading' -%}
+          <h3 class="faq__item__heading">{{ block.settings.heading }}</h3>
+        {%- else -%}
+          <button class="faq__item__question{% if is_active %} is-active{% endif %}"
+            data-faq-trigger="{{ block.id }}"
+            data-type="tab"
+            data-index="{{ index }}"
+            aria-expanded="{{ is_active }}"
+            aria-controls="FAQ-item--{{ forloop.index0 }}-{{ section.id }}">
+            {{- question | default: faq_title -}}
+
+            {%- render 'icon-plus' -%}
+            {%- render 'icon-minus' -%}
+          </button>
+        {%- endif -%}
+      {%- endcapture -%}
+
+      {%- capture content -%}
+        {{- content -}}
+
+        {%- if block.type == 'heading' -%}
+          <h3 class="faq__item__heading">{{ block.settings.heading }}</h3>
+        {%- else -%}
+          <details class="faq__item" data-accordion{% if is_active %} open="true"{% endif %} {{ block.shopify_attributes }}>
+            <summary class="faq__item__question"
+              data-index="{{ index }}"
+              aria-controls="FAQ-item--{{ forloop.index0 }}-{{ section.id }}"
+              data-accordion-trigger>
+              {{- question | default: faq_title -}}
+
+              {%- render 'icon-plus' -%}
+              {%- render 'icon-minus' -%}
+            </summary>
+
+            {%- unless answer == blank -%}
+              <div class="faq__item__answer__wrapper"
+                id="FAQ-item--{{ forloop.index0 }}-{{ section.id }}"
+                data-accordion-body
+                {% if is_active %} style="height: auto"{% endif %}
+              >
+                <div class="faq__item__answer" data-accordion-content>
+                  {{- answer -}}
+                </div>
+              </div>
+            {%- endunless -%}
+          </details>
+        {%- endif -%}
+      {%- endcapture -%}
+    {%- endfor -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <faq-list class="faq{% if section.blocks.size == 1 %} faq--single{% endif %}{% if layout_split %} faq--tabs{% endif %}">
+        <div class="faq__nav">
+          <div>
+            {{- nav -}}
+          </div>
+        </div>
+
+        <div class="faq__contents">
+          <accordion-elements class="faq__list" single>
+            {{- content -}}
+          </accordion-elements>
+        </div>
+      </faq-list>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if request.design_mode -%}
+  <script defer>
+    document.addEventListener('shopify:block:select', (event) => {
+      const details = event.target.closest('details');
+      const summary = details.querySelector('summary');
+      const index = summary.dataset.index;
+      const faqList = details.closest('faq-list');
+      const trigger = faqList.querySelector(`[data-index="${index}"]`)
+
+      if (trigger && !details.open) {
+        trigger.dispatchEvent(new Event('click'));
+      }
+    });
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "class": "shopify-section--faq",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "FAQ"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Questions and Answers"
+    },
+    {
+      "type": "checkbox",
+      "id": "layout_split",
+      "label": "Show headings as a menu on the left",
+      "default": true,
+      "info": "Desktop only"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "container",
+      "options": [
+        {"value": "container", "label": "Normal"},
+        {"value": "container-narrow", "label": "Narrow"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Blocks",
+      "info": "Blocks are required for the FAQ section in order to add questions and answers. You can add them from the drop-down in order to edit or reorder."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Item",
+      "type": "item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question",
+          "default": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Use this answer block to discuss some commonly asked questions you've discovered from your customers interactions. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your product or collection. This section will appear across all products.</p>"
+        }
+      ]
+    },
+    {
+      "name": "Heading",
+      "type": "heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Category"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Text",
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

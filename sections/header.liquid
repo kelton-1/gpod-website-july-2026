@@ -1,0 +1,399 @@
+{% comment %} Settings {% endcomment %}
+{%- liquid
+  assign header_sticky = section.settings.header_sticky
+  assign header_transparent = section.settings.header_transparent
+  assign text_color = section.settings.text_color
+  assign style = section.settings.style
+  assign shop_name = shop.name | escape
+  assign cart_item_count = cart.item_count
+  if cart_item_count > 9
+    assign cart_item_count = '9+'
+  endif
+
+  assign header_position = 'relative'
+
+  capture header_class
+    echo 'site-header header--is-standard '
+    echo 'header--' | append: style
+
+    if header_transparent
+      echo ' header--transparent'
+    endif
+
+    if header_sticky
+      echo ' header--sticky'
+      assign header_position = 'absolute'
+    endif
+
+    unless logo_default or logo_transparent
+      echo ' header--no-logo'
+    endunless
+  endcapture
+-%}
+
+{%- comment -%} Check if there is only one logo set and show it always {%- endcomment -%}
+{%- liquid
+  assign logo = section.settings.logo
+  assign logo_transparent = section.settings.logo_transparent
+  assign logo_height_small = 40
+  assign logo_width = section.settings.logo_max_width
+  assign logo_width_x2 = logo_width | times: 2
+  assign sizes = logo_width | append: 'px'
+  assign alt = logo.alt | default: shop.name | strip_html | escape
+  assign width = logo_width_x2
+  assign has_logo_image = false
+  assign single_logo = false
+
+  if logo and logo_transparent == blank
+    assign single_logo = true
+  elsif logo == blank and logo_transparent
+    assign single_logo = true
+  endif
+-%}
+
+{%- capture logo_default -%}
+  {%- if logo != blank -%}
+    {%- liquid
+      assign logo_classes = 'logo__image logo__image--default'
+      if single_logo
+        assign logo_classes = logo_classes | append: ' logo__image--single'
+      endif
+
+      assign logo_height = logo_width | divided_by: logo.aspect_ratio | round
+      if logo_height < 40
+        assign logo_height_small = logo_height
+      endif
+      assign logo_width_small = logo_height_small | times: logo.aspect_ratio | round
+      assign widths = logo_width_small | append: ', ' | append: logo_width | append: ', ' | append: logo_width_x2
+
+      render 'image' image: logo, loading: 'eager', width: width, widths: widths, sizes: sizes, alt: alt, modifier: logo_classes, show_backfill: false
+    -%}
+
+    {%- style -%}
+      .logo__image--default { width: {{ logo_width }}px; }
+      .header--has-scrolled .logo__image--default { width: {{ logo_width_small }}px; }
+    {%- endstyle -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture logo_transparent -%}
+  {%- if logo_transparent != blank -%}
+    {%- liquid
+      assign logo_classes = 'logo__image logo__image--transparent'
+      if single_logo
+        assign logo_classes = logo_classes | append: ' logo__image--single'
+      endif
+
+      assign logo_height = logo_width | divided_by: logo_transparent.aspect_ratio | round
+      if logo_height < 40
+        assign logo_height_small = logo_height
+      endif
+      assign logo_width_small = logo_height_small | times: logo_transparent.aspect_ratio | round
+      assign widths = logo_width_small | append: ', ' | append: logo_width | append: ', ' | append: logo_width_x2
+
+      render 'image' image: logo_transparent, loading: 'eager', width: width, widths: widths, sizes: sizes, alt: alt, modifier: logo_classes, show_backfill: false
+    -%}
+   
+    {%- style -%}
+      .logo__image--transparent { width: {{ logo_width }}px; }
+      .header--has-scrolled .logo__image--transparent { width: {{ logo_width_small }}px; }
+    {%- endstyle -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if logo_default != blank or logo_transparent != blank -%}
+  {%- assign has_logo_image = true -%}
+{%- endif -%}
+
+{%- style -%}
+  :root { --header-position: {{ header_position }}; }
+
+  {%- if text_color != 'rgba(0,0,0,0)' and text_color != blank -%}
+    .header--transparent.site-header { --text: {{ text_color }} }
+  {%- endif -%}
+
+  {%- unless header_transparent -%}
+    @media screen and (max-width: 479px) {
+      .shopify-section:first-child .banner--transparent-header,
+      .template-page .banner--transparent-header { --header-initial-height: 25px; }
+    }
+  {%- endunless -%}
+{%- endstyle -%}
+
+{%- capture search_popdown -%}
+  <header-search-popdown>
+    <details>
+      <summary class="search-popdown-bar" aria-haspopup="dialog" data-popdown-toggle title="{{ 'search.search' | t }}">
+        {%- render 'icon-search' -%}
+        <span class="visually-hidden">{{ 'search.search' | t }}</span>
+      </summary>
+
+      {%- render 'header-search-popdown' -%}
+
+      <span class="drawer__underlay" data-popdown-underlay></span>
+    </details>
+  </header-search-popdown>
+{%- endcapture -%}
+
+<header
+  class="{{ header_class }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="header"
+  data-transparent="{{ header_transparent }}"
+  data-header
+  data-header-height
+  data-scroll-lock-fill-gap>
+  <div class="container">
+    <div class="row">
+      <div class="nav-item logo{% unless has_logo_image %} logo--text-only{% endunless %}{% if settings.type_nav_caps %} caps{% endif %}">
+        {%- if has_logo_image -%}
+          <a href="{{ routes.root_url }}" class="logo__image-link visible-nav-link" data-width="{{ section.settings.logo_max_width }}" aria-label="{{ shop_name }}" data-logo-image>
+            {%- if logo_transparent != blank -%}
+              {{- logo_transparent -}}
+            {%- endif -%}
+
+            {%- if logo_default != blank -%}
+              {{- logo_default -}}
+            {%- endif -%}
+          </a>
+
+        {%- else -%}
+          <a id="shopName" class="logo__text" href="{{ routes.root_url }}" data-logo-text>{{ shop_name }}</a>
+        {%- endif -%}
+      </div>
+
+      <div class="header-fix-cont">
+        <div class="header-fix-cont-inner">
+          <nav class="nav-standard nav-main{% if settings.type_nav_caps %} caps{% endif %}" data-nav-main>
+            {%- render 'navigation', is_hamburger_nav: false -%}
+          </nav>
+
+          <div class="header__icons" data-header-icons>
+            <a href="#menu" class="menuToggle" data-target="nav" aria-expanded="false" aria-label="{{ 'general.accessibility.menu_toggle' | t }}" data-menu-toggle>
+              <div id="hamburger-menu" class="icon-menu" data-hamburger-icon>
+                <div class="diamond-bar"></div>
+                <div id="hamburger-bar" class="icon-bar"></div>
+              </div>
+            </a>
+
+            {%- if shop.customer_accounts_enabled -%}
+              <a href="{{ routes.account_url }}" class="nav-item nav-account-link{% unless settings.show_search %} nav-account-link--no-search{% endunless %}" aria-label="{{ 'general.accessibility.account' | t }}">
+                {%- render 'icon-user' -%}
+              </a>
+            {%- endif -%}
+
+            {%- if settings.show_search -%}
+              {{ search_popdown }}
+            {%- endif -%}
+
+            <a id="cartTotal" href="{{ routes.cart_url }}" class="nav-item cartToggle{% if settings.cart_icon == 'circle' %} cartToggle--circle{% endif %}{% if cart.item_count == 0 %} cartToggle--empty{% endif %}" data-cart-toggle aria-expanded="false" aria-label="{{ 'general.accessibility.cart' | t }}">
+              {%- if settings.cart_icon == 'cart' -%}
+                {%- render 'icon-cart' -%}
+              {%- else -%}
+                {%- render 'icon-circle' -%}
+                <div class="cartToggle-items" data-cart-items-count>{{ cart_item_count }}</div>
+              {%- endif -%}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-cartPopover" data-popover></div>
+
+<template data-popover-template>
+  <div class="popover-inner">
+    <div class="popover-item-heading" data-popover-heading>{{ 'cart.labels.items_added' | t }}</div>
+    <div class="popover-item-thumb">
+      <div class="image-wrapper lazy-image" style="--aspect-ratio: 1;" data-popover-image></div>
+    </div>
+    <div class="popover-item-info">
+      <span class="popover-item-title" data-popover-title></span>
+      <span class="popover-item-variant" data-popover-variant></span>
+      <span class="popover-item-selling-plan" data-popover-selling-plan></span>
+      <div class="popover-item-properties" data-popover-item-props></div>
+      <span class="popover-item-price" data-popover-item-price></span>
+      <span class="popover-item-unit-price" data-popover-unit-price></span>
+    </div>
+  </div>
+</template>
+</header>
+
+{% comment %} Site Navigation {% endcomment %}
+<nav class="nav-hamburger nav-main{% if settings.type_nav_caps %} caps{% endif %}" data-nav-main>
+  <button class="nav-mobile-close" aria-expanded="false" aria-label="{{ 'general.accessibility.menu_toggle' | t }}" data-menu-toggle>
+    {%- render 'icon-close' -%}
+  </button>
+  <div class="nav-inner" data-hamburger-scrollable>
+    <div class="nav-inner-wrapper">
+      {%- render 'navigation', is_hamburger_nav: true -%}
+    </div>
+  </div>
+</nav>
+
+<div class="overlay"></div>
+
+{%- if template != 'cart' and settings.enable_ajax_cart -%}
+  <div class="cart-drawer">
+    {%- render 'site-cart' -%}
+  </div>
+{%- endif -%}
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": {{ shop.name | json }},
+  {%- if section.settings.logo or section.settings.logo_transparent -%}
+    {%- if section.settings.logo -%}
+      {%- assign logo = section.settings.logo -%}
+    {%- elsif section.settings.logo_transparent -%}
+      {%- assign logo = section.settings.logo_transparent -%}
+    {%- endif -%}
+    {%- assign image_size = logo.width | append:'x' -%}
+
+    "logo": {{ logo | img_url: image_size | prepend: "https:" | json }},
+  {%- endif -%}
+  "sameAs": [
+    {{ settings.instagram_link | json }},
+    {{ settings.facebook_link | json }},
+    {{ settings.twitter_link | json }},
+    {{ settings.youtube_link | json }},
+    {{ settings.vimeo_link | json }},
+    {{ settings.pinterest_link | json }},
+    {{ settings.tumblr_link | json }}
+  ],
+  "url": {{ shop.url | append: page.url | json }}
+}
+</script>
+
+{%- if template.name == 'index' -%}
+  {%- assign potential_action_target = shop.url | append: routes.search_url | append: "?q={search_term_string}" -%}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {{ potential_action_target | json }},
+        "query-input": "required name=search_term_string"
+      },
+      "url": {{ shop.url | append: page.url | json }}
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "shopify-section-header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "header_sticky",
+      "label": "Enable sticky header",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Used on the other pages and on scroll when the header is sticky"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "label": "Width",
+      "info": "Max logo height is 100px",
+      "min": 50,
+      "max": 400,
+      "default": 100,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Menus"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_list",
+      "label": "Primary menu"
+    },
+    {
+      "type": "header",
+      "content": "Navigation settings"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Style",
+      "default": "logo-center-links-left",
+      "options": [
+        { "value": "logo-left-links-right", "label": "Menu right, logo left" },
+        { "value": "logo-left-links-center", "label": "Menu center, logo left" },
+        { "value": "logo-center-links-left", "label": "Menu left, logo center" },
+        { "value": "logo-center-links-center", "label": "Menu center, logo center" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Mega menu"
+    },
+    {
+      "type": "image_picker",
+      "id": "meganav_image",
+      "label": "Image",
+      "info": "Recommended size: 500 x 800 px"
+    },
+    {
+      "type": "range",
+      "id": "image_aspect_ratio",
+      "label": "Image aspect ratio",
+      "min": 0.5,
+      "max": 1.5,
+      "step": 0.1,
+      "unit": ":1",
+      "default": 1
+    },
+    {
+      "type": "text",
+      "id": "meganav_image_heading",
+      "label": "Heading"
+    },
+    {
+      "type": "url",
+      "id": "meganav_image_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Transparent header"
+    },
+    {
+      "type": "checkbox",
+      "id": "header_transparent",
+      "label": "Enable transparent header",
+      "default": true,
+      "info": "If only the first section has fullscreen background image or video."
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_transparent",
+      "label": "Logo",
+      "info": "Used on Home and Collection pages when the header is transparent"
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}

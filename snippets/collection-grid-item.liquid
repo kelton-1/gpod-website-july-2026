@@ -1,0 +1,108 @@
+{% comment %}
+    Renders list of collections in grid layout
+
+    Accepts:
+    - collection: {Object} collection
+    - image: {Object} image
+    - mobile_image: {Object} mobile_image
+    - unique: {String} id
+    - overlay_color: {Color} Overlay color
+    - overlay_opacity: {Number} Overlay opacity
+    - shopify_attributes: {Object} block.shopify_attributes
+
+    Usage:
+    {% render 'collection-grid-item', collection: collection, image: image, unique: unique, overlay_color: overlay_color, overlay_opacity: overlay_opacity, shopify_attributes: shopify_attributes %}
+{% endcomment %}
+
+{%- liquid
+  assign btn_text = section.settings.button_text
+  assign btn_size = section.settings.btn_size
+  assign btn_style = section.settings.btn_style
+  assign btn_type = section.settings.btn_type
+  assign transition_grid_items = settings.transition_grid_items
+  assign animation_anchor = '#CollectionModule--' | append: section.id
+
+  assign widths = '195, 205, 245, 275, 400, 500, 565, 750, 800, 1000, 1130, 1500, 1600, 2000, 2260, 3000, 3200, 4000'
+
+  if section.blocks.size == 1
+    assign sizes = 'calc(100vw - 20px)'
+  else
+    assign sizes = '(min-width: 1024px) calc((100vw - 20px) / 2 - 5px), calc(100vw - 20px)'
+  endif
+
+  unless collection == empty
+    assign title = collection.title | strip_html | truncate: 150
+    assign description = collection.description | strip_html | truncate: 250
+    assign url = collection.url
+  else
+    assign title = 'onboarding.collection' | t
+    assign description = 'onboarding.collection_description' | t
+    assign url = '#'
+  endunless
+
+  if image == blank and mobile_image == blank
+    assign image = collection.products.first.featured_image
+  endif
+
+  capture block_style
+    unless overlay_color == 'rgba(0,0,0,0)' or overlay_color == '' or overlay_opacity == 0
+      echo '--overlay-color: ' | append: overlay_color | append: ';'
+      echo '--overlay-opacity: ' | append: overlay_opacity | append: ';'
+    endunless
+  endcapture
+-%}
+
+<div id="CollectionBlock--{{ section.id }}-{{ unique }}"
+  class="collection-block"
+  {% if transition_grid_items and mosaic %}
+    data-aos="zoom-in-up"
+    data-aos-anchor="{{ animation_anchor }}"
+    data-aos-order="{{ mosaic }}"
+  {% elsif transition_grid_items %}
+    data-aos="zoom-in-up"
+  {% endif %}
+  {% if shopify_attributes != blank %}
+    {{ shopify_attributes }}
+  {% endif %}
+  style="{{ block_style }}"
+>
+  <a href="{{ url }}" aria-label="{{ title }}" class="collection-block__link">
+    {%- if image != blank or mobile_image != blank -%}
+      <div class="collection-block__image{% if settings.transition_collections_list %} collection-block__image--zoom{% endif %}">
+        {%- if image != blank -%}
+          <div class="collection-block__image-bg{% if mobile_image != blank %} desktop{% endif %}">
+            {%- render 'image' image: image, sizes: sizes, widths: widths -%}
+          </div>
+        {%- endif -%}
+
+        {%- if mobile_image != blank -%}
+          <div class="collection-block__image-bg{% if image != blank %} mobile{% endif %}">
+            {%- render 'image' image: mobile_image, sizes: sizes, widths: widths -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- else -%}
+      <div class="collection-block__image{% if settings.transition_collections_list %} collection-block__image--zoom{% endif %}">
+        <div class="collection-block__image-bg svg-placeholder">
+          {%- capture current -%}{% cycle 1, 2, 3, 4, 5 %}{%- endcapture -%}
+          {{- 'collection-' | append: current | placeholder_svg_tag -}}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="collection-block__info text-position--{{ section.settings.coll_text_position }}">
+      <div>
+        <h3 class="collection-block__title">{{ title }}</h3>
+        {%- if section.settings.show_description and description != blank -%}
+          <p class="collection-block__description">
+            {{- description -}}
+          </p>
+        {%- endif -%}
+
+        {%- if btn_text != blank -%}
+          <span class="btn {{ btn_size }} {{ btn_style }} {{ btn_type }}">{{ btn_text }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+  </a>
+</div>

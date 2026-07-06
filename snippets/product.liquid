@@ -1,0 +1,574 @@
+{%- comment -%}
+  Renders product section and page
+
+  Accepts:
+  - product: {Object} product (required for Featured product section)
+  - section_type: {String} Used for Featured product section
+
+  Usage:
+  {% render 'product', product: product, image_position: image_position, section_type: section_type %}
+{%- endcomment -%}
+
+{% comment %} Settings {% endcomment %}
+{%- liquid
+  assign image_size = section.settings.image_size
+  assign image_position = section.settings.image_position
+  assign lightbox = section.settings.lightbox
+  assign arrows = settings.show_slideshow_arrows
+  assign dots = settings.show_slideshow_dots
+  assign dots_style = settings.dots_style
+  assign enable_video_looping = section.settings.enable_video_looping
+  assign is_product_template = false
+  assign is_slideshow = false
+  assign scrollable_images = false
+
+  if section_type == 'product-template'
+    assign is_product_template = true
+  endif
+
+  assign onboarding = false
+  if product == blank
+    assign onboarding = true
+  endif
+
+  if dots_style == 'hidden'
+    assign dots = false
+  endif
+
+  assign product_layout = section.settings.product_layout
+  assign first_3d_model = product.media | where: 'media_type', 'model' | first
+  assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media
+  assign featured_media_id = featured_media.id
+  assign featured_media_aspect_ratio = featured_media.aspect_ratio | default: 1
+  assign preorder = false
+  assign has_form_block = false
+  assign is_single_media = true
+  assign product_tags = product.tags | join: ',' | append: ','
+
+  if product.media.size > 1
+    assign is_single_media = false
+  endif
+
+  if product_tags contains '_preorder'
+    assign preorder = true
+  endif
+
+  assign sold_out = true
+  if product.available or product == blank
+    assign sold_out = false
+  endif
+
+  if product_layout == 'slideshow' or product_layout == 'slideshow-left'
+    assign is_slideshow = true
+  else
+    assign scrollable_images = true
+  endif
+-%}
+
+{%- capture product_images -%}
+  {%- unless onboarding -%}
+    {%- if product.media.size > 0 -%}
+      {%- comment -%} Show Featured media first {%- endcomment -%}
+      {%- render 'media', media: featured_media, featured_media: featured_media, is_single_media: is_single_media, enable_video_looping: enable_video_looping, unique: section.id, loading: 'eager' -%}
+
+      {%- comment -%} Loop product media skipping the featured {%- endcomment -%}
+      {%- for media in product.media -%}
+        {%- if media.id != featured_media_id -%}
+          {%- render 'media', media: media, featured_media: featured_media, is_single_media: is_single_media, enable_video_looping: enable_video_looping, unique: section.id -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- comment -%} Show blank image if product has no media {%- endcomment -%}
+      <div class="product-image product-image--empty"></div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="product-image product-image--onboarding">
+      {{ 'product-5' | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+  {%- endunless -%}
+{%- endcapture -%}
+
+{%- comment -%} Prevent CLS on flickity init {%- endcomment -%}
+{%- if is_slideshow or is_product_template == false %}
+  {%- style -%}
+    #Product--{{ section.id }} .product__images__slider .flickity-viewport::after { aspect-ratio: {{ featured_media_aspect_ratio | round: 2 }}; }
+  {%- endstyle -%}
+{%- endif -%}
+
+<div class="product product--layout-{{ product_layout }} container-wrap{% unless is_product-template %} featured-product featured-product--{{ section.id }}{% if onboarding %} onboarding-product{% endif %}{% endunless %}"
+  id="Product--{{ section.id }}"
+  data-lightbox="{{ lightbox }}"
+  {% if scrollable_images %}data-product-scrollable-images{% endif %}
+  data-product-container>
+  <div class="container">
+    {%- if settings.show_breadcrumbs and is_product_template -%}
+      <div class="breadcrumbs">
+        {%- render 'site-breadcrumbs' -%}
+      </div>
+    {%- endif -%}
+
+    <div class="product__container{% if image_position == 'top' %} product__container--vertical{% endif %}">
+      <div class="product__images product__images--{{ image_size }}">
+        {%- if is_slideshow or is_product_template == false %}
+          <div class="product__images__container" data-product-single-media-group>
+            <div
+              id="product__images__slider--{{ section.id }}"
+              class="product__images__slider{% if is_single_media %} product__images__slider--single{% endif %}"
+              data-dots="{{ dots }}"
+              data-dots-style="{{ dots_style }}"
+              data-arrows="{{ arrows }}"
+              data-product-slideshow>
+              {{ product_images }}
+            </div>
+
+            {%- if first_3d_model -%}
+              <button
+                aria-label="{{ 'products.product_page.view_in_space_label' | t }}"
+                class="btn btn--ar product-single__view-in-space"
+                data-shopify-xr
+                data-shopify-model3d-id="{{ first_3d_model.id }}"
+                data-shopify-title="{{ product.title | strip_html }}"
+                data-shopify-xr-hidden>
+                {%- render 'icon-media-model' -%}
+                <span class='product-single__view-in-space-text'>{{ 'products.product_page.view_in_space' | t }}</span>
+              </button>
+            {%- endif -%}
+          </div>
+
+          {%- unless is_single_media or onboarding -%}
+            <div class="product__images__slider-nav-holder">
+              <div class="product__images__slider-nav" {% if product_layout == 'slideshow-left' %}data-product-single-media-thumbs-vertical{% else %}data-product-single-media-thumbs{% endif %}>
+                {%- comment -%} Show Featured media thumbnail first {%- endcomment -%}
+                {%- render 'media-thumb', media: featured_media, featured_media: featured_media, index: 0 -%}
+
+                {%- comment -%} Loop product media thumbnails skipping the featured {%- endcomment -%}
+                {%- assign media_thumb_counter = 0 -%}
+                {%- for media in product.media -%}
+                  {%- if media.id != featured_media_id -%}
+                    {%- assign media_thumb_counter = media_thumb_counter | plus: 1 -%}
+                    {%- render 'media-thumb', media: media, featured_media: featured_media, index: media_thumb_counter -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endunless -%}
+        {%- else -%}
+          <div class="product__images__container" data-product-single-media-group>
+            <div class="product__images__scroller{% if is_single_media %} product__images__scroller--single{% endif %}" data-lightbox="{{ lightbox }}" data-custom-scrollbar-items>
+              {{ product_images }}
+            </div>
+
+            {%- unless is_single_media -%}
+              <div class="custom-scrollbar" data-custom-scrollbar>
+                <div class="custom-scrollbar__track" data-custom-scrollbar-track></div>
+              </div>
+            {%- endunless -%}
+
+            {%- if first_3d_model -%}
+              <button
+                aria-label="{{ 'products.product_page.view_in_space_label' | t }}"
+                class="btn btn--ar product-single__view-in-space"
+                data-shopify-xr
+                data-shopify-model3d-id="{{ first_3d_model.id }}"
+                data-shopify-title="{{ product.title | strip_html }}"
+                data-shopify-xr-hidden>
+                {%- render 'icon-media-model' -%}
+                <span class='product-single__view-in-space-text'>{{ 'products.product_page.view_in_space' | t }}</span>
+              </button>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+      <!-- end product-images -->
+
+      <div class="product__info"{% if is_product_template %} data-form-wrapper{% endif %}>
+        <div class="product__info__wrapper">          {%- unless onboarding -%}
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign padding_bottom = block.settings.padding_bottom
+
+                if padding_bottom != blank
+                  capture block_style
+                    echo 'style="--PBB:' | append: padding_bottom | append: 'px;"'
+                  endcapture
+                endif
+              -%}
+
+              {%- case block.type -%}
+                {%- when '@app' -%}
+                  {%- render block -%}
+
+                {%- when 'price-and-title' -%}
+                  {%- assign product_title = product.title | strip_html -%}
+
+                  <div class="product__title__wrapper{% unless block.settings.show_vendor %} product__title__wrapper--no-subheading{% endunless %} block-padding"
+                    {{ block_style }}
+                    {{ block.shopify_attributes }}
+                  >
+                    {%- if block.settings.show_vendor -%}
+                      <p class="product__vendor subheading-text">{{ product.vendor }}</p>
+                    {%- endif -%}
+
+                    <h1 class="product__title">
+                      {%- if section_type == 'featured-product' -%}
+                        <a href="{{ product.url }}" title="{{ product.title | strip_html }}">
+                          {{- product_title -}}
+                        </a>
+                      {%- else -%}
+                        {{- product_title -}}
+                      {%- endif -%}
+                    </h1>{%- liquid
+  assign first_variant = product.selected_or_first_available_variant
+  assign on_sale = false
+  if first_variant.compare_at_price > first_variant.price
+    assign on_sale = true
+  endif
+
+  capture first_variant_price
+    if first_variant.price == 0
+      echo 'products.labels.free' | t
+    elsif settings.currency_code_enable
+      echo first_variant.price | money_with_currency
+    else
+      echo first_variant.price | money
+    endif
+  endcapture
+-%}
+
+<div class="product__price" data-price-wrapper>
+  <span data-product-price>
+    {{ first_variant_price }}
+  </span>
+  <s class="product__price__sale" data-compare-price>
+    {%- if on_sale -%}
+      {%- liquid
+        if settings.currency_code_enable
+          echo first_variant.compare_at_price | money_with_currency
+        else
+          echo first_variant.compare_at_price | money
+        endif
+      -%}
+    {%- endif -%}
+  </s>
+
+  {%- liquid
+    assign units = product.variants | map: 'unit_price' | compact
+    if units[0]
+      assign has_units = true
+    else
+      assign has_units = false
+    endif
+  -%}
+
+  {%- if has_units -%}
+    {%- unless first_variant.unit_price -%}
+      {%- assign hide_units = ' hidden' -%}
+    {%- endunless -%}
+
+    {%- capture unit_price_separator -%}
+      <span aria-hidden="true">/</span>
+      <span class="visually-hidden">{{ 'general.accessibility.unit_price_separator' | t }}</span>
+    {%- endcapture -%}
+
+    {%- capture unit_price_base_unit -%}
+      <span>
+        {%- if first_variant.unit_price_measurement -%}
+          {%- if first_variant.unit_price_measurement.reference_value != 1 -%}
+            {{ first_variant.unit_price_measurement.reference_value }}
+          {%- endif -%}
+          {{- first_variant.unit_price_measurement.reference_unit -}}
+        {% endif %}
+      </span>
+    {%- endcapture -%}
+    <div class="product__price__meta">
+      <span class="product__unit-price{{ hide_units }}" data-product-unit>
+        <span class="visually-hidden">{{ 'products.labels.unit_price_label' | t }}</span>
+        <span data-product-unit-price id="unit-price-{{ section.id }}">{{ first_variant.unit_price | money }}</span>
+        {{ unit_price_separator }}
+        <span data-product-base id="unit-price-base-{{ section.id }}">{{ unit_price_base_unit }}</span>
+      </span>
+      <span data-price-each class="product__price--unit visually-hidden">
+        {{ 'products.labels.each' | t }}
+        <span data-price-each-amount></span>
+      </span>
+    </div>
+  {% endif %}
+</div></div>
+
+                {%- when 'product-description' -%}
+                  <div class="product__description rte block-padding"
+                    data-product-description
+                    {{ block_style }}
+                    {{ block.shopify_attributes }}
+                  >
+                    {{- product.description -}}
+                  </div>
+
+                {%- when 'form' -%}
+                  {%- assign enable_payment_button = block.settings.enable_payment_button -%}
+                  {%- assign show_newsletter = settings.show_newsletter -%}
+                  {%- assign text_newsletter = settings.text_newsletter -%}
+
+                  <div class="product__form block-padding"
+                    data-show-quantity="{{ block.settings.show_quantity }}"
+                    {{ block_style }}
+                    {{ block.shopify_attributes }}
+                  >
+                    <div data-product-form-container>
+                      {%- render 'product-form', product: product, preorder: preorder, enable_payment_button: enable_payment_button, block: block -%}
+                      {%- render 'notification-form', variant_available: product.selected_or_first_available_variant.available, product_title: product.title, show_newsletter: show_newsletter, text_newsletter: text_newsletter -%}
+                    </div>
+                  </div>
+                  {%- assign has_form_block = true -%}
+
+                {%- when 'store-availability' -%}
+                  <div class="product-single__store-availability-container block-padding"
+                    data-store-availability-container
+                    {{ block_style }}
+                    {{ block.shopify_attributes }}
+                  ></div>
+
+                {%- when 'social-share' -%}
+                  <div class="product__share block-padding"
+                    {{ block_style }}
+                    {{ block.shopify_attributes }}
+                  >
+                    {%- if settings.share_on_facebook or settings.share_on_twitter or settings.share_on_pinterest -%}
+                      <div class="share-links">
+                        {%- render 'site-shareLinks' -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+
+                {%- when 'complementary-products' -%}
+                  <div class="product__complementary block-padding"
+                    {{ block_style }}
+                    {{ block.shopify_attributes }}
+                  >
+                    <complementary-products class="complementary-products" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=10&intent=complementary">
+                      {%- if recommendations.performed and recommendations.products_count > 0 -%}
+                        {%- assign complementary_products_title = 'products.labels.complementary_products_title' | t -%}
+                        {%- if complementary_products_title != blank -%}
+                          <p class="complementary-products__title">{{ complementary_products_title }}</p>
+                        {%- endif -%}
+
+                        {%- for product_complementary in recommendations.products -%}
+                          {%- render 'product-grid-item', product: product_complementary -%}
+                        {%- endfor -%}
+                      {%- endif -%}
+                    </complementary-products>
+                  </div>
+
+                {%- when 'inventory_countdown' -%}{% comment %} Product inventory {% endcomment %}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign show_remaining_class = ''
+  assign show_notice = block.settings.show_notice
+  assign max_inventory = block.settings.max_inventory
+  assign hide_inventory_count = block.settings.hide_inventory_counter
+  assign current_inventory = 0
+  assign has_unavailable_variants = false
+  assign show_buy_buttons = false
+  assign buy_buttons = section.blocks | where: 'type', 'buttons'
+  if buy_buttons.size > 0
+    assign show_buy_buttons = true
+  endif
+
+  comment
+    Set a limit of the max inventory quantity to prevent a real quantity exposure
+  endcomment
+  assign max_inventory_quantity = max_inventory | plus: 1
+
+  if current_variant.inventory_management and current_variant.inventory_policy == 'deny'
+    if current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= max_inventory
+      assign show_remaining_class = 'count-is-low'
+      assign current_inventory = current_variant.inventory_quantity | at_most: max_inventory_quantity
+    elsif current_variant.inventory_quantity > 0 and current_variant.inventory_quantity > max_inventory and show_notice == 'always'
+      assign show_remaining_class = 'count-is-in'
+    elsif current_variant.inventory_quantity < 1 and show_notice == 'always'
+      assign show_remaining_class = 'count-is-out'
+    endif
+  endif
+
+  assign show_inventory = false
+  assign has_low_inventory = false
+  assign has_soldout = false
+  assign variants_inventory = product.variants | map: 'inventory_quantity'
+  for inventory_quantity in variants_inventory
+    if inventory_quantity > 0 and inventory_quantity < max_inventory
+      assign has_low_inventory = true
+    endif
+
+    if inventory_quantity < 1
+      assign has_soldout = true
+    endif
+  endfor
+
+  if has_low_inventory or has_soldout and show_notice == 'always'
+    assign show_inventory = true
+  endif
+
+  assign variant_count = 1
+  for option in product.options_with_values
+    assign variant_count = variant_count | times: option.values.size
+  endfor
+
+  if variant_count > product.variants.size
+    assign has_unavailable_variants = true
+  endif
+
+  if show_buy_buttons == false and has_unavailable_variants
+    assign show_inventory = true
+  endif
+-%}
+
+{%- if show_inventory or show_notice == 'always' -%}
+  {%- capture inventory -%}
+    <span data-remaining-count>{{ current_inventory | default: 0 }}</span>
+  {%- endcapture -%}
+
+  <div class="product__block variant__countdown block-padding {{ show_remaining_class }}"
+    data-remaining-max="{{ max_inventory }}"
+    data-remaining-show-notice="{{ show_notice }}"
+    data-remaining-wrapper
+    {{ block_style }}
+    {{ block.shopify_attributes }}
+  >
+    <span class="variant__countdown--in">{{ 'products.inventory.in_stock' | t }}</span>
+    {%- if hide_inventory_count -%}
+      <span class="variant__countdown--low">{{ 'products.inventory.remaining_no_count' | t }}</span>
+    {%- else -%}
+      <span class="variant__countdown--low">{{ 'products.inventory.remaining_html' | t: inventory: inventory }}</span>
+    {%- endif -%}
+
+    <span class="variant__countdown--out">{{ 'products.inventory.out_of_stock' | t }}</span>
+    <span class="variant__countdown--unavailable">{{ 'products.inventory.item_unavailable' | t }}</span>
+
+    <script data-product-remaining-json type="application/json">
+      {
+        {%- liquid
+          for variant in product.variants
+            assign variant_id = variant.id | json
+
+            if variant.inventory_management and variant.inventory_policy == 'deny'
+              assign quantity = variant.inventory_quantity | at_most: max_inventory_quantity
+
+              if hide_inventory_count
+                if quantity < 1
+                  assign remaining_value = 'out'
+                elsif quantity > 0 and quantity < max_inventory
+                  assign remaining_value = 'low'
+                else
+                  assign remaining_value = 'in'
+                endif
+              else
+                assign remaining_value = quantity
+              endif
+            else
+              assign remaining_value = 'unavailable'
+            endif
+
+            echo '"' | append: variant_id | append: '": "' | append: remaining_value | append: '"'
+
+            unless forloop.last
+              echo ','
+            endunless
+          endfor
+        -%}
+      }
+    </script>
+  </div>
+{%- elsif request.design_mode -%}
+  <div {{ block.shopify_attributes }}></div>
+{%- endif -%}{%- endcase -%}
+            {%- endfor -%}
+
+            {%- unless has_form_block -%}
+              {%- assign text_newsletter = 'general.footer.newsletter.default_text_html' | t -%}
+              <div class="product__form">
+                <div data-product-form-container>
+                  {%- render 'product-form', product: product, preorder: preorder -%}
+                  {%- render 'notification-form', variant_available: product.selected_or_first_available_variant.available, product_title: product.title, show_newsletter: true, text_newsletter: text_newsletter -%}
+                </div>
+              </div>
+            {%- endunless -%}
+          {%- else -%}
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign padding_bottom = block.settings.padding_bottom
+
+                if padding_bottom != blank
+                  capture block_style
+                    echo 'style="--PBB:' | append: padding_bottom | append: 'px;"'
+                  endcapture
+                endif
+              -%}
+
+              {%- case block.type -%}
+                {%- when '@app' -%}
+                  {%- render block -%}
+
+                {%- when 'price-and-title' -%}
+                  {%- liquid
+                    capture onboarding_price
+                      if settings.currency_code_enable
+                        echo 9900 | money_with_currency
+                      else
+                        echo 9900 | money
+                      endif
+                    endcapture
+                  -%}
+                  <div class="product__title__wrapper{% unless block.settings.show_vendor %} product__title__wrapper--no-subheading{% endunless %} block-padding"
+                    {{ block_style }}
+                    {{ block.shopify_attributes }}
+                  >
+                    {%- if block.settings.show_vendor -%}
+                      <p class="product__vendor subheading-text">{{ shop.name }}</p>
+                    {%- endif -%}
+
+                    <h1 class="product__title">{{ 'onboarding.product_title' | t }}</h1>
+
+                    <div class="product__price">{{ onboarding_price }}</div>
+                  </div>
+
+                {%- when 'form' -%}
+                  {%- assign enable_payment_button = block.settings.enable_payment_button -%}
+                  <div class="product__form block-padding"
+                    {{ block_style }}
+                    data-show-quantity="{{ block.settings.show_quantity }}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {%- render 'pseudoform', enable_payment_button: enable_payment_button -%}
+                  </div>
+
+                {%- when 'product-description' -%}
+                  <div class="product__description rte block-padding" {{ block_style }}>{{ 'onboarding.product_description' | t }}</div>
+
+                {%- when 'social-share' -%}
+                  <div class="product__share block-padding" {{ block_style }} {{ block.shopify_attributes }}>
+                    {%- if settings.share_on_facebook or settings.share_on_twitter or settings.share_on_pinterest -%}
+                      <span class="share-links p">
+                        {%- render 'site-shareLinks' -%}
+                      </span>
+                    {%- endif -%}
+                  </div>
+              {%- endcase -%}
+            {%- endfor -%}
+          {%- endunless -%}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} We should hide the sticky shop bar if product has selling plans {%- endcomment -%}
+{%- if is_product_template -%}
+  {%- if section.settings.show_cart_bar and product.selling_plan_groups.size == 0 -%}
+    {%- render 'shop-bar', product: product, featured_media: featured_media -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- unless onboarding -%}
+  <script type="application/json" id="ProductJson--{{ section.id }}" data-product-json hidden>{{ product | json }}</script>
+  <script type="application/json" id="ModelJson-{{ section.id }}" hidden>{{ product.media | where: 'media_type', 'model' | json }}</script>
+{%- endunless -%}

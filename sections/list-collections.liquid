@@ -1,0 +1,276 @@
+{%- comment -%} Colors {%- endcomment -%}
+{%- liquid
+  assign text_color = section.settings.text_color
+  assign overlay_color = section.settings.overlay_color
+  assign overlay_opacity = section.settings.overlay_opacity | times: 0.01 | round: 2
+  assign collections_columns = section.settings.collections_columns | plus: 0
+-%}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+
+  --COLUMNS: {{ collections_columns }};
+  --COLUMNS-MEDIUM: {{ 2 | at_most: collections_columns }};
+
+  {%- unless text_color == 'rgba(0,0,0,0)' or text_color == blank -%}
+    --text: {{ text_color }};
+  {%- endunless -%}
+
+  {%- unless overlay_color == 'rgba(0,0,0,0)' or overlay_color == '' or overlay_opacity == 0 -%}
+    --overlay-color: {{ overlay_color }};
+    --overlay-opacity: {{ overlay_opacity }};
+  {%- endunless -%}
+
+  {%- if collections_columns == 4 -%}
+    --line-clamp-large: 1;
+    --line-clamp-wide: 3;
+  {%- else -%}
+    --line-clamp-large: none;
+    --line-clamp-wide: none;
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- paginate collections by 12 -%}
+  <section id="CollectionModule--{{ section.id }}"
+    class="collection-list container-wrap section-padding"
+    data-section-type="collection-grid"
+    data-section-id="{{ section.id }}"
+    style="{{ style }}"
+  >
+    <div class="collection-list__header row row-sm">
+      <h1 class="collection-list__header">{{ 'collections.listing_page.title' | t }}</h1>
+    </div>
+
+    <div class="collection-list__row grid"{% if settings.enable_infinity_scroll %} data-infinity{% endif %}>
+      {%- comment -%} Collection Block, contains .js-quickView {%- endcomment -%}
+
+      {%- liquid
+        if section.settings.display_type == 'all' or section.blocks.size == 0
+          for collection in collections
+            unless collection.image == blank
+              assign image = collection.image
+            else
+              assign image = collection.products.first.featured_media.preview_image
+            endunless
+
+            render 'collection-grid-item', collection: collection, image: image, image_position: 'center-center', overlay_color: overlay_color, overlay_opacity: overlay_opacity, unique: forloop.index0
+          endfor
+        else
+          for block in section.blocks
+            assign collection = collections[block.settings.collection]
+            assign image = block.settings.image | default: collection.image | default: collection.products.first.featured_media.preview_image
+            assign mobile_image = block.settings.mobile_image
+            assign image_position = block.settings.image_position
+            assign overlay_opacity = block.settings.overlay_opacity | times: 0.01 | round: 2
+            assign overlay_color = block.settings.overlay_color
+            assign shopify_attributes = block.shopify_attributes
+
+            render 'collection-grid-item', collection: collection, image: image, mobile_image: mobile_image, image_position: image_position, unique: forloop.index0, shopify_attributes: shopify_attributes, overlay_opacity: overlay_opacity, overlay_color: overlay_color
+          endfor
+        endif
+      -%}
+    </div>
+
+    {%- liquid
+      if section.settings.display_type == 'all' or section.blocks.size == 0
+        render 'pagination', paginate: paginate
+      endif
+    -%}
+  </section>
+{%- endpaginate -%}
+
+{%- comment -%} Schema {%- endcomment -%}
+{% schema %}
+{
+  "name": "Collections list",
+  "class": "shopify-section--list-collections",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "All of your collections are listed by default. To customize your list, choose 'Selected' and add collections."
+    },
+    {
+      "type": "radio",
+      "id": "display_type",
+      "label": "Select collections to show",
+      "default": "all",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "selected",
+          "label": "Selected"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show descriptions",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "collections_columns",
+      "label": "Collections per row",
+      "default": 2,
+      "min": 2,
+      "max": 4,
+      "step": 1
+    },
+    {
+      "type": "select",
+      "id": "coll_text_position",
+      "label": "Collections text position",
+      "default": "center",
+      "options": [
+        { "label": "Top left", "value": "top_left" },
+        { "label": "Top right", "value": "top_right" },
+        { "label": "Center", "value": "center" },
+        { "label": "Bottom left", "value": "bottom_left" },
+        { "label": "Bottom right", "value": "bottom_right" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button label",
+      "default": "View products"
+    },
+    {
+      "type": "select",
+      "id": "btn_type",
+      "label": "Color",
+      "default": "btn--primary",
+      "options": [
+        { "label": "Primary", "value": "btn--primary" },
+        { "label": "Secondary", "value": "btn--secondary" },
+        { "label": "White", "value": "btn--white" },
+        { "label": "Black", "value": "btn--black" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_size",
+      "label": "Size",
+      "default": "",
+      "options": [
+        { "label": "Small", "value": "btn--small" },
+        { "label": "Medium", "value": "" },
+        { "label": "Large", "value": "btn--large" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_style",
+      "label": "Style",
+      "default": "btn--solid",
+      "options": [
+        { "label": "Solid", "value": "btn--solid" },
+        { "label": "Outline", "value": "btn--outline" },
+        { "label": "Text", "value": "btn--text" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "step": 5,
+      "max": 95,
+      "min": 0,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Replacement image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Replacement mobile image"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay",
+          "default": "#333333"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Overlay opacity",
+          "step": 5,
+          "max": 95,
+          "min": 0,
+          "unit": "%",
+          "default": 0
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

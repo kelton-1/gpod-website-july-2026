@@ -1,0 +1,81 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "footer-block-logo": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/GPOD_Footer_logo.png",
+            "logo_width": 150,
+            "mobile_hide_block": false
+          }
+        },
+        "footer-block-menu": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer",
+            "title": "Helpful Links",
+            "mobile_hide_block": false
+          }
+        },
+        "footer-block-newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "title": "Newsletter",
+            "content": "",
+            "mobile_hide_block": false
+          }
+        }
+      },
+      "block_order": [
+        "footer-block-logo",
+        "footer-block-menu",
+        "footer-block-newsletter"
+      ],
+      "settings": {
+        "color_footer_text": "#ffffff",
+        "color_footer_bg": "#000000",
+        "color_bottom_bar_bg": "#000000",
+        "show_payment_icons": true,
+        "show_social_icons": true,
+        "menu": "",
+        "show_locale_selector": true,
+        "show_country_selector": true,
+        "show_country_name": false,
+        "show_country_flag": true,
+        "enable_follow_on_shop": false,
+        "padding_top": 40,
+        "padding_bottom": 30
+      }
+    },
+    "popup": {
+      "type": "popup",
+      "settings": {
+        "show_popup": "disabled",
+        "popup_position": "right",
+        "popup_header": "Use the popup to catch emails and showcase promotions",
+        "popup_content": "<p>Popups can detract from a user's experience, so try to limit how often they appear.</p>",
+        "text_alignment": "center",
+        "show_popup_newsletter": true,
+        "popup_delay": 5,
+        "popup_reappear_time": "7"
+      }
+    }
+  },
+  "order": [
+    "footer",
+    "popup"
+  ]
+}

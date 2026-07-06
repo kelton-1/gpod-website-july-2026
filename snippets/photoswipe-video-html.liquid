@@ -1,0 +1,47 @@
+{%- liquid
+  assign item_link = item_link | default: ''
+  assign item_id = item_id | default: ''
+  assign item_link_type = item_link_type | default: item_link.media_type | default: item_link.type
+  assign item_link_id = item_link_id | default: item_link.id
+-%}
+
+{%- if item_link != '' -%}
+  {%- capture data_html_video -%}
+    <div class="pswp__custom-inner">
+      <div class="pswp__custom-content">
+        <div class="iframe-outer pswp__custom-iframe-outer">
+          {%- if item_link_type == 'video' -%}
+            {{ item_link | video_tag: image_size: '1100x', autoplay: true, loop: true, muted: false, controls: true, preload: false }}
+          {%- elsif item_id != '' -%}
+            <div id="{{ item_id }}" class="pswp__custom-iframe">
+              {%- if item_link.type == 'vimeo' -%}
+                {%- assign video_code = item_link.url | split: '.com/' -%}
+                <iframe
+                  src="https://player.vimeo.com/video/{{ video_code[1] }}?autoplay=1&loop=1&playlist={{ item_link_id }}"
+                  allow="autoplay; encrypted-media"
+                  allowfullscreen
+                  data-host="vimeo"
+                ></iframe>
+              {%- else -%}
+                {%- liquid
+                  if item_link.url != blank
+                    assign video_code = item_link.url | split: '='
+                  else
+                    assign video_code = item_link | split: '='
+                  endif
+                -%}
+                <iframe
+                  src="//www.youtube.com/embed/{{ video_code[1] }}?enablejsapi=1&autoplay=1&loop=1&playlist={{ item_link_id }}"
+                  allow="autoplay; encrypted-media"
+                  allowfullscreen
+                  data-host="youtube"
+                ></iframe>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endcapture -%}
+  {{- data_html_video | replace: '"', "'" | strip -}}
+{%- endif -%}

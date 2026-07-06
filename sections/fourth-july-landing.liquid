@@ -1,0 +1,908 @@
+{% comment %}
+  Fourth of July Sale Landing Page — GPOD GOLF
+  Target theme: Copy of Modular (PaulDev), ID 153797918888 (UNPUBLISHED)
+  Do NOT deploy to live theme without explicit user approval.
+  Discount code: JULY4 (15% off, applied at checkout)
+{% endcomment %}
+
+{%- style -%}
+  :root {
+    --fj-red:      #B22234;
+    --fj-navy:     #002868;
+    --fj-gold:     #C9A84C;
+    --fj-black:    #000000;
+    --fj-white:    #ffffff;
+    --fj-off-white:#f9f8f6;
+    --fj-grey:     #f2f2f2;
+    --fj-text:     #1a1a1a;
+    --fj-muted:    #666666;
+    --fj-border:   #e0e0e0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  .fj-page { font-family: 'Saira', sans-serif; color: var(--fj-text); overflow-x: hidden; }
+
+  .fj-eyebrow {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--fj-red); display: block; margin-bottom: 14px;
+  }
+  .fj-eyebrow--gold { color: var(--fj-gold); }
+  .fj-eyebrow--white { color: rgba(255,255,255,0.65); }
+
+  .fj-btn {
+    display: inline-block;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600; font-size: 14px;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 36px;
+    border-radius: 100px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.15s ease;
+    text-align: center; white-space: nowrap;
+  }
+  .fj-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .fj-btn--red        { background: var(--fj-red);   color: var(--fj-white); border-color: var(--fj-red); }
+  .fj-btn--red:hover  { background: #9a1c2b; color: var(--fj-white); }
+  .fj-btn--black      { background: var(--fj-black); color: var(--fj-white); border-color: var(--fj-black); }
+  .fj-btn--black:hover{ background: #222; color: var(--fj-white); }
+  .fj-btn--ghost      { background: transparent; color: var(--fj-white); border-color: rgba(255,255,255,0.45); }
+  .fj-btn--ghost:hover{ border-color: var(--fj-white); background: rgba(255,255,255,0.08); color: var(--fj-white); }
+  .fj-btn--outline    { background: transparent; color: var(--fj-black); border-color: var(--fj-black); }
+  .fj-btn--full { width: 100%; }
+
+  .fj-stars {
+    display: flex; gap: 6px; align-items: center; justify-content: center;
+    margin-bottom: 20px; opacity: 0.6;
+  }
+  .fj-stars span { font-size: 10px; color: var(--fj-gold); letter-spacing: 4px; }
+
+  /* Hero */
+  .fj-hero {
+    position: relative;
+    color: var(--fj-white);
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 48px 80px;
+    overflow: hidden;
+  }
+  .fj-hero__bg-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    display: block;
+  }
+  .fj-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.12);
+    z-index: 1;
+  }
+  .fj-hero__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .fj-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(to right, var(--fj-red) 33.3%, var(--fj-white) 33.3% 66.6%, var(--fj-navy) 66.6%);
+    z-index: 3;
+  }
+  .fj-hero__eyebrow {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--fj-gold); margin-bottom: 20px;
+  }
+  .fj-hero__headline {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: clamp(38px, 5.5vw, 80px);
+    line-height: 1.03;
+    letter-spacing: -0.025em;
+    margin: 0 0 10px;
+    max-width: 900px;
+    color: var(--fj-white);
+  }
+  .fj-hero__headline em { font-style: normal; color: var(--fj-red); }
+  .fj-hero__divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(to right, var(--fj-red), var(--fj-navy));
+    border: none; margin: 32px auto;
+    border-radius: 2px;
+  }
+  .fj-hero__sub {
+    font-size: clamp(17px, 1.9vw, 23px);
+    line-height: 1.65;
+    color: rgba(255,255,255,0.82);
+    max-width: 640px;
+    margin: 0 auto 48px;
+  }
+  .fj-hero__ctas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .fj-hero__nudge {
+    margin-top: 40px;
+    font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Sale Banner */
+  .fj-sale-bar {
+    background: var(--fj-navy);
+    color: var(--fj-white);
+    padding: 48px 32px;
+    text-align: center;
+  }
+  .fj-sale-bar__inner { max-width: 760px; margin: 0 auto; }
+  .fj-sale-bar__title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 4vw, 52px);
+    line-height: 1.05;
+    margin: 0 0 8px;
+    color: var(--fj-white);
+  }
+  .fj-sale-bar__title em { font-style: normal; color: var(--fj-gold); }
+  .fj-sale-bar__sub {
+    font-size: clamp(15px, 1.5vw, 18px);
+    color: rgba(255,255,255,0.75); line-height: 1.55;
+    margin: 0 0 32px;
+  }
+  .fj-sale-bar__badges {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-bottom: 28px;
+  }
+  .fj-sale-bar__badge {
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,255,255,0.2);
+    border-radius: 14px;
+    padding: 16px 24px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    min-width: 140px;
+  }
+  .fj-sale-bar__badge-val {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(22px, 2.5vw, 32px); font-weight: 800;
+    color: var(--fj-gold); line-height: 1;
+  }
+  .fj-sale-bar__badge-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+  .fj-sale-bar__code-row {
+    display: flex; align-items: center; gap: 12px;
+    justify-content: center; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .fj-sale-bar__code-label {
+    font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600;
+    color: rgba(255,255,255,0.65);
+  }
+  .fj-sale-bar__code {
+    font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 900;
+    letter-spacing: 0.25em;
+    background: var(--fj-gold); color: var(--fj-black);
+    padding: 10px 24px; border-radius: 100px;
+  }
+  .fj-sale-bar__fine {
+    font-size: 11px; color: rgba(255,255,255,0.4);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Manifesto */
+  .fj-manifesto {
+    background: var(--fj-white);
+    padding: 104px 64px;
+  }
+  .fj-manifesto__inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 96px; align-items: center;
+  }
+  .fj-manifesto__headline {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: clamp(26px, 2.8vw, 40px);
+    line-height: 1.15; letter-spacing: -0.02em;
+    color: var(--fj-black); margin: 0 0 28px;
+  }
+  .fj-manifesto__body {
+    font-size: 17px; line-height: 1.82; color: #3a3a3a;
+  }
+  .fj-manifesto__body p { margin: 0 0 18px; color: #3a3a3a; }
+  .fj-manifesto__body p:last-child { margin-bottom: 0; }
+  .fj-manifesto__list {
+    list-style: none; padding: 0; margin: 18px 0 24px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .fj-manifesto__list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 17px; line-height: 1.5; color: #333;
+  }
+  .fj-manifesto__list li::before {
+    content: '\2605';
+    color: var(--fj-gold); font-size: 10px;
+    margin-top: 6px; flex-shrink: 0;
+  }
+  .fj-manifesto__pull {
+    font-family: 'Poppins', sans-serif; font-weight: 800;
+    font-size: clamp(18px, 1.8vw, 24px);
+    line-height: 1.3; color: var(--fj-black);
+    border-left: 4px solid var(--fj-red);
+    padding-left: 20px; margin: 32px 0 0;
+  }
+  .fj-manifesto__visual { position: relative; }
+  .fj-manifesto__flag-accent {
+    position: absolute;
+    top: -16px; right: -16px;
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, var(--fj-red) 50%, var(--fj-navy) 50%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    z-index: 2;
+  }
+  .fj-manifesto__img {
+    width: 100%; aspect-ratio: 4 / 5;
+    object-fit: cover; border-radius: 20px; display: block;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.14);
+  }
+
+  /* Mission */
+  .fj-mission {
+    background: var(--fj-black);
+    color: var(--fj-white);
+    padding: 96px 64px;
+    text-align: center;
+  }
+  .fj-mission__inner { max-width: 800px; margin: 0 auto; }
+  .fj-mission__headline {
+    font-family: 'Poppins', sans-serif; font-weight: 800;
+    font-size: clamp(26px, 3.2vw, 46px);
+    line-height: 1.12; letter-spacing: -0.02em; margin: 0 0 32px;
+    color: var(--fj-white);
+  }
+  .fj-mission__headline em { font-style: normal; color: var(--fj-red); }
+  .fj-mission__pillars {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-bottom: 48px;
+  }
+  .fj-mission__pillar {
+    padding: 24px 20px;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    background: rgba(255,255,255,0.04);
+  }
+  .fj-mission__pillar-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+  .fj-mission__pillar-text {
+    font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600;
+    line-height: 1.4; color: rgba(255,255,255,0.85);
+  }
+
+  /* Products */
+  .fj-products {
+    background: var(--fj-off-white);
+    padding: 104px 64px;
+  }
+  .fj-products__header { text-align: center; max-width: 680px; margin: 0 auto 64px; }
+  .fj-products__title {
+    font-family: 'Poppins', sans-serif; font-weight: 800;
+    font-size: clamp(28px, 3vw, 46px);
+    line-height: 1.1; letter-spacing: -0.02em;
+    color: var(--fj-black); margin: 0 0 16px;
+  }
+  .fj-products__title em { font-style: normal; color: var(--fj-red); }
+  .fj-products__sub { font-size: 17px; line-height: 1.65; color: var(--fj-muted); }
+  .fj-products__grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 28px; align-items: start;
+  }
+
+  /* Product Card */
+  .fj-card {
+    background: var(--fj-white);
+    border-radius: 24px; overflow: hidden;
+    display: flex; flex-direction: column;
+    border: 1.5px solid var(--fj-border);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .fj-card:hover { box-shadow: 0 20px 56px rgba(0,0,0,0.1); transform: translateY(-5px); }
+  .fj-card--featured { border-color: var(--fj-red); box-shadow: 0 8px 40px rgba(178,34,52,0.12); }
+  .fj-card--featured:hover { box-shadow: 0 24px 64px rgba(178,34,52,0.2); }
+  .fj-card__top {
+    padding: 20px 20px 0;
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 40px;
+  }
+  .fj-card__tier {
+    font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--fj-muted);
+  }
+  .fj-card__badge {
+    background: var(--fj-red); color: var(--fj-white);
+    font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 100px;
+  }
+  .fj-card__img-wrap { padding: 24px 24px 12px; }
+  .fj-card__img {
+    width: 100%; aspect-ratio: 1 / 1;
+    object-fit: contain; display: block;
+    border-radius: 12px; background: var(--fj-off-white);
+  }
+  .fj-card__body { padding: 8px 24px 20px; flex: 1; display: flex; flex-direction: column; }
+  .fj-card__title {
+    font-family: 'Poppins', sans-serif; font-weight: 800;
+    font-size: 19px; line-height: 1.2; color: var(--fj-black); margin: 0 0 6px;
+  }
+  .fj-card__tagline { font-size: 13px; color: var(--fj-muted); font-weight: 500; margin-bottom: 16px; }
+  .fj-card__price-row {
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;
+  }
+  .fj-card__price {
+    font-family: 'Poppins', sans-serif; font-size: 30px;
+    font-weight: 800; color: var(--fj-black); line-height: 1; margin: 0;
+  }
+  .fj-card__compare {
+    font-family: 'Poppins', sans-serif; font-size: 18px;
+    font-weight: 500; color: var(--fj-muted); text-decoration: line-through; line-height: 1;
+  }
+  .fj-card__savings {
+    font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--fj-red); background: rgba(178,34,52,0.08);
+    padding: 3px 10px; border-radius: 100px;
+  }
+  .fj-card__desc { font-size: 14px; line-height: 1.65; color: #555; margin-bottom: 18px; flex: 1; }
+  .fj-card__bullets {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .fj-card__bullets li {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 13px; line-height: 1.45; color: #333;
+  }
+  .fj-check {
+    flex-shrink: 0; width: 17px; height: 17px;
+    background: var(--fj-navy); color: var(--fj-white);
+    border-radius: 50%; font-size: 9px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-top: 1px;
+  }
+  .fj-card__ctas {
+    padding: 16px 20px 0; display: flex; flex-direction: column; gap: 10px;
+  }
+  .fj-card__cta-primary {
+    display: block; width: 100%;
+    font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 13px;
+    letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
+    padding: 16px 20px; border-radius: 100px; border: none; cursor: pointer;
+    background: var(--fj-black); color: var(--fj-white);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.15s ease;
+    text-align: center;
+  }
+  .fj-card__cta-primary:hover { background: #222; color: var(--fj-white); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+  .fj-card--featured .fj-card__cta-primary { background: var(--fj-red); color: var(--fj-white); }
+  .fj-card--featured .fj-card__cta-primary:hover { background: #9a1c2b; color: var(--fj-white); box-shadow: 0 8px 28px rgba(178,34,52,0.35); }
+  .fj-card__foot {
+    padding: 12px 20px 20px;
+    text-align: center; font-size: 12px; color: var(--fj-muted); line-height: 1.5;
+  }
+  .fj-code {
+    font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 11px; letter-spacing: 0.16em;
+    background: var(--fj-black); color: var(--fj-gold);
+    padding: 3px 10px; border-radius: 100px; display: inline-block; margin-top: 4px;
+  }
+
+  /* Closing */
+  .fj-closing {
+    background: var(--fj-navy);
+    color: var(--fj-white);
+    padding: 120px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .fj-closing::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(to right, var(--fj-red) 33.3%, var(--fj-white) 33.3% 66.6%, var(--fj-navy) 66.6%);
+  }
+  .fj-closing__inner { max-width: 760px; margin: 0 auto; position: relative; z-index: 1; }
+  .fj-closing__list {
+    list-style: none; padding: 0; margin: 0 0 48px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .fj-closing__list li {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(17px, 1.8vw, 21px); font-weight: 600;
+    line-height: 1.55; color: rgba(255,255,255,0.82);
+  }
+  .fj-closing__headline {
+    font-family: 'Poppins', sans-serif; font-weight: 800;
+    font-size: clamp(30px, 4vw, 54px);
+    line-height: 1.08; letter-spacing: -0.02em;
+    margin: 0 0 48px;
+    color: var(--fj-white);
+  }
+  .fj-closing__headline em { font-style: normal; color: var(--fj-gold); }
+  .fj-closing__ctas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .fj-closing__urgency {
+    margin-top: 28px; font-size: 12px; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.4); text-transform: uppercase;
+    font-family: 'Poppins', sans-serif; font-weight: 600;
+  }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .fj-manifesto { padding-left: 40px; padding-right: 40px; }
+    .fj-manifesto__inner { gap: 56px; }
+    .fj-products { padding-left: 40px; padding-right: 40px; }
+    .fj-products__grid { gap: 20px; }
+    .fj-mission { padding-left: 40px; padding-right: 40px; }
+    .fj-closing { padding-left: 40px; padding-right: 40px; }
+  }
+  @media (max-width: 900px) {
+    .fj-hero { padding: 80px 28px 64px; min-height: auto; }
+    .fj-manifesto { padding: 72px 28px; }
+    .fj-manifesto__inner { grid-template-columns: 1fr; gap: 48px; }
+    .fj-mission { padding: 72px 28px; }
+    .fj-mission__pillars { grid-template-columns: 1fr; gap: 12px; }
+    .fj-products { padding: 72px 28px; }
+    .fj-products__grid { grid-template-columns: 1fr 1fr; }
+    .fj-products__grid .fj-card:last-child { grid-column: 1 / -1; max-width: 480px; margin: 0 auto; width: 100%; }
+    .fj-closing { padding: 80px 28px; }
+  }
+  @media (max-width: 600px) {
+    .fj-hero { padding: 80px 20px 56px; }
+    .fj-hero__ctas { flex-direction: column; align-items: center; }
+    .fj-hero__ctas .fj-btn { width: 100%; max-width: 320px; }
+    .fj-sale-bar { padding: 32px 20px; }
+    .fj-sale-bar__badges { gap: 10px; }
+    .fj-products__grid { grid-template-columns: 1fr; }
+    .fj-products__grid .fj-card:last-child { grid-column: auto; max-width: 100%; }
+    .fj-closing { padding: 72px 20px; }
+    .fj-closing__ctas { flex-direction: column; align-items: center; }
+    .fj-closing__ctas .fj-btn { width: 100%; max-width: 320px; }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign gpod_magsafe = all_products['gpodmagsafe']
+  assign gpod_mini    = all_products['gpod-mini']
+  assign gpuck        = all_products['replacement-magnet-for-magsafe']
+
+  assign gsm_vid = gpod_magsafe.variants.first.id
+  assign gm_vid  = gpod_mini.variants.first.id
+  assign gp_vid  = gpuck.variants.first.id
+
+  assign discount_pct = 85
+  assign gsm_sale = gpod_magsafe.price | times: discount_pct | divided_by: 100
+  assign gm_sale  = gpod_mini.price | times: discount_pct | divided_by: 100
+  assign gp_sale  = gpuck.price | times: discount_pct | divided_by: 100
+
+  assign gsm_savings = gpod_magsafe.price | minus: gsm_sale
+  assign gm_savings  = gpod_mini.price | minus: gm_sale
+  assign gp_savings  = gpuck.price | minus: gp_sale
+-%}
+
+<div class="fj-page">
+
+  <section class="fj-hero">
+    <svg class="fj-hero__bg-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <radialGradient id="fj-glow-red" cx="78%" cy="18%" r="55%">
+          <stop offset="0%" stop-color="#B22234" stop-opacity="0.24"/>
+          <stop offset="100%" stop-color="#B22234" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="fj-glow-navy" cx="14%" cy="80%" r="50%">
+          <stop offset="0%" stop-color="#002868" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#002868" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="fj-glow-gold" cx="55%" cy="50%" r="38%">
+          <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.1"/>
+          <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="fj-glow-center" cx="50%" cy="45%" r="40%">
+          <stop offset="0%" stop-color="#001133" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#001133" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="fj-star-glow">
+          <feGaussianBlur stdDeviation="0.8" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect width="1440" height="900" fill="#000c1f"/>
+      <rect width="1440" height="900" fill="url(#fj-glow-red)"/>
+      <rect width="1440" height="900" fill="url(#fj-glow-navy)"/>
+      <rect width="1440" height="900" fill="url(#fj-glow-gold)"/>
+      <rect width="1440" height="900" fill="url(#fj-glow-center)"/>
+      <rect x="0" y="820" width="1440" height="2" fill="#B22234" opacity="0.08"/>
+      <rect x="0" y="826" width="1440" height="2" fill="#ffffff" opacity="0.05"/>
+      <rect x="0" y="832" width="1440" height="2" fill="#002868" opacity="0.08"/>
+      <g filter="url(#fj-star-glow)">
+        <circle cx="72" cy="42" r="1.1" fill="#ffffff" opacity="0.55"/>
+        <circle cx="188" cy="28" r="0.8" fill="#ffffff" opacity="0.4"/>
+        <circle cx="315" cy="58" r="1.4" fill="#ffffff" opacity="0.6"/>
+        <circle cx="428" cy="18" r="0.9" fill="#ffffff" opacity="0.45"/>
+        <circle cx="542" cy="50" r="1.2" fill="#ffffff" opacity="0.5"/>
+        <circle cx="655" cy="32" r="0.7" fill="#ffffff" opacity="0.38"/>
+        <circle cx="788" cy="64" r="1.5" fill="#ffffff" opacity="0.65"/>
+        <circle cx="908" cy="22" r="1.0" fill="#ffffff" opacity="0.48"/>
+        <circle cx="1025" cy="46" r="0.8" fill="#ffffff" opacity="0.42"/>
+        <circle cx="1138" cy="30" r="1.3" fill="#ffffff" opacity="0.55"/>
+        <circle cx="1262" cy="55" r="0.9" fill="#ffffff" opacity="0.44"/>
+        <circle cx="1385" cy="20" r="1.1" fill="#ffffff" opacity="0.5"/>
+        <circle cx="48" cy="110" r="0.9" fill="#ffffff" opacity="0.4"/>
+        <circle cx="162" cy="92" r="1.2" fill="#ffffff" opacity="0.52"/>
+        <circle cx="282" cy="128" r="0.7" fill="#ffffff" opacity="0.35"/>
+        <circle cx="398" cy="105" r="1.4" fill="#ffffff" opacity="0.6"/>
+        <circle cx="518" cy="120" r="0.9" fill="#ffffff" opacity="0.44"/>
+        <circle cx="632" cy="98" r="1.1" fill="#ffffff" opacity="0.5"/>
+        <circle cx="752" cy="135" r="0.8" fill="#ffffff" opacity="0.4"/>
+        <circle cx="872" cy="108" r="1.3" fill="#ffffff" opacity="0.56"/>
+        <circle cx="992" cy="125" r="1.0" fill="#ffffff" opacity="0.48"/>
+        <circle cx="1108" cy="95" r="0.7" fill="#ffffff" opacity="0.36"/>
+        <circle cx="1225" cy="130" r="1.2" fill="#ffffff" opacity="0.52"/>
+        <circle cx="1348" cy="110" r="0.9" fill="#ffffff" opacity="0.43"/>
+        <circle cx="95" cy="188" r="1.3" fill="#ffffff" opacity="0.54"/>
+        <circle cx="218" cy="172" r="0.8" fill="#ffffff" opacity="0.38"/>
+        <circle cx="345" cy="198" r="1.0" fill="#ffffff" opacity="0.46"/>
+        <circle cx="462" cy="180" r="1.5" fill="#ffffff" opacity="0.62"/>
+        <circle cx="578" cy="208" r="0.7" fill="#ffffff" opacity="0.34"/>
+        <circle cx="695" cy="185" r="1.2" fill="#ffffff" opacity="0.52"/>
+        <circle cx="815" cy="202" r="0.9" fill="#ffffff" opacity="0.44"/>
+        <circle cx="935" cy="178" r="1.1" fill="#ffffff" opacity="0.5"/>
+        <circle cx="1055" cy="195" r="0.8" fill="#ffffff" opacity="0.4"/>
+        <circle cx="1175" cy="182" r="1.4" fill="#ffffff" opacity="0.58"/>
+        <circle cx="1295" cy="205" r="1.0" fill="#ffffff" opacity="0.46"/>
+        <circle cx="1412" cy="178" r="0.8" fill="#ffffff" opacity="0.4"/>
+        <circle cx="252" cy="72" r="1.9" fill="#ffffff" opacity="0.72"/>
+        <circle cx="748" cy="36" r="1.7" fill="#ffffff" opacity="0.68"/>
+        <circle cx="1112" cy="68" r="2.0" fill="#ffffff" opacity="0.74"/>
+        <circle cx="488" cy="155" r="1.8" fill="#ffffff" opacity="0.66"/>
+        <circle cx="988" cy="162" r="1.6" fill="#ffffff" opacity="0.62"/>
+        <circle cx="1358" cy="148" r="1.9" fill="#ffffff" opacity="0.68"/>
+        <circle cx="330" cy="38" r="1.2" fill="#C9A84C" opacity="0.3"/>
+        <circle cx="910" cy="78" r="1.0" fill="#C9A84C" opacity="0.25"/>
+        <circle cx="1190" cy="50" r="1.1" fill="#C9A84C" opacity="0.28"/>
+        <circle cx="620" cy="168" r="0.9" fill="#C9A84C" opacity="0.22"/>
+      </g>
+      <g stroke="#B22234" stroke-linecap="round" fill="none" opacity="0.12">
+        <line x1="1195" y1="280" x2="1265" y2="195" stroke-width="1.2"/>
+        <line x1="1195" y1="280" x2="1308" y2="302" stroke-width="1"/>
+        <line x1="1195" y1="280" x2="1238" y2="385" stroke-width="1.2"/>
+        <line x1="1195" y1="280" x2="1108" y2="340" stroke-width="1"/>
+        <line x1="1195" y1="280" x2="1145" y2="210" stroke-width="1.2"/>
+        <line x1="1195" y1="280" x2="1285" y2="248" stroke-width="0.8"/>
+        <line x1="1195" y1="280" x2="1175" y2="375" stroke-width="0.8"/>
+        <circle cx="1195" cy="280" r="6" stroke-width="1" opacity="0.5"/>
+      </g>
+      <g stroke="#4070d0" stroke-linecap="round" fill="none" opacity="0.15">
+        <line x1="238" y1="615" x2="158" y2="528" stroke-width="1.2"/>
+        <line x1="238" y1="615" x2="165" y2="688" stroke-width="1"/>
+        <line x1="238" y1="615" x2="295" y2="718" stroke-width="1.2"/>
+        <line x1="238" y1="615" x2="335" y2="568" stroke-width="1"/>
+        <line x1="238" y1="615" x2="198" y2="705" stroke-width="1.2"/>
+        <line x1="238" y1="615" x2="142" y2="590" stroke-width="0.8"/>
+        <line x1="238" y1="615" x2="310" y2="640" stroke-width="0.8"/>
+        <circle cx="238" cy="615" r="5" stroke-width="1" opacity="0.5"/>
+      </g>
+      <radialGradient id="fj-vignette" cx="50%" cy="45%" r="65%">
+        <stop offset="40%" stop-color="#000c1f" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#000c1f" stop-opacity="0.55"/>
+      </radialGradient>
+      <rect width="1440" height="900" fill="url(#fj-vignette)"/>
+    </svg>
+
+    <div class="fj-hero__content">
+      <p class="fj-hero__eyebrow">Fourth of July Sale · 250 Years of Independence</p>
+      <div class="fj-stars"><span>★ ★ ★ ★ ★ ★ ★</span></div>
+      <h1 class="fj-hero__headline">
+        Celebrate <em>250 Years</em> of Independence.<br>
+        Find Your Golf Independence.
+      </h1>
+      <hr class="fj-hero__divider">
+      <p class="fj-hero__sub">
+        For 250 years, independence has meant doing things on your own terms.<br>
+        For golfers, that means something a little different.
+      </p>
+      <div class="fj-hero__ctas">
+        <a href="#fj-products" class="fj-btn fj-btn--red">Shop the Fourth of July Sale</a>
+        <a href="#fj-manifesto" class="fj-btn fj-btn--ghost">Read the Story</a>
+      </div>
+      <p class="fj-hero__nudge">15% off sitewide · Use code JULY4 at checkout</p>
+    </div>
+  </section>
+
+  <div class="fj-sale-bar">
+    <div class="fj-sale-bar__inner">
+      <span class="fj-eyebrow fj-eyebrow--white">Fourth of July Sale</span>
+      <h2 class="fj-sale-bar__title"><em>15% OFF</em> GPOD</h2>
+      <p class="fj-sale-bar__sub">Plus enjoy additional savings when you bundle.</p>
+      <div class="fj-sale-bar__badges">
+        <div class="fj-sale-bar__badge">
+          <span class="fj-sale-bar__badge-val">15%</span>
+          <span class="fj-sale-bar__badge-label">Off Sitewide</span>
+        </div>
+        <div class="fj-sale-bar__badge">
+          <span class="fj-sale-bar__badge-val">🇺🇸</span>
+          <span class="fj-sale-bar__badge-label">July 4th Only</span>
+        </div>
+        <div class="fj-sale-bar__badge">
+          <span class="fj-sale-bar__badge-val">+</span>
+          <span class="fj-sale-bar__badge-label">Bundle Savings</span>
+        </div>
+      </div>
+      <div class="fj-sale-bar__code-row">
+        <span class="fj-sale-bar__code-label">Use code at checkout:</span>
+        <span class="fj-sale-bar__code">JULY4</span>
+      </div>
+      <p class="fj-sale-bar__fine">Discount applied at checkout · Cannot be combined with other offers</p>
+    </div>
+  </div>
+
+  <section class="fj-manifesto" id="fj-manifesto">
+    <div class="fj-manifesto__inner">
+      <div class="fj-manifesto__copy">
+        <span class="fj-eyebrow">Your Game. Your Terms.</span>
+        <h2 class="fj-manifesto__headline">Independence means practicing when you want.</h2>
+        <div class="fj-manifesto__body">
+          <p>For 250 years, independence has meant doing things on your own terms. For golfers, that means something a little different.</p>
+        </div>
+        <ul class="fj-manifesto__list">
+          <li>Practicing when you want.</li>
+          <li>Filming every swing without asking someone to hold your phone.</li>
+          <li>Getting consistent footage from the perfect angle.</li>
+          <li>Making every range session count.</li>
+        </ul>
+        <div class="fj-manifesto__body">
+          <p>That's why we built GPOD.</p>
+          <p>A tripod designed specifically for golfers — so you can capture every swing in seconds, on any surface, without slowing down your practice.</p>
+          <p>This Fourth of July, celebrate the freedom to improve your game your way.</p>
+        </div>
+        <blockquote class="fj-manifesto__pull">
+          No camera crew. No complicated setup. No compromises.<br>Just better practice.
+        </blockquote>
+      </div>
+      <div class="fj-manifesto__visual">
+        <div class="fj-manifesto__flag-accent">🇺🇸</div>
+        <img
+          src="https://cdn.shopify.com/s/files/1/0521/6462/4552/files/4th_of_July_Hero.png?v=1782699036"
+          alt="GPOD in use on the golf range — Fourth of July"
+          class="fj-manifesto__img"
+          loading="lazy"
+        >
+      </div>
+    </div>
+  </section>
+
+  <section class="fj-mission">
+    <div class="fj-mission__inner">
+      <span class="fj-eyebrow fj-eyebrow--gold">Built for Golfers. Used Independently.</span>
+      <h2 class="fj-mission__headline">
+        Whether you're grinding at the range, playing your home course,<br>or chasing a <em>new personal best</em>—
+      </h2>
+      <div class="fj-mission__pillars">
+        <div class="fj-mission__pillar">
+          <span class="fj-mission__pillar-icon">📱</span>
+          <p class="fj-mission__pillar-text">Film every swing without asking anyone to hold your phone</p>
+        </div>
+        <div class="fj-mission__pillar">
+          <span class="fj-mission__pillar-icon">⚳</span>
+          <p class="fj-mission__pillar-text">Perfect angle. Every time. On any surface.</p>
+        </div>
+        <div class="fj-mission__pillar">
+          <span class="fj-mission__pillar-icon">📈</span>
+          <p class="fj-mission__pillar-text">Practice independently and improve consistently</p>
+        </div>
+      </div>
+      <div class="fj-mission__cta">
+        <a href="#fj-products" class="fj-btn fj-btn--red">Shop the Sale</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="fj-products" id="fj-products">
+    <div class="fj-products__header">
+      <span class="fj-eyebrow">Fourth of July Sale</span>
+      <h2 class="fj-products__title">Shop <em>15% Off</em> GPOD</h2>
+      <p class="fj-products__sub">GPOD helps you practice independently and improve consistently. Pick your setup — use code <strong>JULY4</strong> at checkout for 15% off.</p>
+    </div>
+     </div>
+      </div>
+      
+{%- liquid
+  assign bundle2 = all_products['g-bundle-two-gpod-x-with-gpod-base']
+  assign studio  = all_products['gpod-studio']
+  assign travel  = all_products['gpod-travel-1']
+
+  assign b2_vid  = bundle2.variants.first.id
+  assign st_vid  = studio.variants.first.id
+  assign tv_vid  = travel.variants.first.id
+
+  assign b2_compare = bundle2.variants.first.compare_at_price
+  assign st_compare = studio.variants.first.compare_at_price
+  assign tv_compare = travel.variants.first.compare_at_price
+
+  assign b2_savings = b2_compare | minus: bundle2.price
+  assign st_savings = st_compare | minus: studio.price
+  assign tv_savings = tv_compare | minus: travel.price
+-%}
+  <div class="fj-products__grid">
+
+      {%- comment -%}── G-Bundle 2 (featured) ──{%- endcomment -%}
+      <div class="fj-card-wrap">
+        <div class="fj-card fj-card--featured">
+          <div class="fj-card__top">
+            <span class="fj-card__tier">Bundle · Most Popular</span>
+            <span class="fj-card__badge">⭐ Best Value</span>
+          </div>
+          <div class="fj-card__img-wrap">
+            {%- if bundle2.featured_image -%}
+              <img src="{{ bundle2.featured_image | img_url: '600x' }}"
+                   alt="{{ bundle2.featured_image.alt | escape }}"
+                   class="fj-card__img" loading="lazy">
+            {%- endif -%}
+          </div>
+          <div class="fj-card__body">
+            <h3 class="fj-card__title">{{ bundle2.title }}</h3>
+            <p class="fj-card__subtitle">GPOD X + GPOD Base 2.0</p>
+            <div class="fj-card__price-row">
+              <span class="fj-card__price">{{ bundle2.price | money }}</span>
+              {%- if b2_compare > bundle2.price -%}
+                <span class="fj-card__compare">{{ b2_compare | money }}</span>
+                <span class="fj-card__savings">Save {{ b2_savings | money }}</span>
+              {%- endif -%}
+            </div>
+            <p class="fj-card__desc">The upgraded GPOD X paired with the Base 2.0 — for the golfer who wants extended reach and effortless portability in one complete kit.</p>
+            <ul class="fj-card__bullets">
+              <li><span class="fj-check">✓</span>GPOD X — extendable/collapsible for extreme portability</li>
+              <li><span class="fj-check">✓</span>GPOD Base 2.0 for hard surfaces</li>
+              <li><span class="fj-check">✓</span>MagSafe Compatible</li>
+            </ul>
+          </div>
+          <div class="fj-card__ctas">
+            <a href="/cart/{{ b2_vid }}:1?discount=JULY4" class="fj-card__cta-primary">
+              🇺🇸 Add to Cart
+            </a>
+          </div>
+          <div class="fj-card__foot">
+            Use code <span class="fj-code">JULY4</span> at checkout
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%}── Studio 2.0 ──{%- endcomment -%}
+      <div class="fj-card-wrap">
+        <div class="fj-card">
+          <div class="fj-card__top">
+            <span class="fj-card__tier">Studio · Premium</span>
+          </div>
+          <div class="fj-card__img-wrap">
+            {%- if studio.featured_image -%}
+              <img src="{{ studio.featured_image | img_url: '600x' }}"
+                   alt="{{ studio.featured_image.alt | escape }}"
+                   class="fj-card__img" loading="lazy">
+            {%- endif -%}
+          </div>
+          <div class="fj-card__body">
+            <h3 class="fj-card__title">{{ studio.title }}</h3>
+            <p class="fj-card__subtitle">The ultimate home studio setup</p>
+            <div class="fj-card__price-row">
+              <span class="fj-card__price">{{ studio.price | money }}</span>
+              {%- if st_compare > studio.price -%}
+                <span class="fj-card__compare">{{ st_compare | money }}</span>
+                <span class="fj-card__savings">Save {{ st_savings | money }}</span>
+              {%- endif -%}
+            </div>
+            <p class="fj-card__desc">GPOD Studio 2.0 — built for serious swing analysis at home or at the range. Film, review, and improve without anyone else holding the camera.</p>
+            <ul class="fj-card__bullets">
+              <li><span class="fj-check">✓</span>Designed for home and range use</li>
+              <li><span class="fj-check">✓</span>Stable setup for consistent angles</li>
+              <li><span class="fj-check">✓</span>MagSafe Compatible</li>
+            </ul>
+          </div>
+          <div class="fj-card__ctas">
+            <a href="/cart/{{ st_vid }}:1?discount=JULY4" class="fj-card__cta-primary">
+              🇺🇸 Add to Cart
+            </a>
+          </div>
+          <div class="fj-card__foot">
+            Use code <span class="fj-code">JULY4</span> at checkout
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%}── GPOD Travel ──{%- endcomment -%}
+      <div class="fj-card-wrap">
+        <div class="fj-card">
+          <div class="fj-card__top">
+            <span class="fj-card__tier">Travel · On-the-Go</span>
+          </div>
+          <div class="fj-card__img-wrap">
+            {%- if travel.featured_image -%}
+              <img src="{{ travel.featured_image | img_url: '600x' }}"
+                   alt="{{ travel.featured_image.alt | escape }}"
+                   class="fj-card__img" loading="lazy">
+            {%- endif -%}
+          </div>
+          <div class="fj-card__body">
+            <h3 class="fj-card__title">{{ travel.title }}</h3>
+            <p class="fj-card__subtitle">Magnetic tripod + Bluetooth remote</p>
+            <div class="fj-card__price-row">
+              <span class="fj-card__price">{{ travel.price | money }}</span>
+              {%- if tv_compare > travel.price -%}
+                <span class="fj-card__compare">{{ tv_compare | money }}</span>
+                <span class="fj-card__savings">Save {{ tv_savings | money }}</span>
+              {%- endif -%}
+            </div>
+            <p class="fj-card__desc">The magnetic tripod made for golfers on the go. Includes a Bluetooth remote so you can capture every moment on and off the course — completely hands-free.</p>
+            <ul class="fj-card__bullets">
+              <li><span class="fj-check">✓</span>Magnetic mount — attaches anywhere</li>
+              <li><span class="fj-check">✓</span>Bluetooth remote included</li>
+              <li><span class="fj-check">✓</span>MagSafe Compatible</li>
+            </ul>
+          </div>
+          <div class="fj-card__ctas">
+            <a href="/cart/{{ tv_vid }}:1?discount=JULY4" class="fj-card__cta-primary">
+              🇺🇸 Add to Cart
+            </a>
+          </div>
+          <div class="fj-card__foot">
+            Use code <span class="fj-code">JULY4</span> at checkout
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+    <div style="text-align: center; margin-top: 48px;">
+      <a href="/collections/all" class="fj-btn fj-btn--outline">Shop More GPODs</a>
+    </div>
+  </section>
+
+
+  <section class="fj-closing">
+    <div class="fj-closing__inner">
+      <span class="fj-eyebrow fj-eyebrow--gold">Fourth of July · Limited Time</span>
+      <h2 class="fj-closing__headline">
+        Capture Every<br><em>Summer Moment</em>
+      </h2>
+      <div class="fj-closing__ctas">
+      <a href="/collections/all" class="fj-btn fj-btn--red">Shop 4th of July Deals</a>
+      </div>
+      <p class="fj-closing__urgency">Use code JULY4 at checkout</p>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Fourth of July Landing",
+  "tag": "section",
+  "class": "fourth-july-landing",
+  "settings": [],
+  "presets": [{ "name": "Fourth of July Landing" }]
+}
+{% endschema %}

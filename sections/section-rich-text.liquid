@@ -1,0 +1,250 @@
+{% comment %} /sections/rich-text.liquid {% endcomment %}
+{%- liquid
+  assign id = section.id
+  assign transition_text = settings.transition_text
+  assign animation_delay = 0
+  assign animation_anchor = '#title-module--' | append: id
+-%}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+<section id="title-module--{{ id }}"
+  class="title-module container-wrap section-padding"
+  data-section-type="rich-text"
+  style="{{ style }}"
+>
+  {%- if section.blocks.size > 0 -%}
+    <div class="container pad-sm">
+      <div class="row row-sm">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'subheading' -%}
+              {%- assign subheading = block.settings.subheading -%}
+
+              {%- if subheading != blank -%}
+                <p class="rich__subheading subheading-text"
+                  {% if transition_text %}
+                    data-aos="fade-up"
+                    data-aos-delay="{{ animation_delay }}"
+                    data-aos-anchor="{{ animation_anchor }}"
+                  {% endif %}
+                  {{ block.shopify_attributes }}
+                >
+                  {{- subheading -}}
+                </p>
+                {%- assign animation_delay = animation_delay | plus: 250 -%}
+              {%- endif -%}
+
+            {%- when 'heading' -%}
+              {%- assign title = block.settings.title -%}
+
+              {%- if title != blank -%}
+                <h2 class="rich__heading"
+                  {% if transition_text %}
+                    data-aos="fade-up"
+                    data-aos-delay="{{ animation_delay }}"
+                    data-aos-anchor="{{ animation_anchor }}"
+                  {% endif %}
+                  {{ block.shopify_attributes }}
+                >
+                  {{- title -}}
+                </h2>
+                {%- assign animation_delay = animation_delay | plus: 250 -%}
+              {%- endif -%}
+
+            {%- when 'text' -%}
+              {%- assign content = block.settings.content -%}
+
+              {%- if content != blank -%}
+                <div class="rich__content"
+                  {% if transition_text %}
+                    data-aos="fade-up"
+                    data-aos-delay="{{ animation_delay }}"
+                    data-aos-anchor="{{ animation_anchor }}"
+                  {% endif %}
+                  {{ block.shopify_attributes }}
+                >
+                  {{- content -}}
+                </div>
+
+                {%- assign animation_delay = animation_delay | plus: 250 -%}
+              {%- endif -%}
+
+            {%- when 'button' -%}
+              {%- liquid
+                assign btn_text = block.settings.button_text
+                assign btn_link = block.settings.button_link | default: '#'
+                assign btn_size = block.settings.btn_size
+                assign btn_style = block.settings.btn_style
+                assign btn_type = block.settings.btn_type
+              -%}
+
+              {%- if btn_text != blank -%}
+                <div class="button-wrapper"
+                  {% if transition_text %}
+                    data-aos="fade-up"
+                    data-aos-delay="{{ animation_delay }}"
+                    data-aos-anchor="{{ animation_anchor }}"
+                  {% endif %}
+                  {{ block.shopify_attributes }}
+                >
+                  <a href="{{ btn_link }}" class="btn {{ btn_size }} {{ btn_style }} {{ btn_type }}" title="{{ btn_text }}" aria-label="{{ btn_text }}" tabindex="0">{{ btn_text }}</a>
+                </div>
+                
+                {%- assign animation_delay = animation_delay | plus: 250 -%}
+              {%- endif -%}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% comment %} Schema {% endcomment %}
+{% schema %}
+  {
+    "name": "Rich text",
+    "class": "shopify-section--rich-text",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Section padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 100
+      }
+    ],
+    "blocks": [
+      {
+        "type": "subheading",
+        "name": "Subheading",
+        "settings": [
+          {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading",
+            "default": "Humble Beginnings"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "name": "Heading",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "title",
+            "label": "Heading",
+            "default":"Describe your products or brand in detail here"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Text",
+            "default": "<p>It features ample space to showcase your imagery with Mosaic, Image with text, and Slideshow sections ... and even this Rich Text section itself.</p>"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "name": "Button",
+        "settings": [
+          {
+            "type": "text",
+            "id": "button_text",
+            "label": "Label",
+            "default": "Learn More"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Link"
+          },
+          {
+            "type": "select",
+            "id": "btn_type",
+            "label": "Color",
+            "default": "btn--primary",
+            "options": [
+              { "label": "Primary", "value": "btn--primary" },
+              { "label": "Secondary", "value": "btn--secondary" },
+              { "label": "White", "value": "btn--white" },
+              { "label": "Black", "value": "btn--black" }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "btn_size",
+            "label": "Size",
+            "default": "",
+            "options": [
+              { "label": "Small", "value": "btn--small" },
+              { "label": "Medium", "value": "" },
+              { "label": "Large", "value": "btn--large" }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "btn_style",
+            "label": "Style",
+            "default": "btn--solid",
+            "options": [
+              { "label": "Solid", "value": "btn--solid" },
+              { "label": "Outline", "value": "btn--outline" },
+              { "label": "Text", "value": "btn--text" }
+            ]
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "category": "Text",
+        "name": "Rich text",
+        "blocks": [
+          {
+            "type": "subheading"
+          },
+          {
+            "type": "heading"
+          },
+          {
+            "type": "text"
+          },
+          {
+            "type": "button"
+          }
+        ]
+      }
+    ],
+    "disabled_on": {
+      "groups": ["header", "footer"]
+    }
+  }
+{% endschema %}

@@ -1,0 +1,82 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image-with-text-overlay-0": {
+      "type": "section-image-with-text-overlay",
+      "settings": {}
+    },
+    "rich-text": {
+      "type": "section-rich-text",
+      "blocks": {
+        "subheading": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "Humble Beginnings"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "title": "Describe your products or brand in detail here"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "content": "<p>It features ample space to showcase your imagery with Mosaic, Image with text, and Slideshow sections ... and even this Rich Text section itself.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_text": "Learn More",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "subheading",
+        "heading",
+        "text",
+        "button"
+      ],
+      "settings": {}
+    },
+    "product-features": {
+      "type": "section-product-features",
+      "blocks": {
+        "section-product-features-0": {
+          "type": "text",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "section-product-features-0"
+      ],
+      "settings": {}
+    },
+    "image-with-text-overlay-1": {
+      "type": "section-image-with-text-overlay",
+      "settings": {}
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    }
+  },
+  "order": [
+    "image-with-text-overlay-0",
+    "rich-text",
+    "product-features",
+    "image-with-text-overlay-1",
+    "main"
+  ]
+}

@@ -1,0 +1,96 @@
+{%- liquid
+  assign heading = section.settings.title
+  assign product_recently_limit = 4
+-%}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+{% comment %}
+  Set collectionBlock size classes
+  These are applied in the collection-grid__block.liquid file
+{% endcomment %}
+{%- liquid
+  assign products_rows = settings.products_rows | plus: 0
+  assign products_columns = settings.products_columns | plus: 0
+  assign products_columns_mobile = settings.products_columns_mobile | plus: 0
+  assign products_limit = products_columns | times: products_rows
+-%}
+
+{%- capture style -%}
+  {{ style }}
+  --COLUMNS: {{ products_columns }};
+  --COLUMNS-MEDIUM: {{ products_columns | at_most: 3 }};
+  --COLUMNS-SMALL: {{ products_columns_mobile }};
+  --COLUMNS-MOBILE: {{ products_columns_mobile }};
+{%- endcapture -%}
+
+<section
+  class="related-products container-wrap collection-grid section-padding"
+  data-columns="{{ products_columns }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="recently-viewed-products"
+  data-show-quantity="{{ settings.show_quantity }}"
+  data-limit="{{ product_recently_limit }}"
+  style="{{ style }}"
+>
+  {%- if heading != blank -%}
+    <div class="page-title">
+      <div class="container">
+        <h2>{{ heading }}</h2>
+      </div>
+    </div>
+  {%- endif -%}
+  <div id="RecentlyViewed"
+    class="collection-grid__row grid collection-grid__row--grid{% if align_center %} row--center{% endif %}"
+    style="{{ style }}"></div>
+</section>
+
+{% schema %}
+{
+  "name": "Recently viewed",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Recently viewed"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    }
+  ],
+  "presets": [
+    {
+      "category": "Collection",
+      "name": "Recently viewed products"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

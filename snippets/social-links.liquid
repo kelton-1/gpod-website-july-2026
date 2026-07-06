@@ -1,0 +1,119 @@
+{%- liquid
+  assign show_social_icons = section.settings.show_social_icons
+  assign enable_follow_on_shop = section.settings.enable_follow_on_shop
+  assign social_class = social_class | default: 'footer__social'
+  assign social_inner_class = social_inner_class | default: 'footer__social__inner'
+  assign social_list_class = social_list_class | default: 'social-links'
+-%}
+
+<div class="{{ social_class }}">
+  {%- if show_social_icons -%}
+    {%- liquid
+      capture all_socials
+        echo settings.instagram_url
+        echo settings.facebook_url
+        echo settings.twitter_url
+        echo settings.tiktok_url
+        echo settings.snapchat_url
+        echo settings.pinterest_url
+        echo settings.youtube_url
+        echo settings.tumblr_url
+        echo settings.linkedin_url
+        echo settings.rss_url
+      endcapture
+    -%}
+
+    {%- if all_socials != blank -%}
+      <div class="{{ social_inner_class }}">
+        <ul class="{{ social_list_class }}">
+          {%- if settings.instagram_url != '' -%}
+            <li>
+              <a href="{{ settings.instagram_url }}" target="_blank" class="social-link" rel="noopener">
+                {%- render 'icon-instagram' -%}
+                <span class="fallback-text">{{ 'general.footer.instagram' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.facebook_url != '' -%}
+            <li>
+              <a href="{{ settings.facebook_url }}" target="_blank" class="social-link" rel="noopener">
+                {%- render 'icon-facebook' -%}
+                <span class="fallback-text">{{ 'general.footer.facebook' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.twitter_url != '' -%}
+            <li>
+              <a href="{{ settings.twitter_url }}" target="_blank" class="social-link" rel="noopener">
+                {%- render 'icon-twitter' -%}
+                <span class="fallback-text">{{ 'general.footer.twitter' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.tiktok_url != '' -%}
+            <li>
+              <a href="{{ settings.tiktok_url }}" target="_blank" class="social-link" rel="noopener">
+                {%- render 'icon-tiktok' -%}
+                <span class="fallback-text">{{ 'general.footer.tiktok' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.snapchat_url != '' -%}
+            <li>
+              <a href="{{ settings.snapchat_url }}" target="_blank" class="social-link" rel="noopener">
+                {%- render 'icon-snapchat' -%}
+                <span class="fallback-text">{{ 'general.footer.snapchat' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.pinterest_url != '' -%}
+            <li>
+              <a href="{{ settings.pinterest_url }}" target="_blank" class="social-link" rel="noopener">
+                {%- render 'icon-pinterest' -%}
+                <span class="fallback-text">{{ 'general.footer.pinterest' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.youtube_url != '' -%}
+            <li>
+              <a href="{{ settings.youtube_url }}" target="_blank" class="social-link" rel="noopener">
+                {%- render 'icon-youtube' -%}
+                <span class="fallback-text">{{ 'general.footer.youtube' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.tumblr_url != '' -%}
+            <li>
+              <a href="{{ settings.tumblr_url }}" target="_blank" class="social-link" rel="noopener">
+                {%- render 'icon-tumblr' -%}
+                <span class="fallback-text">{{ 'general.footer.tumblr' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.linkedin_url != '' -%}
+            <li>
+              <a href="{{ settings.linkedin_url }}" target="_blank" class="social-link" rel="noopener">
+                {%- render 'icon-linkedin' -%}
+                <span class="fallback-text">{{ 'general.footer.linkedin' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.rss_url != '' -%}
+            <li>
+              <a href="{{ settings.rss_url }}" target="_blank" class="social-link" rel="noopener">
+                {%- render 'icon-rss' -%}
+                <span class="fallback-text">{{ 'general.footer.rss' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+        </ul>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- if shop.features.follow_on_shop? and enable_follow_on_shop -%}
+    <div class="footer__follow-on-shop">
+      {{ shop | login_button: action: 'follow' }}
+    </div>
+  {%- endif -%}
+</div>

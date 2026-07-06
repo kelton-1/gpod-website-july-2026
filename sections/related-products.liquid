@@ -1,0 +1,108 @@
+{%- assign heading = section.settings.title -%}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+{% comment %}
+  Set collectionBlock size classes
+  These are applied in the collection-grid__block.liquid file
+{% endcomment %}
+{%- liquid
+  assign products_rows = settings.products_rows | plus: 0
+  assign products_columns = settings.products_columns | plus: 0
+  assign products_columns_mobile = settings.products_columns_mobile | plus: 0
+  assign products_limit = products_columns | times: products_rows
+-%}
+
+{%- capture style -%}
+  {{ style }}
+  --COLUMNS: {{ products_columns }};
+  --COLUMNS-MEDIUM: {{ products_columns | at_most: 3 }};
+  --COLUMNS-SMALL: {{ products_columns_mobile }};
+  --COLUMNS-MOBILE: {{ products_columns_mobile }};
+{%- endcapture -%}
+
+<section class="related-products container-wrap collection-grid section-padding"
+  data-columns="{{ products_columns }}"
+  data-section-type="related-products"
+  data-section-id="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-show-quantity="{{ settings.show_quantity }}"
+  data-limit="{{ settings.products_columns }}"
+  style="{{ style }}"
+>
+  {%- if section.settings.related_products_enable -%}
+    {%- if recommendations.performed -%}
+      {%- if recommendations.products_count > 0 -%}
+
+        {%- assign align_center = false -%}
+        {%- if recommendations.products_count < products_columns -%}
+          {%- assign align_center = true -%}
+        {%- endif -%}
+
+        {%- if heading != blank -%}
+          <div class="page-title">
+            <div class="container">
+              <h2>{{ heading }}</h2>
+            </div>
+          </div>
+        {%- endif -%}
+
+        <div class="collection-grid__row grid collection-grid__row--grid{% if align_center %} row--center{% endif %}" style="{{ style }}">
+          {%- for product in recommendations.products -%}
+            {%- render 'product-grid-item', product: product, index: forloop.index -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="related__placeholder"></div>
+    {%- endif -%}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Product recommendations",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "related_products_enable",
+      "label": "Show related products",
+      "info": "Use the [Search & Discovery](https://apps.shopify.com/search-and-discovery) app from Shopify to customize the list of related products. [Learn more](https://help.shopify.com/en/manual/online-store/search-and-discovery/product-recommendations)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Related products"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

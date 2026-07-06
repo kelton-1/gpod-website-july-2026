@@ -1,0 +1,425 @@
+{%- liquid
+  comment
+    Layout
+  endcomment
+  assign content_alignment = section.settings.content_alignment
+
+  comment
+    Settings
+  endcomment
+  assign transition_text = settings.transition_text
+  assign animation_delay = 0
+  assign animation_anchor = '#split-hero--' | append: section.id
+
+  comment
+    Colors
+  endcomment
+  assign overlay_color = section.settings.overlay_color
+  assign overlay_opacity = section.settings.overlay_opacity | times: 0.01 | round: 2
+  assign color_style = section.settings.color_style
+
+  comment
+    Content
+  endcomment
+  assign heading = section.settings.title
+  assign subheading = section.settings.subheading
+  assign text = section.settings.text
+
+  assign first_button_text = section.settings.cta
+  assign first_button_link = section.settings.link
+  assign first_button_size = section.settings.first_button_size
+  assign first_button_style = section.settings.first_button_style
+  assign first_button_type = section.settings.first_button_type
+
+  assign second_button_text = section.settings.cta_2
+  assign second_button_link = section.settings.link_2
+  assign second_button_size = section.settings.second_button_size
+  assign second_button_style = section.settings.second_button_style
+  assign second_button_type = section.settings.second_button_type
+-%}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+
+  {%- unless overlay_color == 'rgba(0,0,0,0)' or overlay_color == '' or overlay_opacity == 0 -%}
+    --overlay-color: {{ overlay_color }};
+    --overlay-opacity: {{ overlay_opacity }};
+  {%- endunless -%}
+{%- endcapture -%}
+
+{%- capture image_overlay -%}
+  <div class="split-hero__overlay"></div>
+{%- endcapture -%}
+
+<section id="split-hero--{{ section.id }}"
+  class="section-padding"
+  data-section-type="split-hero"
+  data-section-id="{{ section.id }}"
+  style="{{ style }}">
+  <div class="split-hero {{ section.settings.image_height }} {{ section.settings.image_height }}--mobile" data-style="{{ color_style }}">
+    <div class="split-hero__half split-hero__half--left">
+      {%- assign image = section.settings.image_desktop_left -%}
+      {%- assign image_mobile = section.settings.image_mobile_left -%}
+
+      {%- render 'split-hero-image', image: image, image_mobile: image_mobile -%}
+      {{- image_overlay -}}
+    </div>
+    <div class="split-hero__half split-hero__half--right">
+      {%- assign image = section.settings.image_desktop_right -%}
+      {%- assign image_mobile = section.settings.image_mobile_right -%}
+
+      {%- render 'split-hero-image', image: image, image_mobile: image_mobile -%}
+      {{- image_overlay -}}
+    </div>
+
+    <div class="split-hero__content split-hero__content--{{ content_alignment }}">
+      <div class="container">
+        <div class="row">
+          <div class="split-hero__text">
+            {%- if subheading != blank -%}
+              <p
+                class="split-hero__subheading subheading-text"
+                {% if transition_text %}
+                data-aos="fade-up"
+                data-aos-delay="{{ animation_delay }}"
+                data-aos-anchor="{{ animation_anchor }}"
+                {% endif %}>
+                {{- subheading -}}
+              </p>
+              {%- assign animation_delay = animation_delay | plus: 250 -%}
+            {%- endif -%}
+
+            {%- if heading != blank -%}
+              <h2
+                class="split-hero__heading size--heading-1"
+                {% if transition_text %}
+                data-aos="fade-up"
+                data-aos-delay="{{ animation_delay }}"
+                data-aos-anchor="{{ animation_anchor }}"
+                {% endif %}>
+                {{- heading -}}
+              </h2>
+              {%- assign animation_delay = animation_delay | plus: 250 -%}
+            {%- endif -%}
+
+            {%- if text != blank -%}
+              <div
+                class="split-hero__richtext"
+                {% if transition_text %}
+                data-aos="fade-up"
+                data-aos-delay="{{ animation_delay }}"
+                data-aos-anchor="{{ animation_anchor }}"
+                {% endif %}>
+                {{- text -}}
+              </div>
+              {%- assign animation_delay = animation_delay | plus: 250 -%}
+            {%- endif -%}
+
+            {%- if first_button_text != blank or second_button_text != blank -%}
+              <div class="split-hero__buttons{% if first_button_text != blank and second_button_text != blank %} split-hero__buttons--inline{% endif %}"{% if transition_text %}data-aos="fade-up"data-aos-delay="{{ animation_delay }}"data-aos-anchor="{{ animation_anchor }}"{% endif %}>
+                {%- if first_button_text != blank -%}
+                  <a
+                    tabindex="0"
+                    href="{{ first_button_link | default: '#!' }}"
+                    class="split-hero__button btn {{ first_button_size }} {{ first_button_style }} {{ first_button_type }}"
+                    aria-label="{{ first_button_text }}"
+                    title="{{ first_button_text }}">{{ first_button_text }}</a>
+                {%- endif -%}
+
+                {%- if second_button_text != blank -%}
+                  <a
+                    tabindex="0"
+                    href="{{ second_button_link | default: '#!' }}"
+                    class="split-hero__button btn {{ second_button_size }} {{ second_button_style }} {{ second_button_type }}"
+                    aria-label="{{ second_button_text }}"
+                    title="{{ second_button_text }}">{{ second_button_text }}</a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% comment %} Schema {% endcomment %}
+{% schema %}
+  {
+    "name": "Split hero",
+    "class": "shopify-section--split-hero",
+    "settings": [
+      {
+        "type": "select",
+        "id": "image_height",
+        "label": "Section height",
+        "default": "five-fifty-height-hero",
+        "options": [
+          {
+            "value": "one-hundred-height-hero",
+            "label": "Full screen"
+          },
+          {
+            "value": "seven-fifty-height-hero",
+            "label": "750px"
+          },
+          {
+            "value": "sixty-fifty-height-hero",
+            "label": "650px"
+          },
+          {
+            "value": "five-fifty-height-hero",
+            "label": "550px"
+          },
+          {
+            "value": "four-fifty-height-hero",
+            "label": "450px"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Image left"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_desktop_left",
+        "label": "Image desktop"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mobile_left",
+        "label": "Image mobile",
+        "info": "Desktop image will be used if not set"
+      },
+      {
+        "type": "header",
+        "content": "Image right"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_desktop_right",
+        "label": "Image desktop"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mobile_right",
+        "label": "Image mobile",
+        "info": "Desktop image will be used if not set"
+      },
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "select",
+        "id": "content_alignment",
+        "label": "Alignment",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          },
+          {
+            "value": "bottom-left",
+            "label": "Bottom left"
+          },
+          {
+            "value": "bottom-right",
+            "label": "Bottom right"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "color_style",
+        "label": "Color",
+        "default": "white",
+        "options": [
+          {
+            "value": "white",
+            "label": "Light"
+          },
+          {
+            "value": "black",
+            "label": "Dark"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Subheading"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Welcome to Modular"
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text",
+        "default": "<p>A unique layout with a striking design</p>"
+      },
+      {
+        "type": "header",
+        "content": "Overlay"
+      },
+      {
+        "type": "color",
+        "id": "overlay_color",
+        "label": "Color",
+        "default": "#333333"
+      },
+      {
+        "type": "range",
+        "id": "overlay_opacity",
+        "label": "Opacity",
+        "min": 0,
+        "max": 95,
+        "step": 5,
+        "unit": "%",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "First button"
+      },
+      {
+        "type": "text",
+        "id": "cta",
+        "label": "Label",
+        "default": "Shop Now"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "link",
+        "default": "/collections/all"
+      },
+       {
+        "type": "select",
+        "id": "first_button_type",
+        "label": "Color",
+        "default": "btn--primary",
+        "options": [
+          { "label": "Primary", "value": "btn--primary" },
+          { "label": "Secondary", "value": "btn--secondary" },
+          { "label": "White", "value": "btn--white" },
+          { "label": "Black", "value": "btn--black" }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "first_button_size",
+        "label": "Size",
+        "default": "",
+        "options": [
+          { "label": "Small", "value": "btn--small" },
+          { "label": "Medium", "value": "" },
+          { "label": "Large", "value": "btn--large" }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "first_button_style",
+        "label": "Style",
+        "default": "btn--solid",
+        "options": [
+          { "label": "Solid", "value": "btn--solid" },
+          { "label": "Outline", "value": "btn--outline" },
+          { "label": "Text", "value": "btn--text" }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Second button"
+      },
+      {
+        "type": "text",
+        "id": "cta_2",
+        "label": "Label"
+      },
+      {
+        "type": "url",
+        "id": "link_2",
+        "label": "Link"
+      },
+      {
+        "type": "select",
+        "id": "second_button_type",
+        "label": "Color",
+        "default": "btn--secondary",
+        "options": [
+          { "label": "Primary", "value": "btn--primary" },
+          { "label": "Secondary", "value": "btn--secondary" },
+          { "label": "White", "value": "btn--white" },
+          { "label": "Black", "value": "btn--black" }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "second_button_size",
+        "label": "Size",
+        "default": "",
+        "options": [
+          { "label": "Small", "value": "btn--small" },
+          { "label": "Medium", "value": "" },
+          { "label": "Large", "value": "btn--large" }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "second_button_style",
+        "label": "Style",
+        "default": "btn--solid",
+        "options": [
+          { "label": "Solid", "value": "btn--solid" },
+          { "label": "Outline", "value": "btn--outline" },
+          { "label": "Text", "value": "btn--text" }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Section padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 10
+      }
+    ],
+    "presets": [
+      {
+        "name": "Split hero",
+        "category": "Image"
+      }
+    ],
+    "disabled_on": {
+      "groups": ["header", "footer"]
+    }
+  }
+{% endschema %}

@@ -1,0 +1,340 @@
+{% comment %} /sections/section-split-content.liquid {% endcomment %}
+{%- liquid
+  assign id = section.id
+  assign transition_text = settings.transition_text
+  assign animation_delay = 0
+  assign animation_anchor = '#section-split-content--' | append: id
+  assign accordion_header = section.settings.accordion_header | plus: 0
+  assign header_counter = 0
+  assign column_counter = 0
+  assign content_counter = 0
+  assign header_markup = ''
+  assign content_markup = ''
+  assign block_markup = ''
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  {%- for block in section.blocks -%}
+    {%- capture block_markup -%}
+      {%- case block.type -%}
+        {%- when 'text' -%}
+          {%- liquid
+            assign subheading = block.settings.subheading
+            assign title = block.settings.title
+            assign content = block.settings.content
+            assign btn_text = block.settings.button_text
+            assign btn_link = block.settings.button_link | default: '#'
+            assign btn_style = block.settings.btn_style
+            assign btn_type = block.settings.btn_type
+            assign btn_size = block.settings.btn_size
+          -%}
+  
+          {%- if title != blank or subheading != blank or content != blank or btn_text != blank -%}
+            <div class="split-content__entry"{% if transition_text %} data-aos="fade-up" data-aos-delay="{{ animation_delay }}" data-aos-anchor="{{ animation_anchor }}"{% endif %} {{ block.shopify_attributes }}>
+              {%- if subheading != blank -%}
+                <p class="split-content__subheading subheading-text">
+                  {{- subheading -}}
+                </p>
+              {%- endif -%}
+  
+              {%- if title != blank -%}
+                <h2 class="split-content__title">
+                  {{- title -}}
+                </h2>
+              {%- endif -%}
+  
+              {%- if content != blank -%}
+                <div class="split-content__description">
+                  {{- content -}}
+                </div>
+              {%- endif -%}
+
+              {%- if btn_text != blank -%}
+                <div class="split-content__button-wrapper">
+                  <a href="{{ btn_link }}" class="btn {{ btn_style }} {{ btn_type }} {{ btn_size }}" title="{{ btn_text }}" aria-label="{{ btn_text }}" tabindex="0">{{ btn_text }}</a>
+                </div>
+              {%- endif -%}
+
+              {%- assign animation_delay = animation_delay | plus: 250 -%}
+            </div>
+          {%- endif -%}
+
+        {%- when 'image' -%}
+          <div class="split-content__image"{% if transition_text %} data-aos="zoom-in-up" data-aos-delay="{{ animation_delay }}" data-aos-anchor="{{ animation_anchor }}"{% endif %} {{ block.shopify_attributes }}>
+            {%- liquid
+              assign sizes = '(min-width: 768px) calc((100vw - 130px) / ||columns-count-placeholder||), (min-width: 480px) calc(100vw - 80px), calc(100vw - 40px)'
+              render 'image' image: block.settings.image, sizes: sizes
+            -%}
+          </div>
+          {%- assign animation_delay = animation_delay | plus: 250 -%}
+
+      {%- endcase -%}
+    {%- endcapture -%}
+    
+    {%- if block_markup != '' -%}
+      {%- assign column_counter = column_counter | plus: 1 -%}
+      {%- if column_counter <= accordion_header -%}
+        {%- assign header_counter = header_counter | plus: 1 -%}
+  
+        {%- capture header_markup -%}
+          {{- header_markup -}}
+  
+          {{- block_markup -}}
+        {%- endcapture -%}
+      {%- else -%}
+        {%- assign content_counter = content_counter | plus: 1 -%}
+  
+        {%- capture content_markup -%}
+          {{- content_markup -}}
+  
+          {{- block_markup -}}
+        {%- endcapture -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  
+  {%- if header_markup != '' or content_markup != '' -%}
+    {%- capture style -%}
+      --columns-count: {{ column_counter }};
+      --header-count: {{ header_counter }};
+      --content-count: {{ content_counter }};
+      --PT: {{ section.settings.padding_top }}px;
+      --PB: {{ section.settings.padding_bottom }}px;
+    {%- endcapture -%}
+
+    <section class="split-content section-padding" 
+      id="section-split-content--{{ id }}"
+      data-section-type="split-content"
+      data-section-id="{{ section.id }}"
+      style="{{ style }}">
+      <div class="container">
+
+        <accordion-elements class="mobile">
+          <details data-accordion>
+            {%- if header_markup != '' -%}
+              <summary class="split-content__heading"{% if transition_text %} data-aos="fade-up" data-aos-delay="0" data-aos-anchor="{{ animation_anchor }}"{% endif %} data-accordion-trigger>
+                {%- render 'icon-arrow' -%}
+                
+                {{ header_markup | replace: '||columns-count-placeholder||', column_counter }}
+              </summary>
+            {%- endif -%}
+
+            {%- if content_markup != '' -%}
+              <div data-accordion-body>
+                <div class="split-content__inner" data-accordion-content>
+                  {{ content_markup | replace: '||columns-count-placeholder||', column_counter }}
+                </div>
+              </div>
+            {%- endif -%}
+          </details>
+        </accordion-elements>
+
+        <div class="split-content__columns desktop">
+          {%- if header_markup != '' -%}
+            <div class="split-content__column split-content__heading">
+              {{ header_markup }}
+            </div>
+          {%- endif -%}
+
+          {%- if content_markup != '' -%}
+            <div class="split-content__column split-content__inner">
+              {{ content_markup }}
+            </div>
+          {%- endif -%}
+        </div>
+
+      </div>
+    </section>
+  {%- endif -%}
+{%- endif -%}
+
+{%- if request.design_mode -%}
+  <script defer>
+    document.addEventListener('shopify:block:select', (event) => {
+      const details = event.target.closest('details');
+
+      if (details && !details.hasAttribute('open')) {
+        details.querySelector('summary').dispatchEvent(new Event('click'));
+      }
+    });
+  </script>
+{%- endif -%}
+
+{% comment %} Schema {% endcomment %}
+{% schema %}
+  {
+    "name": "Split content",
+    "class": "shopify-section--split-content",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Mobile"
+      },
+      {
+        "type": "select",
+        "id": "accordion_header",
+        "label": "Accordion header",
+        "options": [
+          {
+            "value": "1",
+            "label": "First block"
+          },
+          {
+            "value": "2",
+            "label": "First and second block"
+          }
+        ],
+        "default": "1"
+      },
+      {
+        "type": "header",
+        "content": "Section padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 100
+      }
+    ],
+    "max_blocks": 4,
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading",
+            "default": "What it is"
+          },
+          {
+            "type": "textarea",
+            "id": "title",
+            "label": "Heading",
+            "default": "Product Title"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Text",
+            "default": "<p>Describe your product or amplify a product bundle by utilizing multiple multicolumn sections.</p>"
+          },
+          {
+            "type": "header",
+            "content": "Button"
+          },
+          {
+            "type": "text",
+            "id": "button_text",
+            "label": "Label",
+            "default": "Learn More"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Link"
+          },
+          {
+            "type": "select",
+            "id": "btn_type",
+            "label": "Color",
+            "default": "btn--primary",
+            "options": [
+              { "label": "Primary", "value": "btn--primary" },
+              { "label": "Secondary", "value": "btn--secondary" },
+              { "label": "White", "value": "btn--white" },
+              { "label": "Black", "value": "btn--black" }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "btn_size",
+            "label": "Size",
+            "default": "",
+            "options": [
+              { "label": "Small", "value": "btn--small" },
+              { "label": "Medium", "value": "" },
+              { "label": "Large", "value": "btn--large" }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "btn_style",
+            "label": "Style",
+            "default": "btn--solid",
+            "options": [
+              { "label": "Solid", "value": "btn--solid" },
+              { "label": "Outline", "value": "btn--outline" },
+              { "label": "Text", "value": "btn--text" }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "category": "Text",
+        "name": "Split content",
+        "blocks": [
+          {
+            "type": "text",
+            "settings": {
+              "subheading": "",
+              "title": "Product Title",
+              "content": "",
+              "button_text": ""
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "subheading": "What it is",
+              "title": "",
+              "content": "<p>Describe your product or amplify a product bundle by utilizing multiple split content sections.</p>",
+              "button_text": ""
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "subheading": "Key ingredients/materials",
+              "title": "",
+              "content": "<p>Showcase key ingredients or materials that push customer to convert.</p>",
+              "button_text": ""
+            }
+          }
+        ]
+      }
+    ],
+    "disabled_on": {
+      "groups": ["header", "footer"]
+    }
+  }
+{% endschema %}

@@ -1,0 +1,265 @@
+{% comment %} Settings {% endcomment %}
+{%- liquid
+  assign featured_collection = collections[section.settings.featured_collection] | default: false
+  assign title = section.settings.title
+  assign show_description = section.settings.show_description
+  assign layout = section.settings.products_layout
+  assign show_button = section.settings.show_button
+  assign btn_size = section.settings.btn_size
+  assign btn_style = section.settings.btn_style
+  assign btn_type = section.settings.btn_type
+  assign color_style = section.settings.color_style
+  assign enable_carousel = false
+  if layout == 'carousel'
+    assign enable_carousel = true
+  endif
+-%}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+{% comment %} Layout {% endcomment %}
+{% comment %}
+  Set collectionBlock size classes
+  These are applied in the collection-grid__block.liquid file
+{% endcomment %}
+{%- liquid
+  assign products_rows = settings.products_rows | plus: 0
+  assign products_columns = settings.products_columns | plus: 0
+  assign products_columns_mobile = settings.products_columns_mobile | plus: 0
+  assign products_limit = products_columns | times: products_rows
+-%}
+
+{%- capture style -%}
+  {{ style }}
+  --COLUMNS: {{ products_columns }};
+  --COLUMNS-MEDIUM: {{ products_columns | at_most: 3 }};
+  --COLUMNS-SMALL: {{ products_columns_mobile }};
+  --COLUMNS-MOBILE: {{ products_columns_mobile }};
+{%- endcapture -%}
+{%- assign products_rows = section.settings.products_rows | plus: 0 -%}
+{%- assign products_limit = products_columns | times: products_rows -%}
+
+{% comment %} Shop All Link {% endcomment %}
+{%- capture shop_all_button -%}
+  {%- if show_button -%}
+    <div class="button-wrapper">
+      <a href="{{ featured_collection.url | default: '#' }}" class="btn {{ btn_size }} {{ btn_style }} {{ btn_type }}" aria-label="{{ featured_collection.title | strip_html }}" title="{{ featured_collection.title | strip_html }}">
+        {{ 'collections.grid.shop_all' | t }} {{ featured_collection.title }}
+      </a>
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+
+{% comment %} Collection Block, contains .js-quickView {% endcomment %}
+{%- capture collection_products -%}
+  {%- if featured_collection -%}
+    {%- unless featured_collection.products == empty -%}
+      {%- if enable_carousel -%}
+        {%- for product in featured_collection.products -%}
+          {%- render 'product-grid-item', product: product, index: forloop.index -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for product in featured_collection.products limit: products_limit -%}
+          {%- render 'product-grid-item', product: product, index: forloop.index -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- else -%}
+      <div class="collection-no-products">
+        <div class="container">
+          <h4>{{ 'collections.errors.no_products' | t }}</h4>
+
+          {{- shop_all_button -}}
+        </div>
+      </div>
+    {%- endunless -%}
+  {%- else -%}
+    {%- for i in (1..products_limit) -%}
+      {%- render 'product-grid-item', fallback: true, index: forloop.index -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+{% comment %} Section {% endcomment %}
+<section id="collection-module-{{ section.id }}"
+  class="featured-collection collection-grid container-wrap section-padding"
+  data-section-type="featured-collection"
+  data-section-id="{{ section.id }}"
+  data-show-quantity="{{ settings.show_quantity }}"
+  data-style="{{ color_style }}"
+  data-collection-products
+  style="{{ style }}"
+>
+  {%- if title != blank or show_description and featured_collection.description != blank -%}
+    <div class="container">
+      <div class="collection-grid__header row row-sm{% if featured_collection.products == empty %} collection-grid__header--no-products{% endif %}">
+        {%- unless title == blank -%}
+          <h2>{{ title }}</h2>
+        {%- endunless -%}
+
+        {%- if show_description and featured_collection.description != blank -%}
+          <p>{{ featured_collection.description | strip_html }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if enable_carousel -%}
+    <div class="collection-slider__wrapper" data-collection-slider-wrapper>
+      <div class="collection-grid__row grid collection-grid__row--slider collection-slider" data-collection-slider>
+        {{- collection_products -}}
+      </div>
+
+      <button class="slider-arrow slider-arrow--prev" aria-label="{{ 'slideshow.previous' | t }}" type="button" data-prev-arrow>{% render "icon-submit" %}</button>
+
+      <button class="slider-arrow slider-arrow--next" aria-label="{{ 'slideshow.next' | t }}" type="button" data-next-arrow>{% render "icon-submit" %}</button>
+    </div>
+  {%- else -%}
+    <div class="collection-grid__row grid collection-grid__row--grid">
+      {{- collection_products -}}
+    </div>
+  {%- endif -%}
+
+  {%- unless featured_collection and featured_collection.products == empty -%}
+    {{- shop_all_button -}}
+  {%- endunless -%}
+</section>
+
+{% comment %} Schema {% endcomment %}
+{% schema %}
+{
+  "name": "Featured collection",
+  "class": "shopify-section--featured-collection",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": false
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "select",
+      "id": "products_layout",
+      "label": "Layout",
+      "default": "grid",
+      "options": [
+        { "value": "grid", "label": "Grid" },
+        { "value": "carousel", "label": "Carousel" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "products_rows",
+      "label": "Number of rows",
+      "info": "For grid layout only",
+      "default": 2,
+      "min":1,
+      "max":4,
+      "step":1
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show collection link button",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "btn_type",
+      "label": "Color",
+      "default": "btn--primary",
+      "options": [
+        { "label": "Primary", "value": "btn--primary" },
+        { "label": "Secondary", "value": "btn--secondary" },
+        { "label": "White", "value": "btn--white" },
+        { "label": "Black", "value": "btn--black" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_size",
+      "label": "Size",
+      "default": "",
+      "options": [
+        { "label": "Small", "value": "btn--small" },
+        { "label": "Medium", "value": "" },
+        { "label": "Large", "value": "btn--large" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_style",
+      "label": "Style",
+      "default": "btn--solid",
+      "options": [
+        { "label": "Solid", "value": "btn--solid" },
+        { "label": "Outline", "value": "btn--outline" },
+        { "label": "Text", "value": "btn--text" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "color_style",
+      "label": "Arrows style",
+      "info": "For carousel layout only",
+      "default": "white",
+      "options": [
+        { "value": "white", "label": "Light" },
+        { "value": "black", "label": "Dark" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    }
+  ],
+  "presets": [
+    {
+      "category": "Collection",
+      "name": "Featured collection",
+      "settings": {
+        "featured_collection": "frontpage"
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

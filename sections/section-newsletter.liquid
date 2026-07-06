@@ -1,0 +1,122 @@
+{% comment %} Settings {% endcomment %}
+{%- liquid
+  assign title = section.settings.title
+  assign content = section.settings.content
+  assign text_color = section.settings.color
+  assign bg_color = section.settings.background
+-%}
+
+{% comment %} Section {% endcomment %}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+
+  {%- unless text_color == 'rgba(0,0,0,0)' or text_color == '' -%}
+    --text: {{ text_color }};
+  {%- endunless -%}
+
+  {%- unless bg_color == 'rgba(0,0,0,0)' or bg_color == '' -%}
+  --bg: {{ bg_color }};
+  {%- endunless -%}
+{%- endcapture -%}
+
+<section class="section-newsletter container-wrap section-padding"
+  data-section-type="newsletter"
+  data-section-id="{{ section.id }}"
+  style="{{ style }}"
+>
+  <div class="container sign-up">
+    <div class="row">
+      {%- if title != blank -%}
+        <h2 class="newsletter__title">{{ title }}</h2>
+      {%- endif -%}
+
+      {%- if content != blank -%}
+        <div class="sign-up-body">{{ content }}</div>
+      {%- endif -%}
+
+      {%- render 'newsletter' -%}
+    </div>
+  </div>
+</section>
+
+{% comment %} Schema {% endcomment %}
+{% schema %}
+{
+  "name": "Newsletter",
+  "class": "shopify-section--newsletter",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Text",
+      "default": "#222"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#fff"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Newsletter"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Subheading",
+      "default": "<p>Let's keep in touch</p>"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter",
+      "category": "Text",
+      "settings":
+      {
+        "title": "Newsletter",
+        "content": "<p>Let's keep in touch</p>"
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}
