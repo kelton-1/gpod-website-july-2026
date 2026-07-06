@@ -80,6 +80,7 @@
 
   {%- comment -%} CSS {%- endcomment -%}
   {{- 'theme.css' | asset_url | stylesheet_tag -}}
+  {{- 'gpod.css' | asset_url | stylesheet_tag -}}
 
   {%- comment -%}{{- 'theme.dev.css' | asset_url | stylesheet_tag -}}{%- endcomment -%}
 
@@ -98,16 +99,7 @@
   {%- assign swatch_labels = swatch_translation | append: ',' | split: ',' -%}
 
   <script type="text/javascript">
-    if (window.MSInputMethodContext && document.documentMode) {
-      var scripts = document.getElementsByTagName('script')[0];
-      var polyfill = document.createElement("script");
-      polyfill.defer = true;
-      polyfill.src = "{{ 'ie11.js' | asset_url }}";
-
-      scripts.parentNode.insertBefore(polyfill, scripts);
-    } else {
-      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
-    }
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
 
     let root = '{{ routes.root_url }}';
     if (root[root.length - 1] !== '/') {
@@ -202,7 +194,7 @@
   {%- endif -%}
 
   {{ content_for_header }}
-{% include 'pagefly-app-header' %}</head>
+</head>
 
 {%- assign animations = false -%}
 {%- if settings.transition_text or settings.transition_grid_items or settings.transition_images_fade -%}

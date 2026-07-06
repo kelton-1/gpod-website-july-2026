@@ -1,0 +1,112 @@
+{
+  "sections": {
+    "main": {
+      "type": "compare-table",
+      "blocks": {
+        "col_0": {
+          "type": "product",
+          "settings": {
+            "product": "gpodmagsafe",
+            "badge": "The original"
+          }
+        },
+        "col_1": {
+          "type": "product",
+          "settings": {
+            "product": "gpodx",
+            "badge": "Most popular"
+          }
+        },
+        "col_2": {
+          "type": "product",
+          "settings": {
+            "product": "gpod-pauly-p2",
+            "badge": "Flagship"
+          }
+        },
+        "col_3": {
+          "type": "product",
+          "settings": {
+            "product": "gpod-travel-1"
+          }
+        },
+        "col_4": {
+          "type": "product",
+          "settings": {
+            "product": "gpod-studio",
+            "badge": "For coaches"
+          }
+        },
+        "col_5": {
+          "type": "product",
+          "settings": {
+            "product": "indoor-base-for-gpod-gpod-mini"
+          }
+        }
+      },
+      "block_order": [
+        "col_0",
+        "col_1",
+        "col_2",
+        "col_3",
+        "col_4",
+        "col_5"
+      ],
+      "settings": {
+        "kicker": "Side by side",
+        "heading": "Compare every GPOD model",
+        "text": "<p>Stability, height, pack size, phone attachment — here's the whole lineup on one page. Tap any column to see the full product.</p>",
+        "center_heading": false,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "cta": {
+      "type": "section-rich-text",
+      "blocks": {
+        "cta_sub": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "Not sure where to start?"
+          }
+        },
+        "cta_head": {
+          "type": "heading",
+          "settings": {
+            "title": "Find your GPOD in 30 seconds"
+          }
+        },
+        "cta_text": {
+          "type": "text",
+          "settings": {
+            "content": "<p>Answer three quick questions about where you practice and what phone you use, and we'll point you at the right setup.</p>"
+          }
+        },
+        "cta_btn": {
+          "type": "button",
+          "settings": {
+            "button_text": "Take the product finder",
+            "button_link": "/pages/product-finder-quiz",
+            "btn_type": "btn--primary",
+            "btn_size": "btn--large",
+            "btn_style": "btn--solid"
+          }
+        }
+      },
+      "block_order": [
+        "cta_sub",
+        "cta_head",
+        "cta_text",
+        "cta_btn"
+      ],
+      "settings": {
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "main",
+    "cta"
+  ]
+}

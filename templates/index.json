@@ -1,62 +1,6 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "section_announcement_BHqV8q": {
-      "type": "section-announcement",
-      "blocks": {
-        "text_DbjfQB": {
-          "type": "text",
-          "settings": {
-            "text": "<p><a href=\"/pages/fourth-of-july\" title=\"Fourth of July Sale\">JULY 4TH SALE 15% STOREWIDE!</a></p>"
-          }
-        },
-        "text_dYLXB4": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "<p><strong>Create a free shipping countdown</strong></p>"
-          }
-        },
-        "message_tVepn4": {
-          "type": "message",
-          "disabled": true,
-          "settings": {
-            "show_wheel": false,
-            "message": "Spend ||amount|| more for free shipping."
-          }
-        },
-        "text_ajHbqd": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "<p><strong>Create a scrolling marquee or a simple announcement</strong></p>"
-          }
-        }
-      },
-      "block_order": [
-        "text_DbjfQB",
-        "text_dYLXB4",
-        "message_tVepn4",
-        "text_ajHbqd"
-      ],
-      "settings": {
-        "bg_color": "#000000",
-        "color": "#ffffff",
-        "layout": "marquee",
-        "speed": 7,
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "section_video_7ehnVn": {
+    "hero": {
       "type": "section-video",
       "settings": {
         "video_bg": "shopify://files/videos/GPOD OG Range Use.MOV",
@@ -67,7 +11,7 @@
         "overlay_opacity": 15,
         "overlay_color": "#333333",
         "title": "WE MAKE FILMING YOUR SWING EASY.",
-        "description": "Just stick it and swing it.",
+        "description": "Magnetic phone monopods and tripods for filming your golf swing. Just stick it and swing it.",
         "flex_align": "align--middle-center",
         "text_color": "text-light",
         "transparent": true,
@@ -78,7 +22,118 @@
         "btn_style": "btn--solid"
       }
     },
-    "section_image_with_text_overlay_X7fJ6j": {
+    "usecases": {
+      "type": "home-use-cases",
+      "blocks": {
+        "tile_on_the_course": {
+          "type": "tile",
+          "settings": {
+            "collection": "on-the-course",
+            "title": "On the Course",
+            "text": "Stake it into the turf between shots"
+          }
+        },
+        "tile_indoor_simulator": {
+          "type": "tile",
+          "settings": {
+            "collection": "indoor-simulator",
+            "title": "Indoor & Simulator",
+            "text": "Freestanding setups for mats and sims"
+          }
+        },
+        "tile_coaching_studio": {
+          "type": "tile",
+          "settings": {
+            "collection": "coaching-studio",
+            "title": "Coaching & Studio",
+            "text": "Pro-grade stability for daily filming"
+          }
+        },
+        "tile_travel_ready": {
+          "type": "tile",
+          "settings": {
+            "collection": "travel-ready",
+            "title": "Travel Ready",
+            "text": "Packs into a pocket, bag, or carry-on"
+          }
+        }
+      },
+      "block_order": [
+        "tile_on_the_course",
+        "tile_indoor_simulator",
+        "tile_coaching_studio",
+        "tile_travel_ready"
+      ],
+      "settings": {
+        "kicker": "Shop by how you practice",
+        "heading": "Where do you play?",
+        "center_heading": true,
+        "padding_top": 60,
+        "padding_bottom": 40
+      }
+    },
+    "compare": {
+      "type": "compare-table",
+      "blocks": {
+        "col_0": {
+          "type": "product",
+          "settings": {
+            "product": "gpodmagsafe",
+            "badge": "The original"
+          }
+        },
+        "col_1": {
+          "type": "product",
+          "settings": {
+            "product": "gpodx",
+            "badge": "Most popular"
+          }
+        },
+        "col_2": {
+          "type": "product",
+          "settings": {
+            "product": "gpod-pauly-p2",
+            "badge": "Flagship"
+          }
+        },
+        "col_3": {
+          "type": "product",
+          "settings": {
+            "product": "gpod-travel-1"
+          }
+        },
+        "col_4": {
+          "type": "product",
+          "settings": {
+            "product": "gpod-studio",
+            "badge": "For coaches"
+          }
+        },
+        "col_5": {
+          "type": "product",
+          "settings": {
+            "product": "indoor-base-for-gpod-gpod-mini"
+          }
+        }
+      },
+      "block_order": [
+        "col_0",
+        "col_1",
+        "col_2",
+        "col_3",
+        "col_4",
+        "col_5"
+      ],
+      "settings": {
+        "kicker": "Which GPOD is right for you?",
+        "heading": "Compare GPOD models",
+        "text": "<p>Every GPOD holds your phone magnetically and films your swing. The difference is where you practice and how you carry it — compare the specs that matter.</p>",
+        "center_heading": false,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "overlay": {
       "type": "section-image-with-text-overlay",
       "blocks": {
         "subheading_TqgUfr": {
@@ -129,1149 +184,97 @@
         "overlay_opacity": 85
       }
     },
-    "section_list_collections_nDEVC3": {
-      "type": "section-list-collections",
+    "icons": {
+      "type": "section-icons-row",
       "blocks": {
-        "collection_7Hr9mT": {
-          "type": "collection",
+        "icon_tour": {
+          "type": "text",
           "settings": {
-            "collection": "outdoor",
-            "image": "shopify://shop_images/GPOD_Glamour_Shot_with_Ball_Stack_Range.jpg",
-            "mobile_image": "shopify://shop_images/GPOD_Glamour_Shot_with_Ball_Stack_Range.jpg",
-            "overlay_color": "#333333",
-            "overlay_opacity": 20
+            "icon_name": "award",
+            "title": "Trusted On Tour",
+            "text": "<p>You'll find GPOD in countless bags on the PGA Tour — pros, coaches, and creators.</p>"
           }
         },
-        "collection_k3CVGB": {
-          "type": "collection",
+        "icon_warranty": {
+          "type": "text",
           "settings": {
-            "collection": "indoor",
-            "image": "shopify://shop_images/Studio_Indoor.png",
-            "overlay_color": "#333333",
-            "overlay_opacity": 0
+            "icon_name": "lock",
+            "title": "Lifetime Warranty",
+            "text": "<p>We guarantee that your GPOD will last as long as you need it to.</p>"
+          }
+        },
+        "icon_build": {
+          "type": "text",
+          "settings": {
+            "icon_name": "shop",
+            "title": "Premium Build",
+            "text": "<p>Crafted with lightweight carbon fiber and aluminum for strength and dependability.</p>"
           }
         }
       },
       "block_order": [
-        "collection_7Hr9mT",
-        "collection_k3CVGB"
+        "icon_tour",
+        "icon_warranty",
+        "icon_build"
       ],
       "settings": {
-        "title": "",
-        "text": "",
-        "blocks_height": "default-height",
-        "coll_text_position": "center",
-        "show_description": true,
-        "button_text": "Shop Now",
-        "btn_type": "btn--primary",
-        "btn_size": "",
-        "btn_style": "btn--solid",
-        "text_color": "#ffffff",
-        "enable_slider": true,
-        "padding_top": 10,
-        "padding_bottom": 0
-      }
-    },
-    "ss_text_block_pro_aQ93F9": {
-      "type": "ss-text-block-pro",
-      "blocks": {
-        "title_GCAjgX": {
-          "type": "title",
-          "settings": {
-            "title": "WHAT MAKES US THE BEST:",
-            "title_custom": true,
-            "title_font": "saira_i7",
-            "title_size": 52,
-            "title_height": 100,
-            "title_align": "center",
-            "title_mt": 12,
-            "title_color": "#8cc662"
-          }
-        }
-      },
-      "block_order": [
-        "title_GCAjgX"
-      ],
-      "settings": {
-        "image_width": 20,
-        "image_custom": false,
-        "image_height_desktop": 400,
-        "image_height_mobile": 200,
-        "image_radius": 12,
-        "image_ration": "none",
-        "image_location": "row",
-        "image_location_mobile": "column",
-        "content_padding_horizontal": 40,
-        "content_padding_vertical": 40,
-        "content_radius": 40,
-        "gap": 30,
-        "gap_mobile": 15,
-        "background_color": "#000000",
-        "background_gradient": "",
-        "border_color": "#000000",
-        "content_bg": "",
-        "margin_top": 12,
-        "margin_bottom": 0,
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "padding_horizontal": 5,
-        "padding_horizontal_mobile": 1.5,
-        "content_width": 120,
-        "border_thickness": 0
-      }
-    },
-    "section_product_features_iT4Hdw": {
-      "type": "section-product-features",
-      "blocks": {
-        "text_g3VgBJ": {
-          "type": "text",
-          "settings": {
-            "title": "PREMIUM MATERIALS",
-            "description": "<p>Crafted with light-weight carbon fiber, for exceptional strength, durability, and dependability.</p>",
-            "image": "shopify://shop_images/GPOD_Gif.gif",
-            "image_position": "left",
-            "image_link": "",
-            "button_text": "GET YOURS",
-            "button_link": "shopify://collections/frontpage",
-            "btn_type": "btn--primary",
-            "btn_size": "",
-            "btn_style": "btn--solid"
-          }
-        },
-        "text_etLBKN": {
-          "type": "text",
-          "settings": {
-            "title": "360° ROTATING HEAD",
-            "description": "<p>360-degree adjustable mag-safe magnetic head allows you to capture your swing from any angle, including overhead putting views.</p>",
-            "image": "shopify://shop_images/GPOD_Rotating_Head.gif",
-            "image_position": "right",
-            "image_link": "",
-            "button_text": "GET YOURS",
-            "button_link": "shopify://collections/frontpage",
-            "btn_type": "btn--primary",
-            "btn_size": "",
-            "btn_style": "btn--solid"
-          }
-        },
-        "text_YF46yq": {
-          "type": "text",
-          "settings": {
-            "title": "JUST STICK IT AND SWING IT",
-            "description": "<p>It's really that easy. </p>",
-            "image": "shopify://shop_images/Stick_it.gif",
-            "image_position": "left",
-            "image_link": "",
-            "button_text": "GET YOURS",
-            "button_link": "shopify://collections/frontpage",
-            "btn_type": "btn--primary",
-            "btn_size": "",
-            "btn_style": "btn--solid"
-          }
-        }
-      },
-      "block_order": [
-        "text_g3VgBJ",
-        "text_etLBKN",
-        "text_YF46yq"
-      ],
-      "settings": {
-        "blocks_alignment": "center",
-        "image_aspect_ratio": 1,
+        "alignment": "center",
+        "color_icons_bg": "#8cc662",
+        "color_icons_text": "#333333",
         "padding_top": 50,
         "padding_bottom": 50
       }
     },
-    "section_image_with_text_j3cwyK": {
-      "type": "section-image-with-text",
-      "blocks": {
-        "gallery_image_ikDtdB": {
-          "type": "gallery_image",
-          "settings": {
-            "image": "shopify://shop_images/GPOD_Gif.gif",
-            "mobile_image": "shopify://shop_images/GPOD_Gif.gif"
-          }
-        }
-      },
-      "block_order": [
-        "gallery_image_ikDtdB"
-      ],
-      "disabled": true,
-      "settings": {
-        "width": "container-wrap",
-        "show_nav_arrows": true,
-        "color_style": "white",
-        "transition": "fade",
-        "autoplay": true,
-        "duration": 4,
-        "slide_height": "five-fifty-height-hero",
-        "slide_image_position": "right",
-        "slide_image_size": "fifty",
-        "subheading": "",
-        "title": "PREMIUM MATERIALS",
-        "content": "<p>Crafted with light-weight carbon fiber, for exceptional strength, durability, and dependability.</p>",
-        "cta": "",
-        "link": "",
-        "btn_type": "btn--primary",
-        "btn_size": "",
-        "btn_style": "btn--solid",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "section_image_with_text_zaExdN": {
-      "type": "section-image-with-text",
-      "blocks": {
-        "gallery_image_igTW6g": {
-          "type": "gallery_image",
-          "settings": {
-            "image": "shopify://shop_images/GPOD_Rotating_Head.gif",
-            "mobile_image": "shopify://shop_images/GPOD_Rotating_Head.gif"
-          }
-        }
-      },
-      "block_order": [
-        "gallery_image_igTW6g"
-      ],
-      "disabled": true,
-      "settings": {
-        "width": "container-wrap",
-        "show_nav_arrows": true,
-        "color_style": "white",
-        "transition": "fade",
-        "autoplay": true,
-        "duration": 4,
-        "slide_height": "five-fifty-height-hero",
-        "slide_image_position": "left",
-        "slide_image_size": "fifty",
-        "subheading": "",
-        "title": "360° ROTATING HEAD",
-        "content": "<p>360-degree adjustable mag-safe magnetic head allows you to capture your swing from any angle, including overhead putting views.</p>",
-        "cta": "",
-        "link": "",
-        "btn_type": "btn--primary",
-        "btn_size": "",
-        "btn_style": "btn--solid",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "section_rich_text_rUftPD": {
+    "quiz_cta": {
       "type": "section-rich-text",
       "blocks": {
-        "subheading_thqPHh": {
+        "cta_sub": {
           "type": "subheading",
           "settings": {
-            "subheading": "Unparalleled Convenience"
+            "subheading": "Not sure where to start?"
           }
         },
-        "heading_Yxkn34": {
+        "cta_head": {
           "type": "heading",
           "settings": {
-            "title": "WE MAKE FILMING YOUR SWING EASY."
+            "title": "Find your GPOD in 30 seconds"
           }
         },
-        "text_fRLYhz": {
+        "cta_text": {
           "type": "text",
-          "disabled": true,
           "settings": {
-            "content": "<p>Describe here how GPOD makes it easier and more effective to film and analyze your swing vs others</p>"
+            "content": "<p>Answer three quick questions about where you practice and what phone you use, and we'll point you at the right setup.</p>"
           }
         },
-        "button_hFmajT": {
+        "cta_btn": {
           "type": "button",
-          "disabled": true,
           "settings": {
-            "button_text": "Learn More",
-            "button_link": "",
+            "button_text": "Take the product finder",
+            "button_link": "/pages/product-finder-quiz",
             "btn_type": "btn--primary",
-            "btn_size": "",
+            "btn_size": "btn--large",
             "btn_style": "btn--solid"
           }
         }
       },
       "block_order": [
-        "subheading_thqPHh",
-        "heading_Yxkn34",
-        "text_fRLYhz",
-        "button_hFmajT"
-      ],
-      "disabled": true,
-      "settings": {
-        "padding_top": 100,
-        "padding_bottom": 100
-      }
-    },
-    "section_product_features_3GViUf": {
-      "type": "section-product-features",
-      "blocks": {
-        "text_V7hfck": {
-          "type": "text",
-          "settings": {
-            "title": "STEP 1: STICK IT",
-            "description": "<p>It's truly that simple. Our propriatary magnet puck is guaranteed to stick to any magsafe smartphone.</p>",
-            "image": "shopify://shop_images/Stick_it.gif",
-            "image_position": "left",
-            "image_link": "",
-            "button_text": "",
-            "button_link": "",
-            "btn_type": "btn--primary",
-            "btn_size": "",
-            "btn_style": "btn--solid"
-          }
-        },
-        "text_VJcFmR": {
-          "type": "text",
-          "settings": {
-            "title": "STEP 2: SWING IT",
-            "description": "<p>Let 'em rip.</p>",
-            "image": "shopify://shop_images/Swing_it.gif",
-            "image_position": "left",
-            "image_link": "",
-            "button_text": "",
-            "button_link": "",
-            "btn_type": "btn--primary",
-            "btn_size": "",
-            "btn_style": "btn--solid"
-          }
-        },
-        "text_PkmPjA": {
-          "type": "text",
-          "settings": {
-            "title": "STEP 3: ANALYZE IT",
-            "description": "<p>Watch your swing back in real-time and make instant adjustments.</p>",
-            "image": "shopify://shop_images/GPOD_KEY_VISUAL.jpg",
-            "image_position": "left",
-            "image_link": "",
-            "button_text": "",
-            "button_link": "",
-            "btn_type": "btn--primary",
-            "btn_size": "",
-            "btn_style": "btn--solid"
-          }
-        }
-      },
-      "block_order": [
-        "text_V7hfck",
-        "text_VJcFmR",
-        "text_PkmPjA"
-      ],
-      "disabled": true,
-      "settings": {
-        "blocks_alignment": "center",
-        "image_aspect_ratio": 1,
-        "padding_top": 0,
-        "padding_bottom": 100
-      }
-    },
-    "ss_comparison_table_6_UwWQ4d": {
-      "type": "ss-comparison-table-6",
-      "blocks": {
-        "list_item_cUhYDd": {
-          "type": "list_item",
-          "settings": {
-            "text": "1-YEAR WARRANTY"
-          }
-        },
-        "list_item_EGgmTf": {
-          "type": "list_item",
-          "settings": {
-            "text": "PREMIUM MATERIALS"
-          }
-        },
-        "list_item_pwWf86": {
-          "type": "list_item",
-          "settings": {
-            "text": "TRUSTED BY THE PROS"
-          }
-        },
-        "list_item_KL89g3": {
-          "type": "list_item",
-          "settings": {
-            "text": "UNPARALLELED CONVENIENCE"
-          }
-        },
-        "table_row_y3XBMn": {
-          "type": "table_row",
-          "settings": {
-            "row_heading": "360° Adjustable Magnetic Head",
-            "first_column": "",
-            "first_column_icon": "check",
-            "second_column": "",
-            "second_column_icon": "cross",
-            "third_column": "",
-            "third_column_icon": "none",
-            "four_column": "",
-            "four_column_icon": "none"
-          }
-        },
-        "table_row_BFzTRE": {
-          "type": "table_row",
-          "settings": {
-            "row_heading": "Lightweight Carbon Fiber",
-            "first_column": "",
-            "first_column_icon": "check",
-            "second_column": "",
-            "second_column_icon": "cross",
-            "third_column": "",
-            "third_column_icon": "none",
-            "four_column": "",
-            "four_column_icon": "none"
-          }
-        },
-        "table_row_g4Hrx8": {
-          "type": "table_row",
-          "settings": {
-            "row_heading": "Aluminum Alloy Components",
-            "first_column": "",
-            "first_column_icon": "check",
-            "second_column": "",
-            "second_column_icon": "cross",
-            "third_column": "",
-            "third_column_icon": "none",
-            "four_column": "",
-            "four_column_icon": "none"
-          }
-        },
-        "table_row_beacPa": {
-          "type": "table_row",
-          "settings": {
-            "row_heading": "Rare-earth Neodymium Magnets",
-            "first_column": "",
-            "first_column_icon": "check",
-            "second_column": "",
-            "second_column_icon": "cross",
-            "third_column": "",
-            "third_column_icon": "none",
-            "four_column": "",
-            "four_column_icon": "none"
-          }
-        },
-        "table_row_FyPjUc": {
-          "type": "table_row",
-          "settings": {
-            "row_heading": "Wind-Resistant Stability",
-            "first_column": "",
-            "first_column_icon": "check",
-            "second_column": "",
-            "second_column_icon": "cross",
-            "third_column": "",
-            "third_column_icon": "none",
-            "four_column": "",
-            "four_column_icon": "none"
-          }
-        },
-        "table_row_nHGtp7": {
-          "type": "table_row",
-          "settings": {
-            "row_heading": "Unparalleled Convenience",
-            "first_column": "",
-            "first_column_icon": "check",
-            "second_column": "",
-            "second_column_icon": "cross",
-            "third_column": "",
-            "third_column_icon": "none",
-            "four_column": "",
-            "four_column_icon": "none"
-          }
-        }
-      },
-      "block_order": [
-        "list_item_cUhYDd",
-        "list_item_EGgmTf",
-        "list_item_pwWf86",
-        "list_item_KL89g3",
-        "table_row_y3XBMn",
-        "table_row_BFzTRE",
-        "table_row_g4Hrx8",
-        "table_row_beacPa",
-        "table_row_FyPjUc",
-        "table_row_nHGtp7"
+        "cta_sub",
+        "cta_head",
+        "cta_text",
+        "cta_btn"
       ],
       "settings": {
-        "body_gap": 32,
-        "body_gap_mobile": 32,
-        "content_horizontal_align": "start",
-        "content_horizontal_align_mobile": "center",
-        "heading": "<p><em><strong>THE BREAKDOWN</strong></em></p>",
-        "heading_custom": true,
-        "heading_font": "saira_i7",
-        "heading_size": 52,
-        "heading_size_mobile": 32,
-        "heading_height": 150,
-        "text": "<p>We've spent countless hours laboring over every painstaking detail to provide you with the best possible magnetic phone mount on the market.</p>",
-        "text_custom": true,
-        "text_font": "saira_n4",
-        "text_size": 18,
-        "text_size_mobile": 18,
-        "text_height": 150,
-        "text_mt": 4,
-        "list_mt": 50,
-        "list_mt_mobile": 32,
-        "list_gap": 30,
-        "list_gap_mobile": 30,
-        "list_hide_mobile": true,
-        "icon_size": 28,
-        "icon_size_mobile": 28,
-        "icon_margin_right": 16,
-        "list_text_custom": true,
-        "list_text_font": "saira_n4",
-        "list_text_size": 20,
-        "list_text_size_mobile": 18,
-        "list_text_height": 150,
-        "button": "GET YOURS NOW",
-        "button_url": "shopify://collections/frontpage",
-        "button_custom": false,
-        "button_font": "josefin_sans_n4",
-        "button_size": 18,
-        "button_size_mobile": 18,
-        "button_height": 100,
-        "button_width": 305,
-        "button_mt": 50,
-        "button_mt_mobile": 32,
-        "button_padding_vertical": 16,
-        "button_padding_vertical_mobile": 16,
-        "button_padding_horizontal": 48,
-        "button_padding_horizontal_mobile": 48,
-        "button_radius": 100,
-        "button_border_thickness": 0,
-        "button_style": "non_outline",
-        "button_position_mobile": "bottom",
-        "table_columns": 2,
-        "table_mt_mobile": 32,
-        "table_column_active": "1",
-        "table_radius": 16,
-        "table_border_thickness": 1,
-        "table_heading_image_size": 100,
-        "table_heading_image_size_mobile": 80,
-        "first_heading": "GPOD",
-        "first_heading_image": "shopify://shop_images/GPOD_logo.png",
-        "second_heading": "OTHERS",
-        "third_heading": "Third",
-        "four_heading": "Fourth",
-        "table_heading_custom": true,
-        "table_heading_font": "assistant_n4",
-        "table_heading_size": 20,
-        "table_heading_size_mobile": 16,
-        "table_heading_height": 100,
-        "table_heading_align": "center",
-        "table_heading_padding_horizontal": 18,
-        "table_heading_padding_horizontal_mobile": 18,
-        "table_heading_padding_vertical": 18,
-        "table_heading_padding_vertical_mobile": 18,
-        "table_row_padding_horizontal": 14,
-        "table_row_padding_horizontal_mobile": 14,
-        "table_row_padding_vertical": 16,
-        "table_row_padding_vertical_mobile": 16,
-        "table_row_heading_width_mobile": 66,
-        "table_row_heading_custom": false,
-        "table_row_heading_font": "assistant_n4",
-        "table_row_heading_size": 16,
-        "table_row_heading_size_mobile": 16,
-        "table_row_heading_height": 130,
-        "table_row_heading_align": "center",
-        "table_row_text_custom": true,
-        "table_row_text_font": "saira_n4",
-        "table_row_text_size": 20,
-        "table_row_text_size_mobile": 16,
-        "table_row_text_height": 130,
-        "table_row_text_align": "center",
-        "table_row_image_size": 24,
-        "table_row_image_size_mobile": 24,
-        "heading_color": "#8cc662",
-        "text_color": "#ffffff",
-        "icon_color": "#8cc662",
-        "list_text_color": "#ffffff",
-        "button_color": "#000000",
-        "button_hover_color": "#ffffff",
-        "button_bg_color": "#ffffff",
-        "button_bg_hover_color": "#8cc662",
-        "button_border_color": "#16142b",
-        "button_border_hover_color": "#16142b",
-        "table_border_color": "#ffffff",
-        "table_active_border_color": "#8cc662",
-        "table_heading_color": "#ffffff",
-        "table_heading_active_color": "#ffffff",
-        "table_heading_bg_active_color": "#ffffff",
-        "table_column_active_bg_color": "#ffffff",
-        "table_row_heading_color": "#ffffff",
-        "table_row_text_color": "#ffffff",
-        "table_row_active_text_color": "#ffffff",
-        "background_color": "#000000",
-        "background_gradient": "",
-        "border_color": "#000000",
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "padding_horizontal": 5,
-        "padding_horizontal_mobile": 1.5,
-        "full_width": false,
-        "content_width": 130,
-        "border_thickness": 0,
-        "lazy": true
-      }
-    },
-    "17415583002fccbc6e": {
-      "type": "apps",
-      "settings": {
-        "width": "container-wrap"
-      }
-    },
-    "1741557308aa34bb86": {
-      "type": "apps",
-      "settings": {
-        "width": "container-wrap"
-      }
-    },
-    "section_video_VJ4bBD": {
-      "type": "section-video",
-      "disabled": true,
-      "settings": {
-        "video_bg": "shopify://files/videos/GPOD OG Range Use.MOV",
-        "show_video_popup": false,
-        "video_popup_social": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "height": "five-fifty-height-hero",
-        "height_mobile": "one-hundred-height-hero--mobile",
-        "overlay_opacity": 10,
-        "overlay_color": "#333333",
-        "title": "TRUSTED BY 75,000 GOLFERS WORLDWIDE AND COUNTING.",
-        "description": "Join our community of golfers who have revolutionized their game.",
-        "flex_align": "align--middle-center",
-        "text_color": "text-light",
-        "transparent": true,
-        "link_text": "View products",
-        "link": "",
-        "btn_type": "btn--primary",
-        "btn_size": "",
-        "btn_style": "btn--solid"
-      }
-    },
-    "ss_text_block_pro_HTNBLt": {
-      "type": "ss-text-block-pro",
-      "blocks": {
-        "title_BYmAmV": {
-          "type": "title",
-          "settings": {
-            "title": "FIND US ON TOUR:",
-            "title_custom": true,
-            "title_font": "saira_i7",
-            "title_size": 52,
-            "title_height": 100,
-            "title_align": "center",
-            "title_mt": 12,
-            "title_color": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "title_BYmAmV"
-      ],
-      "settings": {
-        "image_width": 20,
-        "image_custom": false,
-        "image_height_desktop": 400,
-        "image_height_mobile": 200,
-        "image_radius": 12,
-        "image_ration": "none",
-        "image_location": "row",
-        "image_location_mobile": "column",
-        "content_padding_horizontal": 40,
-        "content_padding_vertical": 40,
-        "content_radius": 40,
-        "gap": 30,
-        "gap_mobile": 15,
-        "background_color": "#000000",
-        "background_gradient": "",
-        "border_color": "#000000",
-        "content_bg": "",
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "padding_horizontal": 5,
-        "padding_horizontal_mobile": 1.5,
-        "content_width": 120,
-        "border_thickness": 0
-      }
-    },
-    "logo-list": {
-      "type": "section-logo-list",
-      "blocks": {
-        "logo-list-0": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/PGA.png",
-            "logo_width": 120,
-            "logo_url": ""
-          }
-        },
-        "logo-list-1": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/Liv.png",
-            "logo_width": 120,
-            "logo_url": ""
-          }
-        },
-        "item_logo_4qXXbi": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/DP.png",
-            "logo_width": 120,
-            "logo_url": ""
-          }
-        },
-        "item_logo_DQimtX": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/Americas.png",
-            "logo_width": 120,
-            "logo_url": ""
-          }
-        },
-        "logo-list-2": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/Asian.png",
-            "logo_width": 120,
-            "logo_url": ""
-          }
-        },
-        "logo-list-3": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/Epson.png",
-            "logo_width": 120,
-            "logo_url": ""
-          }
-        },
-        "logo-list-4": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/Korn_Ferry.png",
-            "logo_width": 140,
-            "logo_url": ""
-          }
-        }
-      },
-      "block_order": [
-        "logo-list-0",
-        "logo-list-1",
-        "item_logo_4qXXbi",
-        "item_logo_DQimtX",
-        "logo-list-2",
-        "logo-list-3",
-        "logo-list-4"
-      ],
-      "settings": {
-        "color_logos_bg": "#ffffff",
-        "padding_top": 14,
-        "padding_bottom": 0
-      }
-    },
-    "ss_gallery_4_nkrbgg": {
-      "type": "ss-gallery-4",
-      "blocks": {
-        "item_XtNHpn": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/15_b3fc3bfb-2365-42a5-8830-88c2d4a6618d.png"
-          }
-        },
-        "item_RfegMj": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/16_6d82abb8-f2d3-450e-a6ea-0b3a0d840bcf.png"
-          }
-        },
-        "item_QMh67G": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/17.png"
-          }
-        },
-        "item_9NrJgd": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/19.png"
-          }
-        }
-      },
-      "block_order": [
-        "item_XtNHpn",
-        "item_RfegMj",
-        "item_QMh67G",
-        "item_9NrJgd"
-      ],
-      "settings": {
-        "items_row": 4,
-        "items_row_mobile": 2,
-        "items_gap": 0,
-        "items_gap_mobile": 8,
-        "image_radius": 0,
-        "image_border_thickness": 0,
-        "image_ratio": "square",
-        "image_ratio_mobile": "original",
-        "modal_overlay": 1,
-        "close_size": 42,
-        "close_icon_size_mobile": 24,
-        "close_icon_size": 24,
-        "close_size_mobile": 42,
-        "close_radius": 8,
-        "close_border_thickness": 0,
-        "arrow_size": 42,
-        "arrow_size_mobile": 42,
-        "pagination_custom": false,
-        "pagination_font": "josefin_sans_n4",
-        "pagination_size": 14,
-        "pagination_size_mobile": 14,
-        "pagination_height": 130,
-        "image_border_color": "#000000",
-        "modal_bg_color": "#171717",
-        "close_bg_color": "#ffffff",
-        "close_border_color": "#ffffff",
-        "close_icon_color": "#ffffff",
-        "arrow_color": "#ffffff",
-        "pagination_color": "#ffffff",
-        "background_color": "#ffffff",
-        "background_gradient": "",
-        "border_color": "#000000",
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "margin_horizontal": 0,
-        "margin_horizontal_mobile": 0,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_horizontal": 0,
-        "padding_horizontal_mobile": 1.5,
-        "full_width": true,
-        "content_width": 120,
-        "border_thickness": 0,
-        "section_radius": 0,
-        "lazy": true
-      }
-    },
-    "ss_gallery_4_xJ7AC9": {
-      "type": "ss-gallery-4",
-      "blocks": {
-        "item_qhLAPJ": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/14_92e4d3d3-e5ef-44d7-a0df-85572ef8d9c5.png"
-          }
-        },
-        "item_9NQNrM": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/18.png"
-          }
-        },
-        "item_BW3CBn": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/20.png"
-          }
-        },
-        "item_cantQp": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/21.png"
-          }
-        }
-      },
-      "block_order": [
-        "item_qhLAPJ",
-        "item_9NQNrM",
-        "item_BW3CBn",
-        "item_cantQp"
-      ],
-      "settings": {
-        "items_row": 4,
-        "items_row_mobile": 2,
-        "items_gap": 0,
-        "items_gap_mobile": 8,
-        "image_radius": 0,
-        "image_border_thickness": 0,
-        "image_ratio": "square",
-        "image_ratio_mobile": "square",
-        "modal_overlay": 1,
-        "close_size": 42,
-        "close_icon_size_mobile": 24,
-        "close_icon_size": 24,
-        "close_size_mobile": 42,
-        "close_radius": 8,
-        "close_border_thickness": 0,
-        "arrow_size": 42,
-        "arrow_size_mobile": 42,
-        "pagination_custom": false,
-        "pagination_font": "josefin_sans_n4",
-        "pagination_size": 14,
-        "pagination_size_mobile": 14,
-        "pagination_height": 130,
-        "image_border_color": "#000000",
-        "modal_bg_color": "#171717",
-        "close_bg_color": "#ffffff",
-        "close_border_color": "#ffffff",
-        "close_icon_color": "#ffffff",
-        "arrow_color": "#ffffff",
-        "pagination_color": "#ffffff",
-        "background_color": "#ffffff",
-        "background_gradient": "",
-        "border_color": "#000000",
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "margin_horizontal": 0,
-        "margin_horizontal_mobile": 0,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_horizontal": 0,
-        "padding_horizontal_mobile": 1.5,
-        "full_width": true,
-        "content_width": 120,
-        "border_thickness": 0,
-        "section_radius": 0,
-        "lazy": true
-      }
-    },
-    "ss_text_block_pro_7cXbKa": {
-      "type": "ss-text-block-pro",
-      "blocks": {
-        "title_dWTJYx": {
-          "type": "title",
-          "settings": {
-            "title": "TRUSTED BY 75,000+ GOLFERS",
-            "title_custom": false,
-            "title_font": "assistant_n4",
-            "title_size": 50,
-            "title_height": 100,
-            "title_align": "center",
-            "title_mt": 12,
-            "title_color": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "title_dWTJYx"
-      ],
-      "settings": {
-        "image_width": 20,
-        "image_custom": false,
-        "image_height_desktop": 400,
-        "image_height_mobile": 200,
-        "image_radius": 12,
-        "image_ration": "none",
-        "image_location": "row",
-        "image_location_mobile": "column",
-        "content_padding_horizontal": 40,
-        "content_padding_vertical": 40,
-        "content_radius": 40,
-        "gap": 30,
-        "gap_mobile": 15,
-        "background_color": "#000000",
-        "background_gradient": "",
-        "border_color": "#000000",
-        "content_bg": "",
-        "margin_top": 12,
-        "margin_bottom": 12,
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "padding_horizontal": 5,
-        "padding_horizontal_mobile": 1.5,
-        "content_width": 120,
-        "border_thickness": 0
-      }
-    },
-    "1744312839a10500bf": {
-      "type": "apps",
-      "blocks": {
-        "fera_all_reviews_L3J7fM": {
-          "type": "shopify://apps/fera/blocks/all_reviews/2fbfcfa7-8a04-479f-89a8-0621fa099c51",
-          "settings": {
-            "heading": "Customer Reviews",
-            "layout": "masonry",
-            "star_color": "#000000",
-            "types_to_show": "both"
-          }
-        }
-      },
-      "block_order": [
-        "fera_all_reviews_L3J7fM"
-      ],
-      "settings": {
-        "width": "container-wrap"
-      }
-    },
-    "ss_text_block_pro_KFRXeN": {
-      "type": "ss-text-block-pro",
-      "blocks": {
-        "subtitle_tKfmKT": {
-          "type": "subtitle",
-          "settings": {
-            "subtitle": "",
-            "subtitle_custom": false,
-            "subtitle_font": "assistant_n4",
-            "subtitle_size": 20,
-            "subtitle_height": 100,
-            "subtitle_align": "center",
-            "subtitle_mt": 0,
-            "subtitle_color": "#000000"
-          }
-        },
-        "title_VRUjyx": {
-          "type": "title",
-          "settings": {
-            "title": "FIND THE BEST GPOD PRODUCT FOR YOU BY TAKING OUR SHORT QUIZ BELOW:",
-            "title_custom": false,
-            "title_font": "assistant_n4",
-            "title_size": 40,
-            "title_height": 100,
-            "title_align": "center",
-            "title_mt": 12,
-            "title_color": "#ffffff"
-          }
-        },
-        "text_W6M8x9": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Just answer a few quick questions about how you plan on using your GPOD product and we'll tell which GPOD product is best.</p>",
-            "text_custom": false,
-            "text_font": "assistant_n4",
-            "text_size": 20,
-            "text_height": 130,
-            "text_align": "center",
-            "text_mt": 16,
-            "text_color": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "subtitle_tKfmKT",
-        "title_VRUjyx",
-        "text_W6M8x9"
-      ],
-      "name": "SS - Text Block Pro",
-      "settings": {
-        "image_width": 20,
-        "image_custom": false,
-        "image_height_desktop": 400,
-        "image_height_mobile": 200,
-        "image_radius": 12,
-        "image_ration": "none",
-        "image_location": "row",
-        "image_location_mobile": "column",
-        "content_padding_horizontal": 40,
-        "content_padding_vertical": 40,
-        "content_radius": 40,
-        "gap": 30,
-        "gap_mobile": 15,
-        "background_color": "#000000",
-        "background_gradient": "",
-        "border_color": "#000000",
-        "content_bg": "",
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "padding_horizontal": 5,
-        "padding_horizontal_mobile": 1.5,
-        "content_width": 120,
-        "border_thickness": 0
-      }
-    },
-    "175328400999d04378": {
-      "type": "apps",
-      "blocks": {
-        "revenuehunt_quizzes_v2_inline_quiz_QTtVfD": {
-          "type": "shopify://apps/product-recommendation-quiz/blocks/v2-inline-quiz/672f3d48-fd3b-4227-8778-c6e58c4f8a98",
-          "settings": {
-            "quiz_height": 500,
-            "quiz_height_unit": "px",
-            "quiz_fixed_height": false,
-            "quiz_full_width": false,
-            "quiz_retake_autoscroll": "disabled",
-            "quiz_question_autoscroll": "disabled",
-            "quiz_id": ""
-          }
-        }
-      },
-      "block_order": [
-        "revenuehunt_quizzes_v2_inline_quiz_QTtVfD"
-      ],
-      "settings": {
-        "width": "container-wrap"
-      }
-    },
-    "17431857369520612c": {
-      "type": "apps",
-      "blocks": {
-        "socialwidget_instafeed_base_widget_XGDjzr": {
-          "type": "shopify://apps/socialwidget-instafeed/blocks/base-widget/508b8d5b-b176-4dc6-a0ba-2b222db6eb79",
-          "disabled": true,
-          "settings": {}
-        },
-        "instagram_feed_mp_instagram_block_hTQRNy": {
-          "type": "shopify://apps/mp-instagram-feed/blocks/mp_instagram_block/2e85b90f-5da9-4654-967e-051f1942340c",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "socialwidget_instafeed_base_widget_XGDjzr",
-        "instagram_feed_mp_instagram_block_hTQRNy"
-      ],
-      "settings": {
-        "width": "container-wrap"
-      }
-    },
-    "section_collection_yEpQtL": {
-      "type": "section-collection",
-      "settings": {
-        "title": "EXPLORE GPOD:",
-        "show_description": false,
-        "featured_collection": "frontpage",
-        "products_layout": "grid",
-        "products_rows": 2,
-        "show_button": true,
-        "btn_type": "btn--primary",
-        "btn_size": "btn--large",
-        "btn_style": "btn--solid",
-        "color_style": "black",
-        "padding_top": 70,
-        "padding_bottom": 50
-      }
-    },
-    "section_rich_text_QT36UJ": {
-      "type": "section-rich-text",
-      "settings": {
-        "padding_top": 100,
-        "padding_bottom": 23
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     }
   },
   "order": [
-    "section_announcement_BHqV8q",
-    "section_video_7ehnVn",
-    "section_image_with_text_overlay_X7fJ6j",
-    "section_list_collections_nDEVC3",
-    "ss_text_block_pro_aQ93F9",
-    "section_product_features_iT4Hdw",
-    "section_image_with_text_j3cwyK",
-    "section_image_with_text_zaExdN",
-    "section_rich_text_rUftPD",
-    "section_product_features_3GViUf",
-    "ss_comparison_table_6_UwWQ4d",
-    "17415583002fccbc6e",
-    "1741557308aa34bb86",
-    "section_video_VJ4bBD",
-    "ss_text_block_pro_HTNBLt",
-    "logo-list",
-    "ss_gallery_4_nkrbgg",
-    "ss_gallery_4_xJ7AC9",
-    "ss_text_block_pro_7cXbKa",
-    "1744312839a10500bf",
-    "ss_text_block_pro_KFRXeN",
-    "175328400999d04378",
-    "17431857369520612c",
-    "section_collection_yEpQtL",
-    "section_rich_text_QT36UJ"
+    "hero",
+    "usecases",
+    "compare",
+    "overlay",
+    "icons",
+    "quiz_cta"
   ]
 }

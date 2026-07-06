@@ -1,0 +1,202 @@
+{% comment %}
+  PDP: how to set up and use — video (per-product gpod.setup_video_url metafield
+  overrides the section setting) + numbered steps. Directly answers the top
+  support complaints: twist-lock extension use and remote pairing.
+{% endcomment %}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+{%- liquid
+  assign video_url = product.metafields.gpod.setup_video_url.value | default: section.settings.video_url
+  assign video_id = ''
+  assign video_type = ''
+  if video_url contains 'youtube.com/watch?v='
+    assign video_id = video_url | split: 'watch?v=' | last | split: '&' | first
+    assign video_type = 'youtube'
+  elsif video_url contains 'youtu.be/'
+    assign video_id = video_url | split: 'youtu.be/' | last | split: '?' | first
+    assign video_type = 'youtube'
+  elsif video_url contains 'vimeo.com/'
+    assign video_id = video_url | split: 'vimeo.com/' | last | split: '?' | first
+    assign video_type = 'vimeo'
+  endif
+-%}
+
+{%- if video_type != blank or section.blocks.size > 0 -%}
+<section class="gpod-section gpod-howto container-wrap section-padding"
+  id="how-to"
+  data-section-type="pdp-how-to"
+  style="{{ style }}"
+>
+  <div class="container">
+    {%- if section.settings.kicker != blank -%}
+      <p class="gpod-kicker">{{ section.settings.kicker | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gpod-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    <div class="gpod-howto__grid">
+      {%- if video_type != blank -%}
+        <div class="gpod-howto__video">
+          {%- if video_type == 'youtube' -%}
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/{{ video_id }}?rel=0"
+              title="{{ section.settings.heading | default: 'Setup video' | escape }}"
+              loading="lazy"
+              allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          {%- else -%}
+            <iframe
+              src="https://player.vimeo.com/video/{{ video_id }}?dnt=1"
+              title="{{ section.settings.heading | default: 'Setup video' | escape }}"
+              loading="lazy"
+              allow="fullscreen; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div>
+          <ol class="gpod-steps">
+            {%- for block in section.blocks -%}
+              <li {{ block.shopify_attributes }}>
+                {%- if block.settings.title != blank -%}
+                  <h3>{{ block.settings.title | escape }}</h3>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <p>{{ block.settings.text }}</p>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ol>
+          {%- if section.settings.support_link_text != blank -%}
+            <a class="btn btn--secondary btn--outline btn--small" href="{{ section.settings.support_link | default: '/pages/support' }}">
+              {{- section.settings.support_link_text | escape -}}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PDP how-to",
+  "class": "shopify-section--pdp-how-to",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Get set up in under a minute"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How to use it"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Fallback video URL (YouTube or Vimeo)",
+      "info": "Per-product videos come from the product's 'Setup video URL' metafield; this is used when that's empty."
+    },
+    {
+      "type": "url",
+      "id": "support_link",
+      "label": "Support link"
+    },
+    {
+      "type": "text",
+      "id": "support_link_text",
+      "label": "Support link label",
+      "default": "Guides & troubleshooting"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "category": "Product",
+      "name": "PDP how-to",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Extend from the top down",
+            "text": "Twist each lock a quarter turn to loosen, pull the section out, then twist back to lock. Always extend the upper sections first and never slam the GPOD into the ground while collapsed — that's what jams the lower section."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Attach your phone",
+            "text": "iPhones with MagSafe snap straight on. Android or thick cases: stick one of the included metal plates on first — it holds just as strong."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Frame your swing and film",
+            "text": "Stake it down-target or face-on, tilt the ball head to frame yourself, and record. With a Bluetooth remote, pair it in your phone's Bluetooth settings and the button triggers your camera shutter."
+          }
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

@@ -1,0 +1,141 @@
+{% comment %}
+  PDP: full specifications + what's in the box, driven by gpod.* metafields.
+  Renders nothing if the product has no spec metafields and no box contents.
+{% endcomment %}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+{%- liquid
+  assign spec_keys = 'best_for,extended_length,collapsed_length,weight,base_detail,phone_attachment,remote_included,bag_fit,materials' | split: ','
+  assign spec_labels = 'Best for,Extended height,Collapsed length,Weight,Base,Phone attachment,Remote,Golf bag fit,Materials' | split: ','
+
+  assign has_specs = false
+  for key in spec_keys
+    if product.metafields.gpod[key].value != blank
+      assign has_specs = true
+      break
+    endif
+  endfor
+
+  assign box_contents = product.metafields.gpod.box_contents.value
+-%}
+
+{%- if has_specs or box_contents != blank -%}
+<section class="gpod-section gpod-pdp-specs container-wrap section-padding"
+  id="specs"
+  data-section-type="pdp-specs"
+  style="{{ style }}"
+>
+  <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gpod-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    <div class="gpod-pdp-specs__grid">
+      {%- if has_specs -%}
+        <div>
+          <h3>{{ section.settings.specs_title | escape }}</h3>
+          <dl class="gpod-spec-list">
+            {%- for key in spec_keys -%}
+              {%- assign value = product.metafields.gpod[key].value -%}
+              {%- if value != blank -%}
+                <div class="gpod-spec-list__row">
+                  <dt>{{ spec_labels[forloop.index0] }}</dt>
+                  <dd>{{ value }}</dd>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </dl>
+          {%- if section.settings.specs_note != blank -%}
+            <p class="gpod-pdp-specs__note">{{ section.settings.specs_note }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if box_contents != blank -%}
+        <div>
+          <h3>{{ section.settings.box_title | escape }}</h3>
+          <ul class="gpod-box-list">
+            {%- assign box_lines = box_contents | newline_to_br | split: '<br />' -%}
+            {%- for line in box_lines -%}
+              {%- assign trimmed = line | strip -%}
+              {%- if trimmed != blank -%}
+                <li>{{ trimmed }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PDP specs + box",
+  "class": "shopify-section--pdp-specs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Specs & what you get"
+    },
+    {
+      "type": "text",
+      "id": "specs_title",
+      "label": "Specs column title",
+      "default": "Specifications"
+    },
+    {
+      "type": "text",
+      "id": "box_title",
+      "label": "Box column title",
+      "default": "What's in the box"
+    },
+    {
+      "type": "richtext",
+      "id": "specs_note",
+      "label": "Note under specs",
+      "default": "<p>Questions about a spec we haven't listed? <a href=\"/pages/contact-us\">Ask us</a> — we answer fast.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    }
+  ],
+  "presets": [
+    {
+      "category": "Product",
+      "name": "PDP specs + box"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

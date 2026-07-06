@@ -1,0 +1,172 @@
+{% comment %}
+  PDP: device compatibility answers (MagSafe / Android / tablets / cameras).
+  The highlighted banner pulls the per-product gpod.phone_attachment metafield;
+  the cards below are merchant-editable blocks with sensible defaults.
+{% endcomment %}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+{%- assign attachment = product.metafields.gpod.phone_attachment.value -%}
+
+<section class="gpod-section gpod-compat container-wrap section-padding"
+  id="compatibility"
+  data-section-type="pdp-compatibility"
+  style="{{ style }}"
+>
+  <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gpod-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    {%- if attachment != blank -%}
+      <p class="gpod-compat__banner">
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm-1.2 11.7L3.4 8.3l1.4-1.4 2 2 4.4-4.4 1.4 1.4-5.8 5.8z"/></svg>
+        <span>{{ attachment | escape }}</span>
+      </p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="gpod-compat__grid">
+        {%- for block in section.blocks -%}
+          <div class="gpod-compat__item" {{ block.shopify_attributes }}>
+            {%- case block.settings.icon -%}
+              {%- when 'phone' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="7" y="2" width="10" height="20" rx="2"/><circle cx="12" cy="12" r="3.2"/></svg>
+              {%- when 'android' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="7" y="2" width="10" height="20" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/></svg>
+              {%- when 'tablet' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M10 18h4"/></svg>
+              {%- when 'camera' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.2"/></svg>
+              {%- else -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.3 2.3 4.7-4.7"/></svg>
+            {%- endcase -%}
+            {%- if block.settings.title != blank -%}
+              <h3>{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p>{{ block.settings.text }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "PDP compatibility",
+  "class": "shopify-section--pdp-compatibility",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Will it work with your phone?"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Compatibility item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "check",
+          "options": [
+            { "label": "Check", "value": "check" },
+            { "label": "iPhone", "value": "phone" },
+            { "label": "Android", "value": "android" },
+            { "label": "Tablet", "value": "tablet" },
+            { "label": "Camera", "value": "camera" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "category": "Product",
+      "name": "PDP compatibility",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "phone",
+            "title": "iPhone with MagSafe",
+            "text": "iPhone 12 and newer snap straight onto the magnetic mount — with or without a MagSafe case. Thick rugged cases (e.g. OtterBox): stick an included metal plate on the case for a secure hold."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "android",
+            "title": "Android & non-MagSafe phones",
+            "text": "Metal plates with 3M adhesive are included. Stick one on your phone or case and it attaches magnetically just like MagSafe."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "tablet",
+            "title": "iPads & tablets",
+            "text": "Tablets attach using the included metal plates. For larger iPads we recommend the GPOD Studio 2.0 for maximum stability."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "camera",
+            "title": "GoPro & cameras",
+            "text": "The magnetic head unscrews from a standard 1/4-20 thread, so you can mount any camera or GoPro adapter that fits a 1/4 in tripod screw."
+          }
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

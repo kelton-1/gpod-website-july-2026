@@ -1,0 +1,292 @@
+{% comment %}
+  Support hub: guide cards + troubleshooting accordion (details/summary, no JS).
+  Default content answers the store's real top support drivers — see
+  docs/customer-insights.md (stuck extension, remote, Sportsbox, compatibility).
+{% endcomment %}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+<section class="gpod-section gpod-support container-wrap section-padding"
+  data-section-type="support-hub"
+  style="{{ style }}"
+>
+  <div class="container">
+    {%- if section.settings.kicker != blank -%}
+      <p class="gpod-kicker">{{ section.settings.kicker | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gpod-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="gpod-lede">{{ section.settings.text }}</div>
+    {%- endif -%}
+
+    {%- assign guide_blocks = section.blocks | where: 'type', 'guide' -%}
+    {%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
+
+    {%- if guide_blocks.size > 0 -%}
+      <div class="gpod-support__grid">
+        {%- for block in guide_blocks -%}
+          {%- assign tag = 'div' -%}
+          {%- if block.settings.link != blank -%}{%- assign tag = 'a' -%}{%- endif -%}
+          <{{ tag }}{% if block.settings.link != blank %} href="{{ block.settings.link }}"{% endif %} class="gpod-support__card" {{ block.shopify_attributes }}>
+            {%- case block.settings.icon -%}
+              {%- when 'video' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="M16 10.5 22 7v10l-6-3.5z"/></svg>
+              {%- when 'wrench' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4L14 12l-2-2 2.7-3.7z"/></svg>
+              {%- when 'remote' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="8" y="2" width="8" height="20" rx="3"/><circle cx="12" cy="8" r="2"/></svg>
+              {%- when 'app' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+              {%- when 'parts' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4M5 5l2.8 2.8m8.4 8.4L19 19M19 5l-2.8 2.8M7.8 16.2 5 19"/></svg>
+              {%- else -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zm0 0a2 2 0 0 0 2 2h13"/></svg>
+            {%- endcase -%}
+            {%- if block.settings.title != blank -%}
+              <h3>{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p>{{ block.settings.text }}</p>
+            {%- endif -%}
+          </{{ tag }}>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if faq_blocks.size > 0 -%}
+      {%- if section.settings.faq_heading != blank -%}
+        <h2 class="gpod-heading" id="troubleshooting">{{ section.settings.faq_heading | escape }}</h2>
+      {%- endif -%}
+      <div class="gpod-accordion">
+        {%- for block in faq_blocks -%}
+          <details {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.question | escape }}</summary>
+            <div class="gpod-accordion__body">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Support hub",
+  "class": "shopify-section--support-hub",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Support"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Guides, setup videos & troubleshooting"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Intro text",
+      "default": "<p>Everything you need to get filming — and quick fixes for the most common questions we get.</p>"
+    },
+    {
+      "type": "text",
+      "id": "faq_heading",
+      "label": "Troubleshooting heading",
+      "default": "Troubleshooting"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "guide",
+      "name": "Guide card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "guide",
+          "options": [
+            { "label": "Guide", "value": "guide" },
+            { "label": "Video", "value": "video" },
+            { "label": "Wrench", "value": "wrench" },
+            { "label": "Remote", "value": "remote" },
+            { "label": "App", "value": "app" },
+            { "label": "Parts", "value": "parts" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Troubleshooting item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Text",
+      "name": "Support hub",
+      "blocks": [
+        {
+          "type": "guide",
+          "settings": {
+            "icon": "guide",
+            "title": "Setup instructions",
+            "text": "Step-by-step setup for every GPOD model, from unboxing to your first swing video.",
+            "link": "/pages/instructions"
+          }
+        },
+        {
+          "type": "guide",
+          "settings": {
+            "icon": "remote",
+            "title": "Remote pairing & use",
+            "text": "Pair the Bluetooth remote in seconds and use it to start and stop recording from address.",
+            "link": "/pages/instructions"
+          }
+        },
+        {
+          "type": "guide",
+          "settings": {
+            "icon": "app",
+            "title": "Activate Sportsbox 3D",
+            "text": "Bought a Sportsbox bundle? Here's exactly how to redeem and log in to your subscription.",
+            "link": "/pages/faq"
+          }
+        },
+        {
+          "type": "guide",
+          "settings": {
+            "icon": "wrench",
+            "title": "Stuck extension fix",
+            "text": "Lower section jammed or won't extend? Follow our un-sticking guide before reaching for pliers.",
+            "link": "#troubleshooting"
+          }
+        },
+        {
+          "type": "guide",
+          "settings": {
+            "icon": "video",
+            "title": "Compatibility guide",
+            "text": "MagSafe, Android plates, thick cases, iPads, GoPros — check what works with your device.",
+            "link": "/pages/gpod-compatibility-guide"
+          }
+        },
+        {
+          "type": "guide",
+          "settings": {
+            "icon": "parts",
+            "title": "Replacement parts",
+            "text": "Lost a remote, knob, or magnet? Contact us — most small parts can be replaced individually.",
+            "link": "/pages/contact-us"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "My GPOD's lower section is stuck or won't extend",
+            "answer": "<p>This almost always happens when the twist-lock is over-tightened or the pod was pushed into the ground while collapsed. To free it: grip the stuck section close to the joint, twist a quarter turn <strong>counter-clockwise</strong> with steady (not sudden) force, and pull gently while twisting. A rubber jar-opener adds grip without scratching. To prevent it: extend fully before staking, and lock each section with a light quarter turn — it doesn't need to be torqued down. Still stuck? <a href=\"/pages/contact-us\">Contact us</a> and we'll make it right.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What does the Bluetooth remote actually do?",
+            "answer": "<p>It's a camera shutter button. Pair it once (Settings → Bluetooth on your phone), open your camera or swing app, and the remote starts/stops video or snaps photos — so you can trigger recording from address instead of running back and forth.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "The remote won't pair or turn on",
+            "answer": "<p>1) Hold the power button 3 seconds until the light blinks. 2) On your phone: Settings → Bluetooth → pair the remote. 3) If it doesn't respond, pull the battery tab or replace the CR2032 battery. 4) Already paired to another phone? \"Forget\" the device and re-pair. Still dead on arrival? <a href=\"/pages/contact-us\">Contact us</a> for a replacement.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "My phone slides off the magnetic mount",
+            "answer": "<p>Magnetic hold depends on what's between the magnet and the phone. Bare iPhone 12+ or MagSafe case: it should snap on firmly and centered — check for dirt on the mount. Non-MagSafe case or Android: use an included 3M metal plate on the outside of the case. Very thick or rugged cases still slipping: put the plate directly on the case surface closest to the mount.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How do I activate the Sportsbox 3D subscription from my bundle?",
+            "answer": "<p>Your activation code and instructions are in the order confirmation email. Download the Sportsbox 3D Golf app, create an account with the <em>same email you used at checkout</em>, and redeem the code under Subscription. Can't find the code? <a href=\"/pages/contact-us\">Contact us</a> with your order number and we'll resend it.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How do I take the GPUCK / base off to install the spike?",
+            "answer": "<p>Hold the base of the unit firmly with one hand and unscrew the GPUCK counter-clockwise with the other. If the puck just spins, grip it flat across its edges (not the rotating head) — a rubber pad helps. The spike then screws into the exposed 1/4 in thread.</p>"
+          }
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

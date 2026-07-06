@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
@@ -78,10 +69,82 @@
         "padding_top": 50,
         "padding_bottom": 50
       }
+    },
+    "toolbar": {
+      "type": "collection-toolbar",
+      "blocks": {
+        "pill_monopods": {
+          "type": "pill",
+          "settings": {
+            "collection": "monopods"
+          }
+        },
+        "pill_tripods_bases": {
+          "type": "pill",
+          "settings": {
+            "collection": "tripods-bases"
+          }
+        },
+        "pill_bundles": {
+          "type": "pill",
+          "settings": {
+            "collection": "bundles"
+          }
+        },
+        "pill_accessories": {
+          "type": "pill",
+          "settings": {
+            "collection": "accessories"
+          }
+        },
+        "pill_on_the_course": {
+          "type": "pill",
+          "settings": {
+            "collection": "on-the-course"
+          }
+        },
+        "pill_indoor_simulator": {
+          "type": "pill",
+          "settings": {
+            "collection": "indoor-simulator"
+          }
+        },
+        "pill_coaching_studio": {
+          "type": "pill",
+          "settings": {
+            "collection": "coaching-studio"
+          }
+        },
+        "pill_travel_ready": {
+          "type": "pill",
+          "settings": {
+            "collection": "travel-ready"
+          }
+        }
+      },
+      "block_order": [
+        "pill_monopods",
+        "pill_tripods_bases",
+        "pill_bundles",
+        "pill_accessories",
+        "pill_on_the_course",
+        "pill_indoor_simulator",
+        "pill_coaching_studio",
+        "pill_travel_ready"
+      ],
+      "settings": {
+        "compare_text": "Compare models",
+        "compare_link": "/pages/compare-gpod-models",
+        "quiz_text": "Take the 30-second finder",
+        "quiz_link": "/pages/product-finder-quiz",
+        "padding_top": 10,
+        "padding_bottom": 10
+      }
     }
   },
   "order": [
     "hero",
+    "toolbar",
     "section_image_with_text_overlay_ahfGdq",
     "main"
   ]

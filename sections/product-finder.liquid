@@ -1,0 +1,219 @@
+{% comment %}
+  Native product finder quiz (replaces the PageFly quiz). Three questions map
+  to a recommendation. Product lookups use all_products by handle so the
+  section works out of the box; handles are merchant-editable in settings.
+  Logic lives in assets/gpod.js (GpodFinder).
+{% endcomment %}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+{%- liquid
+  assign handle_list = section.settings.product_handles | default: 'gpodmagsafe,gpodx,gpod-pauly-p2,gpod-travel-1,gpod-studio,g-bundle-one-gpod-with-gpod-base,g-bundle-two-gpod-x-with-gpod-base,g-bundle-three-gpod-pauly-p-and-gpod-base'
+  assign handles = handle_list | split: ','
+-%}
+
+<section class="gpod-section gpod-finder-section container-wrap section-padding gpod-section--center"
+  data-section-type="product-finder"
+  style="{{ style }}"
+>
+  <div class="container">
+    <div class="gpod-finder" data-gpod-finder>
+      {%- if section.settings.kicker != blank -%}
+        <p class="gpod-kicker">{{ section.settings.kicker | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="gpod-heading">{{ section.settings.heading | escape }}</h1>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="gpod-lede">{{ section.settings.text }}</div>
+      {%- endif -%}
+
+      <div class="gpod-finder__progress" aria-hidden="true">
+        <span data-finder-progress class="is-active"></span>
+        <span data-finder-progress></span>
+        <span data-finder-progress></span>
+      </div>
+
+      <form data-finder-form>
+        <div class="gpod-finder__step" data-finder-step="0">
+          <fieldset>
+            <legend>Where will you film most?</legend>
+            <div class="gpod-finder__options">
+              <div class="gpod-finder__option">
+                <input type="radio" name="where" id="finder-where-grass" value="grass">
+                <label for="finder-where-grass">On grass — course or range<small>The GPOD stakes straight into the turf</small></label>
+              </div>
+              <div class="gpod-finder__option">
+                <input type="radio" name="where" id="finder-where-indoor" value="indoor">
+                <label for="finder-where-indoor">Indoors — mats, sim, or home<small>You need a freestanding base or tripod</small></label>
+              </div>
+              <div class="gpod-finder__option">
+                <input type="radio" name="where" id="finder-where-both" value="both">
+                <label for="finder-where-both">Both — everywhere I practice<small>Bundles cover grass and hard surfaces</small></label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="gpod-finder__step" data-finder-step="1" hidden>
+          <fieldset>
+            <legend>What device will you film with?</legend>
+            <div class="gpod-finder__options">
+              <div class="gpod-finder__option">
+                <input type="radio" name="device" id="finder-device-iphone" value="iphone">
+                <label for="finder-device-iphone">iPhone with MagSafe<small>iPhone 12 or newer — snaps straight on</small></label>
+              </div>
+              <div class="gpod-finder__option">
+                <input type="radio" name="device" id="finder-device-android" value="android">
+                <label for="finder-device-android">Android or non-MagSafe phone<small>Included metal plates make any phone magnetic</small></label>
+              </div>
+              <div class="gpod-finder__option">
+                <input type="radio" name="device" id="finder-device-tablet" value="tablet">
+                <label for="finder-device-tablet">iPad or tablet<small>Bigger screens want the most stable setup</small></label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="gpod-finder__step" data-finder-step="2" hidden>
+          <fieldset>
+            <legend>What matters most to you?</legend>
+            <div class="gpod-finder__options">
+              <div class="gpod-finder__option">
+                <input type="radio" name="priority" id="finder-priority-pack" value="pack">
+                <label for="finder-priority-pack">Smallest pack size<small>Fits in a bag pocket or club slot</small></label>
+              </div>
+              <div class="gpod-finder__option">
+                <input type="radio" name="priority" id="finder-priority-speed" value="speed">
+                <label for="finder-priority-speed">Fast height changes<small>Reframe between shots in seconds</small></label>
+              </div>
+              <div class="gpod-finder__option">
+                <input type="radio" name="priority" id="finder-priority-stability" value="stability">
+                <label for="finder-priority-stability">Maximum stability<small>Wind, uneven lies, or daily coaching use</small></label>
+              </div>
+              <div class="gpod-finder__option">
+                <input type="radio" name="priority" id="finder-priority-value" value="value">
+                <label for="finder-priority-value">Best value<small>The essentials, without extras</small></label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="gpod-finder__nav">
+          <button type="button" class="btn btn--secondary btn--outline" data-finder-back hidden>Back</button>
+          <button type="button" class="btn btn--primary btn--solid" data-finder-next disabled>Next</button>
+        </div>
+      </form>
+
+      <div class="gpod-finder__result-wrap" data-finder-result hidden aria-live="polite"></div>
+
+      {%- comment -%} Candidate cards rendered server-side; JS picks which to show. {%- endcomment -%}
+      <template data-finder-products>
+        {%- for handle in handles -%}
+          {%- assign candidate = all_products[handle] -%}
+          {%- if candidate != blank -%}
+            <div class="gpod-finder__result" data-handle="{{ candidate.handle }}">
+              {%- if candidate.featured_image -%}
+                <img
+                  src="{{ candidate.featured_image | image_url: width: 400 }}"
+                  width="200" height="200" loading="lazy"
+                  alt="{{ candidate.featured_image.alt | default: candidate.title | escape }}"
+                >
+              {%- endif -%}
+              <div>
+                <p class="gpod-kicker">Our pick for you</p>
+                <h3>{{ candidate.title }}</h3>
+                <p class="gpod-finder__price"><strong>{{ candidate.price | money }}</strong></p>
+                <p class="gpod-finder__why" data-finder-why></p>
+                <a class="btn btn--primary btn--solid" href="{{ candidate.url }}">See the {{ candidate.title | escape }}</a>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </template>
+
+      <div class="gpod-finder__alt" data-finder-footer hidden>
+        <p>
+          Want to see everything side by side? <a href="{{ section.settings.compare_link | default: '/pages/compare-gpod-models' }}">Compare all models</a>
+          · <button type="button" class="btn btn--text" data-finder-restart>Start over</button>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'gpod.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Product finder quiz",
+  "class": "shopify-section--product-finder",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Product finder"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find your GPOD in 30 seconds"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Intro text",
+      "default": "<p>Answer three quick questions and we'll point you at the right setup — no guesswork.</p>"
+    },
+    {
+      "type": "text",
+      "id": "product_handles",
+      "label": "Candidate product handles (comma-separated)",
+      "info": "Order doesn't matter. Defaults cover the core monopods, tripods, and G-Bundles."
+    },
+    {
+      "type": "url",
+      "id": "compare_link",
+      "label": "Compare page link"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "category": "Product",
+      "name": "Product finder quiz"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

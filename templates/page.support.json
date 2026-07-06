@@ -1,0 +1,130 @@
+{
+  "sections": {
+    "main": {
+      "type": "support-hub",
+      "blocks": {
+        "guide_0": {
+          "type": "guide",
+          "settings": {
+            "icon": "guide",
+            "title": "Setup instructions",
+            "text": "Step-by-step setup for every GPOD model, from unboxing to your first swing video.",
+            "link": "/pages/instructions"
+          }
+        },
+        "guide_1": {
+          "type": "guide",
+          "settings": {
+            "icon": "remote",
+            "title": "Remote pairing & use",
+            "text": "Pair the Bluetooth remote in seconds and use it to start and stop recording from address.",
+            "link": "/pages/instructions"
+          }
+        },
+        "guide_2": {
+          "type": "guide",
+          "settings": {
+            "icon": "app",
+            "title": "Activate Sportsbox 3D",
+            "text": "Bought a Sportsbox bundle? Here's exactly how to redeem and log in to your subscription.",
+            "link": "/pages/faq"
+          }
+        },
+        "guide_3": {
+          "type": "guide",
+          "settings": {
+            "icon": "wrench",
+            "title": "Stuck extension fix",
+            "text": "Lower section jammed or won't extend? Follow our un-sticking guide before reaching for pliers.",
+            "link": "#troubleshooting"
+          }
+        },
+        "guide_4": {
+          "type": "guide",
+          "settings": {
+            "icon": "video",
+            "title": "Compatibility guide",
+            "text": "MagSafe, Android plates, thick cases, iPads, GoPros — check what works with your device.",
+            "link": "/pages/gpod-compatibility-guide"
+          }
+        },
+        "guide_5": {
+          "type": "guide",
+          "settings": {
+            "icon": "parts",
+            "title": "Replacement parts",
+            "text": "Lost a remote, knob, or magnet? Contact us — most small parts can be replaced individually.",
+            "link": "/pages/contact-us"
+          }
+        },
+        "faq_0": {
+          "type": "faq",
+          "settings": {
+            "question": "My GPOD's lower section is stuck or won't extend",
+            "answer": "<p>This almost always happens when the twist-lock is over-tightened or the pod was pushed into the ground while collapsed. To free it: grip the stuck section close to the joint, twist a quarter turn <strong>counter-clockwise</strong> with steady (not sudden) force, and pull gently while twisting. A rubber jar-opener adds grip without scratching. To prevent it: extend fully before staking, and lock each section with a light quarter turn — it doesn't need to be torqued down. Still stuck? <a href=\"/pages/contact-us\">Contact us</a> and we'll make it right.</p>"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "What does the Bluetooth remote actually do?",
+            "answer": "<p>It's a camera shutter button. Pair it once (Settings → Bluetooth on your phone), open your camera or swing app, and the remote starts/stops video or snaps photos — so you can trigger recording from address instead of running back and forth.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "The remote won't pair or turn on",
+            "answer": "<p>1) Hold the power button 3 seconds until the light blinks. 2) On your phone: Settings → Bluetooth → pair the remote. 3) If it doesn't respond, pull the battery tab or replace the CR2032 battery. 4) Already paired to another phone? \"Forget\" the device and re-pair. Still dead on arrival? <a href=\"/pages/contact-us\">Contact us</a> for a replacement.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "My phone slides off the magnetic mount",
+            "answer": "<p>Magnetic hold depends on what's between the magnet and the phone. Bare iPhone 12+ or MagSafe case: it should snap on firmly and centered — check for dirt on the mount. Non-MagSafe case or Android: use an included 3M metal plate on the outside of the case. Very thick or rugged cases still slipping: put the plate directly on the case surface closest to the mount.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I activate the Sportsbox 3D subscription from my bundle?",
+            "answer": "<p>Your activation code and instructions are in the order confirmation email. Download the Sportsbox 3D Golf app, create an account with the <em>same email you used at checkout</em>, and redeem the code under Subscription. Can't find the code? <a href=\"/pages/contact-us\">Contact us</a> with your order number and we'll resend it.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I take the GPUCK / base off to install the spike?",
+            "answer": "<p>Hold the base of the unit firmly with one hand and unscrew the GPUCK counter-clockwise with the other. If the puck just spins, grip it flat across its edges (not the rotating head) — a rubber pad helps. The spike then screws into the exposed 1/4 in thread.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "guide_0",
+        "guide_1",
+        "guide_2",
+        "guide_3",
+        "guide_4",
+        "guide_5",
+        "faq_0",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5"
+      ],
+      "settings": {
+        "kicker": "Support",
+        "heading": "Guides, setup videos & troubleshooting",
+        "text": "<p>Everything you need to get filming — and quick fixes for the most common questions we get.</p>",
+        "faq_heading": "Troubleshooting",
+        "padding_top": 50,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

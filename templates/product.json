@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
@@ -138,303 +129,6 @@
         "color_icons_text": "#333333",
         "padding_top": 50,
         "padding_bottom": 50
-      }
-    },
-    "ss_comparison_table_6_WTXV4b": {
-      "type": "ss-comparison-table-6",
-      "blocks": {
-        "list_item_hhpn6e": {
-          "type": "list_item",
-          "settings": {
-            "text": "1-YEAR WARRANTY"
-          }
-        },
-        "list_item_mxwtc8": {
-          "type": "list_item",
-          "settings": {
-            "text": "PREMIUM MATERIALS"
-          }
-        },
-        "list_item_jfdVEN": {
-          "type": "list_item",
-          "settings": {
-            "text": "TRUSTED BY THE PROS"
-          }
-        },
-        "list_item_7UJUw8": {
-          "type": "list_item",
-          "settings": {
-            "text": "UNPARALLELED CONVENIENCE"
-          }
-        },
-        "table_row_EfyGBe": {
-          "type": "table_row",
-          "settings": {
-            "row_heading": "360° Adjustable Magnetic Head",
-            "first_column": "",
-            "first_column_icon": "check",
-            "second_column": "",
-            "second_column_icon": "cross",
-            "third_column": "",
-            "third_column_icon": "none",
-            "four_column": "",
-            "four_column_icon": "none"
-          }
-        },
-        "table_row_YhMjaF": {
-          "type": "table_row",
-          "settings": {
-            "row_heading": "Lightweight Carbon Fiber",
-            "first_column": "",
-            "first_column_icon": "check",
-            "second_column": "",
-            "second_column_icon": "cross",
-            "third_column": "",
-            "third_column_icon": "none",
-            "four_column": "",
-            "four_column_icon": "none"
-          }
-        },
-        "table_row_xi67iC": {
-          "type": "table_row",
-          "settings": {
-            "row_heading": "Aluminum Alloy Components",
-            "first_column": "",
-            "first_column_icon": "check",
-            "second_column": "",
-            "second_column_icon": "cross",
-            "third_column": "",
-            "third_column_icon": "none",
-            "four_column": "",
-            "four_column_icon": "none"
-          }
-        },
-        "table_row_qAhAmt": {
-          "type": "table_row",
-          "settings": {
-            "row_heading": "Rare-earth Neodymium Magnets",
-            "first_column": "",
-            "first_column_icon": "check",
-            "second_column": "",
-            "second_column_icon": "cross",
-            "third_column": "",
-            "third_column_icon": "none",
-            "four_column": "",
-            "four_column_icon": "none"
-          }
-        },
-        "table_row_bqHHRc": {
-          "type": "table_row",
-          "settings": {
-            "row_heading": "Wind-Resistant Stability",
-            "first_column": "",
-            "first_column_icon": "check",
-            "second_column": "",
-            "second_column_icon": "cross",
-            "third_column": "",
-            "third_column_icon": "none",
-            "four_column": "",
-            "four_column_icon": "none"
-          }
-        },
-        "table_row_FcQPXp": {
-          "type": "table_row",
-          "settings": {
-            "row_heading": "Unparalleled Convenience",
-            "first_column": "",
-            "first_column_icon": "check",
-            "second_column": "",
-            "second_column_icon": "cross",
-            "third_column": "",
-            "third_column_icon": "none",
-            "four_column": "",
-            "four_column_icon": "none"
-          }
-        }
-      },
-      "block_order": [
-        "list_item_hhpn6e",
-        "list_item_mxwtc8",
-        "list_item_jfdVEN",
-        "list_item_7UJUw8",
-        "table_row_EfyGBe",
-        "table_row_YhMjaF",
-        "table_row_xi67iC",
-        "table_row_qAhAmt",
-        "table_row_bqHHRc",
-        "table_row_FcQPXp"
-      ],
-      "settings": {
-        "body_gap": 32,
-        "body_gap_mobile": 32,
-        "content_horizontal_align": "start",
-        "content_horizontal_align_mobile": "center",
-        "heading": "<p><em><strong>THE BREAKDOWN</strong></em></p>",
-        "heading_custom": false,
-        "heading_font": "josefin_sans_i7",
-        "heading_size": 52,
-        "heading_size_mobile": 32,
-        "heading_height": 150,
-        "text": "<p>We've spent countless hours laboring over every painstaking detail to provide you with the best possible magnetic phone mount on the market.</p>",
-        "text_custom": false,
-        "text_font": "josefin_sans_n4",
-        "text_size": 18,
-        "text_size_mobile": 18,
-        "text_height": 150,
-        "text_mt": 4,
-        "list_mt": 50,
-        "list_mt_mobile": 32,
-        "list_gap": 30,
-        "list_gap_mobile": 30,
-        "list_hide_mobile": true,
-        "icon_size": 28,
-        "icon_size_mobile": 28,
-        "icon_margin_right": 16,
-        "list_text_custom": false,
-        "list_text_font": "josefin_sans_n4",
-        "list_text_size": 20,
-        "list_text_size_mobile": 18,
-        "list_text_height": 150,
-        "button": "GET YOURS NOW",
-        "button_url": "",
-        "button_custom": false,
-        "button_font": "josefin_sans_n4",
-        "button_size": 18,
-        "button_size_mobile": 18,
-        "button_height": 100,
-        "button_width": 305,
-        "button_mt": 50,
-        "button_mt_mobile": 32,
-        "button_padding_vertical": 16,
-        "button_padding_vertical_mobile": 16,
-        "button_padding_horizontal": 48,
-        "button_padding_horizontal_mobile": 48,
-        "button_radius": 100,
-        "button_border_thickness": 0,
-        "button_style": "non_outline",
-        "button_position_mobile": "bottom",
-        "table_columns": 2,
-        "table_mt_mobile": 32,
-        "table_column_active": "1",
-        "table_radius": 16,
-        "table_border_thickness": 1,
-        "table_heading_image_size": 100,
-        "table_heading_image_size_mobile": 80,
-        "first_heading": "SECTION STORE",
-        "first_heading_image": "shopify://shop_images/GPOD_logo.png",
-        "second_heading": "Others",
-        "third_heading": "Third",
-        "four_heading": "Fourth",
-        "table_heading_custom": false,
-        "table_heading_font": "assistant_n4",
-        "table_heading_size": 20,
-        "table_heading_size_mobile": 16,
-        "table_heading_height": 100,
-        "table_heading_align": "center",
-        "table_heading_padding_horizontal": 18,
-        "table_heading_padding_horizontal_mobile": 18,
-        "table_heading_padding_vertical": 18,
-        "table_heading_padding_vertical_mobile": 18,
-        "table_row_padding_horizontal": 14,
-        "table_row_padding_horizontal_mobile": 14,
-        "table_row_padding_vertical": 16,
-        "table_row_padding_vertical_mobile": 16,
-        "table_row_heading_width_mobile": 66,
-        "table_row_heading_custom": false,
-        "table_row_heading_font": "assistant_n4",
-        "table_row_heading_size": 16,
-        "table_row_heading_size_mobile": 16,
-        "table_row_heading_height": 130,
-        "table_row_heading_align": "left",
-        "table_row_text_custom": false,
-        "table_row_text_font": "assistant_n4",
-        "table_row_text_size": 20,
-        "table_row_text_size_mobile": 16,
-        "table_row_text_height": 130,
-        "table_row_text_align": "center",
-        "table_row_image_size": 24,
-        "table_row_image_size_mobile": 24,
-        "heading_color": "#8cc662",
-        "text_color": "#ffffff",
-        "icon_color": "#8cc662",
-        "list_text_color": "#ffffff",
-        "button_color": "#000000",
-        "button_hover_color": "#ffffff",
-        "button_bg_color": "#ffffff",
-        "button_bg_hover_color": "#8cc662",
-        "button_border_color": "#16142b",
-        "button_border_hover_color": "#16142b",
-        "table_border_color": "#ffffff",
-        "table_active_border_color": "#8cc662",
-        "table_heading_color": "#ffffff",
-        "table_heading_active_color": "#ffffff",
-        "table_heading_bg_active_color": "#ffffff",
-        "table_column_active_bg_color": "#ffffff",
-        "table_row_heading_color": "#ffffff",
-        "table_row_text_color": "#8cc662",
-        "table_row_active_text_color": "#ffffff",
-        "background_color": "#000000",
-        "background_gradient": "",
-        "border_color": "rgba(0,0,0,0)",
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "padding_horizontal": 5,
-        "padding_horizontal_mobile": 1.5,
-        "full_width": false,
-        "content_width": 130,
-        "border_thickness": 0,
-        "lazy": true
-      }
-    },
-    "ss_text_block_pro_WbzFYf": {
-      "type": "ss-text-block-pro",
-      "blocks": {
-        "title_wEVwUG": {
-          "type": "title",
-          "settings": {
-            "title": "TRUSTED BY 75,000+ GOLFERS",
-            "title_custom": false,
-            "title_font": "assistant_n4",
-            "title_size": 40,
-            "title_height": 100,
-            "title_align": "center",
-            "title_mt": 12,
-            "title_color": "#000000"
-          }
-        }
-      },
-      "block_order": [
-        "title_wEVwUG"
-      ],
-      "name": "SS - Text Block Pro",
-      "settings": {
-        "image_width": 20,
-        "image_custom": false,
-        "image_height_desktop": 400,
-        "image_height_mobile": 200,
-        "image_radius": 12,
-        "image_ration": "none",
-        "image_location": "row",
-        "image_location_mobile": "column",
-        "content_padding_horizontal": 40,
-        "content_padding_vertical": 40,
-        "content_radius": 40,
-        "gap": 30,
-        "gap_mobile": 15,
-        "background_color": "#8cc662",
-        "background_gradient": "",
-        "border_color": "#000000",
-        "content_bg": "",
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "padding_horizontal": 5,
-        "padding_horizontal_mobile": 1.5,
-        "content_width": 120,
-        "border_thickness": 0
       }
     },
     "1742914022b79f91bc": {
@@ -626,15 +320,169 @@
         "padding_top": 50,
         "padding_bottom": 50
       }
+    },
+    "pdp_specs": {
+      "type": "pdp-specs",
+      "settings": {
+        "heading": "Specs & what you get",
+        "specs_title": "Specifications",
+        "box_title": "What's in the box",
+        "specs_note": "<p>Questions about a spec we haven't listed? <a href=\"/pages/contact-us\">Ask us</a> — we answer fast.</p>",
+        "padding_top": 50,
+        "padding_bottom": 30
+      }
+    },
+    "pdp_compat": {
+      "type": "pdp-compatibility",
+      "blocks": {
+        "compat_iphone": {
+          "type": "item",
+          "settings": {
+            "icon": "phone",
+            "title": "iPhone with MagSafe",
+            "text": "iPhone 12 and newer snap straight onto the magnetic mount — with or without a MagSafe case. Thick rugged cases (e.g. OtterBox): stick an included metal plate on the case for a secure hold."
+          }
+        },
+        "compat_android": {
+          "type": "item",
+          "settings": {
+            "icon": "android",
+            "title": "Android & non-MagSafe phones",
+            "text": "Metal plates with 3M adhesive are included. Stick one on your phone or case and it attaches magnetically just like MagSafe."
+          }
+        },
+        "compat_tablet": {
+          "type": "item",
+          "settings": {
+            "icon": "tablet",
+            "title": "iPads & tablets",
+            "text": "Tablets attach using the included metal plates. For larger iPads we recommend the GPOD Studio 2.0 for maximum stability."
+          }
+        },
+        "compat_camera": {
+          "type": "item",
+          "settings": {
+            "icon": "camera",
+            "title": "GoPro & cameras",
+            "text": "The magnetic head unscrews from a standard 1/4-20 thread, so you can mount any camera or GoPro adapter that fits a 1/4 in tripod screw."
+          }
+        }
+      },
+      "block_order": [
+        "compat_iphone",
+        "compat_android",
+        "compat_tablet",
+        "compat_camera"
+      ],
+      "settings": {
+        "heading": "Will it work with your phone?",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "pdp_howto": {
+      "type": "pdp-how-to",
+      "blocks": {
+        "step_extend": {
+          "type": "step",
+          "settings": {
+            "title": "Extend from the top down",
+            "text": "Twist each lock a quarter turn to loosen, pull the section out, then twist back to lock. Always extend the upper sections first and never slam the GPOD into the ground while collapsed — that's what jams the lower section."
+          }
+        },
+        "step_attach": {
+          "type": "step",
+          "settings": {
+            "title": "Attach your phone",
+            "text": "iPhones with MagSafe snap straight on. Android or thick cases: stick one of the included metal plates on first — it holds just as strong."
+          }
+        },
+        "step_film": {
+          "type": "step",
+          "settings": {
+            "title": "Frame your swing and film",
+            "text": "Stake it down-target or face-on, tilt the ball head to frame yourself, and record. With a Bluetooth remote, pair it in your phone's Bluetooth settings and the button triggers your camera shutter."
+          }
+        }
+      },
+      "block_order": [
+        "step_extend",
+        "step_attach",
+        "step_film"
+      ],
+      "settings": {
+        "kicker": "Get set up in under a minute",
+        "heading": "How to use it",
+        "support_link": "/pages/support-guides",
+        "support_link_text": "Guides & troubleshooting",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "gpod_compare": {
+      "type": "compare-table",
+      "blocks": {
+        "col_0": {
+          "type": "product",
+          "settings": {
+            "product": "gpodmagsafe",
+            "badge": "The original"
+          }
+        },
+        "col_1": {
+          "type": "product",
+          "settings": {
+            "product": "gpodx",
+            "badge": "Most popular"
+          }
+        },
+        "col_2": {
+          "type": "product",
+          "settings": {
+            "product": "gpod-pauly-p2",
+            "badge": "Flagship"
+          }
+        },
+        "col_3": {
+          "type": "product",
+          "settings": {
+            "product": "gpod-travel-1"
+          }
+        },
+        "col_4": {
+          "type": "product",
+          "settings": {
+            "product": "gpod-studio",
+            "badge": "For coaches"
+          }
+        }
+      },
+      "block_order": [
+        "col_0",
+        "col_1",
+        "col_2",
+        "col_3",
+        "col_4"
+      ],
+      "settings": {
+        "kicker": "Which GPOD is right for you?",
+        "heading": "How it compares",
+        "text": "<p>Every GPOD holds your phone magnetically and films your swing — the difference is where you practice and how you carry it.</p>",
+        "center_heading": false,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
     "main",
     "1763423954672c8f0a",
     "section_icons_row_Yk6GXG",
-    "ss_comparison_table_6_WTXV4b",
-    "ss_text_block_pro_WbzFYf",
+    "pdp_specs",
+    "pdp_compat",
+    "pdp_howto",
     "1742914022b79f91bc",
+    "gpod_compare",
     "section_product_features_6FAzHV",
     "faq",
     "section_faq_h3p3ep",
