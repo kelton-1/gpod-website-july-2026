@@ -22,11 +22,27 @@
             "mobile_hide_block": false
           }
         },
-        "footer-block-menu": {
+        "footer-block-menu-shop": {
           "type": "menu",
           "settings": {
-            "menu": "footer",
-            "title": "Helpful Links",
+            "menu": "footer-shop-v2",
+            "title": "Shop",
+            "mobile_hide_block": false
+          }
+        },
+        "footer-block-menu-support": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-support-v2",
+            "title": "Support",
+            "mobile_hide_block": false
+          }
+        },
+        "footer-block-menu-company": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-company-v2",
+            "title": "Company",
             "mobile_hide_block": false
           }
         },
@@ -41,7 +57,9 @@
       },
       "block_order": [
         "footer-block-logo",
-        "footer-block-menu",
+        "footer-block-menu-shop",
+        "footer-block-menu-support",
+        "footer-block-menu-company",
         "footer-block-newsletter"
       ],
       "settings": {

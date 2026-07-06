@@ -17,6 +17,7 @@ This repo contains a **Shopify Online Store 2.0 theme** at the root (standard Sh
 | Date | Decision |
 |---|---|
 | 2026-07-06 | Repo initialized from live theme export; redesign requirements derived from customer inquiries (see `docs/customer-insights.md`). |
+| 2026-07-06 | New IA adopted (see `docs/information-architecture.md`): 4-item header nav (Shop meganav by product type / Find Your GPOD use-case dropdown / Support / About) + 3-column footer. Created in Shopify (additive, live site untouched): collections `monopods`, `tripods-bases`, `on-the-course`, `indoor-simulator`, `coaching-studio`, `travel-ready` (all manual); menus `main-menu-v2`, `footer-{shop,support,company}-v2`. Theme wired to them via `header-group.json`/`footer-group.json`. Old INDOOR/OUTDOOR collections deprecated for nav. |
 
 ## The "why" behind the redesign — read this first
 
@@ -42,6 +43,7 @@ When designing any page, ask: *does this help a confused customer choose the rig
 CLAUDE.md              ← you are here; keep it current
 docs/                  ← project docs, research, decisions
   customer-insights.md ← FAQ analysis + catalog snapshot + redesign priorities
+  information-architecture.md ← nav trees, collection matrix, menu/collection handles
 assets/ config/ layout/ locales/ sections/ snippets/ templates/   ← the theme
 ```
 

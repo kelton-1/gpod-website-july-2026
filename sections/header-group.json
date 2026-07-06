@@ -72,7 +72,7 @@
         "header_sticky": true,
         "logo": "shopify://shop_images/GPOD_logo.png",
         "logo_max_width": 220,
-        "menu_list": "main-menu",
+        "menu_list": "main-menu-v2",
         "style": "logo-center-links-left",
         "image_aspect_ratio": 1,
         "meganav_image_heading": "",
