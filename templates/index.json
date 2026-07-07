@@ -267,14 +267,152 @@
         "padding_top": 80,
         "padding_bottom": 80
       }
+    },
+    "brand_statement": {
+      "type": "home-brand-statement",
+      "settings": {
+        "kicker": "Why GPOD exists",
+        "statement": "Filming your swing shouldn’t be the hard part of getting better.",
+        "text": "<p>GPOD was created by professional golfer Paul Park after years of fumbling with flimsy clamps and shaky footage. Cradle-free magnetic mounting, a carbon fiber body, and a pointed stake that holds steady in any wind — so you can focus on your game, not your camera.</p>",
+        "color_style": "dark",
+        "padding_top": 84,
+        "padding_bottom": 84
+      }
+    },
+    "founder": {
+      "type": "section-image-with-text",
+      "blocks": {
+        "founder_img": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/BW_FO_Paul.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "founder_img"
+      ],
+      "settings": {
+        "width": "container-wrap",
+        "color_style": "white",
+        "slide_height": "five-fifty-height-hero",
+        "slide_image_position": "right",
+        "slide_image_size": "fifty",
+        "subheading": "From frustration to innovation",
+        "title": "Designed by a pro who lives on the range",
+        "content": "<p>As a professional golfer, Paul Park spent countless hours on video analysis — and just as many fighting unstable phone holders. GPOD is his answer: one-handed magnetic attachment, tour-grade stability, and hardware that disappears into your bag until you need it.</p>",
+        "cta": "Read our story",
+        "link": "/pages/about-us",
+        "btn_type": "btn--primary",
+        "btn_size": "",
+        "btn_style": "btn--outline",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "tour": {
+      "type": "section-image-with-text-overlay",
+      "blocks": {
+        "tour_sub": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "Trusted where it counts"
+          }
+        },
+        "tour_head": {
+          "type": "heading",
+          "settings": {
+            "title": "In the bags of tour players and Top-100 coaches"
+          }
+        },
+        "tour_text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Joaquín Niemann · Beatriz Recari · Christina Kim · Kelly Tan · George Gankas · Jeff Leishman — and more players and coaches filming with GPOD every week on the PGA, LPGA, LIV, and Korn Ferry Tours.</p>"
+          }
+        },
+        "tour_btn": {
+          "type": "button",
+          "settings": {
+            "button_text": "See who's using GPOD",
+            "button_link": "/pages/on-tour",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        }
+      },
+      "block_order": [
+        "tour_sub",
+        "tour_head",
+        "tour_text",
+        "tour_btn"
+      ],
+      "settings": {
+        "banner_image": "shopify://shop_images/Lifestyle_Shot_joaco.jpg",
+        "height": "five-fifty-height-hero",
+        "height_mobile": "five-fifty-height-hero--mobile",
+        "text_position": "center",
+        "color_text": "#ffffff",
+        "color_overlay": "#101410",
+        "overlay_opacity": 45
+      }
+    },
+    "sportsbox": {
+      "type": "section-split-content",
+      "blocks": {
+        "sb_img": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/GPOD_Sportsbox_Logo_Lockup.png"
+          }
+        },
+        "sb_text": {
+          "type": "text",
+          "settings": {
+            "subheading": "Official partner",
+            "title": "Film it. Then measure it.",
+            "content": "<p>GPOD teams up with Sportsbox AI to turn your swing videos into 3D data — body angles, sway, and turn numbers your coach can actually use. Grab the GPOD Travel + Sportsbox 3D bundle and get a full year of swing analysis with your setup.</p>",
+            "button_text": "Shop the Sportsbox bundle",
+            "button_link": "/products/gpod-travel-sportsbox-3d-player-annual-swing-analysis",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--outline"
+          }
+        }
+      },
+      "block_order": [
+        "sb_img",
+        "sb_text"
+      ],
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "community": {
+      "type": "section-newsletter",
+      "settings": {
+        "color": "#ffffff",
+        "background": "#101410",
+        "title": "Join the GPOD community",
+        "content": "<p>Swing tips, drills, and first access to new gear. Film something good? Tag <strong>@gpodgolf</strong> — we feature player videos every week.</p>",
+        "padding_top": 70,
+        "padding_bottom": 70
+      }
     }
   },
   "order": [
     "hero",
+    "brand_statement",
     "usecases",
+    "founder",
     "compare",
+    "tour",
     "overlay",
+    "sportsbox",
     "icons",
+    "community",
     "quiz_cta"
   ]
 }

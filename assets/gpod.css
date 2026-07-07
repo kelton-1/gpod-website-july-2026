@@ -750,3 +750,73 @@ a.gpod-support__card:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* --------------------------------------------------------------
+   Brand statement band (sections/home-brand-statement.liquid)
+   -------------------------------------------------------------- */
+
+.gpod-statement {
+  text-align: center;
+}
+
+.gpod-statement__inner {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.gpod-statement__heading {
+  margin: 0.35em 0 0;
+  font-size: clamp(1.7rem, 4.5vw, 3rem);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.gpod-statement__text {
+  max-width: 640px;
+  margin: 1.1em auto 0;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.gpod-statement__link {
+  display: inline-block;
+  margin-top: 1.4em;
+  font-weight: 700;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--gpod-accent);
+  text-decoration-thickness: 2px;
+}
+
+.gpod-statement--light {
+  background: var(--gpod-soft);
+  color: var(--gpod-text);
+}
+
+.gpod-statement--light .gpod-statement__heading {
+  color: var(--gpod-ink);
+}
+
+.gpod-statement--dark {
+  background: #101410;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.gpod-statement--dark .gpod-statement__heading {
+  color: #fff;
+}
+
+.gpod-statement--dark .gpod-kicker {
+  color: var(--gpod-accent);
+}
+
+.gpod-statement--accent {
+  background: var(--gpod-accent);
+  color: #14210d;
+}
+
+.gpod-statement--accent .gpod-statement__heading,
+.gpod-statement--accent .gpod-kicker {
+  color: #14210d;
+}

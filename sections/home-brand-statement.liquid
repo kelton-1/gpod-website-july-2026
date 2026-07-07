@@ -1,0 +1,111 @@
+{% comment %}
+  Big-type brand statement band. One oversized line that carries the brand
+  voice between shopping sections, with an optional supporting line and link.
+{% endcomment %}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+<section class="gpod-section gpod-statement gpod-statement--{{ section.settings.color_style }} section-padding"
+  data-section-type="home-brand-statement"
+  style="{{ style }}"
+>
+  <div class="container">
+    <div class="gpod-statement__inner">
+      {%- if section.settings.kicker != blank -%}
+        <p class="gpod-kicker">{{ section.settings.kicker | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.statement != blank -%}
+        <h2 class="gpod-statement__heading">{{ section.settings.statement | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="gpod-statement__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+      {%- if section.settings.link_text != blank and section.settings.link != blank -%}
+        <a class="gpod-statement__link" href="{{ section.settings.link }}">{{ section.settings.link_text | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand statement",
+  "class": "shopify-section--brand-statement",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Why GPOD exists"
+    },
+    {
+      "type": "textarea",
+      "id": "statement",
+      "label": "Statement",
+      "default": "Built by a tour pro who was tired of flimsy phone clamps."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Supporting text"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link label"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "select",
+      "id": "color_style",
+      "label": "Style",
+      "default": "dark",
+      "options": [
+        { "label": "Light", "value": "light" },
+        { "label": "Dark", "value": "dark" },
+        { "label": "Accent green", "value": "accent" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "category": "Text",
+      "name": "Brand statement"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}
