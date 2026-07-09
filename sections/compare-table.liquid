@@ -2,6 +2,11 @@
   Spec comparison table. Columns are product blocks; rows are driven by the
   `gpod.*` product metafields (see docs/product-data.md) and hide automatically
   when no selected product has a value for them.
+
+  With "Interactive picker" enabled (the Compare page), every column gets a
+  model dropdown fed by the candidate list below — Apple-compare style. The
+  server-rendered table is the no-JS fallback; gpod.js re-renders columns on
+  selection and honours ?models=handle1,handle2 deep links.
 {% endcomment %}
 
 {%- capture style -%}
@@ -12,11 +17,15 @@
 {%- liquid
   assign spec_keys = 'best_for,extended_length,collapsed_length,weight,base_detail,phone_attachment,remote_included,bag_fit,materials' | split: ','
   assign spec_labels = 'Best for,Extended height,Collapsed length,Weight,Base,Phone attachment,Remote,Golf bag fit,Materials' | split: ','
+  assign picker = section.settings.enable_picker
+  assign default_candidates = 'gpodmagsafe,gpodx,gpod-pauly-p2,gpod-travel-1,gpod-studio,indoor-base-for-gpod-gpod-mini,gpod-anywhere-tripod,gpod-mini,g-bundle-one-gpod-with-gpod-base,g-bundle-two-gpod-x-with-gpod-base,g-bundle-three-gpod-pauly-p-and-gpod-base,gpod-travel-sportsbox-3d-player-annual-swing-analysis'
+  assign candidate_handles = section.settings.candidate_handles | default: default_candidates | split: ','
 -%}
 
 <section class="gpod-section gpod-compare container-wrap section-padding{% if section.settings.center_heading %} gpod-section--center{% endif %}"
   id="compare-{{ section.id }}"
   data-section-type="compare-table"
+  {% if picker %}data-compare-picker{% endif %}
   style="{{ style }}"
 >
   <div class="container">
@@ -32,35 +41,37 @@
 
     {%- if section.blocks.size > 0 -%}
       <div class="gpod-compare__scroller" tabindex="0" role="region" aria-label="{{ section.settings.heading | default: 'Product comparison' | escape }}">
-        <table>
+        <table data-compare-table>
           <caption class="visually-hidden">{{ section.settings.heading | default: 'Product comparison' | escape }}</caption>
           <thead>
             <tr>
               <th scope="col"><span class="visually-hidden">Spec</span></th>
               {%- for block in section.blocks -%}
                 {%- assign product = block.settings.product -%}
-                <th scope="col" class="gpod-compare__product" {{ block.shopify_attributes }}>
-                  {%- if product != blank -%}
-                    {%- if block.settings.badge != blank -%}
-                      <span class="gpod-compare__badge">{{ block.settings.badge | escape }}</span>
+                <th scope="col" class="gpod-compare__product" data-compare-col="{{ forloop.index0 }}" {% if product != blank %}data-compare-initial="{{ product.handle }}"{% endif %} {{ block.shopify_attributes }}>
+                  <span data-compare-card>
+                    {%- if product != blank -%}
+                      {%- if block.settings.badge != blank -%}
+                        <span class="gpod-compare__badge">{{ block.settings.badge | escape }}</span>
+                      {%- endif -%}
+                      {%- if product.featured_image -%}
+                        <img
+                          src="{{ product.featured_image | image_url: width: 220 }}"
+                          srcset="{{ product.featured_image | image_url: width: 220 }} 1x, {{ product.featured_image | image_url: width: 440 }} 2x"
+                          width="110" height="110" loading="lazy"
+                          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                        >
+                      {%- endif -%}
+                      <a class="gpod-compare__title" href="{{ product.url }}">{{ product.title }}</a>
+                      <span class="gpod-compare__price">
+                        {{- product.price | money -}}
+                        {%- if product.compare_at_price > product.price %} <s>{{ product.compare_at_price | money }}</s>{% endif -%}
+                      </span>
+                      <a class="gpod-compare__cta btn btn--primary btn--solid btn--small" href="{{ product.url }}">Shop</a>
+                    {%- else -%}
+                      <span class="gpod-compare__empty">Select a product</span>
                     {%- endif -%}
-                    {%- if product.featured_image -%}
-                      <img
-                        src="{{ product.featured_image | image_url: width: 220 }}"
-                        srcset="{{ product.featured_image | image_url: width: 220 }} 1x, {{ product.featured_image | image_url: width: 440 }} 2x"
-                        width="110" height="110" loading="lazy"
-                        alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                      >
-                    {%- endif -%}
-                    <a class="gpod-compare__title" href="{{ product.url }}">{{ product.title }}</a>
-                    <span class="gpod-compare__price">
-                      {{- product.price | money -}}
-                      {%- if product.compare_at_price > product.price %} <s>{{ product.compare_at_price | money }}</s>{% endif -%}
-                    </span>
-                    <a class="gpod-compare__cta btn btn--primary btn--solid btn--small" href="{{ product.url }}">Shop</a>
-                  {%- else -%}
-                    <span class="gpod-compare__empty">Select a product</span>
-                  {%- endif -%}
+                  </span>
                 </th>
               {%- endfor -%}
             </tr>
@@ -76,12 +87,12 @@
                   endif
                 endfor
               -%}
-              {%- if row_has_value -%}
-                <tr>
+              {%- if row_has_value or picker -%}
+                <tr data-compare-row="{{ key }}"{% unless row_has_value %} hidden{% endunless %}>
                   <th scope="row">{{ spec_labels[forloop.index0] }}</th>
                   {%- for block in section.blocks -%}
                     {%- assign product = block.settings.product -%}
-                    <td>
+                    <td data-compare-col="{{ forloop.index0 }}">
                       {%- if product != blank and product.metafields.gpod[key].value != blank -%}
                         {{- product.metafields.gpod[key].value -}}
                       {%- else -%}
@@ -96,6 +107,39 @@
         </table>
       </div>
       <p class="gpod-compare__hint gpod-compare__hint--mobile">Swipe sideways to see all models →</p>
+
+      {%- if picker -%}
+        <script type="application/json" data-compare-data>
+          {
+            "specKeys": {{ spec_keys | json }},
+            "candidates": [
+              {%- assign sep = '' -%}
+              {%- for handle in candidate_handles -%}
+                {%- assign c_handle = handle | strip -%}
+                {%- assign p = all_products[c_handle] -%}
+                {%- if p != blank -%}
+                  {{ sep }}{
+                    "handle": {{ p.handle | json }},
+                    "title": {{ p.title | json }},
+                    "url": {{ p.url | json }},
+                    "image": {% if p.featured_image %}{{ p.featured_image | image_url: width: 220 | json }}{% else %}null{% endif %},
+                    "image2x": {% if p.featured_image %}{{ p.featured_image | image_url: width: 440 | json }}{% else %}null{% endif %},
+                    "price": {{ p.price | money | json }},
+                    "compareAt": {% if p.compare_at_price > p.price %}{{ p.compare_at_price | money | json }}{% else %}null{% endif %},
+                    "specs": {
+                      {%- for key in spec_keys -%}
+                        {{ key | json }}: {{ p.metafields.gpod[key].value | json }}{% unless forloop.last %},{% endunless %}
+                      {%- endfor -%}
+                    }
+                  }
+                  {%- assign sep = ',' -%}
+                {%- endif -%}
+              {%- endfor -%}
+            ]
+          }
+        </script>
+        <script src="{{ 'gpod.js' | asset_url }}" defer></script>
+      {%- endif -%}
     {%- endif -%}
 
     {%- if section.settings.footnote != blank -%}
@@ -132,6 +176,19 @@
       "id": "center_heading",
       "label": "Center heading",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_picker",
+      "label": "Interactive model picker",
+      "info": "Adds a dropdown to each column so shoppers can swap in any model. Supports ?models=handle,handle links.",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "candidate_handles",
+      "label": "Picker candidates (comma-separated handles)",
+      "info": "Defaults to every compareable GPOD product."
     },
     {
       "type": "richtext",

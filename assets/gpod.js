@@ -174,8 +174,121 @@
     show(0);
   }
 
+  /* --------------------------------------------------------------
+     Interactive compare picker (sections/compare-table.liquid)
+     Each column gets a model <select>; changing it re-renders that
+     column's product card and spec cells from the JSON payload.
+     Deep links: ?models=handle1,handle2,... preselect the columns.
+     -------------------------------------------------------------- */
+
+  function initComparePicker(root) {
+    if (root.hasAttribute('data-compare-ready')) return;
+    var dataEl = root.querySelector('script[data-compare-data]');
+    var table = root.querySelector('[data-compare-table]');
+    if (!dataEl || !table) return;
+    root.setAttribute('data-compare-ready', '');
+
+    var data;
+    try {
+      data = JSON.parse(dataEl.textContent);
+    } catch (e) {
+      return;
+    }
+    var byHandle = {};
+    data.candidates.forEach(function (c) { byHandle[c.handle] = c; });
+
+    var cols = Array.prototype.slice.call(table.querySelectorAll('thead [data-compare-col]'));
+    if (!cols.length) return;
+
+    var selection = cols.map(function (th) {
+      return th.getAttribute('data-compare-initial') || '';
+    });
+
+    // ?models=a,b,c preselects columns left to right.
+    var params = new URLSearchParams(window.location.search);
+    var wanted = (params.get('models') || '').split(',').filter(function (h) {
+      return byHandle[h];
+    });
+    wanted.forEach(function (h, i) {
+      if (i < selection.length) selection[i] = h;
+    });
+
+    function renderCard(th, candidate) {
+      var card = th.querySelector('[data-compare-card]');
+      if (!card) return;
+      if (!candidate) {
+        card.innerHTML = '<span class="gpod-compare__empty">Select a model</span>';
+        return;
+      }
+      var html = '';
+      if (candidate.image) {
+        html += '<img src="' + candidate.image + '" srcset="' + candidate.image + ' 1x, ' + candidate.image2x + ' 2x" width="110" height="110" loading="lazy" alt="">';
+      }
+      html += '<a class="gpod-compare__title" href="' + candidate.url + '"></a>';
+      html += '<span class="gpod-compare__price"></span>';
+      html += '<a class="gpod-compare__cta btn btn--primary btn--solid btn--small" href="' + candidate.url + '">Shop</a>';
+      card.innerHTML = html;
+      card.querySelector('.gpod-compare__title').textContent = candidate.title;
+      var price = card.querySelector('.gpod-compare__price');
+      price.textContent = candidate.price;
+      if (candidate.compareAt) {
+        var s = document.createElement('s');
+        s.textContent = candidate.compareAt;
+        price.appendChild(document.createTextNode(' '));
+        price.appendChild(s);
+      }
+    }
+
+    function renderCells() {
+      data.specKeys.forEach(function (key) {
+        var row = table.querySelector('[data-compare-row="' + key + '"]');
+        if (!row) return;
+        var any = false;
+        row.querySelectorAll('td[data-compare-col]').forEach(function (td) {
+          var idx = parseInt(td.getAttribute('data-compare-col'), 10);
+          var candidate = byHandle[selection[idx]];
+          var value = candidate && candidate.specs[key];
+          if (value) {
+            td.textContent = value;
+            any = true;
+          } else {
+            td.innerHTML = '<span class="gpod-compare__empty" aria-label="Not applicable">—</span>';
+          }
+        });
+        row.hidden = !any;
+      });
+    }
+
+    cols.forEach(function (th, idx) {
+      var select = document.createElement('select');
+      select.className = 'gpod-compare__picker';
+      select.setAttribute('aria-label', 'Choose model for column ' + (idx + 1));
+      data.candidates.forEach(function (c) {
+        var opt = document.createElement('option');
+        opt.value = c.handle;
+        opt.textContent = c.title;
+        if (c.handle === selection[idx]) opt.selected = true;
+        select.appendChild(opt);
+      });
+      select.addEventListener('change', function () {
+        selection[idx] = select.value;
+        renderCard(th, byHandle[select.value]);
+        renderCells();
+      });
+      th.insertBefore(select, th.firstChild);
+
+      // Apply deep-linked selection if it differs from the server render.
+      if (selection[idx] && selection[idx] !== th.getAttribute('data-compare-initial')) {
+        renderCard(th, byHandle[selection[idx]]);
+      }
+    });
+
+    if (wanted.length) renderCells();
+  }
+
   function init() {
     document.querySelectorAll('[data-gpod-finder]').forEach(initFinder);
+    document.querySelectorAll('[data-compare-picker]').forEach(initComparePicker);
   }
 
   if (document.readyState === 'loading') {
@@ -188,5 +301,7 @@
   document.addEventListener('shopify:section:load', function (event) {
     var finder = event.target.querySelector('[data-gpod-finder]');
     if (finder) initFinder(finder);
+    var compare = event.target.closest('[data-compare-picker]') || event.target.querySelector('[data-compare-picker]');
+    if (compare) initComparePicker(compare);
   });
 })();

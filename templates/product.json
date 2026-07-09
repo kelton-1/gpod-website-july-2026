@@ -472,14 +472,109 @@
         "padding_top": 60,
         "padding_bottom": 60
       }
+    },
+    "pdp_benefits": {
+      "type": "pdp-benefits",
+      "blocks": {
+        "b_solo": {
+          "type": "benefit",
+          "settings": {
+            "icon": "person",
+            "title": "Never ask a stranger to film you again",
+            "text": "Set it once and every swing is on camera — no favors, no fences, no golf carts."
+          }
+        },
+        "b_speed": {
+          "type": "benefit",
+          "settings": {
+            "icon": "clock",
+            "title": "Recording in seconds, not minutes",
+            "text": "Stake it, snap your phone on magnetically, press record. Setup never eats your range time."
+          }
+        },
+        "b_stable": {
+          "type": "benefit",
+          "settings": {
+            "icon": "anchor",
+            "title": "Steady footage in wind, slopes, and mats",
+            "text": "No more phone propped against your bag falling over mid-swing."
+          }
+        },
+        "b_pack": {
+          "type": "benefit",
+          "settings": {
+            "icon": "bag",
+            "title": "Disappears into your bag until you need it",
+            "text": "Lightweight carbon fiber that rides along without weighing you down."
+          }
+        }
+      },
+      "block_order": [
+        "b_solo",
+        "b_speed",
+        "b_stable",
+        "b_pack"
+      ],
+      "settings": {
+        "heading": "What it fixes",
+        "padding_top": 50,
+        "padding_bottom": 20
+      }
+    },
+    "pdp_pairs": {
+      "type": "pdp-pairs-with",
+      "blocks": {
+        "p_base": {
+          "type": "pair",
+          "settings": {
+            "product": "indoor-base-for-gpod-gpod-mini",
+            "usecase": "For mats & sim rooms"
+          }
+        },
+        "p_gpuck": {
+          "type": "pair",
+          "settings": {
+            "product": "gpod-caddy",
+            "usecase": "For balls, tees & your remote"
+          }
+        },
+        "p_gplate": {
+          "type": "pair",
+          "settings": {
+            "product": "gpod-gplate",
+            "usecase": "For Android & thick cases"
+          }
+        },
+        "p_travel": {
+          "type": "pair",
+          "settings": {
+            "product": "gpod-travel-1",
+            "usecase": "For trips & indoor days"
+          }
+        }
+      },
+      "block_order": [
+        "p_base",
+        "p_gpuck",
+        "p_gplate",
+        "p_travel"
+      ],
+      "settings": {
+        "kicker": "Complete your setup",
+        "heading": "Pairs well with",
+        "padding_top": 40,
+        "padding_bottom": 50
+      }
     }
   },
   "order": [
     "main",
+    "pdp_benefits",
     "1763423954672c8f0a",
     "section_icons_row_Yk6GXG",
     "pdp_specs",
     "pdp_compat",
+    "pdp_pairs",
     "pdp_howto",
     "1742914022b79f91bc",
     "gpod_compare",

@@ -1,0 +1,135 @@
+{% comment %}
+  PDP: benefit-led outcomes strip. People buy outcomes, not features —
+  this sits above the spec sheet and answers "what does this fix for me?"
+  Blocks are merchant-editable; defaults come from real customer inquiries
+  (docs/customer-insights.md).
+{% endcomment %}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+{%- if section.blocks.size > 0 -%}
+<section class="gpod-section gpod-benefits container-wrap section-padding"
+  data-section-type="pdp-benefits"
+  style="{{ style }}"
+>
+  <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gpod-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    <div class="gpod-benefits__grid">
+      {%- for block in section.blocks -%}
+        <div class="gpod-benefits__item" {{ block.shopify_attributes }}>
+          {%- case block.settings.icon -%}
+            {%- when 'clock' -%}
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+            {%- when 'anchor' -%}
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 8v13M5 12l-2 2c0 4 4 7 9 7s9-3 9-7l-2-2"/><circle cx="12" cy="5" r="2.5"/></svg>
+            {%- when 'person' -%}
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="7.5" r="3.5"/><path d="M4.5 20.5c1-4 4-6 7.5-6s6.5 2 7.5 6"/></svg>
+            {%- when 'bag' -%}
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 8h12l-1 13H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+            {%- else -%}
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>
+          {%- endcase -%}
+          {%- if block.settings.title != blank -%}
+            <h3>{{ block.settings.title | escape }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p>{{ block.settings.text | escape }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PDP benefits",
+  "class": "shopify-section--pdp-benefits",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What it fixes"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "check",
+          "options": [
+            { "label": "Check", "value": "check" },
+            { "label": "Clock (speed)", "value": "clock" },
+            { "label": "Anchor (stability)", "value": "anchor" },
+            { "label": "Person (no helpers)", "value": "person" },
+            { "label": "Bag (portability)", "value": "bag" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Outcome headline",
+          "default": "Never ask a stranger to film you again"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Supporting line",
+          "default": "Set it once and every swing is on camera — no favors, no fences, no golf carts."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Product",
+      "name": "PDP benefits",
+      "blocks": [
+        { "type": "benefit" },
+        { "type": "benefit" },
+        { "type": "benefit" }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

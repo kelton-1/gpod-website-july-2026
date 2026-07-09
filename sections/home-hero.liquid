@@ -1,0 +1,225 @@
+{% comment %}
+  Native home hero: background video OR static image (separate mobile media),
+  headline + subhead, star trust row, and two CTAs (shop + quiz).
+  Mobile-first; media is decorative (aria-hidden) with a dark overlay for
+  text contrast.
+{% endcomment %}
+
+{%- liquid
+  assign media_type = section.settings.media_type
+  assign video = section.settings.video_bg
+  assign video_mobile = section.settings.video_bg_mobile
+  assign image = section.settings.image
+  assign image_mobile = section.settings.mobile_image
+  assign has_mobile_media = false
+  if media_type == 'video' and video_mobile != blank
+    assign has_mobile_media = true
+  elsif media_type == 'image' and image_mobile != blank
+    assign has_mobile_media = true
+  endif
+-%}
+
+{%- capture style -%}
+  --hero-h: {{ section.settings.height_desktop }}px;
+  --hero-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+{%- endcapture -%}
+
+<section class="gpod-hero{% if section.settings.mobile_fullscreen %} gpod-hero--mobile-full{% endif %}"
+  data-section-type="home-hero"
+  style="{{ style }}"
+>
+  <div class="gpod-hero__media" aria-hidden="true">
+    {%- if media_type == 'video' and video != blank -%}
+      <div class="gpod-hero__layer{% if has_mobile_media %} gpod-hero__layer--desktop{% endif %}">
+        {{ video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
+      </div>
+      {%- if has_mobile_media -%}
+        <div class="gpod-hero__layer gpod-hero__layer--mobile">
+          {{ video_mobile | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
+        </div>
+      {%- endif -%}
+    {%- elsif media_type == 'image' and image != blank -%}
+      <img
+        class="gpod-hero__layer{% if has_mobile_media %} gpod-hero__layer--desktop{% endif %}"
+        src="{{ image | image_url: width: 1600 }}"
+        srcset="{{ image | image_url: width: 900 }} 900w, {{ image | image_url: width: 1600 }} 1600w, {{ image | image_url: width: 2200 }} 2200w"
+        sizes="100vw"
+        alt=""
+        fetchpriority="high"
+      >
+      {%- if has_mobile_media -%}
+        <img
+          class="gpod-hero__layer gpod-hero__layer--mobile"
+          src="{{ image_mobile | image_url: width: 800 }}"
+          srcset="{{ image_mobile | image_url: width: 500 }} 500w, {{ image_mobile | image_url: width: 800 }} 800w, {{ image_mobile | image_url: width: 1100 }} 1100w"
+          sizes="100vw"
+          alt=""
+          fetchpriority="high"
+        >
+      {%- endif -%}
+    {%- endif -%}
+    <div class="gpod-hero__overlay"></div>
+  </div>
+
+  <div class="gpod-hero__content container">
+    {%- if section.settings.headline != blank -%}
+      <h1 class="gpod-hero__headline">{{ section.settings.headline | escape }}</h1>
+    {%- endif -%}
+    {%- if section.settings.subhead != blank -%}
+      <p class="gpod-hero__subhead">{{ section.settings.subhead | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.show_trust and section.settings.trust_text != blank -%}
+      <p class="gpod-hero__trust">
+        <span class="gpod-hero__stars" role="img" aria-label="Rated 5 stars">
+          {%- for i in (1..5) -%}
+            <svg viewBox="0 0 20 20" width="16" height="16" focusable="false" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z" fill="currentColor"/></svg>
+          {%- endfor -%}
+        </span>
+        <span>{{ section.settings.trust_text | escape }}</span>
+      </p>
+    {%- endif -%}
+
+    <div class="gpod-hero__ctas">
+      {%- if section.settings.cta1_text != blank -%}
+        <a class="btn btn--primary btn--solid btn--large" href="{{ section.settings.cta1_link | default: '/collections/all-products' }}">{{ section.settings.cta1_text | escape }}</a>
+      {%- endif -%}
+      {%- if section.settings.cta2_text != blank -%}
+        <a class="btn btn--white btn--outline btn--large" href="{{ section.settings.cta2_link | default: '/pages/product-finder-quiz' }}">{{ section.settings.cta2_text | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home hero",
+  "class": "shopify-section--home-hero",
+  "settings": [
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "Background type",
+      "default": "video",
+      "options": [
+        { "label": "Video", "value": "video" },
+        { "label": "Image", "value": "image" }
+      ]
+    },
+    {
+      "type": "video",
+      "id": "video_bg",
+      "label": "Video (desktop)"
+    },
+    {
+      "type": "video",
+      "id": "video_bg_mobile",
+      "label": "Video (mobile)",
+      "info": "Optional vertical crop. Falls back to the desktop video."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Image (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "height_desktop",
+      "label": "Desktop height",
+      "min": 480,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 660
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_fullscreen",
+      "label": "Full-screen on mobile",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "WE MAKE FILMING YOUR SWING AND CONTENT EASY."
+    },
+    {
+      "type": "textarea",
+      "id": "subhead",
+      "label": "Subheading",
+      "default": "MagSafe compatible magnetic phone monopods and tripods for all your filming needs. Just stick it and swing it."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust",
+      "label": "Show trust line",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trust_text",
+      "label": "Trust line",
+      "default": "Trusted by 75,000+ golfers"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "cta1_text",
+      "label": "Primary button label",
+      "default": "Shop All GPODs"
+    },
+    {
+      "type": "url",
+      "id": "cta1_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "cta2_text",
+      "label": "Secondary button label",
+      "default": "Take the Quiz"
+    },
+    {
+      "type": "url",
+      "id": "cta2_link",
+      "label": "Secondary button link"
+    }
+  ],
+  "presets": [
+    {
+      "category": "Hero",
+      "name": "Home hero"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

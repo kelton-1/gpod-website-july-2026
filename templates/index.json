@@ -1,25 +1,21 @@
 {
   "sections": {
     "hero": {
-      "type": "section-video",
+      "type": "home-hero",
       "settings": {
+        "media_type": "video",
         "video_bg": "shopify://files/videos/GPOD OG Range Use.MOV",
-        "show_video_popup": false,
-        "video_popup_social": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "height": "five-fifty-height-hero",
-        "height_mobile": "five-fifty-height-hero--mobile",
-        "overlay_opacity": 15,
-        "overlay_color": "#333333",
-        "title": "WE MAKE FILMING YOUR SWING EASY.",
-        "description": "Magnetic phone monopods and tripods for filming your golf swing. Just stick it and swing it.",
-        "flex_align": "align--middle-center",
-        "text_color": "text-light",
-        "transparent": true,
-        "link_text": "Shop All Products",
-        "link": "shopify://collections/frontpage",
-        "btn_type": "btn--primary",
-        "btn_size": "btn--large",
-        "btn_style": "btn--solid"
+        "overlay_opacity": 30,
+        "height_desktop": 660,
+        "mobile_fullscreen": true,
+        "headline": "WE MAKE FILMING YOUR SWING AND CONTENT EASY.",
+        "subhead": "MagSafe compatible magnetic phone monopods and tripods for all your filming needs. Just stick it and swing it.",
+        "show_trust": true,
+        "trust_text": "Trusted by 75,000+ golfers",
+        "cta1_text": "Shop All GPODs",
+        "cta1_link": "/collections/all-products",
+        "cta2_text": "Take the Quiz",
+        "cta2_link": "/pages/product-finder-quiz"
       }
     },
     "usecases": {
@@ -272,8 +268,11 @@
       "type": "home-brand-statement",
       "settings": {
         "kicker": "Why GPOD exists",
-        "statement": "Filming your swing shouldn’t be the hard part of getting better.",
-        "text": "<p>GPOD was created by professional golfer Paul Park after years of fumbling with flimsy clamps and shaky footage. Cradle-free magnetic mounting, a carbon fiber body, and a pointed stake that holds steady in any wind — so you can focus on your game, not your camera.</p>",
+        "statement": "Capturing the moment shouldn’t get in the way of the moment.",
+        "text": "<p>Whether you’re filming a golf swing, coaching a student, or creating content on the move, your gear should work with you — not against you.</p><p>I created GPOD after years of dealing with unstable tripods, awkward phone clamps, and missed shots caused by slow, frustrating setups. There had to be a better way.</p><p>GPOD was designed to set up in seconds, stay put in tough conditions, and let you focus on what you’re actually there to do.</p><p><strong>Less time setting up. More time creating.</strong></p>",
+        "signature": "— Paul Park",
+        "signature_role": "Founder",
+        "layout": "letter",
         "color_style": "dark",
         "padding_top": 84,
         "padding_bottom": 84
@@ -400,6 +399,88 @@
         "padding_top": 70,
         "padding_bottom": 70
       }
+    },
+    "gpodder": {
+      "type": "home-use-cases",
+      "blocks": {
+        "id_golfer": {
+          "type": "tile",
+          "settings": {
+            "collection": "on-the-course",
+            "title": "Golfer",
+            "text": "Film every swing, anywhere you play"
+          }
+        },
+        "id_coach": {
+          "type": "tile",
+          "settings": {
+            "collection": "coaching-studio",
+            "title": "Coach",
+            "text": "Steady angles for every lesson"
+          }
+        },
+        "id_creator": {
+          "type": "tile",
+          "settings": {
+            "title": "Creator",
+            "link": "/pages/product-finder-quiz",
+            "image": "shopify://shop_images/Pauly_P_DSLR.png",
+            "text": "Your camera crew that fits in a pocket"
+          }
+        },
+        "id_parent": {
+          "type": "tile",
+          "settings": {
+            "title": "Sports Parent",
+            "link": "/pages/product-finder-quiz",
+            "image": "shopify://shop_images/fathers.jpg",
+            "text": "Capture every game-day moment"
+          }
+        },
+        "id_hiker": {
+          "type": "tile",
+          "settings": {
+            "collection": "travel-ready",
+            "title": "Hiker",
+            "text": "Summit views, hands-free"
+          }
+        },
+        "id_traveler": {
+          "type": "tile",
+          "settings": {
+            "collection": "travel-ready",
+            "title": "Traveler",
+            "image": "shopify://shop_images/GPODX_Hero_Shot_2_be99715f-cd04-4316-b16e-df908d240e88.png",
+            "text": "Packs into any carry-on"
+          }
+        },
+        "id_photographer": {
+          "type": "tile",
+          "settings": {
+            "collection": "tripods-bases",
+            "title": "Photographer",
+            "text": "A stable base for any shot"
+          }
+        }
+      },
+      "block_order": [
+        "id_golfer",
+        "id_coach",
+        "id_creator",
+        "id_parent",
+        "id_hiker",
+        "id_traveler",
+        "id_photographer"
+      ],
+      "settings": {
+        "kicker": "One tool, many games",
+        "heading": "Why become a GPODDER?",
+        "text": "<p>Wherever you point a camera, GPOD holds it steady. Find yourself below.</p>",
+        "center_heading": true,
+        "grid_style": "compact",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
@@ -409,6 +490,7 @@
     "founder",
     "compare",
     "tour",
+    "gpodder",
     "overlay",
     "sportsbox",
     "icons",

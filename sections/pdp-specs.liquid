@@ -30,9 +30,14 @@
   style="{{ style }}"
 >
   <div class="container">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="gpod-heading">{{ section.settings.heading | escape }}</h2>
-    {%- endif -%}
+    <div class="gpod-pdp-specs__head">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="gpod-heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.show_compare_link -%}
+        <a class="gpod-pdp-specs__compare" href="{{ section.settings.compare_link | default: '/pages/compare-gpod-models' }}?models={{ product.handle }}">Compare models →</a>
+      {%- endif -%}
+    </div>
 
     <div class="gpod-pdp-specs__grid">
       {%- if has_specs -%}
@@ -70,6 +75,21 @@
         </div>
       {%- endif -%}
     </div>
+
+    {%- if section.settings.scale_image != blank -%}
+      <figure class="gpod-pdp-specs__scale">
+        <img
+          src="{{ section.settings.scale_image | image_url: width: 1200 }}"
+          srcset="{{ section.settings.scale_image | image_url: width: 700 }} 700w, {{ section.settings.scale_image | image_url: width: 1200 }} 1200w"
+          sizes="(min-width: 900px) 860px, 100vw"
+          loading="lazy"
+          alt="{{ section.settings.scale_caption | default: 'Size reference' | escape }}"
+        >
+        {%- if section.settings.scale_caption != blank -%}
+          <figcaption>{{ section.settings.scale_caption | escape }}</figcaption>
+        {%- endif -%}
+      </figure>
+    {%- endif -%}
   </div>
 </section>
 {%- endif -%}
@@ -102,6 +122,34 @@
       "id": "specs_note",
       "label": "Note under specs",
       "default": "<p>Questions about a spec we haven't listed? <a href=\"/pages/contact-us\">Ask us</a> — we answer fast.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compare_link",
+      "label": "Show 'Compare models' link",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "compare_link",
+      "label": "Compare page",
+      "info": "Defaults to /pages/compare-gpod-models; the current product is pre-selected."
+    },
+    {
+      "type": "header",
+      "content": "Size reference"
+    },
+    {
+      "type": "image_picker",
+      "id": "scale_image",
+      "label": "Size reference photo",
+      "info": "e.g. the product next to a golf bag for scale"
+    },
+    {
+      "type": "text",
+      "id": "scale_caption",
+      "label": "Caption",
+      "default": "Shown in a standard golf bag for scale"
     },
     {
       "type": "header",

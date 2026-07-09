@@ -8,7 +8,7 @@
   --PB: {{ section.settings.padding_bottom }}px;
 {%- endcapture -%}
 
-<section class="gpod-section gpod-usecases container-wrap section-padding{% if section.settings.center_heading %} gpod-section--center{% endif %}"
+<section class="gpod-section gpod-usecases{% if section.settings.grid_style == 'compact' %} gpod-usecases--compact{% endif %} container-wrap section-padding{% if section.settings.center_heading %} gpod-section--center{% endif %}"
   data-section-type="home-use-cases"
   style="{{ style }}"
 >
@@ -86,6 +86,16 @@
       "default": true
     },
     {
+      "type": "select",
+      "id": "grid_style",
+      "label": "Tile style",
+      "default": "feature",
+      "options": [
+        { "label": "Feature (tall)", "value": "feature" },
+        { "label": "Compact", "value": "compact" }
+      ]
+    },
+    {
       "type": "header",
       "content": "Section padding"
     },
@@ -144,7 +154,7 @@
       ]
     }
   ],
-  "max_blocks": 4,
+  "max_blocks": 8,
   "presets": [
     {
       "category": "Collection",

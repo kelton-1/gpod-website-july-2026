@@ -1,109 +1,107 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "section_faq_wKdJef": {
+    "faq_main": {
       "type": "section-faq",
       "blocks": {
-        "item_pjAWKj": {
-          "type": "item",
-          "settings": {
-            "title": "Do you ship internationally?",
-            "answer": "<p>Yes, we ship all over the world! Shipping costs will apply and will be added at checkout.</p>"
-          }
-        },
-        "item_KnbG6U": {
-          "type": "item",
-          "settings": {
-            "title": "How long will it take to ship my order?",
-            "answer": "<p>If you order on a business day and the item is in stock, the item will be packed and shipped within 1 business day.</p>"
-          }
-        },
-        "item_jQnArP": {
-          "type": "item",
-          "settings": {
-            "title": "What is your return policy?",
-            "answer": "<p>We have put a lot of effort into ensuring the quality of our craftsmanship and raw materials so that you receive the best quality product. If for any reason you are not satisfied with the product we will gladly accept returns within 14 days of purchase, on us! (international orders subject to charges)</p><p>The product(s) must be in their original packaging, if applicable, in the same condition it was received. Orders are subject to restocking fees based on the condition of the product.</p><p>Returns will be refunded in the original method of payment (excluding shipping and handling charges).</p>"
-          }
-        },
-        "item_Mq764i": {
+        "item_0": {
           "type": "item",
           "settings": {
             "title": "What makes GPOD special?",
-            "answer": "<p>The GPOD is the lightest and strongest magnetic phone holder for filming sports motion and personal content. The body is made of carbon fiber that is 10x stronger and 5x lighter than steel. Each GPOD is equipped with a super user friendly adjustable magnetic head. No more flimsy plastic clamps!</p>"
+            "answer": "<p>The GPOD is the lightest and strongest magnetic phone holder for filming sports motion and personal content. The body is carbon fiber — around 10x stronger and 5x lighter than steel — with a cradle-free magnetic head, so your phone snaps on and off one-handed.</p>"
           }
         },
-        "item_wfkjrb": {
+        "item_1": {
           "type": "item",
           "settings": {
-            "title": "Can I use this for other things besides golf?",
-            "answer": "<p>The GPOD can be used to film any sports or personal content! Customers have given us feedback saying they have used it in baseball, football, soccer, hiking, beach activities, traveling, and golf among many other activities.</p>"
+            "title": "Which phones work with the magnetic mount?",
+            "answer": "<p>All of them. iPhone 12 and newer with MagSafe snap straight on with nothing added. Android phones and older iPhones use the 3M metal plates included with every purchase — stick one on your phone or case and it's just as magnetic.</p>"
           }
         },
-        "item_bfBTVa": {
+        "item_2": {
           "type": "item",
           "settings": {
-            "title": "Is GPOD compatible with my ipad?",
-            "answer": "<p>Yes, our magnets are strong enough to hold devices up to 3.5 lbs.</p>"
+            "title": "Does it work with a thick case, iPad, or GoPro?",
+            "answer": "<p>Thick or non-MagSafe cases: put an included metal plate on the case and you're set. iPads and tablets: yes — our magnets hold devices up to 3.5 lbs (we recommend the Studio 2.0 for larger iPads). GoPro and cameras: every magnetic head has a universal 1/4\" camera thread.</p>"
           }
         },
-        "item_XFecqw": {
+        "item_3": {
           "type": "item",
           "settings": {
-            "title": "Will the magnet hurt my phone or ipad?",
-            "answer": "<p>Nope. Our magnetic heads are perfectly SAFE for your phones and tablets.</p>"
+            "title": "Will the magnet hurt my phone or iPad?",
+            "answer": "<p>Nope. Our magnetic heads are perfectly safe for phones and tablets.</p>"
           }
         },
-        "item_WVnkWH": {
+        "item_4": {
           "type": "item",
           "settings": {
-            "title": "How does the magnetic mount work?",
-            "answer": "<p>Our Patent Pending magnetic heads have a universal 1/4” camera threaded hole in the back. This makes them compatible to any camera tripod/monopod. Simply screw the magnetic head to the GPOD or GPOD mini mount and stick your phone to it!</p>"
+            "title": "How much does the GPOD weigh? Will it fit in my golf bag?",
+            "answer": "<p>The original GPOD weighs about 8 ounces — a sleeve of 6 golf balls. Every monopod is designed to ride in a standard golf bag; the GPOD X collapses to 20 inches specifically for bag carry. Exact lengths and weights are on each product page and the <a href=\"/pages/compare-gpod-models\">compare page</a>.</p>"
           }
         },
-        "item_HfPyJW": {
+        "item_5": {
           "type": "item",
           "settings": {
-            "title": "Which smartphone models are compatible with the magnetic mount?",
-            "answer": "<p>Our mounts have UNIVERSAL compatibility. They will work with all devices as long as you use our metal plates that are included with every purchase.</p>"
+            "title": "What does the remote do?",
+            "answer": "<p>The Bluetooth remote pairs with your phone in seconds and starts/stops recording from address — no walking back and forth to your camera between swings. Pairing steps are in our <a href=\"/pages/support-guides\">Support &amp; Guides</a> hub.</p>"
           }
         },
-        "item_WBtNYK": {
+        "item_6": {
           "type": "item",
           "settings": {
-            "title": "How much does the GPOD weigh?",
-            "answer": "<p>The GPOD weighs only 8 ounces, which is equivalent to a sleeve of 6 golf balls.</p>"
+            "title": "What's in the Sportsbox 3D bundle?",
+            "answer": "<p>The bundle pairs a GPOD Travel tripod with a full year of Sportsbox 3D — an app that turns your swing videos into 3D body-movement data. Redemption instructions are in <a href=\"/pages/support-guides\">Support &amp; Guides</a>.</p>"
           }
         },
-        "item_eXiAiC": {
+        "item_7": {
           "type": "item",
           "settings": {
-            "title": "Can I use this magnetic head on other tripods?",
-            "answer": "<p>Our Patent Pending magnetic heads have a universal 1/4” camera threaded hole in the back. This makes them compatible to any camera tripod/monopod. Simply screw the magnetic head to the GPOD, GPOD mini, or your existing tripod!</p>"
+            "title": "Can I use GPOD for things besides golf?",
+            "answer": "<p>Absolutely. Customers use GPOD for baseball, football, soccer, hiking, beach days, travel, and content creation of every kind. If you point a camera at it, GPOD can hold the camera.</p>"
+          }
+        },
+        "item_8": {
+          "type": "item",
+          "settings": {
+            "title": "Can I use the magnetic head on other tripods?",
+            "answer": "<p>Yes — the patent-pending magnetic heads have a universal 1/4\" camera thread in the back, so they screw onto any standard tripod or monopod.</p>"
+          }
+        },
+        "item_9": {
+          "type": "item",
+          "settings": {
+            "title": "Do you ship internationally? How fast?",
+            "answer": "<p>We ship worldwide. In-stock orders placed on a business day are packed and shipped within 1 business day; shipping costs are calculated at checkout, and you'll get tracking by text or email.</p>"
+          }
+        },
+        "item_10": {
+          "type": "item",
+          "settings": {
+            "title": "What is your return policy and warranty?",
+            "answer": "<p>If you're not satisfied, we make it right — see <a href=\"/pages/refund-policy\">Shipping &amp; Returns</a> for the full policy. GPODs are guaranteed to last: if something breaks, contact us and we'll repair or replace it, and most small parts (remotes, knobs, magnets) can be replaced individually.</p>"
+          }
+        },
+        "item_11": {
+          "type": "item",
+          "settings": {
+            "title": "My question isn't here — where do I look?",
+            "answer": "<p>Setup videos, troubleshooting (including a stuck lower extension), and remote pairing live in <a href=\"/pages/support-guides\">Support &amp; Guides</a>. Not sure which GPOD to buy? <a href=\"/pages/compare-gpod-models\">Compare models</a> or take the <a href=\"/pages/product-finder-quiz\">30-second finder</a>. Anything else: <a href=\"/pages/contact-us\">contact us</a> — we answer fast.</p>"
           }
         }
       },
       "block_order": [
-        "item_pjAWKj",
-        "item_KnbG6U",
-        "item_jQnArP",
-        "item_Mq764i",
-        "item_wfkjrb",
-        "item_bfBTVa",
-        "item_XFecqw",
-        "item_WVnkWH",
-        "item_HfPyJW",
-        "item_WBtNYK",
-        "item_eXiAiC"
+        "item_0",
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_5",
+        "item_6",
+        "item_7",
+        "item_8",
+        "item_9",
+        "item_10",
+        "item_11"
       ],
-      "name": "FAQ",
       "settings": {
         "title": "FAQ'S",
         "subheading": "",
@@ -112,135 +110,9 @@
         "padding_top": 50,
         "padding_bottom": 50
       }
-    },
-    "main": {
-      "type": "main-page",
-      "disabled": true,
-      "settings": {
-        "show_page_title": true,
-        "padding_top": 50,
-        "padding_bottom": 50
-      }
-    },
-    "faq": {
-      "type": "section-faq",
-      "blocks": {
-        "faq-item-0": {
-          "type": "item",
-          "settings": {
-            "title": "Question",
-            "answer": "<p>Use this answer block to discuss some commonly asked questions you've discovered from your customers interactions. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your product or collection. This section will appear across all products.</p>"
-          }
-        },
-        "faq-item-1": {
-          "type": "item",
-          "settings": {
-            "title": "Question",
-            "answer": "<p>Use this answer block to discuss some commonly asked questions you've discovered from your customers interactions. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your product or collection. This section will appear across all products.</p>"
-          }
-        },
-        "faq-item-2": {
-          "type": "item",
-          "settings": {
-            "title": "Question",
-            "answer": "<p>Use this answer block to discuss some commonly asked questions you've discovered from your customers interactions. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your product or collection. This section will appear across all products.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "faq-item-0",
-        "faq-item-1",
-        "faq-item-2"
-      ],
-      "disabled": true,
-      "settings": {
-        "title": "FAQ",
-        "subheading": "Questions and Answers",
-        "layout_split": true,
-        "width": "container",
-        "padding_top": 50,
-        "padding_bottom": 50
-      }
-    },
-    "ss_text_block_pro_g7GYMK": {
-      "type": "ss-text-block-pro",
-      "blocks": {
-        "text_TeKz3B": {
-          "type": "text",
-          "settings": {
-            "text": "<p><strong>Didn't see your question answered above? No problem! Reach out to us with any questions, comments, concerns here! </strong></p>",
-            "text_custom": false,
-            "text_font": "assistant_n4",
-            "text_size": 20,
-            "text_height": 130,
-            "text_align": "center",
-            "text_mt": 16,
-            "text_color": "#000000"
-          }
-        },
-        "button_WR4cW4": {
-          "type": "button",
-          "settings": {
-            "btn": "CONTACT US",
-            "btn_url": "shopify://pages/contact-us",
-            "btn_custom": false,
-            "btn_font": "assistant_n4",
-            "btn_size": 22,
-            "btn_height": 150,
-            "btn_align": "center",
-            "btn_width": 200,
-            "btn_mt": 32,
-            "btn_padding_horizontal": 16,
-            "btn_padding_vertical": 12,
-            "btn_border_thickness": 1,
-            "btn_radius": 0,
-            "btn_color": "#000000",
-            "btn_hover_color": "#000000",
-            "btn_bg_color": "",
-            "btn_bg_hover_color": "",
-            "btn_border_color": "#000000",
-            "btn_border_hover_color": ""
-          }
-        }
-      },
-      "block_order": [
-        "text_TeKz3B",
-        "button_WR4cW4"
-      ],
-      "name": "SS - Text Block Pro",
-      "settings": {
-        "image_width": 20,
-        "image_custom": false,
-        "image_height_desktop": 400,
-        "image_height_mobile": 200,
-        "image_radius": 12,
-        "image_ration": "none",
-        "image_location": "row",
-        "image_location_mobile": "column",
-        "content_padding_horizontal": 40,
-        "content_padding_vertical": 40,
-        "content_radius": 40,
-        "gap": 30,
-        "gap_mobile": 15,
-        "background_color": "#8cc662",
-        "background_gradient": "",
-        "border_color": "#000000",
-        "content_bg": "",
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "padding_horizontal": 5,
-        "padding_horizontal_mobile": 1.5,
-        "content_width": 120,
-        "border_thickness": 0
-      }
     }
   },
   "order": [
-    "section_faq_wKdJef",
-    "main",
-    "faq",
-    "ss_text_block_pro_g7GYMK"
+    "faq_main"
   ]
 }

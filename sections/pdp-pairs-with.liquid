@@ -1,0 +1,144 @@
+{% comment %}
+  PDP: "Complete your setup" — Peak Design/Huckberry-style pairing cards.
+  Each block = a companion product + a use-case framing line explaining
+  WHY it pairs ("For the sim room: add the Base 2.0"). Blocks that point
+  at the current product hide themselves so one template serves all PDPs.
+{% endcomment %}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+{%- liquid
+  assign visible = 0
+  for block in section.blocks
+    if block.settings.product != blank and block.settings.product.handle != product.handle
+      assign visible = visible | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if visible > 0 -%}
+<section class="gpod-section gpod-pairs container-wrap section-padding"
+  data-section-type="pdp-pairs-with"
+  style="{{ style }}"
+>
+  <div class="container">
+    {%- if section.settings.kicker != blank -%}
+      <p class="gpod-kicker">{{ section.settings.kicker | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gpod-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    <div class="gpod-pairs__grid">
+      {%- for block in section.blocks -%}
+        {%- assign pair = block.settings.product -%}
+        {%- if pair != blank and pair.handle != product.handle -%}
+          <a class="gpod-pairs__card" href="{{ pair.url }}" {{ block.shopify_attributes }}>
+            {%- if pair.featured_image -%}
+              <img
+                src="{{ pair.featured_image | image_url: width: 360 }}"
+                srcset="{{ pair.featured_image | image_url: width: 360 }} 1x, {{ pair.featured_image | image_url: width: 720 }} 2x"
+                width="180" height="180" loading="lazy"
+                alt="{{ pair.featured_image.alt | default: pair.title | escape }}"
+              >
+            {%- endif -%}
+            <div class="gpod-pairs__body">
+              {%- if block.settings.usecase != blank -%}
+                <p class="gpod-pairs__usecase">{{ block.settings.usecase | escape }}</p>
+              {%- endif -%}
+              <h3>{{ pair.title }}</h3>
+              <p class="gpod-pairs__price">
+                {{- pair.price | money -}}
+                {%- if pair.compare_at_price > pair.price %} <s>{{ pair.compare_at_price | money }}</s>{% endif -%}
+              </p>
+              <span class="gpod-pairs__link">Add it to your setup →</span>
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PDP pairs with",
+  "class": "shopify-section--pdp-pairs-with",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Complete your setup"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Pairs well with"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pair",
+      "name": "Companion product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "usecase",
+          "label": "Use-case line",
+          "info": "e.g. 'For the sim room' or 'For thick cases'"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Product",
+      "name": "PDP pairs with",
+      "blocks": [
+        { "type": "pair" },
+        { "type": "pair" },
+        { "type": "pair" }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

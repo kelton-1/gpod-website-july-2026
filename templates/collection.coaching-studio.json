@@ -107,11 +107,74 @@
         "padding_top": 10,
         "padding_bottom": 10
       }
+    },
+    "lifestyle": {
+      "type": "section-image-with-text",
+      "blocks": {
+        "ls_img": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/GPOD_Pauly_P_Base_GPEG_GPLATE.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "ls_img"
+      ],
+      "settings": {
+        "width": "container-wrap",
+        "color_style": "white",
+        "slide_height": "four-fifty-height-hero",
+        "slide_image_position": "left",
+        "slide_image_size": "fifty",
+        "subheading": "Coaching & studio",
+        "title": "Built for all-day lesson filming",
+        "content": "<p>The Studio 2.0 and Pauly P are the setups coaches run daily — fast height changes between students, repeatable camera angles, and stability that survives a full teaching schedule.</p>",
+        "cta": "",
+        "btn_type": "btn--primary",
+        "btn_size": "",
+        "btn_style": "btn--outline",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "testimonials": {
+      "type": "section-testimonials",
+      "blocks": {
+        "quote_1": {
+          "type": "testimonial",
+          "settings": {}
+        },
+        "quote_2": {
+          "type": "testimonial",
+          "settings": {}
+        },
+        "quote_3": {
+          "type": "testimonial",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "quote_1",
+        "quote_2",
+        "quote_3"
+      ],
+      "settings": {
+        "title": "What GPODDERs say",
+        "title_position": "center",
+        "blocks_text_align": "center",
+        "hide_quotes": false,
+        "columns": 3,
+        "padding_top": 50,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
     "hero",
     "toolbar",
-    "main"
+    "main",
+    "lifestyle",
+    "testimonials"
   ]
 }

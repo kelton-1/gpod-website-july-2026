@@ -8,7 +8,7 @@
   --PB: {{ section.settings.padding_bottom }}px;
 {%- endcapture -%}
 
-<section class="gpod-section gpod-statement gpod-statement--{{ section.settings.color_style }} section-padding"
+<section class="gpod-section gpod-statement gpod-statement--{{ section.settings.color_style }}{% if section.settings.layout == 'letter' %} gpod-statement--letter{% endif %} section-padding"
   data-section-type="home-brand-statement"
   style="{{ style }}"
 >
@@ -22,6 +22,14 @@
       {%- endif -%}
       {%- if section.settings.text != blank -%}
         <div class="gpod-statement__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+      {%- if section.settings.signature != blank -%}
+        <p class="gpod-statement__signature">
+          {{ section.settings.signature | escape }}
+          {%- if section.settings.signature_role != blank -%}
+            <small>{{ section.settings.signature_role | escape }}</small>
+          {%- endif -%}
+        </p>
       {%- endif -%}
       {%- if section.settings.link_text != blank and section.settings.link != blank -%}
         <a class="gpod-statement__link" href="{{ section.settings.link }}">{{ section.settings.link_text | escape }}</a>
@@ -61,6 +69,28 @@
       "type": "url",
       "id": "link",
       "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "label": "Signature",
+      "info": "e.g. — Paul Park"
+    },
+    {
+      "type": "text",
+      "id": "signature_role",
+      "label": "Signature role",
+      "info": "e.g. Founder"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "statement",
+      "options": [
+        { "label": "Centered statement", "value": "statement" },
+        { "label": "Founder letter", "value": "letter" }
+      ]
     },
     {
       "type": "select",
