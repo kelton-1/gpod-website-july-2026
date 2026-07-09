@@ -1185,3 +1185,102 @@ a.gpod-support__card:hover {
   font-weight: 700;
   color: var(--gpod-ink);
 }
+
+/* --------------------------------------------------------------
+   PDP: ways to use it (Huckberry-style lifestyle cards)
+   -------------------------------------------------------------- */
+
+.gpod-ways__track {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+
+.gpod-ways__card {
+  flex: 0 0 min(70vw, 300px);
+  scroll-snap-align: start;
+  display: block;
+  color: var(--gpod-text);
+  text-decoration: none;
+}
+
+@media (min-width: 1024px) {
+  .gpod-ways__track--grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    overflow: visible;
+  }
+  .gpod-ways__track--grid .gpod-ways__card {
+    flex: none;
+  }
+}
+
+.gpod-ways__media {
+  aspect-ratio: 4 / 5;
+  border-radius: var(--gpod-radius);
+  overflow: hidden;
+  background: var(--gpod-soft);
+  margin-bottom: 10px;
+}
+
+.gpod-ways__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+a.gpod-ways__card:hover .gpod-ways__media img {
+  transform: scale(1.04);
+}
+
+.gpod-ways__label {
+  margin: 0 0 2px;
+  font-size: 1rem;
+  color: var(--gpod-ink);
+}
+
+.gpod-ways__caption {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.gpod-ways__cta {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gpod-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--gpod-accent);
+  text-decoration-thickness: 2px;
+}
+
+/* --------------------------------------------------------------
+   Image uniformity guards
+   -------------------------------------------------------------- */
+
+/* No image in a gpod section may escape its container. */
+.gpod-section img {
+  max-width: 100%;
+}
+
+/* Wide logo lockups (e.g. GPOD x Sportsbox) in the home split block:
+   contain instead of edge-to-edge crop, capped height, centered. */
+.index-section .split-content__image img,
+.index-section .split-content__image .lazy-image {
+  object-fit: contain;
+  max-height: 340px;
+}
+
+.index-section .split-content__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -565,11 +565,57 @@
         "padding_top": 40,
         "padding_bottom": 50
       }
+    },
+    "pdp_ways": {
+      "type": "pdp-ways-to-use",
+      "blocks": {
+        "way_1": {
+          "type": "way",
+          "settings": {
+            "label": "Range days",
+            "caption": "Staked behind the ball for down-the-line video"
+          }
+        },
+        "way_2": {
+          "type": "way",
+          "settings": {
+            "label": "Sim room",
+            "caption": "Freestanding on the Base 2.0 next to the mat"
+          }
+        },
+        "way_3": {
+          "type": "way",
+          "settings": {
+            "label": "In the studio",
+            "caption": "Locked at lesson height for every student"
+          }
+        },
+        "way_4": {
+          "type": "way",
+          "settings": {
+            "label": "On the road",
+            "caption": "Collapsed in a carry-on, ready at the resort"
+          }
+        }
+      },
+      "block_order": [
+        "way_1",
+        "way_2",
+        "way_3",
+        "way_4"
+      ],
+      "settings": {
+        "kicker": "One GPOD, every setting",
+        "heading": "Ways to use it",
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
     }
   },
   "order": [
     "main",
     "pdp_benefits",
+    "pdp_ways",
     "1763423954672c8f0a",
     "section_icons_row_Yk6GXG",
     "pdp_specs",
