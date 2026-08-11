@@ -114,43 +114,107 @@ Manager; no legacy ad URL 404s or double-hops.
 
 ---
 
-## 5. Sprint 2 — The Mobile Buy Box
+## 5. Sprint 2 — The Mobile PDP: shorten the decision
 
 > *The direct hit on the 2.6× ATC gap.*
 
-**Goal:** make "add to cart" reachable, obvious, and confident on a 390px screen.
+**Goal:** get the deciding information in front of a phone user before they give up scrolling.
 **Primary metric:** mobile ATC rate 3.20% → 4.00% (+25% relative, ≈ +208 orders/90d, ≈ +$92K/yr).
 
-### Backlog
+### Two assumptions killed before planning
 
-**A. Sticky add-to-cart bar (mobile only)** — the single highest-leverage item
-in this plan. Price + selected variant + button, revealed once the hero scrolls
-out. On a 17-section PDP the ATC button is otherwise a memory by the time a
-customer is convinced.
+A code audit overturned the two things this sprint was originally built around,
+so both are recorded here rather than quietly dropped:
 
-**B. Above-the-fold budget.** Define and enforce a px budget at 390×844: media,
-title, star rating + count, price, one differentiator line, variant selector,
-ATC. Anything else moves down. Target: ATC visible within one short scroll.
+- **A sticky mobile add-to-cart bar already exists and is already live.**
+  `snippets/shop-bar.liquid:54-88` overrides Modular's `≤1023px` hide rule with
+  `display:flex !important`; `show_cart_bar = true`; the markup and the 1023px
+  media query are both present in the live PDP HTML. It shipped in the original
+  theme baseline (commit `50cedfc`), not the redesign. **This is not a gap.**
+  That matters: with a sticky ATC already in place, mobile ATC is *still* 3.20%,
+  which is strong evidence the constraint is comprehension and scroll length,
+  not button accessibility.
+- **Variant-picker work is wasted effort.** All 17 active products have
+  `variantsCount = 1` ("Default Title"), so the ~250 lines of option-selector
+  logic in `snippets/product-form.liquid:41-282` never render. Sold-out handling
+  for the single variant is already correct.
 
-**C. Surface the proof we already own.** Fera is live on PDPs (115 markup hits)
-and `AggregateRating` is already in JSON-LD — but the rating is not in the
-above-fold block. Star row + review count directly under the product title.
+### The measured above-fold budget (390×844)
 
-**D. Payment confidence.** `enable_payment_button = true` and Shop Pay
-installments are present. Add explicit installment messaging near price
-("or 4 interest-free payments of $27.50") — meaningful at a $109 AOV.
+| Element | Height | Cumulative |
+|---|---|---|
+| Sticky header | 60 | 60 |
+| Breadcrumbs | 0 (hidden ≤767px) | 60 |
+| **Featured image — uncapped** | **350–490** | 410–550 |
+| Vendor + H1 + price | 95–115 | 505–665 |
+| Fera star summary | 26–34 | 531–699 |
+| Quantity stepper (+40 margin) | 84 | 615–783 |
+| **Add to Cart** | 44 | **659–827** |
 
-**E. Fill the trust vacuum.** The live PDP has **zero free-shipping messaging**
-(verified: 0 hits). Add a compact row under ATC: shipping promise, returns
-window, warranty, "works with your phone" link.
+Against ~690–740px of genuinely visible height once browser chrome is
+subtracted, ATC lands right on the boundary — and **the single uncapped hero
+image is the largest swing variable**. A 4:5 portrait lifestyle shot renders
+~488px tall at 390px wide and pushes ATC below the fold; a square product shot
+does not. The catalog mixes both.
 
-**F. Component hygiene.** Variant tap targets ≥44×44px with an unambiguous
-selected state; gallery swipeable with locked aspect ratio (no CLS); sold-out
-states handled.
+### Backlog, ranked by impact ÷ effort
 
-**G. Cut the PDP from 17 sections to ~10 on mobile.** Merge the two
-`section-faq` instances, audit the three `apps` blocks, and drop or defer
-anything that repeats a message already made.
+**A. Cap the hero image height on mobile** — `max-height: ~62vh` + `object-fit:
+cover` on the featured media box (`snippets/media.liquid:16-26` feeds an
+unclamped `media.aspect_ratio` into a `padding-top` ratio box). CSS-only, and it
+decides whether ATC clears the fold. *The July 9 image-uniformity audit checked
+overflow and distortion, not aspect-ratio-driven scroll length — this is a gap
+in that audit, not a repeat of it.*
+
+**B. Reorder `templates/product.json`** so `pdp_compat` and `pdp_specs` follow
+`main` directly. They currently sit at positions **6 and 7**, behind roughly
+2,300px of scroll — despite answering the #1 documented customer complaint.
+Pure JSON reorder, no new code.
+
+**C. Collapse the raw product description.** `snippets/product.liquid:298-305`
+prints `product.description` untruncated with no read-more affordance anywhere
+in the theme — ~500–700px of legacy rich text whose "What's Included" list
+duplicates the `box_contents` metafield that `pdp-specs` already renders.
+Reuse the existing `.gpod-accordion` pattern (`assets/gpod.css:441-490`).
+
+**D. Fix the remote-pairing contradiction.** The shared `step_film` copy
+(`templates/product.json:400-406`) tells every customer to "pair it in your
+phone's Bluetooth settings" — including on GPOD, whose own metafield says
+`remote_included: No`. This reintroduces the exact pre-purchase confusion the
+redesign exists to remove, on the best-selling product. Gate on
+`product.metafields.gpod.remote_included`.
+
+**E. Fix the app blocks sitting inside the buy box.** `templates/product.json:33-52`
+places a One Click Upsell block and the Hype Discounts tiered progress bar
+between the ATC button and the description — the progress bar styled
+`header_bg_color: "#1eff00"` (neon green) and showing 0% progress before
+anything is in the cart. Rebrand via the app's own settings and move the
+progress bar to the cart drawer, where a running subtotal actually exists.
+
+**F. Resolve `pdp-ways-to-use`, which renders nothing on every PDP.**
+`sections/pdp-ways-to-use.liquid:17-26` gates on `block.settings.image`, and
+none of the four blocks in `templates/product.json:572-599` define an `image`
+key. Either upload the photos tracked in `docs/assets-needed.md` or remove the
+section from the `order` array — a reserved-but-empty slot in position 3.
+
+**G. De-duplicate the embedded compare table.** `gpod_compare` (position 11)
+and `pdp_specs` pull the identical 9 metafields, and the PDP's own compare table
+includes the current product as one of its five columns. Drop the current
+product's column, or replace the embed with the "Compare models →" link that
+already exists at `sections/pdp-specs.liquid:37-39`.
+
+**H. One checkbox: `enable_additional_buttons → true`.** Currently `false`, so
+`content_for_additional_checkout_buttons` never prints and the cart drawer has
+no Shop Pay / PayPal / Google Pay — even though the PDP does.
+
+**I. Render payment icons near ATC.** `snippets/payment-icons.liquid` is called
+from exactly one place — `sections/footer.liquid:157`, roughly 7,000px below the
+buy box.
+
+### Deliberately *not* in this sprint
+Cart-drawer merchandising (no cross-sell, no trust row, no threshold bar) is
+real and worth ~$69K/yr — but mobile cart→order already **outperforms** desktop,
+so it is incremental AOV, not funnel-leak repair. It belongs in Sprint 5.
 
 ---
 
