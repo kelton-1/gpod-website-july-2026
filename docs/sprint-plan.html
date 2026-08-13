@@ -410,6 +410,82 @@
   </section>
 
   <section>
+    <h2>Build parallel, never in place</h2>
+    <p class="sec-lede">Set up now so Intelligems can split traffic later without rework.</p>
+
+    <div class="prose">
+      <p>A change we want to learn from ships as a <strong>new</strong> template or section alongside the existing
+      one — never as an edit that overwrites it. An overwritten template has no control arm, so it can never be
+      tested, only believed.</p>
+    </div>
+
+    <div class="scroller" style="margin-bottom:24px">
+      <table>
+        <thead><tr><th>Intelligems constraint</th><th>What it forces</th></tr></thead>
+        <tbody>
+          <tr><td>Variants must live in the <strong>published</strong> theme, and the template currently in use must be the control</td><td>Variants ship to production dormant — so they must be finished work, not scratch. They're one config change from live traffic.</td></tr>
+          <tr><td><strong>The home page cannot be template-tested.</strong> Shopify blocks switching the <code>index</code> template</td><td>Home layout tests run as <strong>Theme Tests</strong> — duplicate theme, split at theme level, script installed in both. This matters most: <code>/</code> is 51.8% of sessions.</td></tr>
+          <tr><td>Losing variants are deleted; stale cookies redirect to control</td><td>Variants are cheap to create and cheap to retire — provided we actually retire them. The current stale-template mess is what happens when we don't.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <p><strong>Names encode the hypothesis, not a version.</strong> <code>product.specs-first.json</code>, not
+      <code>product.v2.json</code> — by the fourth test nobody remembers what v2 was. One hypothesis per file.</p>
+    </div>
+
+    <div class="callout" style="border-left-color: var(--accent)">
+      <h4>Defects get fixed in the control. Choices get tested as variants.</h4>
+      <p>An empty compatibility page, a 404 CTA, a "John Doe" testimonial and a factually wrong sentence about the
+      Bluetooth remote are not hypotheses — there is no version of the site where they win. Fix those everywhere,
+      immediately. Spend the testing budget on the genuinely open questions: section order, how much detail belongs
+      above the fold, whether the quiz beats the compare table as the primary decision aid.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The design system</h2>
+    <p class="sec-lede">A prerequisite, not a nicety — variants built from inconsistent tokens test which arm looks less broken.</p>
+
+    <h3>What came back clean</h3>
+    <div class="prose">
+      <p><strong>Container alignment is correct across all 13 custom sections</strong> — every one uses the same
+      classes as the header, so left edges align at every breakpoint. <strong>Zero <code>font-family</code>
+      declarations</strong> in the custom layer. <strong>Zero dead CSS.</strong> That's unusual for CSS built this
+      fast, and it's worth protecting.</p>
+    </div>
+
+    <h3>Where it fragmented</h3>
+    <div class="figures" style="margin-top:18px">
+      <div class="fig"><dt>Heading treatments</dt><dd>6<span class="sub">for one role</span></dd></div>
+      <div class="fig"><dt>Card-title sizes</dt><dd>7<span class="sub">no scale</span></dd></div>
+      <div class="fig"><dt>Secondary-text sizes</dt><dd>9<span class="sub">0.7–1rem</span></dd></div>
+      <div class="fig"><dt>Section-padding values</dt><dd>8<span class="sub">no scale</span></dd></div>
+    </div>
+
+    <div class="callout">
+      <h4>The trap for A/B variants</h4>
+      <p><strong>Deployed section padding doesn't match schema defaults.</strong> <code>pdp-compatibility</code> and
+      <code>pdp-how-to</code> ship at 30/30 against a 50/50 default; <code>pdp-specs</code> at 50/30. A variant built
+      by adding sections from defaults renders <em>looser than the current production page</em> — and we'd read that
+      as "the new layout lost," when what actually lost was the spacing. Reconciling defaults to the spacing scale
+      blocks the first variant template.</p>
+    </div>
+
+    <div class="callout">
+      <h4>Four defects on primary conversion elements, all on mobile</h4>
+      <p><strong>Home-hero is the only section of 13 missing the <code>gpod-section</code> class.</strong> Because the
+      theme globally applies <code>outline: none</code> to focus, the scoped focus rule never reaches the hero — so
+      "Shop All GPODs" and "Take the Quiz" have <strong>no dependable keyboard focus ring</strong>. One-word fix.</p>
+      <p>The compare-table "Shop" CTA renders ≈32px tall, the compare picker ≈30px, and collection-toolbar pills ≈32px
+      — all under the 44px minimum, on the primary mobile interactions. <code>prefers-reduced-motion</code> appears
+      <strong>zero times</strong> in either stylesheet, while the theme runs scroll animations throughout and the home
+      hero autoplays video.</p>
+    </div>
+  </section>
+
+  <section>
     <h2>Six sprints</h2>
     <p class="sec-lede">One week each. A part-time developer should read these as two-week sprints, halving scope and keeping the order.</p>
 
@@ -423,6 +499,7 @@
           <li><strong>Staged publish.</strong> Rollback theme first, then PDP alone for 72h, then home, collections, support. Revert trigger declared in advance.</li>
           <li><strong>Instrumentation.</strong> <code>gpod.js</code> emits zero analytics events — the quiz, compare picker and pairs-with are all unmeasurable. Nothing downstream can be proven until this exists.</li>
           <li><strong>Fix where ads land.</strong> 301 the legacy IA URLs. Redirect a stale July 4th page that absorbed <strong>2,876 sessions</strong> in a window ending 11 August.</li>
+          <li><strong>Component defects</strong> — the missing focus ring on the hero CTAs, and three sub-44px tap targets on primary mobile conversion elements. Under an hour together.</li>
         </ul>
       </div>
     </div>
@@ -431,11 +508,11 @@
       <div class="sprint-num">02</div>
       <div class="sprint-body">
         <h3>The Mobile PDP — shorten the decision</h3>
-        <p class="sprint-metric">Metric: mobile ATC <b>3.20% → 4.00%</b> · ≈ +$92K/yr</p>
+        <p class="sprint-metric">Metric: mobile ATC <b>3.20% → 4.00%</b> · ≈ +$92K/yr · ships as <b>template variants</b></p>
         <ul>
           <li><strong>Cap the hero image height.</strong> It's uncapped, so a 4:5 portrait shot renders ~488px tall at 390px wide and pushes Add to Cart below the fold; a square shot doesn't. The catalog mixes both — this single variable decides whether ATC clears the fold.</li>
-          <li><strong>Promote specs and compatibility.</strong> They sit at positions 6 and 7, behind ~2,300px of scroll, despite answering the #1 documented complaint. A JSON reorder.</li>
-          <li><strong>Collapse the raw description</strong> — 500–700px of untruncated legacy copy duplicating a metafield the specs section already renders.</li>
+          <li><strong>Promote specs and compatibility</strong> — they sit at positions 6 and 7, behind ~2,300px of scroll, despite answering the #1 documented complaint. Ships as <code>product.specs-first.json</code>; the current template stays as control.</li>
+          <li><strong>Collapse the raw description</strong> — 500–700px of untruncated legacy copy duplicating a metafield the specs section already renders. Ships as <code>product.compact.json</code>, cutting the PDP from 17 sections to ~10.</li>
           <li><strong>Fix the remote-pairing contradiction.</strong> Every PDP tells customers to pair a Bluetooth remote, including on GPOD, whose own metafield says no remote is included.</li>
           <li><strong>Gate monopod content off accessories.</strong> "Extend from the top down" renders on five products that don't telescope.</li>
         </ul>
@@ -446,7 +523,7 @@
       <div class="sprint-num">03</div>
       <div class="sprint-body">
         <h3>Social Landing &amp; Speed</h3>
-        <p class="sprint-metric">Metric: social CVR <b>0.61% → 0.90%</b> · ≈ +$56K/yr</p>
+        <p class="sprint-metric">Metric: social CVR <b>0.61% → 0.90%</b> · ≈ +$56K/yr · runs as a <b>Theme Test</b></p>
         <ul>
           <li><strong>Performance is conversion work.</strong> The live home page ships <strong>798KB of HTML</strong> (387KB of it inline JS), <strong>288 image tags</strong> and 19 sections, behind a render-blocking 426KB stylesheet, with an autoplay video as the LCP element.</li>
           <li><strong>Keep the H1</strong> — "WE MAKE FILMING YOUR SWING EASY." is good. The promise isn't the problem; the page weight in front of it is.</li>
@@ -510,11 +587,10 @@
     </div>
 
     <div class="callout callout--gap">
-      <h4>Known gap in this audit</h4>
-      <p>The component and design-system pass — token consistency, container alignment across custom sections,
-      button-variant count, tap targets under 44px, breakpoint drift — <strong>did not complete</strong>. Every other
-      finding here is verified against code or live data. That one is simply missing, and should be run before
-      Sprint 2's CSS work begins rather than assumed clean.</p>
+      <h4>Open decision</h4>
+      <p><strong>RevenueHunt Quizzes is installed and enabled</strong> on the store, alongside the native product
+      finder we built. Two quiz systems is one too many — decide which is canonical before Sprint 6 wires quiz→email
+      capture, or that work gets done twice and the data lands in two places.</p>
     </div>
   </section>
 
