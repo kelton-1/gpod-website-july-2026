@@ -16,6 +16,8 @@
   {%- render 'product', product: product, section_type: 'featured-product' -%}
 </section>
 
+<script src="{{ 'gpod.js' | asset_url }}" defer></script>
+
 {% schema %}
 {
   "name": "Featured product",
@@ -60,6 +62,19 @@
         }
       ],
       "default": "large"
+    },
+    {
+      "type": "checkbox",
+      "id": "compact_mobile_media",
+      "label": "Compact product media on mobile",
+      "info": "Keeps the first purchase details closer to the first screen while preserving the full image in the gallery.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "lightbox",
+      "label": "Show lightbox",
+      "default": true
     },
     {
       "type": "header",
@@ -148,6 +163,92 @@
         {
           "type": "header",
           "content": "Block spacing"
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Bottom padding",
+          "default": 20
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "type": "variant-availability",
+      "name": "Variant availability",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Uses each Shopify variant's live availability and the theme's translated stock labels."
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Bottom padding",
+          "default": 12
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "type": "shipping-expectation",
+      "name": "Shipping expectation",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Uses product metafield gpod.shipping_expectation when available. The optional fallback applies to every product using this section; leave it blank until approved."
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Fallback text"
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Bottom padding",
+          "default": 12
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "type": "policy-links",
+      "name": "Purchase policy links",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Uses the titles and URLs from Settings > Policies. Empty policies stay hidden."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_refund_policy",
+          "label": "Show refund policy",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_shipping_policy",
+          "label": "Show shipping policy",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "accessibility_label",
+          "label": "Accessibility label",
+          "default": "Purchase policies"
         },
         {
           "type": "range",

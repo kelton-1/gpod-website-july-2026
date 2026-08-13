@@ -39,6 +39,8 @@
                   src="{{ tile_image | image_url: width: 480 }}"
                   srcset="{{ tile_image | image_url: width: 480 }} 480w, {{ tile_image | image_url: width: 720 }} 720w, {{ tile_image | image_url: width: 960 }} 960w"
                   sizes="(min-width: 1024px) 25vw, (min-width: 600px) 50vw, 100vw"
+                  width="{{ tile_image.width }}"
+                  height="{{ tile_image.height }}"
                   loading="lazy"
                   alt=""
                 >

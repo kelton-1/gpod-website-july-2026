@@ -1,6 +1,6 @@
 {% comment %}
   Native home hero: background video OR static image (separate mobile media),
-  headline + subhead, star trust row, and two CTAs (shop + quiz).
+  headline + subhead, trust row, and two CTAs (shop + quiz).
   Mobile-first; media is decorative (aria-hidden) with a dark overlay for
   text contrast.
 {% endcomment %}
@@ -26,16 +26,17 @@
 
 <section class="gpod-hero{% if section.settings.mobile_fullscreen %} gpod-hero--mobile-full{% endif %}"
   data-section-type="home-hero"
+  data-gpod-play-video-mobile="{{ section.settings.play_video_mobile }}"
   style="{{ style }}"
 >
   <div class="gpod-hero__media" aria-hidden="true">
     {%- if media_type == 'video' and video != blank -%}
       <div class="gpod-hero__layer{% if has_mobile_media %} gpod-hero__layer--desktop{% endif %}">
-        {{ video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
+        {{ video | video_tag: autoplay: false, loop: true, muted: true, playsinline: true, controls: false, preload: 'none', image_size: '1600x' }}
       </div>
       {%- if has_mobile_media -%}
         <div class="gpod-hero__layer gpod-hero__layer--mobile">
-          {{ video_mobile | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
+          {{ video_mobile | video_tag: autoplay: false, loop: true, muted: true, playsinline: true, controls: false, preload: 'none', image_size: '900x' }}
         </div>
       {%- endif -%}
     {%- elsif media_type == 'image' and image != blank -%}
@@ -44,6 +45,8 @@
         src="{{ image | image_url: width: 1600 }}"
         srcset="{{ image | image_url: width: 900 }} 900w, {{ image | image_url: width: 1600 }} 1600w, {{ image | image_url: width: 2200 }} 2200w"
         sizes="100vw"
+        width="{{ image.width }}"
+        height="{{ image.height }}"
         alt=""
         fetchpriority="high"
       >
@@ -53,6 +56,8 @@
           src="{{ image_mobile | image_url: width: 800 }}"
           srcset="{{ image_mobile | image_url: width: 500 }} 500w, {{ image_mobile | image_url: width: 800 }} 800w, {{ image_mobile | image_url: width: 1100 }} 1100w"
           sizes="100vw"
+          width="{{ image_mobile.width }}"
+          height="{{ image_mobile.height }}"
           alt=""
           fetchpriority="high"
         >
@@ -71,10 +76,8 @@
 
     {%- if section.settings.show_trust and section.settings.trust_text != blank -%}
       <p class="gpod-hero__trust">
-        <span class="gpod-hero__stars" role="img" aria-label="Rated 5 stars">
-          {%- for i in (1..5) -%}
-            <svg viewBox="0 0 20 20" width="16" height="16" focusable="false" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z" fill="currentColor"/></svg>
-          {%- endfor -%}
+        <span class="gpod-hero__trust-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" width="18" height="18" focusable="false"><path d="M10 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Zm-1.2 12.1L5.2 10l1.4-1.4 2.2 2.2 4.7-4.7 1.4 1.4-6.1 6.1Z" fill="currentColor"/></svg>
         </span>
         <span>{{ section.settings.trust_text | escape }}</span>
       </p>
@@ -82,7 +85,7 @@
 
     <div class="gpod-hero__ctas">
       {%- if section.settings.cta1_text != blank -%}
-        <a class="btn btn--primary btn--solid btn--large" href="{{ section.settings.cta1_link | default: '/collections/all-products' }}">{{ section.settings.cta1_text | escape }}</a>
+        <a class="btn btn--primary btn--solid btn--large" href="{{ section.settings.cta1_link | default: '/collections/frontpage' }}">{{ section.settings.cta1_text | escape }}</a>
       {%- endif -%}
       {%- if section.settings.cta2_text != blank -%}
         <a class="btn btn--white btn--outline btn--large" href="{{ section.settings.cta2_link | default: '/pages/product-finder-quiz' }}">{{ section.settings.cta2_text | escape }}</a>
@@ -90,6 +93,8 @@
     </div>
   </div>
 </section>
+
+<script src="{{ 'gpod.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
@@ -118,6 +123,13 @@
       "info": "Optional vertical crop. Falls back to the desktop video."
     },
     {
+      "type": "checkbox",
+      "id": "play_video_mobile",
+      "label": "Play background video on mobile",
+      "info": "Leave off for faster paid-traffic entry. Mobile visitors see the Shopify-generated video poster instead.",
+      "default": false
+    },
+    {
       "type": "image_picker",
       "id": "image",
       "label": "Image (desktop)"
@@ -135,7 +147,7 @@
       "max": 80,
       "step": 5,
       "unit": "%",
-      "default": 30
+      "default": 40
     },
     {
       "type": "header",
@@ -165,13 +177,13 @@
       "type": "text",
       "id": "headline",
       "label": "Headline",
-      "default": "WE MAKE FILMING YOUR SWING AND CONTENT EASY."
+      "default": "WE MAKE FILMING YOUR SWING EASY."
     },
     {
       "type": "textarea",
       "id": "subhead",
       "label": "Subheading",
-      "default": "MagSafe compatible magnetic phone monopods and tripods for all your filming needs. Just stick it and swing it."
+      "default": "Just stick it and swing it."
     },
     {
       "type": "checkbox",
@@ -183,7 +195,7 @@
       "type": "text",
       "id": "trust_text",
       "label": "Trust line",
-      "default": "Trusted by 75,000+ golfers"
+      "default": "Trusted by 75,000+ Golfers"
     },
     {
       "type": "header",
@@ -193,7 +205,7 @@
       "type": "text",
       "id": "cta1_text",
       "label": "Primary button label",
-      "default": "Shop All GPODs"
+      "default": "Shop All Products"
     },
     {
       "type": "url",

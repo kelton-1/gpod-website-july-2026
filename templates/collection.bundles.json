@@ -45,10 +45,54 @@
         "height": "five-fifty-height-hero",
         "banner_image_mobile": "shopify://shop_images/GPOD_Lifestyle_Shot_Range1.jpg",
         "height_mobile": "five-fifty-height-hero--mobile",
+        "compact_mobile": true,
         "text_position": "center",
         "color_text": "#ffffff",
         "color_overlay": "#333333",
         "overlay_opacity": 60
+      }
+    },
+    "toolbar": {
+      "type": "collection-toolbar",
+      "blocks": {
+        "pill_monopods": {
+          "type": "pill",
+          "settings": {
+            "collection": "monopods"
+          }
+        },
+        "pill_tripods_bases": {
+          "type": "pill",
+          "settings": {
+            "collection": "tripods-bases"
+          }
+        },
+        "pill_bundles": {
+          "type": "pill",
+          "settings": {
+            "collection": "bundles"
+          }
+        },
+        "pill_accessories": {
+          "type": "pill",
+          "settings": {
+            "collection": "accessories"
+          }
+        }
+      },
+      "block_order": [
+        "pill_monopods",
+        "pill_tripods_bases",
+        "pill_bundles",
+        "pill_accessories"
+      ],
+      "settings": {
+        "compare_text": "Compare models",
+        "compare_link": "/pages/compare-gpod-models",
+        "quiz_text": "Take the Quiz",
+        "quiz_link": "/pages/product-finder-quiz",
+        "padding_top": 10,
+        "padding_bottom": 10
       }
     },
     "main": {
@@ -58,9 +102,9 @@
         "enable_filters": true,
         "position_filters": "left",
         "show_featured_image": false,
-        "featured_heading": "Use this image showcase promotional content.",
-        "featured_text": "<p>Elaborate on it with rich text</p>",
-        "btn_text": "Learn More",
+        "featured_heading": "",
+        "featured_text": "",
+        "btn_text": "",
         "btn_link": "",
         "btn_type": "btn--primary",
         "btn_size": "",
@@ -76,6 +120,7 @@
   "order": [
     "hero",
     "section_image_with_text_overlay_ahfGdq",
+    "toolbar",
     "main"
   ]
 }

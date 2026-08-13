@@ -189,7 +189,7 @@
     </div>
 
     <div class="product__form-buttons">
-      <button class="product__form-submit btn btn--primary{% unless show_payment_buttons %} btn--solid{% else %} btn--outline{% endunless %}" type="submit" data-handle="{{ 'onboarding.product_title' | t | handle }}">{{ 'products.form.submit' | t }}</button>
+      <button class="product__form-submit btn btn--primary btn--solid"{% comment %} Always solid — matches product-form.liquid; see the note there. {% endcomment %} type="submit" data-handle="{{ 'onboarding.product_title' | t | handle }}">{{ 'products.form.submit' | t }}</button>
     </div>
 
     {%- if show_payment_buttons -%}

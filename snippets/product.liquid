@@ -53,11 +53,6 @@
     assign preorder = true
   endif
 
-  assign sold_out = true
-  if product.available or product == blank
-    assign sold_out = false
-  endif
-
   if product_layout == 'slideshow' or product_layout == 'slideshow-left'
     assign is_slideshow = true
   else
@@ -95,7 +90,7 @@
   {%- endstyle -%}
 {%- endif -%}
 
-<div class="product product--layout-{{ product_layout }} container-wrap{% unless is_product-template %} featured-product featured-product--{{ section.id }}{% if onboarding %} onboarding-product{% endif %}{% endunless %}"
+<div class="product product--layout-{{ product_layout }}{% if section.settings.compact_mobile_media %} product--compact-mobile-media{% endif %} container-wrap{% unless is_product-template %} featured-product featured-product--{{ section.id }}{% if onboarding %} onboarding-product{% endif %}{% endunless %}"
   id="Product--{{ section.id }}"
   data-lightbox="{{ lightbox }}"
   {% if scrollable_images %}data-product-scrollable-images{% endif %}
@@ -295,14 +290,100 @@
   {% endif %}
 </div></div>
 
+                {%- when 'model-picker' -%}
+                  {%- comment -%}
+                    Model picker, per the arc.cc variant grid — but the tiles
+                    are LINKS to sibling products, not variant radios. GPOD's
+                    models are distinct products with different heights,
+                    weights and bases; collapsing them into one variant picker
+                    would break the catalogue, inventory and the product feed.
+
+                    Purpose: the model decision previously happened only in the
+                    compare table ~3,400px down the page. This puts it in the
+                    buy box.
+                  {%- endcomment -%}
+                  {%- liquid
+                    assign picker_handles = block.settings.handles | split: ','
+                    assign picker_current = false
+                    for h in picker_handles
+                      assign h = h | strip
+                      if h == product.handle
+                        assign picker_current = true
+                      endif
+                    endfor
+                  -%}
+                  {%- if picker_current or block.settings.hide_if_absent == false -%}
+                    <div class="gpod-model-picker block-padding" {{ block_style }} {{ block.shopify_attributes }}>
+                      <div class="gpod-model-picker__head">
+                        <span class="gpod-model-picker__label">{{ block.settings.label | escape }}</span>
+                        <span class="gpod-model-picker__current">{{ product.title }}</span>
+                      </div>
+                      <ul class="gpod-model-picker__grid">
+                        {%- for h in picker_handles -%}
+                          {%- liquid
+                            assign handle = h | strip
+                            assign p = all_products[handle]
+                          -%}
+                          {%- if p != blank and p.available -%}
+                            {%- assign is_current = false -%}
+                            {%- if handle == product.handle -%}{%- assign is_current = true -%}{%- endif -%}
+                            <li class="gpod-model-picker__item{% if is_current %} is-current{% endif %}">
+                              <a href="{{ p.url }}"
+                                class="gpod-model-picker__tile"
+                                {% if is_current %}aria-current="page"{% endif %}
+                                aria-label="{{ p.title | escape }} {{ p.price | money }}">
+                                <span class="gpod-model-picker__thumb">
+                                  {%- if p.featured_image -%}
+                                    <img src="{{ p.featured_image | image_url: width: 150 }}"
+                                      srcset="{{ p.featured_image | image_url: width: 150 }} 1x, {{ p.featured_image | image_url: width: 300 }} 2x"
+                                      width="74" height="74" loading="lazy"
+                                      alt="{{ p.featured_image.alt | default: p.title | escape }}">
+                                  {%- endif -%}
+                                </span>
+                                {%- comment -%}
+                                  Full title. Stripping the 'GPOD ' prefix to
+                                  save width turned 'GPOD X' into 'X', which
+                                  means nothing on its own — the tiles wrap to
+                                  two lines instead.
+                                {%- endcomment -%}
+                                <span class="gpod-model-picker__name">{{ p.title }}</span>
+                                <span class="gpod-model-picker__price">{{ p.price | money }}</span>
+                              </a>
+                            </li>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+                  {%- endif -%}
+
                 {%- when 'product-description' -%}
-                  <div class="product__description rte block-padding"
+                  {%- comment -%}
+                    Collapsed by default. Measured on the GPOD X PDP, the raw
+                    description ran 820px inside the buy column while the media
+                    column ended 1,000px earlier — that gap was the single
+                    largest visual defect on the page, a tall empty band beside
+                    a wall of body copy.
+
+                    <details> rather than JS: it is keyboard accessible, works
+                    without script, and the content stays in the DOM for SEO
+                    and for in-page find.
+                  {%- endcomment -%}
+                  <details class="product__description-toggle block-padding"
                     data-product-description
                     {{ block_style }}
                     {{ block.shopify_attributes }}
                   >
-                    {{- product.description -}}
-                  </div>
+                    <summary class="product__description-summary">
+                      <span>Product details</span>
+                      {%- comment -%} inlined: the theme ships no chevron snippet {%- endcomment -%}
+                      <svg class="product__description-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                        <path d="M6 9.5l6 6 6-6"/>
+                      </svg>
+                    </summary>
+                    <div class="product__description rte">
+                      {{- product.description -}}
+                    </div>
+                  </details>
 
                 {%- when 'form' -%}
                   {%- assign enable_payment_button = block.settings.enable_payment_button -%}
@@ -320,6 +401,149 @@
                     </div>
                   </div>
                   {%- assign has_form_block = true -%}
+
+                {%- when 'variant-availability' -%}
+                  {%- assign current_variant = product.selected_or_first_available_variant -%}
+                  <div
+                    class="gpod-variant-availability{% if current_variant.available %} is-available{% else %} is-unavailable{% endif %} block-padding"
+                    data-gpod-variant-availability
+                    data-section-id="{{ section.id }}"
+                    data-in-stock="{{ 'products.inventory.in_stock' | t | escape }}"
+                    data-out-of-stock="{{ 'products.inventory.out_of_stock' | t | escape }}"
+                    data-item-unavailable="{{ 'products.inventory.item_unavailable' | t | escape }}"
+                    role="status"
+                    aria-live="polite"
+                    {{ block_style }}
+                    {{ block.shopify_attributes }}
+                  >
+                    <span class="gpod-variant-availability__dot" aria-hidden="true"></span>
+                    <span data-gpod-variant-availability-label>
+                      {%- if current_variant.available -%}
+                        {{- 'products.inventory.in_stock' | t -}}
+                      {%- else -%}
+                        {{- 'products.inventory.out_of_stock' | t -}}
+                      {%- endif -%}
+                    </span>
+                  </div>
+
+                {%- when 'key-specs' -%}
+                  {%- comment -%}
+                    Above-the-fold value. The buy column went price -> stock
+                    dot -> model picker -> Add to Cart with nothing telling a
+                    shopper WHAT they were buying, so the first screen sold
+                    on price alone.
+
+                    Reads the same gpod.* metafields the spec table and the
+                    compare module use, so there is one source of truth and no
+                    new copy to maintain. The whole strip hides if a product
+                    has none of them — same self-hiding convention as
+                    pdp-specs and compare-table.
+                  {%- endcomment -%}
+                  {%- liquid
+                    assign ks_keys = block.settings.keys | default: 'extended_length,collapsed_length,weight,phone_attachment' | split: ','
+                    assign ks_labels = 'Extended,Collapsed,Weight,Mount' | split: ','
+                    assign ks_count = 0
+                    for k in ks_keys
+                      assign kk = k | strip
+                      if product.metafields.gpod[kk].value != blank
+                        assign ks_count = ks_count | plus: 1
+                      endif
+                    endfor
+                  -%}
+                  {%- if ks_count > 0 -%}
+                    <dl class="gpod-keyspecs block-padding" {{ block_style }} {{ block.shopify_attributes }}>
+                      {%- for k in ks_keys -%}
+                        {%- assign kk = k | strip -%}
+                        {%- assign kv = product.metafields.gpod[kk].value -%}
+                        {%- if kv != blank -%}
+                          <div class="gpod-keyspecs__item">
+                            <dt>{{ ks_labels[forloop.index0] | default: kk }}</dt>
+                            {%- comment -%}
+                              Values like "MagSafe GPUCK; 3 adhesive metal
+                              plates included for Android and non-MagSafe
+                              phones" are a paragraph, not a stat. Truncated
+                              at the first clause so the strip stays a strip —
+                              the full text is in the spec table below.
+                            {%- endcomment -%}
+                            {%- assign kv_short = kv | split: ';' | first | split: ' — ' | first | strip -%}
+                            <dd>{{ kv_short | truncate: 26 }}</dd>
+                          </div>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </dl>
+                  {%- endif -%}
+
+                {%- when 'shipping-expectation' -%}
+                  {%- assign shipping_expectation = product.metafields.gpod.shipping_expectation -%}
+                  {%- if shipping_expectation != blank or block.settings.text != blank -%}
+                    <div
+                      class="gpod-shipping-expectation block-padding"
+                      {{ block_style }}
+                      {{ block.shopify_attributes }}
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M3 6h11v11H3z"/>
+                        <path d="M14 10h4l3 3v4h-7z"/>
+                        <circle cx="7" cy="18" r="2"/>
+                        <circle cx="18" cy="18" r="2"/>
+                      </svg>
+                      <div>
+                        {%- if shipping_expectation != blank -%}
+                          {{- shipping_expectation | metafield_tag -}}
+                        {%- else -%}
+                          {{- block.settings.text -}}
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  {%- elsif request.design_mode -%}
+                    <div {{ block.shopify_attributes }}></div>
+                  {%- endif -%}
+
+                {%- when 'policy-links' -%}
+                  {%- liquid
+                    assign visible_policy_count = 0
+
+                    if block.settings.show_refund_policy and shop.refund_policy.body != blank
+                      assign visible_policy_count = visible_policy_count | plus: 1
+                    endif
+
+                    if block.settings.show_shipping_policy and shop.shipping_policy.body != blank
+                      assign visible_policy_count = visible_policy_count | plus: 1
+                    endif
+                  -%}
+
+                  {%- if visible_policy_count > 0 -%}
+                    <nav
+                      class="gpod-purchase-policies block-padding"
+                      aria-label="{{ block.settings.accessibility_label | escape }}"
+                      {{ block_style }}
+                      {{ block.shopify_attributes }}
+                    >
+                      {%- if block.settings.show_refund_policy and shop.refund_policy.body != blank -%}
+                        <a class="gpod-purchase-policies__link" href="{{ shop.refund_policy.url }}">
+                          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M4 12a8 8 0 1 0 2.35-5.65L4 8.7"/>
+                            <path d="M4 4v4.7h4.7"/>
+                          </svg>
+                          <span>{{ shop.refund_policy.title | escape }}</span>
+                        </a>
+                      {%- endif -%}
+
+                      {%- if block.settings.show_shipping_policy and shop.shipping_policy.body != blank -%}
+                        <a class="gpod-purchase-policies__link" href="{{ shop.shipping_policy.url }}">
+                          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M3 6h11v11H3z"/>
+                            <path d="M14 10h4l3 3v4h-7z"/>
+                            <circle cx="7" cy="18" r="2"/>
+                            <circle cx="18" cy="18" r="2"/>
+                          </svg>
+                          <span>{{ shop.shipping_policy.title | escape }}</span>
+                        </a>
+                      {%- endif -%}
+                    </nav>
+                  {%- elsif request.design_mode -%}
+                    <div {{ block.shopify_attributes }}></div>
+                  {%- endif -%}
 
                 {%- when 'store-availability' -%}
                   <div class="product-single__store-availability-container block-padding"

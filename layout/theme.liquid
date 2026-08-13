@@ -82,6 +82,17 @@
   {{- 'theme.css' | asset_url | stylesheet_tag -}}
   {{- 'gpod.css' | asset_url | stylesheet_tag -}}
 
+  {%- comment -%}
+    gpod.js was previously pulled in per-section. The drill-down navigation
+    lives in the header, so it needs to be present on every template.
+
+    Several sections still emit their own tag, and a duplicated src executes
+    the file twice, so gpod.js now no-ops on any run after the first
+    (window.__gpodScriptLoaded). That also fixes the pre-existing case of a
+    PDP loading it from both product.liquid and compare-table.liquid.
+  {%- endcomment -%}
+  <script src="{{ 'gpod.js' | asset_url }}" defer></script>
+
   {%- comment -%}{{- 'theme.dev.css' | asset_url | stylesheet_tag -}}{%- endcomment -%}
 
   {%- comment -%}

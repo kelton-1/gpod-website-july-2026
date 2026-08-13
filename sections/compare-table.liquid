@@ -15,14 +15,35 @@
 {%- endcapture -%}
 
 {%- liquid
+  assign page_product = product
   assign spec_keys = 'best_for,extended_length,collapsed_length,weight,base_detail,phone_attachment,remote_included,bag_fit,materials' | split: ','
   assign spec_labels = 'Best for,Extended height,Collapsed length,Weight,Base,Phone attachment,Remote,Golf bag fit,Materials' | split: ','
+
+  # Optional short set. The full 9 specs across 3 models runs ~2,500px on a
+  # phone once the table reflows to spec-major, which is far too long for a
+  # homepage module — the compare PAGE is where the full set belongs.
+  assign max_specs = section.settings.max_specs | default: 0
+  if max_specs > 0 and max_specs < spec_keys.size
+    assign spec_keys = spec_keys | slice: 0, max_specs
+    assign spec_labels = spec_labels | slice: 0, max_specs
+  endif
   assign picker = section.settings.enable_picker
   assign default_candidates = 'gpodmagsafe,gpodx,gpod-pauly-p2,gpod-travel-1,gpod-studio,indoor-base-for-gpod-gpod-mini,gpod-anywhere-tripod,gpod-mini,g-bundle-one-gpod-with-gpod-base,g-bundle-two-gpod-x-with-gpod-base,g-bundle-three-gpod-pauly-p-and-gpod-base,gpod-travel-sportsbox-3d-player-annual-swing-analysis'
   assign candidate_handles = section.settings.candidate_handles | default: default_candidates | split: ','
+
+  assign applicable_collection = section.settings.applicable_collection
+  assign product_collection_handles = page_product.collections | map: 'handle'
+  assign is_applicable = true
+
+  if page_product != blank and applicable_collection != blank
+    unless product_collection_handles contains applicable_collection.handle
+      assign is_applicable = false
+    endunless
+  endif
 -%}
 
-<section class="gpod-section gpod-compare container-wrap section-padding{% if section.settings.center_heading %} gpod-section--center{% endif %}"
+{%- if is_applicable -%}
+<section class="gpod-section gpod-compare container-wrap section-padding{% if section.settings.center_heading %} gpod-section--center{% endif %}{% if section.settings.layout == 'cards' %} gpod-compare--cards{% endif %}"
   id="compare-{{ section.id }}"
   data-section-type="compare-table"
   {% if picker %}data-compare-picker{% endif %}
@@ -54,11 +75,26 @@
                       {%- if block.settings.badge != blank -%}
                         <span class="gpod-compare__badge">{{ block.settings.badge | escape }}</span>
                       {%- endif -%}
-                      {%- if product.featured_image -%}
+                      {%- comment -%}
+                        Prefer the background-free cutout. The gallery images
+                        carry the "THE GPOD" wordmark baked into the pixels and
+                        the product itself occupies a sliver of the frame, so at
+                        110px they rendered as a logo with a hairline beside it.
+                      {%- endcomment -%}
+                      {%- capture cutout -%}{%- render 'gpod-cutout-url', handle: product.handle -%}{%- endcapture -%}
+                      {%- if cutout != blank -%}
                         <img
+                          class="gpod-compare__thumb"
+                          src="{{ cutout }}"
+                          width="110" height="140" loading="lazy"
+                          alt="{{ product.title | escape }}"
+                        >
+                      {%- elsif product.featured_image -%}
+                        <img
+                          class="gpod-compare__thumb"
                           src="{{ product.featured_image | image_url: width: 220 }}"
                           srcset="{{ product.featured_image | image_url: width: 220 }} 1x, {{ product.featured_image | image_url: width: 440 }} 2x"
-                          width="110" height="110" loading="lazy"
+                          width="110" height="140" loading="lazy"
                           alt="{{ product.featured_image.alt | default: product.title | escape }}"
                         >
                       {%- endif -%}
@@ -92,7 +128,14 @@
                   <th scope="row">{{ spec_labels[forloop.index0] }}</th>
                   {%- for block in section.blocks -%}
                     {%- assign product = block.settings.product -%}
-                    <td data-compare-col="{{ forloop.index0 }}">
+                    {%- comment -%}
+                      data-compare-model carries the model name onto every
+                      cell. On mobile the table reflows to a spec-major layout
+                      where each value needs its own label, rendered from this
+                      attribute with content: attr(). gpod.js keeps it in sync
+                      when a shopper swaps a model.
+                    {%- endcomment -%}
+                    <td data-compare-col="{{ forloop.index0 }}" data-compare-model="{{ product.title | escape }}">
                       {%- if product != blank and product.metafields.gpod[key].value != blank -%}
                         {{- product.metafields.gpod[key].value -}}
                       {%- else -%}
@@ -118,12 +161,25 @@
                 {%- assign c_handle = handle | strip -%}
                 {%- assign p = all_products[c_handle] -%}
                 {%- if p != blank -%}
+                  {%- capture c_cutout -%}{%- render 'gpod-cutout-url', handle: p.handle -%}{%- endcapture -%}
                   {{ sep }}{
                     "handle": {{ p.handle | json }},
                     "title": {{ p.title | json }},
                     "url": {{ p.url | json }},
+                    {%- comment -%}
+                      Same preference as the server-rendered column above, so
+                      swapping a model in the picker does not swap a cutout for
+                      a branded gallery shot. A cutout is one fixed-size theme
+                      asset, so image2x repeats it rather than being null —
+                      gpod.js writes srcset unconditionally.
+                    {%- endcomment -%}
+                    {%- if c_cutout != blank -%}
+                    "image": {{ c_cutout | json }},
+                    "image2x": {{ c_cutout | json }},
+                    {%- else -%}
                     "image": {% if p.featured_image %}{{ p.featured_image | image_url: width: 220 | json }}{% else %}null{% endif %},
                     "image2x": {% if p.featured_image %}{{ p.featured_image | image_url: width: 440 | json }}{% else %}null{% endif %},
+                    {%- endif -%}
                     "price": {{ p.price | money | json }},
                     "compareAt": {% if p.compare_at_price > p.price %}{{ p.compare_at_price | money | json }}{% else %}null{% endif %},
                     "specs": {
@@ -147,12 +203,19 @@
     {%- endif -%}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {
   "name": "Compare table",
   "class": "shopify-section--compare-table",
   "settings": [
+    {
+      "type": "collection",
+      "id": "applicable_collection",
+      "label": "Limit to collection on product pages",
+      "info": "Optional. The section stays hidden on products outside this collection; non-product pages are unaffected."
+    },
     {
       "type": "text",
       "id": "kicker",
@@ -176,6 +239,27 @@
       "id": "center_heading",
       "label": "Center heading",
       "default": false
+    },
+    {
+      "type": "range",
+      "id": "max_specs",
+      "label": "Spec rows to show",
+      "info": "0 shows all. Use a short set on the homepage and link to the full comparison.",
+      "min": 0,
+      "max": 9,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "info": "Cards suits a short 3-model picker (homepage). Table suits the full comparison (compare page).",
+      "default": "table",
+      "options": [
+        { "label": "Table", "value": "table" },
+        { "label": "Cards", "value": "cards" }
+      ]
     },
     {
       "type": "checkbox",

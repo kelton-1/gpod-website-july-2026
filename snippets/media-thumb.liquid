@@ -1,7 +1,17 @@
 {%- liquid
+  comment
+    Thumbnails were forced to aspect_ratio: 1 and painted with object-fit:
+    cover, so every one of them CROPPED a 0.78 portrait product shot to a
+    square — you saw a slice of the middle of the frame, which on GPOD's
+    photography is usually the branding band rather than the product.
+
+    0.8 matches the shape of the gallery images, so the thumbnail is a
+    miniature of the slide it selects rather than a crop of it. gpod.css
+    switches the fit to contain and puts them on a soft tile.
+  endcomment
   assign image = media.preview_image
-  assign widths = '86, 98, 172, 196, 258, 294'
-  assign sizes = '(min-width: 480px) 98px, 86px'
+  assign widths = '80, 100, 160, 200, 240, 300'
+  assign sizes = '(min-width: 480px) 76px, 68px'
   assign loading = loading | default: 'lazy'
   assign index = index | default: 0
 -%}
@@ -11,7 +21,7 @@
     class="product-single__thumbnail product-single__thumbnail--{{ section.id }}"
     data-thumbnail-id="{{ section.id }}-{{ media.id }}">
     {%- liquid
-      render 'image' image: image, widths: widths, sizes: sizes, aspect_ratio: 1, loading: loading, modifier: 'product-single__thumbnail-img'
+      render 'image' image: image, widths: widths, sizes: sizes, aspect_ratio: 0.8, loading: loading, modifier: 'product-single__thumbnail-img'
 
       if media.media_type == 'video' or media.media_type == 'external_video'
         render 'icon-media-video'

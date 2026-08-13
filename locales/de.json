@@ -35,6 +35,7 @@
       "unit_price_separator": "pro",
       "quantity_selector": "Wählen Sie die Menge",
       "product_image_lightbox": "Bild-Lightbox öffnen",
+      "product_rating": "Mit {{ rating }} von {{ scale_max }} bewertet, basierend auf {{ count }} Bewertungen",
       "view": "Ansehen"
     },
     "header": {

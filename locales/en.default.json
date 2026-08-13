@@ -35,6 +35,7 @@
       "unit_price_separator": "per",
       "quantity_selector": "Quantity selector",
       "product_image_lightbox": "Open image lightbox",
+      "product_rating": "Rated {{ rating }} out of {{ scale_max }} from {{ count }} reviews",
       "view": "View"
     },
     "header": {

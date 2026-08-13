@@ -23,9 +23,29 @@
     assign video_id = video_url | split: 'vimeo.com/' | last | split: '?' | first
     assign video_type = 'vimeo'
   endif
+
+  assign applicable_collection = section.settings.applicable_collection
+  assign product_collection_handles = product.collections | map: 'handle'
+  assign is_applicable = false
+  assign has_content = false
+  assign visible_steps = 0
+
+  if applicable_collection == blank or product_collection_handles contains applicable_collection.handle
+    assign is_applicable = true
+  endif
+
+  for block in section.blocks
+    if block.settings.title != blank or block.settings.text != blank
+      assign visible_steps = visible_steps | plus: 1
+    endif
+  endfor
+
+  if video_type != blank or visible_steps > 0
+    assign has_content = true
+  endif
 -%}
 
-{%- if video_type != blank or section.blocks.size > 0 -%}
+{%- if is_applicable and has_content -%}
 <section class="gpod-section gpod-howto container-wrap section-padding"
   id="how-to"
   data-section-type="pdp-how-to"
@@ -39,7 +59,13 @@
       <h2 class="gpod-heading">{{ section.settings.heading | escape }}</h2>
     {%- endif -%}
 
-    <div class="gpod-howto__grid">
+    {%- comment -%}
+      No video means no second column. Without the modifier the grid keeps its
+      1.1fr / 0.9fr split and the steps sit in the left half with 45% of the
+      section empty — which is how it rendered on every product, because no
+      product has gpod.setup_video_url set yet.
+    {%- endcomment -%}
+    <div class="gpod-howto__grid{% if video_type == blank %} gpod-howto__grid--no-video{% endif %}">
       {%- if video_type != blank -%}
         <div class="gpod-howto__video">
           {%- if video_type == 'youtube' -%}
@@ -62,7 +88,7 @@
         </div>
       {%- endif -%}
 
-      {%- if section.blocks.size > 0 -%}
+      {%- if visible_steps > 0 -%}
         <div>
           <ol class="gpod-steps">
             {%- for block in section.blocks -%}
@@ -94,10 +120,15 @@
   "class": "shopify-section--pdp-how-to",
   "settings": [
     {
+      "type": "collection",
+      "id": "applicable_collection",
+      "label": "Limit to collection",
+      "info": "Optional. The section stays hidden on products outside this collection."
+    },
+    {
       "type": "text",
       "id": "kicker",
-      "label": "Kicker",
-      "default": "Get set up in under a minute"
+      "label": "Kicker"
     },
     {
       "type": "text",
@@ -171,27 +202,9 @@
       "category": "Product",
       "name": "PDP how-to",
       "blocks": [
-        {
-          "type": "step",
-          "settings": {
-            "title": "Extend from the top down",
-            "text": "Twist each lock a quarter turn to loosen, pull the section out, then twist back to lock. Always extend the upper sections first and never slam the GPOD into the ground while collapsed — that's what jams the lower section."
-          }
-        },
-        {
-          "type": "step",
-          "settings": {
-            "title": "Attach your phone",
-            "text": "iPhones with MagSafe snap straight on. Android or thick cases: stick one of the included metal plates on first — it holds just as strong."
-          }
-        },
-        {
-          "type": "step",
-          "settings": {
-            "title": "Frame your swing and film",
-            "text": "Stake it down-target or face-on, tilt the ball head to frame yourself, and record. With a Bluetooth remote, pair it in your phone's Bluetooth settings and the button triggers your camera shutter."
-          }
-        }
+        { "type": "step" },
+        { "type": "step" },
+        { "type": "step" }
       ]
     }
   ],

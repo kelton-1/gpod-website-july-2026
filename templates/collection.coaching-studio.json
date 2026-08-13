@@ -1,20 +1,53 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
-      "type": "collection-image-with-title",
+      "type": "collection-hero-split",
       "settings": {
-        "show_banner": true,
-        "banner_image": "shopify://shop_images/GPODX_Close-up.jpg",
-        "height": "four-fifty-height-hero",
-        "banner_image_mobile": "shopify://shop_images/GPOD_Paul_Park.jpg",
-        "height_mobile": "four-fifty-height-hero--mobile",
-        "banner_text_position": "center",
-        "banner_color_text": "#ffffff",
-        "banner_color_overlay": "#333333",
-        "banner_overlay_opacity": 30,
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
+        "image_ratio": "0.8",
+        "image_position": "left",
+        "background_color": "#ffffff",
+        "heading_color": "#111111",
+        "text_color": "#333333",
+        "padding_top": 40,
+        "padding_bottom": 40
+      },
+      "blocks": {
+        "trust_ship": {
+          "type": "trust",
+          "settings": {
+            "icon": "shipping",
+            "label": "Ships within 1 business day"
+          }
+        },
+        "trust_returns": {
+          "type": "trust",
+          "settings": {
+            "icon": "returns",
+            "label": "14-day returns"
+          }
+        },
+        "trust_golfers": {
+          "type": "trust",
+          "settings": {
+            "icon": "golfers",
+            "label": "Trusted by 75,000+ golfers"
+          }
+        }
+      },
+      "block_order": [
+        "trust_ship",
+        "trust_returns",
+        "trust_golfers"
+      ]
     },
     "main": {
       "type": "collection",
@@ -23,9 +56,9 @@
         "enable_filters": true,
         "position_filters": "left",
         "show_featured_image": false,
-        "featured_heading": "Use this image showcase promotional content.",
-        "featured_text": "<p>Elaborate on it with rich text</p>",
-        "btn_text": "Learn More",
+        "featured_heading": "",
+        "featured_text": "",
+        "btn_text": "",
         "btn_link": "",
         "btn_type": "btn--primary",
         "btn_size": "",
@@ -102,7 +135,7 @@
       "settings": {
         "compare_text": "Compare models",
         "compare_link": "/pages/compare-gpod-models",
-        "quiz_text": "Take the 30-second finder",
+        "quiz_text": "Take the Quiz",
         "quiz_link": "/pages/product-finder-quiz",
         "padding_top": 10,
         "padding_bottom": 10
@@ -110,6 +143,7 @@
     },
     "lifestyle": {
       "type": "section-image-with-text",
+      "disabled": true,
       "blocks": {
         "ls_img": {
           "type": "gallery_image",
@@ -140,6 +174,7 @@
     },
     "testimonials": {
       "type": "section-testimonials",
+      "disabled": true,
       "blocks": {
         "quote_1": {
           "type": "testimonial",

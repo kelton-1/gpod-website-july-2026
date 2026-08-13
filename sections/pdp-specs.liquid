@@ -82,6 +82,8 @@
           src="{{ section.settings.scale_image | image_url: width: 1200 }}"
           srcset="{{ section.settings.scale_image | image_url: width: 700 }} 700w, {{ section.settings.scale_image | image_url: width: 1200 }} 1200w"
           sizes="(min-width: 900px) 860px, 100vw"
+          width="{{ section.settings.scale_image.width }}"
+          height="{{ section.settings.scale_image.height }}"
           loading="lazy"
           alt="{{ section.settings.scale_caption | default: 'Size reference' | escape }}"
         >
@@ -120,8 +122,7 @@
     {
       "type": "richtext",
       "id": "specs_note",
-      "label": "Note under specs",
-      "default": "<p>Questions about a spec we haven't listed? <a href=\"/pages/contact-us\">Ask us</a> — we answer fast.</p>"
+      "label": "Note under specs"
     },
     {
       "type": "checkbox",
@@ -148,8 +149,7 @@
     {
       "type": "text",
       "id": "scale_caption",
-      "label": "Caption",
-      "default": "Shown in a standard golf bag for scale"
+      "label": "Caption"
     },
     {
       "type": "header",

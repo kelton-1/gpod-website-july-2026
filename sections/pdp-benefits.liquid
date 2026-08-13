@@ -10,7 +10,24 @@
   --PB: {{ section.settings.padding_bottom }}px;
 {%- endcapture -%}
 
-{%- if section.blocks.size > 0 -%}
+{%- liquid
+  assign applicable_collection = section.settings.applicable_collection
+  assign product_collection_handles = product.collections | map: 'handle'
+  assign is_applicable = false
+  assign visible = 0
+
+  if applicable_collection == blank or product_collection_handles contains applicable_collection.handle
+    assign is_applicable = true
+  endif
+
+  for block in section.blocks
+    if block.settings.title != blank or block.settings.text != blank
+      assign visible = visible | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if is_applicable and visible > 0 -%}
 <section class="gpod-section gpod-benefits container-wrap section-padding"
   data-section-type="pdp-benefits"
   style="{{ style }}"
@@ -53,6 +70,12 @@
   "class": "shopify-section--pdp-benefits",
   "max_blocks": 4,
   "settings": [
+    {
+      "type": "collection",
+      "id": "applicable_collection",
+      "label": "Limit to collection",
+      "info": "Optional. The section stays hidden on products outside this collection."
+    },
     {
       "type": "text",
       "id": "heading",
@@ -105,14 +128,12 @@
         {
           "type": "text",
           "id": "title",
-          "label": "Outcome headline",
-          "default": "Never ask a stranger to film you again"
+          "label": "Outcome headline"
         },
         {
           "type": "text",
           "id": "text",
-          "label": "Supporting line",
-          "default": "Set it once and every swing is on camera — no favors, no fences, no golf carts."
+          "label": "Supporting line"
         }
       ]
     }

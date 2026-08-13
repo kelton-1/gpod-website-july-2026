@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_heading_new": "#000000",
@@ -6,7 +15,7 @@
     "color_border_new": "#000000",
     "color_background_new": "#ffffff",
     "color_badge_bg": "#000000",
-    "color_saving_badge": "#8cc662",
+    "color_saving_badge": "#111111",
     "type_heading_font": "poppins_n8",
     "type_heading_size": 90,
     "type_base_font": "saira_n4",
@@ -14,7 +23,7 @@
     "type_nav_size": 100,
     "type_nav_caps": false,
     "btn_border_style": "rounded",
-    "color_button_primary_bg": "#000000",
+    "color_button_primary_bg": "#8cc662",
     "color_button_secondary_bg": "#ffffff",
     "accent_line": "curved",
     "transition_text": true,
@@ -56,10 +65,10 @@
     "show_breadcrumbs": true,
     "favicon": "shopify://shop_images/Untitled_3_x_4_in_8.png",
     "instagram_url": "https://www.instagram.com/gpodgolf",
-    "facebook_url": "#!",
-    "twitter_url": "#!",
+    "facebook_url": "",
+    "twitter_url": "",
     "tiktok_url": "https://www.tiktok.com/@gpodgolf",
-    "pinterest_url": "#!",
+    "pinterest_url": "",
     "youtube_url": "https://www.youtube.com/@GPODGOLF/",
     "linkedin_url": "https://www.linkedin.com/company/gpodgolf",
     "tumblr_url": "",
@@ -132,13 +141,12 @@
     "default_currency": "USD",
     "color_primary_new": "#333333",
     "color_secondary_new": "#222222",
-    "color_button_bg": "#333333",
+    "color_button_bg": "#111111",
     "color_button_text": "#ffffff",
     "color_badge_text": "#ffffff",
-    "color_button_border": "#333333",
+    "color_button_border": "#111111",
     "button_font_picker": "work_sans_n4",
     "button_letter_spacing": 0,
-    "button_border_radius": 0,
     "googleplus_url": "",
     "share_on_googleplus": true,
     "color_overlay_bg": "#000",
@@ -256,12 +264,12 @@
         }
       },
       "3229191829584207435": {
-        "type": "shopify://apps/hype-discounts-campaigns/blocks/ui-toast/dad89215-8ec1-431c-8488-2e358677b8c3",
-        "disabled": false,
+        "type": "shopify://apps/hype-discounts/blocks/ui-toast/dad89215-8ec1-431c-8488-2e358677b8c3",
+        "disabled": true,
         "settings": {
           "background_style": "solid",
-          "bg_color": "#000",
-          "text_color": "#fff",
+          "bg_color": "#000000",
+          "text_color": "#ffffff",
           "font_size": 14,
           "block_padding": 8,
           "inline_padding": 15,
@@ -275,8 +283,8 @@
         }
       },
       "13877310411414969488": {
-        "type": "shopify://apps/hype-discounts-campaigns/blocks/ui-announcement-bar/dad89215-8ec1-431c-8488-2e358677b8c3",
-        "disabled": false,
+        "type": "shopify://apps/hype-discounts/blocks/ui-announcement-bar/dad89215-8ec1-431c-8488-2e358677b8c3",
+        "disabled": true,
         "settings": {
           "background_style": "solid",
           "background_color": "#13fc00",
@@ -289,15 +297,12 @@
           "custom_css": "",
           "custom_js": ""
         }
-      },
-      "1530068250781986104": {
-        "type": "shopify://apps/fbp-fast-bundle/blocks/fast_bundle/9e87fbe2-9041-4c23-acf5-322413994cef",
-        "disabled": false,
-        "settings": {
-          "home": false
-        }
       }
-    }
+    },
+    "color_button_primary_text": "#111111",
+    "btn_primary_border_color": "#111111",
+    "color_button_secondary_text": "#111111",
+    "btn_secondary_border_color": "#111111"
   },
   "presets": {
     "Mayfair": {
@@ -623,5 +628,10 @@
       "collection_collectionGrid_columns": "3",
       "twitter_via": ""
     }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      "@media screen and (max-width: 767px) {.kl-teaser-RhFjbe {margin: 0 8px !important; width: 144px !important; } .kl-teaser-RhFjbe [data-testid=\"animated-teaser\"] > [role=\"button\"] {min-height: 44px !important; padding: 6px 10px !important; } .kl-teaser-RhFjbe [data-testid=\"animated-teaser\"] span {font-size: 14px !important; } .template-product .kl-teaser-RhFjbe {display: none !important; }}"
+    ]
   }
 }

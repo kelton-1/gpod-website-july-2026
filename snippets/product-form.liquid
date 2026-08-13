@@ -336,8 +336,22 @@
     {%- endif -%}
 
     <div class="product__form-buttons">
+      {%- comment -%}
+        Add to Cart is ALWAYS solid. Modular demotes it to `btn--outline`
+        whenever the Shop Pay button is shown, which handed the buy box's
+        visual primary to Shopify's branded purple and left the GPOD accent
+        absent from the single most important control on the site.
+
+        It also broke legibility once the accent became green: an outline
+        primary draws both border and text from --BTN-PRIMARY-BORDER-COLOR,
+        so Add to Cart rendered green-on-white at 2.03:1.
+
+        Solid green measures 9.32:1 and matches how arc.cc leads its buy box.
+        Shop Pay is unchanged and still sits directly below as express
+        checkout — this is a hierarchy change, not a removal.
+      {%- endcomment -%}
       <button
-        class="product__form-submit btn btn--primary{% unless show_payment_buttons %} btn--solid{% else %} btn--outline{% endunless %}"
+        class="product__form-submit btn btn--primary btn--solid"
         type="submit"
         name="add"
         data-ajax="{{ settings.enable_ajax_cart }}"

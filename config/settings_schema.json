@@ -483,6 +483,13 @@
     },
     {
       "type": "checkbox",
+      "id": "show_product_grid_rating",
+      "label": "Show product ratings",
+      "info": "Uses Shopify's standard product rating and rating count metafields. Products without review data remain hidden.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
       "id": "show_slideshow_arrows",
       "label": "Show slideshow navigation arrows",
       "default": false

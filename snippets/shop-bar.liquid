@@ -12,83 +12,193 @@
 -%}
 
 {%- style -%}
-  /* ===== GPOD sticky ATC refinements (custom) ===== */
-  /* Lift the bar off the page so it stops blending into the white PDP */
+  /* ===== GPOD sticky ATC ===== */
+
+  /* Dark, not white. A white bar on a white PDP reads as part of the page and
+     disappears — which is exactly the complaint. Dark makes it the one
+     persistent object on screen, and gives the green CTA maximum contrast. */
   .shop-bar {
-    height: 64px;
-    background: var(--COLOR-BACKGROUND);
-    border-top: 1px solid var(--COLOR-BORDER);
-    box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.14);
+    height: 76px;
+    background: #0d0d0d;
+    border-top: 0;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.22);
+    /* Above page content and the app widgets that sit around z-index 10-100.
+       Deliberately BELOW Klaviyo's teaser (90000), which is moved out of the
+       way instead — see the rule at the bottom of this block. */
+    z-index: 200;
   }
-  /* Centered, capped content band -> removes the dead white space on desktop */
+
+  /* Mirrors .container exactly (same width calc and cap) so the bar's contents
+     sit on the same inner line as the header card and every content block. */
   .shop-bar__inner {
     display: flex;
+    /* row-reverse is required: the <form> is the FIRST child in the DOM, so
+       plain `row` puts Add to Cart on the LEFT. Reversing sends the form to
+       the right end and the product info to the left. */
     flex-flow: row-reverse nowrap;
     align-items: center;
-    justify-content: center;
-    gap: 28px;
-    width: 100%;
-    max-width: 1200px;
+    justify-content: space-between;
+    gap: 24px;
+    width: calc(100% - 80px);
+    max-width: var(--gpod-page-max, 1380px);
     height: 100%;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 32px;
   }
+
   .shop-bar__info {
+    display: flex;
+    align-items: center;
     flex: 0 1 auto;
     gap: 16px;
     border-right: 0;
+    min-width: 0;
     overflow: hidden;
-  }
-  .shop-bar__title { margin: 0; font-weight: 600; }
-  .shop-bar__price { padding-right: 0; }
-  .shop-bar__price .product__price { margin-bottom: 0; font-weight: 600; }
-  .product__form--shop-bar .product__form-submit {
-    min-width: 220px;
-    height: 48px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    color: #fff;
   }
 
-  /* Tablet + mobile: theme hides the bar <=1023px — reveal it, full-width,
-     with the product NAME stacked over the price on the left */
+  /* The thumbnail was rendering as a ~6px vertical sliver: the image is a tall
+     product shot and nothing constrained the box, so it collapsed to its flex
+     minimum. Fixed box, contained image, on a light tile so a dark product is
+     still legible against the dark bar. */
+  .shop-bar__images,
+  .shop-bar__image {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+  }
+  .shop-bar__images {
+    border-radius: 8px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .shop-bar__image img,
+  .shop-bar__image .image-wrapper {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .shop-bar__title {
+    margin: 0;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .shop-bar__price { padding-right: 0; }
+  .shop-bar__price .product__price {
+    margin-bottom: 0;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .shop-bar__price .product__price__sale {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+  }
+
+  .product__form--shop-bar { flex: 0 0 auto; }
+  .product__form--shop-bar .product__form-submit {
+    min-width: 260px;
+    height: 52px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  /* Tablet + mobile: the theme hides the bar <=1023px. Reveal it, and stack
+     the name over the price so the CTA keeps a full-size tap target. */
   @media only screen and (max-width: 1023px) {
-    .shop-bar { display: flex !important; height: 64px; }
+    .shop-bar {
+      display: flex !important;
+      height: calc(72px + env(safe-area-inset-bottom));
+      padding-bottom: env(safe-area-inset-bottom);
+    }
     .shop-bar__inner {
       justify-content: space-between;
       max-width: none;
-      gap: 14px;
-      padding: 8px 14px;
+      gap: 12px;
+      padding: 8px 16px;
     }
-    .shop-bar__images { display: none; } /* drop thumbnail; keep the name */
+    .shop-bar__images { display: none; }
     .shop-bar__info {
       flex: 1 1 auto;
       min-width: 0;
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      gap: 2px;
+      gap: 1px;
     }
     .shop-bar__title {
       display: block;
       margin: 0;
       max-width: 100%;
-      font-size: 14px;
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 13px;
+      line-height: 1.25;
+      color: rgba(255, 255, 255, 0.72);
+      font-weight: 500;
     }
-    .shop-bar__price .product__price { font-size: 14px; line-height: 1.2; }
-    .product__form--shop-bar { flex: 0 0 auto; }
+    .shop-bar__price .product__price {
+      font-size: 17px;
+      line-height: 1.2;
+    }
     .product__form--shop-bar .product__form-submit {
       min-width: 0;
-      padding: 13px 22px;
-      height: 46px;
+      padding: 0 26px;
+      height: 48px;
+      font-size: 15px;
+    }
+    .site-footer--push {
+      padding-bottom: calc(72px + env(safe-area-inset-bottom));
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    .shop-bar {
+      opacity: 1;
+      visibility: visible;
+      transition: transform 0.3s ease-in-out, opacity 0.3s linear, visibility 0s linear 0s;
+    }
+    /* Variant choices stay in the primary form on phones; the theme keeps the
+       shop-bar variant ID synchronized. */
+    .product__form--shop-bar .selector-wrapper {
+      display: none;
+    }
+  }
+
+  /* The "GET 15% OFF" tab is Klaviyo's teaser. It is z-index 90000 and pinned
+     bottom-left, i.e. exactly on top of the product name and price in this
+     bar, and no z-index we can set on a theme element will beat it. Moving it
+     up is the only fix that keeps both. The class carries a generated hash
+     (kl-teaser-RhFjbe), so it has to be matched on the prefix. */
+  body:has(.shop-bar--is-visible) [class*="kl-teaser-"] {
+    bottom: calc(88px + env(safe-area-inset-bottom)) !important;
+    transition: bottom 0.3s ease-in-out;
+  }
+
+  /* :has() is well supported, but if it is not, an unconditional offset on
+     product pages beats an overlap. */
+  @supports not selector(:has(*)) {
+    .template-product [class*="kl-teaser-"] {
+      bottom: calc(88px + env(safe-area-inset-bottom)) !important;
     }
   }
 {%- endstyle -%}
 
-<div id="shop-bar" class="shop-bar" data-scroll-lock-fill-gap data-shop-bar>
+<div
+  id="shop-bar"
+  class="shop-bar"
+  role="region"
+  aria-label="{{ product.title | strip_html | escape }}"
+  data-product-section-id="{{ section.id }}"
+  data-scroll-lock-fill-gap
+  data-shop-bar
+>
   <div class="shop-bar__inner">
   {%- form 'product', product, class: 'product__form product__form--shop-bar', id: product_form_id -%}
     <div class="product__form-block">
@@ -160,10 +270,17 @@
       {%- endif -%}
     </div>
 
-    <input type="hidden" class="inputCounter" name="quantity" value="1" data-quantity-field>
+    <input type="hidden" name="quantity" value="1" data-quantity-field>
+    <button type="button" data-add-to-cart hidden tabindex="-1" aria-hidden="true"></button>
 
     <div class="product__form-block">
-      <button class="product__form-submit btn btn--solid btn--primary" type="submit" data-ajax="{{ settings.enable_ajax_cart }}" data-handle="{{ product.handle }}"{% if sold_out %} disabled{% endif %} data-add-to-cart>
+      <button
+        class="product__form-submit btn btn--solid btn--primary"
+        type="submit"
+        form="product_form_{{ product.id }}"
+        data-gpod-shop-bar-submit
+        {% if sold_out %}disabled{% endif %}
+      >
         <span data-add-to-cart-text>
           {%- unless sold_out -%}
             {{- 'products.form.submit' | t -}}
@@ -204,7 +321,7 @@
 
     <p class="shop-bar__title">{{ product.title | strip_html }}</p>
 
-    <div class="shop-bar__price">{%- liquid
+    <div class="shop-bar__price" aria-live="polite">{%- liquid
   assign first_variant = product.selected_or_first_available_variant
   assign on_sale = false
   if first_variant.compare_at_price > first_variant.price

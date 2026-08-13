@@ -1,7 +1,7 @@
 {% comment %}
   PDP: device compatibility answers (MagSafe / Android / tablets / cameras).
   The highlighted banner pulls the per-product gpod.phone_attachment metafield;
-  the cards below are merchant-editable blocks with sensible defaults.
+  the cards below are merchant-editable blocks. Empty blocks never render.
 {% endcomment %}
 
 {%- capture style -%}
@@ -9,8 +9,30 @@
   --PB: {{ section.settings.padding_bottom }}px;
 {%- endcapture -%}
 
-{%- assign attachment = product.metafields.gpod.phone_attachment.value -%}
+{%- liquid
+  assign attachment = product.metafields.gpod.phone_attachment.value
+  assign applicable_collection = section.settings.applicable_collection
+  assign product_collection_handles = product.collections | map: 'handle'
+  assign is_applicable = false
+  assign has_content = false
+  assign visible_blocks = 0
 
+  if applicable_collection == blank or product_collection_handles contains applicable_collection.handle
+    assign is_applicable = true
+  endif
+
+  for block in section.blocks
+    if block.settings.title != blank or block.settings.text != blank
+      assign visible_blocks = visible_blocks | plus: 1
+    endif
+  endfor
+
+  if attachment != blank or visible_blocks > 0
+    assign has_content = true
+  endif
+-%}
+
+{%- if is_applicable and has_content -%}
 <section class="gpod-section gpod-compat container-wrap section-padding"
   id="compatibility"
   data-section-type="pdp-compatibility"
@@ -28,9 +50,10 @@
       </p>
     {%- endif -%}
 
-    {%- if section.blocks.size > 0 -%}
+    {%- if visible_blocks > 0 -%}
       <div class="gpod-compat__grid">
         {%- for block in section.blocks -%}
+          {%- if block.settings.title != blank or block.settings.text != blank -%}
           <div class="gpod-compat__item" {{ block.shopify_attributes }}>
             {%- case block.settings.icon -%}
               {%- when 'phone' -%}
@@ -51,17 +74,25 @@
               <p>{{ block.settings.text }}</p>
             {%- endif -%}
           </div>
+          {%- endif -%}
         {%- endfor -%}
       </div>
     {%- endif -%}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {
   "name": "PDP compatibility",
   "class": "shopify-section--pdp-compatibility",
   "settings": [
+    {
+      "type": "collection",
+      "id": "applicable_collection",
+      "label": "Limit to collection",
+      "info": "Optional. The section stays hidden on products outside this collection."
+    },
     {
       "type": "text",
       "id": "heading",
@@ -133,33 +164,25 @@
         {
           "type": "item",
           "settings": {
-            "icon": "phone",
-            "title": "iPhone with MagSafe",
-            "text": "iPhone 12 and newer snap straight onto the magnetic mount — with or without a MagSafe case. Thick rugged cases (e.g. OtterBox): stick an included metal plate on the case for a secure hold."
+            "icon": "phone"
           }
         },
         {
           "type": "item",
           "settings": {
-            "icon": "android",
-            "title": "Android & non-MagSafe phones",
-            "text": "Metal plates with 3M adhesive are included. Stick one on your phone or case and it attaches magnetically just like MagSafe."
+            "icon": "android"
           }
         },
         {
           "type": "item",
           "settings": {
-            "icon": "tablet",
-            "title": "iPads & tablets",
-            "text": "Tablets attach using the included metal plates. For larger iPads we recommend the GPOD Studio 2.0 for maximum stability."
+            "icon": "tablet"
           }
         },
         {
           "type": "item",
           "settings": {
-            "icon": "camera",
-            "title": "GoPro & cameras",
-            "text": "The magnetic head unscrews from a standard 1/4-20 thread, so you can mount any camera or GoPro adapter that fits a 1/4 in tripod screw."
+            "icon": "camera"
           }
         }
       ]

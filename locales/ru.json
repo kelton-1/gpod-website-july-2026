@@ -35,6 +35,7 @@
       "unit_price_separator": "за",
       "quantity_selector": "Селектор количества",
       "product_image_lightbox": "Лайтбокс с изображением",
+      "product_rating": "Оценка {{ rating }} из {{ scale_max }} на основе {{ count }} отзывов",
       "view": "Посмотреть"
     },
     "header": {

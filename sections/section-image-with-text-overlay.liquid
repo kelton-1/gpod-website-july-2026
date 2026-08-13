@@ -1,17 +1,22 @@
-{%- render 'banner',
-  image: section.settings.banner_image,
-  mobile_image: section.settings.banner_image_mobile,
-  desktop_height: section.settings.height,
-  mobile_height: section.settings.height_mobile,
-  transparent_header: true,
-  text_position: section.settings.text_position,
-  image_position: section.settings.image_position,
-  color_text: section.settings.color_text,
-  color_overlay: section.settings.color_overlay,
-  overlay_opacity: section.settings.overlay_opacity,
-  unique: section.id,
-  blocks: section.blocks
--%}
+{%- assign heading_tag = section.settings.heading_tag | default: 'h1' -%}
+
+<div{% if section.settings.compact_mobile %} class="gpod-collection-hero--compact-mobile"{% endif %}>
+  {%- render 'banner',
+    image: section.settings.banner_image,
+    mobile_image: section.settings.banner_image_mobile,
+    desktop_height: section.settings.height,
+    mobile_height: section.settings.height_mobile,
+    transparent_header: true,
+    text_position: section.settings.text_position,
+    image_position: section.settings.image_position,
+    color_text: section.settings.color_text,
+    color_overlay: section.settings.color_overlay,
+    overlay_opacity: section.settings.overlay_opacity,
+    heading_tag: heading_tag,
+    unique: section.id,
+    blocks: section.blocks
+  -%}
+</div>
 
 {% schema %}
 {
@@ -96,8 +101,27 @@
       ]
     },
     {
+      "type": "checkbox",
+      "id": "compact_mobile",
+      "label": "Use compact mobile banner",
+      "info": "Keeps the following content closer to the first screen on phones.",
+      "default": false
+    },
+    {
       "type": "header",
       "content": "Content"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading level",
+      "info": "Use H1 only when this banner is the page's primary heading.",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ],
+      "default": "h1"
     },
     {
       "type": "select",

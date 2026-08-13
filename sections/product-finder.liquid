@@ -115,7 +115,7 @@
         {%- for handle in handles -%}
           {%- assign candidate = all_products[handle] -%}
           {%- if candidate != blank -%}
-            <div class="gpod-finder__result" data-handle="{{ candidate.handle }}">
+            <div class="gpod-finder__result" data-handle="{{ candidate.handle }}" data-available="{{ candidate.available }}">
               {%- if candidate.featured_image -%}
                 <img
                   src="{{ candidate.featured_image | image_url: width: 400 }}"

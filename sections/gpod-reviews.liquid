@@ -1,0 +1,246 @@
+{% comment %}
+  Customer proof band — leads the homepage directly under the hero.
+
+  Modelled on the arc.cc review strip: aggregate score and count on the left,
+  horizontally scrolling quote cards on the right.
+
+  The aggregate is COMPUTED LIVE from the `reviews.rating` /
+  `reviews.rating_count` metafields Fera writes on each product, so it can
+  never go stale the way a hardcoded number would. Set a collection to scope
+  it, or leave blank to total the whole catalogue.
+
+  The quotes are section blocks rather than live Fera data on purpose: Fera
+  renders reviews client-side through its app block and exposes no Liquid
+  object, so individual review text cannot be read at render time. Every
+  quote entered here must be a VERBATIM real review — never write one.
+
+  To refresh them, read real reviews from Fera's public REST API (the store's
+  public key is printed in the storefront page source as `fkey`):
+
+    https://api.fera.ai/v3/public/reviews
+      ?public_key=pk_82e00478375edca2ea87754e1c3eba4541205f2fb0a0bb40cb205977d94de5de
+      &per_page=50&page=N
+
+  Filter on `is_verified` and `rating`, and use `customer.display_name` +
+  `customer.display_location` for the attribution line. Paste the body text
+  unedited — typos and lowercase included; they are what make it read real.
+
+  Deliberately NOT fetched client-side: this band sits directly under the hero,
+  so a network round-trip here would cost LCP and shift layout on the first
+  screen. Curated verbatim beats live-but-janky in this slot.
+
+  Styles: assets/gpod.css under "Customer proof band".
+{% endcomment %}
+
+{%- liquid
+  assign source = section.settings.collection.products | default: collections.all.products
+  assign total_count = 0
+  assign weighted = 0
+
+  comment
+    Weighted mean: sum(rating * count) / sum(count). A plain mean of the
+    ratings would let a 2-review product swing the score as hard as a
+    169-review one.
+  endcomment
+  for p in source
+    assign c = p.metafields.reviews.rating_count.value | plus: 0
+    if c > 0
+      assign r = p.metafields.reviews.rating.value.rating | times: 1.0
+      assign contribution = r | times: c
+      assign weighted = weighted | plus: contribution
+      assign total_count = total_count | plus: c
+    endif
+  endfor
+
+  assign avg = 0
+  if total_count > 0
+    assign avg = weighted | divided_by: total_count
+  endif
+  assign avg_display = avg | round: 1
+
+  assign full_stars = avg | round
+-%}
+
+{%- capture style -%}
+  --rev-pt: {{ section.settings.padding_top }}px;
+  --rev-pb: {{ section.settings.padding_bottom }}px;
+  --rev-bg: {{ section.settings.background_color }};
+  --rev-ink: {{ section.settings.text_color }};
+  --rev-card-bg: {{ section.settings.card_color }};
+  --rev-star: {{ section.settings.star_color }};
+{%- endcapture -%}
+
+<section
+  class="gpod-reviews"
+  data-section-id="{{ section.id }}"
+  data-section-type="reviews"
+  style="{{ style }}"
+>
+  <div class="container gpod-reviews__inner">
+    <div class="gpod-reviews__summary">
+      <div class="gpod-reviews__score">
+        <span class="gpod-reviews__stars" role="img" aria-label="{{ avg_display }} out of 5 stars">
+          {%- for i in (1..5) -%}
+            <span class="gpod-reviews__star{% if i > full_stars %} is-empty{% endif %}">&#9733;</span>
+          {%- endfor -%}
+        </span>
+        {%- if total_count > 0 -%}
+          <span class="gpod-reviews__avg">{{ avg_display }}</span>
+          <span class="gpod-reviews__count">{{ total_count }} reviews</span>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="gpod-reviews__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.link_label != blank and section.settings.link_url != blank -%}
+        <a class="gpod-reviews__link" href="{{ section.settings.link_url }}">
+          {{- section.settings.link_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="gpod-reviews__track">
+        {%- for block in section.blocks -%}
+          <li class="gpod-reviews__card" {{ block.shopify_attributes }}>
+            <span class="gpod-reviews__stars gpod-reviews__stars--sm" role="img" aria-label="{{ block.settings.rating }} out of 5 stars">
+              {%- for i in (1..5) -%}
+                <span class="gpod-reviews__star{% if i > block.settings.rating %} is-empty{% endif %}">&#9733;</span>
+              {%- endfor -%}
+            </span>
+            {%- if block.settings.quote != blank -%}
+              <blockquote class="gpod-reviews__quote">{{ block.settings.quote }}</blockquote>
+            {%- endif -%}
+            {%- if block.settings.author != blank -%}
+              <cite class="gpod-reviews__author">{{ block.settings.author | escape }}</cite>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer proof",
+  "class": "shopify-section--reviews",
+  "tag": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "The score and review count are calculated live from Fera's review metafields across your products — they update themselves. Quotes below must be pasted VERBATIM from a real Fera review, with the reviewer's real name and location. Never write one."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trusted by 75,000+ golfers."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Score scope",
+      "info": "Leave blank to average every product in the store."
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card",
+      "default": "#1c1c1c"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Stars",
+      "default": "#8cc662"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Quote"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Homepage",
+      "name": "Customer proof"
+    }
+  ]
+}
+{% endschema %}

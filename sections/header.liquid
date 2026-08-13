@@ -71,7 +71,12 @@
 
     {%- style -%}
       .logo__image--default { width: {{ logo_width }}px; }
-      .header--has-scrolled .logo__image--default { width: {{ logo_width_small }}px; }
+      {%- comment -%}
+        Logo deliberately does NOT shrink on scroll. The floating header card
+        holds a constant size, and a logo that resizes underneath it breaks the
+        illusion of one fixed object. `logo_width_small` is still used for the
+        srcset above, so the small rendition is not wasted.
+      {%- endcomment -%}
     {%- endstyle -%}
   {%- endif -%}
 {%- endcapture -%}
@@ -96,7 +101,7 @@
    
     {%- style -%}
       .logo__image--transparent { width: {{ logo_width }}px; }
-      .header--has-scrolled .logo__image--transparent { width: {{ logo_width_small }}px; }
+      {%- comment -%} Constant size on scroll — see the note above. {%- endcomment -%}
     {%- endstyle -%}
   {%- endif -%}
 {%- endcapture -%}
@@ -184,6 +189,19 @@
 
             {%- if settings.show_search -%}
               {{ search_popdown }}
+            {%- endif -%}
+
+            {%- comment -%}
+              Scroll-state CTA, per the arc.cc header: hidden at rest, fades in
+              once the header compacts, so the shop link is always one tap away
+              deep in a long page. Purely additive — renders nothing unless a
+              label and link are both set. Hidden below 1024px in gpod.css,
+              where the card has no room for it.
+            {%- endcomment -%}
+            {%- if section.settings.scroll_cta_label != blank and section.settings.scroll_cta_link != blank -%}
+              <a class="btn btn--primary btn--solid header__scroll-cta" href="{{ section.settings.scroll_cta_link }}" tabindex="-1" data-header-scroll-cta>
+                {{- section.settings.scroll_cta_label | escape -}}
+              </a>
             {%- endif -%}
 
             <a id="cartTotal" href="{{ routes.cart_url }}" class="nav-item cartToggle{% if settings.cart_icon == 'circle' %} cartToggle--circle{% endif %}{% if cart.item_count == 0 %} cartToggle--empty{% endif %}" data-cart-toggle aria-expanded="false" aria-label="{{ 'general.accessibility.cart' | t }}">
@@ -312,6 +330,25 @@
       "default": 100,
       "step": 5,
       "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Scroll CTA"
+    },
+    {
+      "type": "paragraph",
+      "content": "Appears in the header once the page is scrolled, like arc.cc. Needs both a label and a link. Desktop only — the mobile header has no room for it."
+    },
+    {
+      "type": "text",
+      "id": "scroll_cta_label",
+      "label": "Label",
+      "info": "e.g. Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "scroll_cta_link",
+      "label": "Link"
     },
     {
       "type": "header",

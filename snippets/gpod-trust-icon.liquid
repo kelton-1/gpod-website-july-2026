@@ -1,0 +1,40 @@
+{%- comment -%}
+  Inline trust icons for the collection hero trust row.
+
+  Accepts:
+  - icon: {String} one of shield | shipping | returns | golfers
+
+  Stroked, currentColor, 1.7 weight — matched to the existing gpod PDP icons
+  (see .gpod-shipping-expectation / .gpod-purchase-policies in gpod.css) so the
+  set reads as one family rather than borrowed clip art.
+
+  {%- render 'gpod-trust-icon', icon: block.settings.icon -%}
+{%- endcomment -%}
+
+{%- case icon -%}
+  {%- when 'shield' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+      <path d="M12 3l7 3v5.5c0 4.2-2.9 7.9-7 9-4.1-1.1-7-4.8-7-9V6l7-3z"/>
+      <path d="M9.2 12.2l2 2 3.6-3.9"/>
+    </svg>
+
+  {%- when 'shipping' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+      <path d="M3 7.5h9v9H3z"/>
+      <path d="M12 10.5h4l3 3v3h-7z"/>
+      <circle cx="7" cy="17.5" r="1.6"/>
+      <circle cx="16.5" cy="17.5" r="1.6"/>
+    </svg>
+
+  {%- when 'returns' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+      <path d="M4 12a8 8 0 1 1 2.6 5.9"/>
+      <path d="M4 6.5V12h5.5"/>
+    </svg>
+
+  {%- when 'golfers' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+      <circle cx="12" cy="8" r="3.2"/>
+      <path d="M5.5 19.5a6.5 6.5 0 0 1 13 0"/>
+    </svg>
+{%- endcase -%}

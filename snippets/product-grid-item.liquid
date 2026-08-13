@@ -45,6 +45,8 @@
   assign widths = '244, 268, 300, 348, 370, 488, 536, 740, 976, 1072, 1480, 1952, 2144, 2960, 3904'
   assign modifier = 'image-wrapper--cover'
   assign featured_image = product.featured_media.preview_image
+  assign product_rating = product.metafields.reviews.rating.value
+  assign product_rating_count = product.metafields.reviews.rating_count.value | plus: 0
 
   if settings.image_size == 'contain'
     assign modifier = 'image-wrapper--contain'
@@ -63,7 +65,6 @@
     assign on_sale = false
     if product.compare_at_price > product.price
       assign on_sale = true
-      assign on_sale_class = ' is-sale'
     endif
 
     assign sold_out = true
@@ -277,6 +278,18 @@
           </p>
         </div>
 
+        {%- if settings.show_product_grid_rating and product_rating != blank and product_rating_count > 0 -%}
+          <div
+            class="product-block__rating"
+            role="img"
+            aria-label="{{ 'general.accessibility.product_rating' | t: rating: product_rating.rating, scale_max: product_rating.scale_max, count: product_rating_count | escape }}"
+          >
+            <span class="product-block__rating-star" aria-hidden="true">★</span>
+            <span>{{ product_rating.rating | round: 1 }}</span>
+            <span>({{ product_rating_count }})</span>
+          </div>
+        {%- endif -%}
+
         {%- if product.variants.size > 1 and settings.swatches_type == 'theme' or settings.swatches_type == 'native' -%}
           {%- capture swatch_translation -%}{{ 'general.swatches.color' | t }}{%- endcapture -%}
           {%- assign swatch_labels = swatch_translation | append: ',' | split: ',' -%}
@@ -309,7 +322,11 @@
                     <div class="swatch__label">
                       <span class="swatch__color swatch__color--{{ value | handle }}" style="--swatch: {{ swatch_value }}"></span>
                     </div>
-                    <a href="{{ product.url }}?variant={{ variant_id }}" class="swatch__link"></a>
+                    <a
+                      href="{{ product.url }}?variant={{ variant_id }}"
+                      class="swatch__link"
+                      aria-label="{{ product.title | strip_html | escape }} — {{ value | escape }}"
+                    ></a>
                   </div>
                 {%- endfor -%}
               </div>

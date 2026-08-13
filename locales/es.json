@@ -35,6 +35,7 @@
       "unit_price_separator": "por",
       "quantity_selector": "Selector de cantidad",
       "product_image_lightbox": "Caja de luz de imagen abierta",
+      "product_rating": "Calificación de {{ rating }} de {{ scale_max }} basada en {{ count }} reseñas",
       "view": "Ver"
     },
     "header": {

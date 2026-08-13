@@ -1,0 +1,152 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "page-landing-hero",
+      "settings": {
+        "show_page_title": true,
+        "show_page_content": true,
+        "overlay_opacity": 45,
+        "text_color": "#ffffff",
+        "background_color": "#101410",
+        "alignment": "left",
+        "height_desktop": 620,
+        "height_mobile": 500,
+        "cta_label": "Shop All Products",
+        "cta_link": "shopify://collections/frontpage"
+      }
+    },
+    "featured_product": {
+      "type": "section-product",
+      "disabled": true,
+      "blocks": {
+        "price_and_title": {
+          "type": "price-and-title",
+          "settings": {
+            "show_vendor": true,
+            "padding_bottom": 16
+          }
+        },
+        "availability": {
+          "type": "variant-availability",
+          "settings": {
+            "padding_bottom": 12
+          }
+        },
+        "form": {
+          "type": "form",
+          "settings": {
+            "show_quantity": true,
+            "enable_payment_button": true,
+            "padding_bottom": 16
+          }
+        },
+        "shipping": {
+          "type": "shipping-expectation",
+          "settings": {
+            "text": "",
+            "padding_bottom": 12
+          }
+        },
+        "policies": {
+          "type": "policy-links",
+          "settings": {
+            "show_refund_policy": true,
+            "show_shipping_policy": true,
+            "accessibility_label": "Purchase policies",
+            "padding_bottom": 16
+          }
+        },
+        "description": {
+          "type": "product-description",
+          "settings": {
+            "padding_bottom": 20
+          }
+        }
+      },
+      "block_order": [
+        "price_and_title",
+        "availability",
+        "form",
+        "shipping",
+        "policies",
+        "description"
+      ],
+      "settings": {
+        "product": "",
+        "image_position": "left",
+        "image_size": "medium",
+        "compact_mobile_media": true,
+        "lightbox": true,
+        "enable_video_looping": false,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "products": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "show_description": false,
+        "featured_collection": "",
+        "products_layout": "grid",
+        "products_rows": 1,
+        "show_button": true,
+        "btn_type": "btn--primary",
+        "btn_size": "btn--large",
+        "btn_style": "btn--solid",
+        "color_style": "black",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "benefits": {
+      "type": "section-icons-row",
+      "disabled": true,
+      "blocks": {
+        "materials": {
+          "type": "text",
+          "settings": {
+            "icon_name": "award",
+            "title": "",
+            "text": ""
+          }
+        },
+        "head": {
+          "type": "text",
+          "settings": {
+            "icon_name": "sync",
+            "title": "",
+            "text": ""
+          }
+        },
+        "setup": {
+          "type": "text",
+          "settings": {
+            "icon_name": "phone",
+            "title": "",
+            "text": ""
+          }
+        }
+      },
+      "block_order": ["materials", "head", "setup"],
+      "settings": {
+        "alignment": "center",
+        "color_icons_bg": "#8cc662",
+        "color_icons_text": "#333333",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": ["hero", "featured_product", "products", "benefits"]
+}

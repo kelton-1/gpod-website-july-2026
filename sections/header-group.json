@@ -68,6 +68,10 @@
     },
     "header": {
       "type": "header",
+      "custom_css": [
+        "h2 {font-size: 32px;}",
+        "@media screen and (max-width: 767px) {.logo__image--default, .logo__image--transparent {width: 100px !important; height: 30px !important; max-width: 100px !important; max-height: 30px !important; padding-bottom: 0 !important; aspect-ratio: 10 / 3 !important; overflow: hidden; --aspect-ratio: 3.333 !important; } .logo__image--default img, .logo__image--transparent img {width: 100% !important; height: 100% !important; object-fit: cover; object-position: center; }}"
+      ],
       "settings": {
         "header_sticky": true,
         "logo": "shopify://shop_images/GPOD_logo.png",
@@ -79,7 +83,9 @@
         "meganav_image_link": "",
         "header_transparent": false,
         "text_color": "#ffffff",
-        "logo_transparent": "shopify://shop_images/GPOD_logo.png"
+        "logo_transparent": "shopify://shop_images/GPOD_logo.png",
+        "scroll_cta_label": "Shop Now",
+        "scroll_cta_link": "/collections/all"
       }
     },
     "1753803424e831e175": {

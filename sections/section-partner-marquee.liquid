@@ -1,0 +1,499 @@
+{%- comment -%}
+  Partner / tour logo marquee — continuous, seamless scroll.
+
+  Built to match the theme's existing `section-logo-list` conventions:
+  same `item_logo` block type and setting ids, so blocks can be copied
+  between the two sections without rework.
+
+  Differences from `section-logo-list`:
+  - logos are normalised by HEIGHT, not width, so mixed aspect ratios
+    (a tall PGA TOUR shield next to a wide Five Iron wordmark) sit on the
+    same optical baseline instead of one towering over the other
+  - per-logo optical scale nudge, because height-normalising alone still
+    leaves some marks reading heavy or light
+  - seamless infinite loop: the set is rendered N times and the track is
+    translated by exactly 1/N, so the loop point is invisible
+  - respects prefers-reduced-motion (falls back to a static centred wrap)
+
+  All CSS is scoped to the section id — safe to drop in alongside other work.
+{%- endcomment -%}
+
+{%- liquid
+  assign count = section.blocks.size
+
+  # Repeat the set enough times to overflow wide viewports. Translating the
+  # track by exactly 1/sets always lands on an identical frame -> seamless.
+  if count > 0 and count < 6
+    assign sets = 4
+    assign shift = '-25%'
+  else
+    assign sets = 2
+    assign shift = '-50%'
+  endif
+
+  assign uid = section.id | replace: '_', '-'
+-%}
+
+{%- capture css -%}
+  #pm-{{ uid }} {
+    --pm-pt: {{ section.settings.padding_top }}px;
+    --pm-pb: {{ section.settings.padding_bottom }}px;
+    --pm-h: {{ section.settings.logo_height }}px;
+    --pm-gap: {{ section.settings.gap }}px;
+    --pm-speed: {{ section.settings.speed }}s;
+    --pm-shift: {{ shift }};
+    --pm-fade: {{ section.settings.edge_fade }}px;
+    {%- if section.settings.background != blank and section.settings.background != 'rgba(0,0,0,0)' %}
+    --pm-bg: {{ section.settings.background }};
+    {%- endif %}
+    position: relative;
+    padding-top: var(--pm-pt);
+    padding-bottom: var(--pm-pb);
+    background: var(--pm-bg, transparent);
+    overflow: hidden;
+  }
+
+  #pm-{{ uid }} .pm__heading {
+    margin: 0 0 calc(var(--pm-gap) * 0.75);
+    text-align: center;
+    font-size: {{ section.settings.heading_size }}px;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: {{ section.settings.heading_color }};
+  }
+
+  #pm-{{ uid }} .pm__viewport {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    {%- if section.settings.edge_fade > 0 %}
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--pm-fade), #000 calc(100% - var(--pm-fade)), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 var(--pm-fade), #000 calc(100% - var(--pm-fade)), transparent 100%);
+    {%- endif %}
+  }
+
+  #pm-{{ uid }} .pm__track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    animation: pm-scroll-{{ uid }} var(--pm-speed) linear infinite;
+    {%- if section.settings.direction == 'right' %}
+    animation-direction: reverse;
+    {%- endif %}
+  }
+
+  #pm-{{ uid }} .pm__set {
+    display: flex;
+    align-items: center;
+    gap: var(--pm-gap);
+    margin: 0;
+    padding: 0 calc(var(--pm-gap) / 2);
+    list-style: none;
+  }
+
+  #pm-{{ uid }} .pm__item {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--pm-h);
+  }
+
+  #pm-{{ uid }} .pm__item img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-height: 100%;
+    max-width: {{ section.settings.max_logo_width }}px;
+    object-fit: contain;
+    {%- if section.settings.grayscale %}
+    filter: grayscale(1);
+    opacity: 0.62;
+    transition: filter 0.35s ease, opacity 0.35s ease;
+    {%- endif %}
+  }
+
+  {%- if section.settings.grayscale %}
+  #pm-{{ uid }} .pm__item:hover img,
+  #pm-{{ uid }} .pm__item:focus-within img {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+  {%- endif %}
+
+  #pm-{{ uid }} .pm__link {
+    display: block;
+    line-height: 0;
+  }
+
+  {%- if section.settings.pause_on_hover %}
+  #pm-{{ uid }}:hover .pm__track,
+  #pm-{{ uid }}:focus-within .pm__track {
+    animation-play-state: paused;
+  }
+  {%- endif %}
+
+  @keyframes pm-scroll-{{ uid }} {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(var(--pm-shift), 0, 0); }
+  }
+
+  @media screen and (max-width: 749px) {
+    #pm-{{ uid }} {
+      --pm-h: {{ section.settings.logo_height_mobile }}px;
+      --pm-gap: {{ section.settings.gap | divided_by: 2 }}px;
+      --pm-fade: {{ section.settings.edge_fade | divided_by: 2 }}px;
+    }
+  }
+
+  {%- comment -%} Motion is decorative here — drop it entirely, keep the logos. {%- endcomment -%}
+  @media (prefers-reduced-motion: reduce) {
+    #pm-{{ uid }} .pm__track {
+      animation: none;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    #pm-{{ uid }} .pm__set {
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: var(--pm-gap);
+    }
+    #pm-{{ uid }} .pm__set[aria-hidden="true"] { display: none; }
+    #pm-{{ uid }} .pm__viewport {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+{%- endcapture -%}
+
+<style>{{ css }}</style>
+
+<div id="pm-{{ uid }}"
+  class="partner-marquee"
+  data-section-id="{{ section.id }}"
+  data-section-type="partner-marquee">
+
+  {%- comment -%}
+    Optional intro. Lets one marquee instance carry a full text block (eyebrow /
+    title / paragraph / button) so the homepage "Find us on tour" band can drop
+    its background photo without losing any copy. Every part is optional, so a
+    bare logo band is still just heading + logos.
+  {%- endcomment -%}
+  {%- if section.settings.heading != blank
+      or section.settings.title != blank
+      or section.settings.lede != blank
+      or section.settings.button_label != blank -%}
+    <div class="pm__intro">
+      {%- if section.settings.heading != blank -%}
+        <p class="pm__heading">{{ section.settings.heading | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.title != blank -%}
+        <h2 class="pm__title">{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.lede != blank -%}
+        <div class="pm__lede rte">{{ section.settings.lede }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+        <a class="btn btn--primary btn--solid pm__btn" href="{{ section.settings.button_link }}">
+          {{- section.settings.button_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if count > 0 -%}
+    <div class="pm__viewport">
+      <div class="pm__track">
+        {%- for n in (1..sets) -%}
+          <ul class="pm__set"{% unless forloop.first %} aria-hidden="true"{% endunless %}>
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign image = block.settings.logo_image
+                assign scale = block.settings.logo_scale | default: 100
+                assign alt = image.alt | default: block.settings.logo_name | escape
+              -%}
+              <li class="pm__item"
+                style="height: calc(var(--pm-h) * {{ scale }} / 100);"
+                {% if forloop.parentloop.first %}{{ block.shopify_attributes }}{% endif %}>
+                {%- if image != blank -%}
+                  {%- capture img -%}
+                    <img
+                      src="{{ image | image_url: width: 600 }}"
+                      srcset="{{ image | image_url: width: 300 }} 300w, {{ image | image_url: width: 600 }} 600w"
+                      sizes="{{ section.settings.max_logo_width }}px"
+                      alt="{{ alt }}"
+                      width="{{ image.width }}"
+                      height="{{ image.height }}"
+                      decoding="async"
+                      fetchpriority="low">
+                    {%- comment -%}
+                      Deliberately NOT loading="lazy": the track is moved by CSS
+                      transform, which does not reliably trigger the lazy-load
+                      intersection check, so logos can stay blank as they scroll
+                      in. These files are a few KB each — eager is correct here.
+                    {%- endcomment -%}
+                  {%- endcapture -%}
+                  {%- if block.settings.logo_url != blank and forloop.parentloop.first -%}
+                    <a class="pm__link" href="{{ block.settings.logo_url }}"{% if section.settings.new_tab %} target="_blank" rel="noopener"{% endif %}>{{ img }}</a>
+                  {%- else -%}
+                    {{ img }}
+                  {%- endif -%}
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- else -%}
+    {%- if request.design_mode -%}
+      <p class="pm__heading">Add logo blocks to this section.</p>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Partner marquee",
+  "class": "shopify-section--partner-marquee",
+  "tag": "section",
+  "max_blocks": 30,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Eyebrow",
+      "info": "Small uppercase label above the logos.",
+      "default": "Trusted on tour and in the shop"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "info": "Optional. Leave blank for a plain logo band."
+    },
+    {
+      "type": "richtext",
+      "id": "lede",
+      "label": "Intro text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 11,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#6b6b6b"
+    },
+    {
+      "type": "header",
+      "content": "Motion"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Loop duration",
+      "info": "Higher is slower. 40–60s reads as calm and premium; under 25s feels frantic.",
+      "min": 10,
+      "max": 90,
+      "step": 5,
+      "unit": "s",
+      "default": 45
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "options": [
+        { "value": "left", "label": "Right to left" },
+        { "value": "right", "label": "Left to right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Logos"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Logo height (desktop)",
+      "min": 24,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "logo_height_mobile",
+      "label": "Logo height (mobile)",
+      "min": 18,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "max_logo_width",
+      "label": "Max logo width",
+      "min": 80,
+      "max": 320,
+      "step": 10,
+      "unit": "px",
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Space between logos",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "checkbox",
+      "id": "grayscale",
+      "label": "Grayscale until hover",
+      "info": "Keeps a mixed-colour logo wall visually calm. Turn off to show brand colours.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "new_tab",
+      "label": "Open links in a new tab",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background color"
+    },
+    {
+      "type": "range",
+      "id": "edge_fade",
+      "label": "Edge fade",
+      "info": "Fades logos out at the left and right edges so they don't cut off hard.",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item_logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "logo_name",
+          "label": "Name",
+          "info": "Fallback alt text if the image file has none."
+        },
+        {
+          "type": "range",
+          "id": "logo_scale",
+          "label": "Optical scale",
+          "info": "Nudge an individual logo up or down so it reads the same visual weight as its neighbours.",
+          "min": 60,
+          "max": 140,
+          "step": 5,
+          "unit": "%",
+          "default": 100
+        },
+        {
+          "type": "url",
+          "id": "logo_url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Partner marquee",
+      "category": "Image",
+      "blocks": [
+        { "type": "item_logo" },
+        { "type": "item_logo" },
+        { "type": "item_logo" },
+        { "type": "item_logo" },
+        { "type": "item_logo" },
+        { "type": "item_logo" },
+        { "type": "item_logo" },
+        { "type": "item_logo" }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

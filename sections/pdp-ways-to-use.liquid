@@ -52,6 +52,8 @@
                 src="{{ block.settings.image | image_url: width: 520 }}"
                 srcset="{{ block.settings.image | image_url: width: 380 }} 380w, {{ block.settings.image | image_url: width: 520 }} 520w, {{ block.settings.image | image_url: width: 760 }} 760w"
                 sizes="(min-width: 1024px) 300px, 70vw"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
                 loading="lazy"
                 alt="{{ block.settings.label | default: section.settings.heading | escape }}"
               >

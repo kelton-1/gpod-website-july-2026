@@ -1,0 +1,243 @@
+{% comment %}
+  "Explore our products" — horizontally scrolling category row.
+
+  Grouping is by PRODUCT TYPE (Monopods / Tripods / Bases / Accessories /
+  Bundles), chosen deliberately over two rejected alternatives:
+
+  - Venue ("On the Course", "Indoor & Simulator") was rejected because it
+    tells people where to use the product. They will use it where they want.
+  - Individual SKUs was rejected because 16 active products is far too many
+    for this treatment, and picking 4-5 hero SKUs duplicates the job the
+    compare module already does — routing an undecided buyer between models.
+
+  Product type describes what the thing IS, which prescribes nothing.
+
+  Each card points at a collection chosen in the theme editor, so the row can
+  be rewired without touching code. Image falls back collection image -> first
+  product image, so a card is never empty even where the collection has no
+  image of its own (accessories and bundles currently do not).
+
+  Styles: assets/gpod.css under "Explore row".
+{% endcomment %}
+
+{%- capture style -%}
+  --explore-pt: {{ section.settings.padding_top }}px;
+  --explore-pb: {{ section.settings.padding_bottom }}px;
+  --explore-bg: {{ section.settings.background_color }};
+  --explore-card-w: {{ section.settings.card_width }}px;
+  --explore-ratio: {{ section.settings.image_ratio }};
+{%- endcapture -%}
+
+<section
+  class="gpod-explore"
+  data-section-id="{{ section.id }}"
+  data-section-type="explore"
+  style="{{ style }}"
+>
+  <div class="container">
+    {%- if section.settings.heading != blank or section.settings.lede != blank -%}
+      <div class="gpod-explore__head">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="gpod-explore__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.lede != blank -%}
+          <div class="gpod-explore__lede rte">{{ section.settings.lede }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="gpod-explore__row">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign col = collections[block.settings.collection]
+            assign img = block.settings.image | default: col.image
+            unless img
+              assign img = col.products.first.featured_image
+            endunless
+            assign title = block.settings.title | default: col.title
+            assign url = col.url | default: '#'
+          -%}
+          {%- comment -%}
+            A cutout, if one is named, wins over everything. The collection
+            images and first-product fallbacks are gallery shots with the "THE
+            GPOD" wordmark baked in, which is what made this row read like a
+            sheet of ads rather than a set of categories.
+          {%- endcomment -%}
+          {%- capture cutout -%}{%- render 'gpod-cutout-url', handle: block.settings.cutout_handle -%}{%- endcapture -%}
+          <li class="gpod-explore__card" {{ block.shopify_attributes }}>
+            <a class="gpod-explore__link" href="{{ url }}" aria-label="{{ title | escape }}">
+              <span class="gpod-explore__media{% if cutout != blank %} gpod-explore__media--cutout{% endif %}">
+                {%- if cutout != blank -%}
+                  <img
+                    class="gpod-explore__img"
+                    src="{{ cutout }}"
+                    alt="{{ title | escape }}"
+                    loading="lazy"
+                  >
+                {%- elsif img -%}
+                  <img
+                    class="gpod-explore__img"
+                    src="{{ img | image_url: width: 700 }}"
+                    srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 700 }} 700w, {{ img | image_url: width: 1000 }} 1000w"
+                    sizes="(min-width: 768px) {{ section.settings.card_width }}px, 78vw"
+                    width="{{ img.width }}"
+                    height="{{ img.height }}"
+                    alt="{{ img.alt | default: title | escape }}"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              </span>
+
+              <span class="gpod-explore__body">
+                <span class="gpod-explore__title">{{ title }}</span>
+                {%- if block.settings.text != blank -%}
+                  <span class="gpod-explore__text">{{ block.settings.text | escape }}</span>
+                {%- endif -%}
+                {%- if section.settings.show_count and col.products_count > 0 -%}
+                  <span class="gpod-explore__count">
+                    {{ col.products_count }} {% if col.products_count == 1 %}product{% else %}products{% endif %}
+                  </span>
+                {%- endif -%}
+                <span class="btn btn--primary btn--solid gpod-explore__cta">
+                  {{- section.settings.cta_label | default: 'Shop now' | escape -}}
+                </span>
+              </span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Explore products",
+  "class": "shopify-section--explore",
+  "tag": "section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Explore our products"
+    },
+    {
+      "type": "richtext",
+      "id": "lede",
+      "label": "Intro text"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Card button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_count",
+      "label": "Show product count",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "label": "Card width (desktop)",
+      "min": 220,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image shape",
+      "default": "0.8",
+      "options": [
+        { "label": "Portrait (4:5)", "value": "0.8" },
+        { "label": "Square (1:1)", "value": "1" },
+        { "label": "Landscape (3:2)", "value": "1.5" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Category card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Falls back to the collection title."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Short description"
+        },
+        {
+          "type": "text",
+          "id": "cutout_handle",
+          "label": "Cutout product handle",
+          "info": "e.g. gpodx. Uses that product's background-free cutout from the theme assets. Wins over the image below. See snippets/gpod-cutout-url.liquid for the list of products that have one."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Used when no cutout handle is set. Falls back to the collection image, then the first product's image."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Homepage",
+      "name": "Explore products"
+    }
+  ]
+}
+{% endschema %}

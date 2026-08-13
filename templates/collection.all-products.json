@@ -44,23 +44,66 @@
         "banner_image": "shopify://shop_images/Untitled_design_6.png",
         "height": "five-fifty-height-hero",
         "height_mobile": "one-hundred-height-hero--mobile",
+        "compact_mobile": true,
         "text_position": "center",
         "color_text": "#ffffff",
         "color_overlay": "#333333",
         "overlay_opacity": 70
       }
     },
+    "toolbar": {
+      "type": "collection-toolbar",
+      "blocks": {
+        "pill_monopods": {
+          "type": "pill",
+          "settings": {
+            "collection": "monopods"
+          }
+        },
+        "pill_tripods_bases": {
+          "type": "pill",
+          "settings": {
+            "collection": "tripods-bases"
+          }
+        },
+        "pill_bundles": {
+          "type": "pill",
+          "settings": {
+            "collection": "bundles"
+          }
+        },
+        "pill_accessories": {
+          "type": "pill",
+          "settings": {
+            "collection": "accessories"
+          }
+        }
+      },
+      "block_order": [
+        "pill_monopods",
+        "pill_tripods_bases",
+        "pill_bundles",
+        "pill_accessories"
+      ],
+      "settings": {
+        "compare_text": "Compare models",
+        "compare_link": "/pages/compare-gpod-models",
+        "quiz_text": "Take the Quiz",
+        "quiz_link": "/pages/product-finder-quiz",
+        "padding_top": 10,
+        "padding_bottom": 10
+      }
+    },
     "main": {
       "type": "collection",
-      "disabled": true,
       "settings": {
         "show_sort_filter": true,
         "enable_filters": true,
         "position_filters": "left",
         "show_featured_image": false,
-        "featured_heading": "Use this image showcase promotional content.",
-        "featured_text": "<p>Elaborate on it with rich text</p>",
-        "btn_text": "Learn More",
+        "featured_heading": "",
+        "featured_text": "",
+        "btn_text": "",
         "btn_link": "",
         "btn_type": "btn--primary",
         "btn_size": "",
@@ -74,6 +117,7 @@
     },
     "section_collection_7MAUnB": {
       "type": "section-collection",
+      "disabled": true,
       "name": "Featured collection",
       "settings": {
         "title": "",
@@ -103,6 +147,7 @@
   "order": [
     "hero",
     "section_image_with_text_overlay_zYtFLQ",
+    "toolbar",
     "main",
     "section_collection_7MAUnB",
     "section_recently_viewed_products_jtLmwG"

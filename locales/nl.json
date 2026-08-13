@@ -35,6 +35,7 @@
       "unit_price_separator": "per",
       "quantity_selector": "Hoeveelheid selector",
       "product_image_lightbox": "Open afbeelding lightbox",
+      "product_rating": "Beoordeeld met {{ rating }} van {{ scale_max }} op basis van {{ count }} beoordelingen",
       "view": "Zien"
     },
     "header": {

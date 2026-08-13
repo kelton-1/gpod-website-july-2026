@@ -1,0 +1,37 @@
+{%- comment -%}
+  Outputs the theme-asset URL of a product's background-free cutout, or
+  nothing if that product has no cutout. Nothing else — so callers can do:
+
+    {%- capture cutout -%}{%- render 'gpod-cutout-url', handle: p.handle -%}{%- endcapture -%}
+    {%- if cutout != blank -%} ... {%- endif -%}
+
+  Why an explicit allow-list rather than just building the filename: an
+  `asset_url` for a file that is not in the theme resolves to a URL that 404s,
+  silently, as a broken image. The list is the only thing that knows which of
+  the catalogue actually has an asset.
+
+  WHY THESE EXIST AT ALL: the product photo library has the marketing template
+  — a vertical "THE GPOD [PRODUCT]" wordmark — baked into the pixels of every
+  frame for 13 of 15 products. Background removal cuts around baked-in text
+  and leaves a floating logo, so each cutout was cropped past the branding band
+  first. See GPOD/Product-Cutouts/MANIFEST.md for the per-product provenance.
+
+  The three monopods are stored ROTATED ~38°. Trimmed to their true silhouette
+  they are 0.06-0.13 aspect — literal hairlines that vanish in any card. The
+  angle is the same fix a reshoot would apply, done to the asset.
+
+  These are theme assets rather than Shopify Files, so there is no CDN resize:
+  each is pre-sized to 700px on the long edge, which is 2x the largest place
+  they are used (an Explore card). If they ever need to render bigger than
+  ~350px, move them to Files with a `gpod.cutout` file_reference metafield and
+  use image_url — that is the upgrade path, not a bigger PNG here.
+{%- endcomment -%}
+
+{%- liquid
+  assign cutout_handles = 'gpodmagsafe,gpodx,gpod-pauly-p2,gpod-travel-1,gpod-studio,gpod-mini,indoor-base-for-gpod-gpod-mini,connect,gpod-caddy,replacement-magnet-for-magsafe,gpod-gplate,gpod-pocket-g,g-bundle-one-gpod-with-gpod-base,g-bundle-two-gpod-x-with-gpod-base,g-bundle-three-gpod-pauly-p-and-gpod-base' | split: ','
+
+  if cutout_handles contains handle
+    assign cutout_file = 'gpod-cutout-' | append: handle | append: '.png'
+    echo cutout_file | asset_url
+  endif
+-%}

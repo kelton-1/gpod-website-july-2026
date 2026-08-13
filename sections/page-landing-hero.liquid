@@ -1,0 +1,180 @@
+{% comment %}
+  Reusable paid-landing-page hero.
+  The headline and supporting copy come from the assigned Shopify page so
+  campaign messaging remains merchant-owned rather than hardcoded in theme code.
+{% endcomment %}
+
+{%- liquid
+  assign desktop_image = section.settings.image
+  assign mobile_image = section.settings.mobile_image
+  assign fallback_image = desktop_image | default: mobile_image
+-%}
+
+{%- capture style -%}
+  --landing-height: {{ section.settings.height_desktop }}px;
+  --landing-height-mobile: {{ section.settings.height_mobile }}px;
+  --landing-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+  --landing-text: {{ section.settings.text_color }};
+  --landing-bg: {{ section.settings.background_color }};
+{%- endcapture -%}
+
+<section
+  class="gpod-landing-hero gpod-landing-hero--{{ section.settings.alignment }}"
+  data-section-type="page-landing-hero"
+  style="{{ style }}"
+>
+  {%- if fallback_image != blank -%}
+    <picture class="gpod-landing-hero__media" aria-hidden="true">
+      {%- if mobile_image != blank -%}
+        <source
+          media="(max-width: 767px)"
+          srcset="
+            {{ mobile_image | image_url: width: 500 }} 500w,
+            {{ mobile_image | image_url: width: 800 }} 800w,
+            {{ mobile_image | image_url: width: 1100 }} 1100w
+          "
+          sizes="100vw"
+        >
+      {%- endif -%}
+      <img
+        src="{{ fallback_image | image_url: width: 1600 }}"
+        srcset="
+          {{ fallback_image | image_url: width: 900 }} 900w,
+          {{ fallback_image | image_url: width: 1600 }} 1600w,
+          {{ fallback_image | image_url: width: 2200 }} 2200w
+        "
+        sizes="100vw"
+        width="{{ fallback_image.width }}"
+        height="{{ fallback_image.height }}"
+        alt=""
+        fetchpriority="high"
+      >
+    </picture>
+  {%- endif -%}
+
+  <div class="gpod-landing-hero__overlay" aria-hidden="true"></div>
+
+  <div class="container gpod-landing-hero__inner">
+    <div class="gpod-landing-hero__content">
+      {%- if section.settings.show_page_title and page.title != blank -%}
+        <h1>{{ page.title | escape }}</h1>
+      {%- endif -%}
+
+      {%- if section.settings.show_page_content and page.content != blank -%}
+        <div class="gpod-landing-hero__copy rte">{{ page.content }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+        <a class="btn btn--primary btn--solid btn--large" href="{{ section.settings.cta_link }}">
+          {{- section.settings.cta_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Paid landing hero",
+  "class": "shopify-section--paid-landing-hero",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "The headline and supporting copy come from the assigned Shopify page. Keep the page content aligned with the ad that sends traffic here."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_page_title",
+      "label": "Show page title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_page_content",
+      "label": "Show page content",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 45
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#101410"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Content alignment",
+      "default": "left",
+      "options": [
+        { "label": "Left", "value": "left" },
+        { "label": "Center", "value": "center" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "height_desktop",
+      "label": "Desktop height",
+      "min": 420,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "default": 620
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "label": "Mobile height",
+      "min": 420,
+      "max": 720,
+      "step": 20,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "category": "Page",
+      "name": "Paid landing hero"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["page"]
+  }
+}
+{% endschema %}

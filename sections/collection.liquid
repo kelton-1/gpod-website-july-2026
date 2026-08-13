@@ -66,6 +66,14 @@
   if position_filters == 'left'
     assign is_left = true
   endif
+
+  capture selected_sort_name
+    for option in collection.sort_options
+      if option.value == sort_by
+        echo option.name
+      endif
+    endfor
+  endcapture
 -%}
 
 {%- capture style -%}
@@ -167,6 +175,10 @@
             </div>
           {%- endif -%}
 
+          <p class="gpod-collection-count" data-collection-count aria-live="polite">
+            {{- 'collection.filters.product_count' | t: product_count: collection.products_count, count: collection.all_products_count -}}
+          </p>
+
           <div class="grid-sort">
             {%- if show_sort_filter -%}
               <div class="collection-grid__sort">
@@ -176,12 +188,15 @@
                   <div class="popout sort" data-popout data-popout-prevent="true">
                     {%- render "icon-arrow" -%}
 
-                    <button type="button" class="popout__toggle" aria-expanded="false" aria-controls="sort-list" aria-describedby="lang-heading" data-popout-toggle>
-                      {%- for option in collection.sort_options -%}
-                        {%- if option.value == sort_by -%}
-                          {{ option.name }}
-                        {%- endif -%}
-                      {%- endfor %}
+                    <button
+                      type="button"
+                      class="popout__toggle"
+                      aria-expanded="false"
+                      aria-controls="sort-list"
+                      aria-label="{{ 'collections.sorting_dropdown.label' | t }}: {{ selected_sort_name | strip | escape }}"
+                      data-popout-toggle
+                    >
+                      {{- selected_sort_name -}}
                     </button>
 
                     <ul id="sort-list" class="popout-list" data-popout-list>
@@ -221,6 +236,10 @@
           data-collection="{{ collection.url | default: routes.all_products_collection_url }}?"
           {% if settings.enable_infinity_scroll %}data-infinity{% endif %}
           data-collection-products>
+          <template
+            data-collection-count-state
+            data-label="{{ 'collection.filters.product_count' | t: product_count: collection.products_count, count: collection.all_products_count | escape }}"
+          ></template>
           {%- if collection.all_products_count > 0 -%}
             {%- if show_featured_image and paginate.current_page == 1 and collection.products_count > 0 -%}
               {% comment %} Featured Content Settings {% endcomment %}
@@ -325,6 +344,7 @@
     sortBy: '{{ collection.sort_by }}'
   }
 </script>
+<script src="{{ 'gpod.js' | asset_url }}" defer></script>
 
 {% schema %}
   {

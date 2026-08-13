@@ -15,6 +15,7 @@
   - color_text: {Color} Text color,
   - color_overlay: {Color} Overlay color,
   - overlay_opacity: {Number} Overlay opacity,
+  - heading_tag: {String} h1, h2, or h3 (Default: h1),
   - unique: {String} Section id
   - blocks: {Array} Section blocks
   - loading: {String} 'lazy' or 'eager' (Default: 'lazy')
@@ -45,6 +46,7 @@
   assign transition_text = settings.transition_text
   assign animation_delay = 0
   assign animation_anchor = '#Banner--' | append: unique
+  assign heading_tag = heading_tag | default: 'h1'
 
   if image
     assign image_aspect_ratio = image.aspect_ratio
@@ -131,7 +133,7 @@
           {%- assign heading = block.settings.title -%}
 
           {%- if heading != blank -%}
-            <h1 class="page-title__heading"
+            <{{ heading_tag }} class="page-title__heading"
               {% if transition_text %}
                 data-aos="fade-up"
                 data-aos-delay="{{ animation_delay }}"
@@ -140,7 +142,7 @@
               {{ block.shopify_attributes }}
             >
               {{- heading -}}
-            </h1>
+            </{{ heading_tag }}>
 
             {%- assign animation_delay = animation_delay | plus: 250 -%}
           {%- endif -%}
@@ -201,13 +203,13 @@
       {%- assign animation_delay = animation_delay | plus: 250 -%}
     {%- endif -%}
     {%- if heading != blank -%}
-      <h1 class="page-title__heading"
+      <{{ heading_tag }} class="page-title__heading"
         {% if transition_text %}
           data-aos="fade-up"
           data-aos-delay="{{ animation_delay }}"
           data-aos-anchor="{{ animation_anchor }}"
         {% endif %}
-      >{{ heading }}</h1>
+      >{{ heading }}</{{ heading_tag }}>
 
       {%- assign animation_delay = animation_delay | plus: 250 -%}
     {%- endif -%}

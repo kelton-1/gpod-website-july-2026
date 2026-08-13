@@ -18,22 +18,24 @@
 {%- endcapture -%}
 
 {%- if show_banner and has_image -%}
-  {%- render 'banner',
-      image: banner_image,
-      mobile_image: banner_image_mobile,
-      desktop_height: section.settings.height,
-      mobile_height: section.settings.height_mobile,
-      transparent_header: true,
-      heading: collection.title,
-      text: collection.description,
-      text_position: section.settings.banner_text_position,
-      image_position: section.settings.image_position,
-      color_text: section.settings.banner_color_text,
-      color_overlay: section.settings.banner_color_overlay,
-      overlay_opacity: section.settings.banner_overlay_opacity,
-      unique: section.id,
-      loading: 'eager'
-  -%}
+  <div{% if section.settings.compact_mobile %} class="gpod-collection-hero--compact-mobile"{% endif %}>
+    {%- render 'banner',
+        image: banner_image,
+        mobile_image: banner_image_mobile,
+        desktop_height: section.settings.height,
+        mobile_height: section.settings.height_mobile,
+        transparent_header: true,
+        heading: collection.title,
+        text: collection.description,
+        text_position: section.settings.banner_text_position,
+        image_position: section.settings.image_position,
+        color_text: section.settings.banner_color_text,
+        color_overlay: section.settings.banner_color_overlay,
+        overlay_opacity: section.settings.banner_overlay_opacity,
+        unique: section.id,
+        loading: 'eager'
+    -%}
+  </div>
 {%- else -%}
   <div class="page-title section-padding" style="{{ style }}" data-banner-content>
     <div class="container">
@@ -139,6 +141,13 @@
           "label": "450px"
         }
       ]
+    },
+    {
+      "type": "checkbox",
+      "id": "compact_mobile",
+      "label": "Use compact mobile banner",
+      "info": "Keeps collection products closer to the first screen on phones.",
+      "default": false
     },
     {
       "type": "select",

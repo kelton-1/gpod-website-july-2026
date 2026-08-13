@@ -16,6 +16,8 @@
   {%- render 'product', section_type: 'product-template' -%}
 </section>
 
+<script src="{{ 'gpod.js' | asset_url }}" defer></script>
+
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 <script type="application/ld+json">
 {
@@ -24,9 +26,8 @@
   "name": {{ product.title | json }},
   "url": {{ shop.url | append: product.url | json }},
   {%- if product.featured_media -%}
-    {%- assign media_size = product.featured_media.preview_image.width | append: 'x' -%}
     "image": [
-      {{ product.featured_media | img_url: media_size | prepend: "https:" | json }}
+      {{ product.featured_media.preview_image | image_url: width: product.featured_media.preview_image.width | prepend: "https:" | json }}
     ],
   {%- endif -%}
   "description": {{ product.description | strip_html | json }},
@@ -37,17 +38,17 @@
     "@type": "Thing",
     "name": {{ product.vendor | json }}
   },
-  {%- if current_variant.barcode -%}
-    "gtin8": "{{ product.variants.first.barcode }}",
+  {%- if current_variant.barcode.size == 8 -%}
+    "gtin8": "{{ current_variant.barcode }}",
   {%- endif -%}
   {%- if current_variant.barcode.size == 12 -%}
-    "gtin12": "{{ product.variants.first.barcode }}",
+    "gtin12": "{{ current_variant.barcode }}",
   {%- endif -%}
   {%- if current_variant.barcode.size == 13 -%}
-    "gtin13": "{{ product.variants.first.barcode }}",
+    "gtin13": "{{ current_variant.barcode }}",
   {%- endif -%}
   {%- if current_variant.barcode.size == 14 -%}
-    "gtin14": "{{ product.variants.first.barcode }}",
+    "gtin14": "{{ current_variant.barcode }}",
   {%- endif -%}
   {%- if product.metafields.reviews.rating.value != blank and product.metafields.reviews.rating_count.value > 0 -%}
   "aggregateRating": {
@@ -65,7 +66,7 @@
         {%- if variant.sku != blank -%}
           "sku": {{ variant.sku | json }},
         {%- endif -%}
-        "availability" : "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+        "availability" : "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
         "price" : {{ variant.price | divided_by: 100.00 | json }},
         "priceCurrency" : {{ cart.currency.iso_code | json }},
         "url" : {{ shop.url | append: variant.url | json }}
@@ -133,6 +134,13 @@
     },
     {
       "type": "checkbox",
+      "id": "compact_mobile_media",
+      "label": "Compact product media on mobile",
+      "info": "Keeps the first purchase details closer to the first screen while preserving the full image in the gallery and lightbox.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
       "id": "lightbox",
       "label": "Show lightbox",
       "default": true
@@ -141,7 +149,7 @@
       "type": "checkbox",
       "id": "show_cart_bar",
       "label": "Show Add to Cart bar",
-      "info": "Hidden on mobile or if product has a selling plan.",
+      "info": "Appears after shoppers scroll into the product page. Hidden when the product has a selling plan.",
       "default": true
     },
     {
@@ -251,6 +259,152 @@
         }
       ],
       "limit": 1
+    },
+    {
+      "type": "policy-links",
+      "name": "Purchase policy links",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Uses the titles and URLs from Settings > Policies. Empty policies stay hidden."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_refund_policy",
+          "label": "Show refund policy",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_shipping_policy",
+          "label": "Show shipping policy",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "accessibility_label",
+          "label": "Accessibility label",
+          "default": "Purchase policies"
+        },
+        {
+          "type": "header",
+          "content": "Block spacing"
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Bottom padding",
+          "default": 20
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "type": "shipping-expectation",
+      "name": "Shipping expectation",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Uses product metafield gpod.shipping_expectation when available. The optional fallback applies to every product using this template; leave it blank until approved."
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Fallback text"
+        },
+        {
+          "type": "header",
+          "content": "Block spacing"
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Bottom padding",
+          "default": 12
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "type": "variant-availability",
+      "name": "Variant availability",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Uses each Shopify variant's live availability and the theme's translated stock labels."
+        },
+        {
+          "type": "header",
+          "content": "Block spacing"
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Bottom padding",
+          "default": 12
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "type": "model-picker",
+      "name": "Model picker",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Tiles link to sibling PRODUCTS, not variants. GPOD's models are distinct products with different heights, weights and bases, so collapsing them into one variant picker would break the catalogue, inventory and product feed."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Model"
+        },
+        {
+          "type": "text",
+          "id": "handles",
+          "label": "Models",
+          "info": "Comma-separated product handles, in display order.",
+          "default": "gpodmagsafe,gpodx,gpod-pauly-p2,gpod-travel-1,gpod-studio"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_if_absent",
+          "label": "Hide when this product is not listed",
+          "info": "Keeps the picker off accessory and bundle pages.",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "key-specs",
+      "name": "Key specs strip",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Four specs at a glance under the price. Values come from the product's gpod.* metafields — the same source as the spec table and the compare module. The strip hides itself on products that have none of them."
+        },
+        {
+          "type": "text",
+          "id": "keys",
+          "label": "Metafield keys (comma-separated, max 4)",
+          "default": "extended_length,collapsed_length,weight,phone_attachment"
+        }
+      ]
     },
     {
       "type": "product-description",

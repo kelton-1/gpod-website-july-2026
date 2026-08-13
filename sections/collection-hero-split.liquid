@@ -1,0 +1,276 @@
+{% comment %}
+  Two-column collection hero — imagery one side, copy the other.
+
+  Replaces the full-bleed `collection-image-with-title` banner on collection
+  pages. That banner forced every collection image into a 450px-tall
+  background-size: cover box; four of GPOD's six collection images are portrait
+  4:5 (4000x5096), so roughly 85% of each frame was being cropped away.
+
+  Here the image gets its own aspect-ratio box, so a portrait source renders
+  as a portrait image. Set `image_ratio` per collection to match the source:
+  portrait for the 4:5 product shots, landscape for On the Course (2048x1012)
+  and Indoor & Simulator (1830x1106).
+
+  Content is merchant-owned — title and description come from the collection
+  itself, so editing them in the Shopify admin is enough.
+
+  Precedence matters here. `image_fallback` and `text_fallback` are FALLBACKS,
+  not overrides: the collection's own image and description always win. That is
+  what lets the default template carry a house image for collections that have
+  none (Accessories, and /collections/all, where collection.image is empty by
+  definition) without clobbering the real image on collections that do have one.
+  `heading_override` is a genuine override — it is per-template and defaults to
+  empty, so it only fires when a merchant deliberately sets it.
+
+  Styles live in assets/gpod.css under "Collection hero (split)".
+{% endcomment %}
+
+{%- liquid
+  assign hero_image = collection.image | default: section.settings.image_fallback
+  assign heading = section.settings.heading_override | default: collection.title
+  assign body = collection.description | default: section.settings.text_fallback
+  assign has_image = false
+  if hero_image != blank
+    assign has_image = true
+  endif
+-%}
+
+{%- capture style -%}
+  --chero-pt: {{ section.settings.padding_top }}px;
+  --chero-pb: {{ section.settings.padding_bottom }}px;
+  --chero-bg: {{ section.settings.background_color }};
+  --chero-ink: {{ section.settings.heading_color }};
+  --chero-text: {{ section.settings.text_color }};
+  --chero-ratio: {{ section.settings.image_ratio }};
+{%- endcapture -%}
+
+<section
+  class="gpod-chero{% unless has_image %} gpod-chero--no-media{% endunless %} gpod-chero--media-{{ section.settings.image_position }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="collection-hero-split"
+  style="{{ style }}"
+>
+  <div class="container gpod-chero__inner">
+    {%- if has_image -%}
+      <div class="gpod-chero__media">
+        <img
+          class="gpod-chero__img"
+          src="{{ hero_image | image_url: width: 900 }}"
+          srcset="
+            {{ hero_image | image_url: width: 500 }} 500w,
+            {{ hero_image | image_url: width: 700 }} 700w,
+            {{ hero_image | image_url: width: 900 }} 900w,
+            {{ hero_image | image_url: width: 1300 }} 1300w
+          "
+          sizes="(min-width: 990px) 640px, (min-width: 768px) 50vw, 100vw"
+          width="{{ hero_image.width }}"
+          height="{{ hero_image.height }}"
+          alt="{{ hero_image.alt | default: heading | escape }}"
+          fetchpriority="high"
+        >
+      </div>
+    {%- endif -%}
+
+    <div class="gpod-chero__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="gpod-chero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      {%- if heading != blank -%}
+        <h1 class="gpod-chero__heading">{{ heading | escape }}</h1>
+      {%- endif -%}
+
+      {%- if body != blank -%}
+        <div class="gpod-chero__copy rte">{{ body }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+        <a class="btn btn--primary btn--solid gpod-chero__cta" href="{{ section.settings.cta_link }}">
+          {{- section.settings.cta_label | escape -}}
+        </a>
+      {%- endif -%}
+
+      {%- comment -%}
+        Trust row, per the Arc collection hero. Blocks rather than fixed text so
+        each collection can make its own promise (Travel Ready can lead with
+        carry-on fit; Coaching & Studio with the warranty). Renders nothing when
+        no blocks are added.
+      {%- endcomment -%}
+      {%- if section.blocks.size > 0 -%}
+        <ul class="gpod-chero__trust">
+          {%- for block in section.blocks -%}
+            <li class="gpod-chero__trust-item" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != 'none' -%}
+                <span class="gpod-chero__trust-icon" aria-hidden="true">
+                  {%- render 'gpod-trust-icon', icon: block.settings.icon -%}
+                </span>
+              {%- endif -%}
+              <span class="gpod-chero__trust-label">{{ block.settings.label | escape }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection hero (split)",
+  "class": "shopify-section--collection-hero-split",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Heading and copy come from the collection itself — edit them under Products → Collections. The fallbacks below only appear on collections that have no image or description of their own."
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_fallback",
+      "label": "Fallback image",
+      "info": "Used only when the collection has no image of its own. The collection's own image always wins."
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image shape",
+      "info": "Match the source image. GPOD's product collection shots are portrait 4:5; On the Course and Indoor & Simulator are landscape.",
+      "default": "0.8",
+      "options": [
+        { "label": "Portrait (4:5)", "value": "0.8" },
+        { "label": "Square (1:1)", "value": "1" },
+        { "label": "Landscape (3:2)", "value": "1.5" },
+        { "label": "Wide (16:9)", "value": "1.777" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image side",
+      "default": "left",
+      "options": [
+        { "label": "Left", "value": "left" },
+        { "label": "Right", "value": "right" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading_override",
+      "label": "Heading override",
+      "info": "Falls back to the collection title."
+    },
+    {
+      "type": "richtext",
+      "id": "text_fallback",
+      "label": "Fallback text",
+      "info": "Used only when the collection has no description of its own."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "trust",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Free shipping"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "shield",
+          "options": [
+            { "label": "Shield", "value": "shield" },
+            { "label": "Shipping", "value": "shipping" },
+            { "label": "Returns", "value": "returns" },
+            { "label": "Golfers", "value": "golfers" },
+            { "label": "None", "value": "none" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Collection",
+      "name": "Collection hero (split)"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["collection"]
+  }
+}
+{% endschema %}

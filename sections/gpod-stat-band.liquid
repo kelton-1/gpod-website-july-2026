@@ -1,0 +1,281 @@
+{% comment %}
+  Stat band — replaces the credibility band (`gpod-proof-band`) on the homepage.
+
+  Why it was replaced rather than restyled:
+
+  The proof band was four equal icon-and-stat cards. Four claims of equal
+  visual weight is four claims nobody remembers, and a 4-up icon row is the
+  single most generic module on a Shopify homepage — restyling it was never
+  going to fix that, which is why the first rebuild did not land.
+
+  This makes one argument instead of four, and makes it with the number GPOD
+  actually owns: 4.8 oz against the 27.2 oz aluminium stick mount it replaces.
+  The bars are drawn to true proportion (4.8 / 27.2 = 17.6%), so the graphic
+  IS the claim rather than decorating it. The spec list to the right carries
+  the supporting detail as plain rows, Apple tech-specs style.
+
+  Dark on purpose. It is the closing punctuation of the page and bookends the
+  dark review band under the hero.
+
+  Note the bars are white, not brand green. Green is reserved for actions
+  (see the colour system commit); using it here would make a chart element
+  look clickable.
+
+  Styles: assets/gpod.css under "Stat band".
+{% endcomment %}
+
+{%- liquid
+  assign bars = section.blocks | where: 'type', 'bar'
+  assign specs = section.blocks | where: 'type', 'spec'
+
+  # The longest bar sets the scale so every other bar is drawn relative to it.
+  # Authored values are plain numbers in one consistent unit — mixing units
+  # would make the proportions lie.
+  assign scale = 0
+  for block in bars
+    assign v = block.settings.value | plus: 0
+    if v > scale
+      assign scale = v
+    endif
+  endfor
+-%}
+
+{%- capture style -%}
+  --stat-pt: {{ section.settings.padding_top }}px;
+  --stat-pb: {{ section.settings.padding_bottom }}px;
+  --stat-bg: {{ section.settings.background_color }};
+  --stat-ink: {{ section.settings.text_color }};
+{%- endcapture -%}
+
+<section
+  class="gpod-statband"
+  data-section-id="{{ section.id }}"
+  data-section-type="stat-band"
+  style="{{ style }}"
+>
+  <div class="container">
+    <div class="gpod-statband__inner">
+      <div class="gpod-statband__claim">
+        {%- if section.settings.kicker != blank -%}
+          <p class="gpod-statband__kicker">{{ section.settings.kicker | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.stat != blank -%}
+          <p class="gpod-statband__stat">
+            {{- section.settings.stat | escape -}}
+            {%- if section.settings.stat_unit != blank -%}
+              <span class="gpod-statband__unit">{{ section.settings.stat_unit | escape }}</span>
+            {%- endif -%}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.stat_caption != blank -%}
+          <p class="gpod-statband__caption">{{ section.settings.stat_caption | escape }}</p>
+        {%- endif -%}
+
+        {%- if bars.size > 0 and scale > 0 -%}
+          <ul class="gpod-statband__bars">
+            {%- for block in bars -%}
+              {%- liquid
+                assign value = block.settings.value | plus: 0
+                assign pct = value | times: 1.0 | divided_by: scale | times: 100
+                if pct < 3
+                  assign pct = 3
+                endif
+              -%}
+              <li
+                class="gpod-statband__bar{% if block.settings.highlight %} is-highlight{% endif %}"
+                style="--bar-pct: {{ pct }}%;"
+                {{ block.shopify_attributes }}
+              >
+                <span class="gpod-statband__bar-label">{{ block.settings.label | escape }}</span>
+                <span class="gpod-statband__bar-track" aria-hidden="true">
+                  <span class="gpod-statband__bar-rail">
+                    <span class="gpod-statband__bar-fill"></span>
+                  </span>
+                </span>
+                <span class="gpod-statband__bar-value">
+                  {{- block.settings.value -}}
+                  {%- if block.settings.unit != blank %} {{ block.settings.unit | escape }}{% endif -%}
+                </span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.text != blank -%}
+          <div class="gpod-statband__text rte">{{ section.settings.text }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+          <a class="gpod-statband__cta btn btn--primary btn--solid" href="{{ section.settings.button_link }}">
+            {{- section.settings.button_label | escape -}}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if specs.size > 0 -%}
+        <dl class="gpod-statband__specs">
+          {%- for block in specs -%}
+            <div class="gpod-statband__spec" {{ block.shopify_attributes }}>
+              <dt>{{ block.settings.label | escape }}</dt>
+              <dd>{{ block.settings.value | escape }}</dd>
+            </div>
+          {%- endfor -%}
+        </dl>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stat band",
+  "class": "shopify-section--stat-band",
+  "tag": "section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "One claim, carried by one number. Keep the bar values in the SAME unit — the bars are drawn to true proportion, so mixing oz and lb would draw a false comparison."
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Why carbon fiber"
+    },
+    {
+      "type": "text",
+      "id": "stat",
+      "label": "Headline number",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "stat_unit",
+      "label": "Headline unit",
+      "default": "oz"
+    },
+    {
+      "type": "text",
+      "id": "stat_caption",
+      "label": "Headline caption",
+      "default": "A full GPOD, ready to swing."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Supporting text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#0d0d0d"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bar",
+      "name": "Comparison bar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "GPOD"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "info": "Number only. The largest value across all bars sets the scale.",
+          "default": "4.8"
+        },
+        {
+          "type": "text",
+          "id": "unit",
+          "label": "Unit",
+          "default": "oz"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "This is us",
+          "info": "Draws the bar solid instead of dimmed.",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "spec",
+      "name": "Spec row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Shaft"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "Carbon fiber"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Homepage",
+      "name": "Stat band"
+    }
+  ]
+}
+{% endschema %}

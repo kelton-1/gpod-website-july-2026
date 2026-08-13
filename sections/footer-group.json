@@ -62,6 +62,10 @@
         "footer-block-menu-company",
         "footer-block-newsletter"
       ],
+      "custom_css": [
+        "h2 {font-size: 32px;}",
+        "p[data-powered-link] {display: none;}"
+      ],
       "settings": {
         "color_footer_text": "#ffffff",
         "color_footer_bg": "#000000",
