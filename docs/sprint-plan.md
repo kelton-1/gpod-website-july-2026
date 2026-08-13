@@ -47,14 +47,68 @@ change. Verified individually against the repo and the live store.
 | 7 | Enable `recently-viewed` | `templates/product.json:315-323` (`disabled: true`) | Built and disabled. |
 | 8 | `cart_icon` → `circle` | `config/settings_data.json:48` | The item-count badge is only emitted in the `circle` branch of `sections/header.liquid:189-196`. Today the cart icon **never shows a count** — the JS updater at `theme.dev.js:2870` is guarded on an element that doesn't exist. |
 | 9 | Fix Organization `sameAs` | `sections/header.liquid:258-266` | Reads `settings.instagram_link`, `facebook_link`, … — **none of those setting IDs exist**. The real ones are `instagram_url`, `facebook_url`, etc. Every `sameAs` entry currently resolves to `null`. |
-| 10 | Reset 6 stale `templateSuffix` values | Shopify admin | See §4E. Includes the #1 seller. |
+| 10 | Reset 6 stale `templateSuffix` values | Shopify admin | See §5E. Includes the #1 seller. |
 | 11 | Add GTIN/barcodes | Shopify admin | **GPOD, GPOD X, Pauly P, Studio 2.0, Base 2.0, G Plate and all 3 bundles have blank barcodes.** Missing GTINs suppress Advantage+ / PMax / Shopping eligibility on exactly the SKUs carrying the ad budget — for a business that is 55% paid social. |
 
 Items 1 and 2 alone justify the day.
 
 ---
 
-## 3. Operating principles
+## 3. Architecture: build parallel, never in place
+
+Full detail in `docs/template-architecture.md`. The rule:
+
+> A change we want to learn from ships as a **new** template or section alongside
+> the existing one — never as an edit that overwrites it. An overwritten template
+> has no control arm, so it can never be tested, only believed.
+
+This is set up now so Intelligems can split traffic later without rework.
+Verified against Intelligems' documentation, three constraints shape everything:
+
+| Constraint | Consequence |
+|---|---|
+| Template Test variants **must live in the published theme**, and the template *currently in use* must be the control | Variants ship to production dormant. They must be finished work, not scratch — they're one config change from live traffic. |
+| **The home page cannot be template-tested.** Shopify blocks switching the `index` template | Home-page layout tests run as **Theme Tests** (duplicate theme, split traffic), not template tests. This matters most: `/` is 51.8% of sessions. |
+| Losing variants are deleted after a test; stale cookies redirect back to control | Variants are cheap to create and cheap to retire — provided we actually retire them. |
+
+**Naming encodes the hypothesis, not a version number.** `product.specs-first.json`,
+not `product.v2.json` — by the fourth test nobody remembers what v2 was. One
+hypothesis per variant file; a variant that changes order *and* type *and* copy
+produces an unreadable result.
+
+### The distinction that governs Sprint 4
+
+> **Defects get fixed in the control. Choices get tested as variants.**
+
+An empty compatibility page, a 404 CTA, a "John Doe" testimonial and a factually
+wrong sentence about the Bluetooth remote are not hypotheses — there is no version
+of the site where they win. Fix them everywhere, immediately. Spend the testing
+budget on the genuinely open questions: section order, copy angle, how much detail
+belongs above the fold, whether the quiz beats the compare table as the primary
+decision aid.
+
+### Why the design system became a prerequisite
+
+If arm A and arm B differ in spacing, type scale and button styling *as well as*
+in the thing under test, we aren't testing layout — we're testing which arm looks
+less broken. The result will be real and uninterpretable. Every variant must be
+assembled from **one shared token set**, so the only difference between arms is
+the variable under test.
+
+That moves the design-system audit from "known gap" to **blocking prerequisite**:
+its token extraction lands before the first variant template is built.
+
+### Instrumentation must be variant-aware
+
+Every event added in Sprint 1 carries the test-group assignment as a property.
+Until Intelligems is installed, send a `control` literal so the schema never
+changes. Intelligems' script goes directly in `theme.liquid`, not as an app embed
+— on an 800KB home page over a course connection, control-content flicker would
+be very visible.
+
+---
+
+## 4. Operating principles
 
 1. **Ship every week.** The redesign has earned $0 for five weeks.
 2. **390px is the design surface.** Desktop is the 14% case.
@@ -78,7 +132,7 @@ sprints, halving scope and keeping the order.
 
 ---
 
-## 4. Sprint 1 — Ship & Instrument
+## 5. Sprint 1 — Ship & Instrument
 
 **Goal:** get the redesign into production safely and make every funnel step measurable.
 **Primary metric:** mobile ATC rate holds at ≥3.20% through the launch window.
@@ -136,10 +190,20 @@ oversold.
 
 ---
 
-## 5. Sprint 2 — The Mobile PDP: shorten the decision
+## 6. Sprint 2 — The Mobile PDP: shorten the decision
 
 **Goal:** get deciding information in front of a phone user before they stop scrolling.
 **Primary metric:** mobile ATC 3.20% → 4.00% (≈ +208 orders/90d, ≈ **+$92K/yr**).
+
+**Ships as template variants, not edits** (§3). `templates/product.json` remains
+the control for the whole sprint. Two variants, one hypothesis each:
+
+- **`product.specs-first.json`** — compatibility and specs promoted directly under `main`; benefits and ways-to-use demoted. Tests *"does answering 'will it fit my phone' earlier beat leading with outcomes?"*
+- **`product.compact.json`** — description collapsed, redundant sections cut, PDP down from 17 sections to ~10. Tests *"is the 17-section page costing us more than it earns?"*
+
+Items D and E below are **defects, not hypotheses** — wrong content about the
+remote, and monopod instructions on products that don't telescope. Those are
+fixed in the control directly and inherited by every variant.
 
 ### Two assumptions killed before planning
 
@@ -189,10 +253,17 @@ already **outperforms** desktop. It's incremental AOV, not leak repair → Sprin
 
 ---
 
-## 6. Sprint 3 — Social Landing & Speed
+## 7. Sprint 3 — Social Landing & Speed
 
 **Goal:** treat the home page as what it is — a cold-traffic mobile LP for paid social.
 **Primary metric:** social CVR 0.61% → 0.90% (≈ +128 orders/90d, ≈ **+$56K/yr**).
+
+**This sprint runs as a Theme Test, not a template test.** Shopify does not allow
+switching the `index` template, so the fast/comprehension home page is built in a
+**duplicated theme** and traffic is split at the theme level. Both themes need the
+Intelligems script installed, or redirected visitors see Shopify's preview bar and
+drop out of tracking. Budget for the duplication step — it is not free, and it is
+the only route to testing the page that takes 51.8% of sessions.
 
 ### The measured problem
 The live home page ships **798KB of HTML** (387KB inline JS), **288 `<img>`
@@ -211,10 +282,16 @@ promise never gets a chance to land.
 
 ---
 
-## 7. Sprint 4 — Content Placement & Alignment
+## 8. Sprint 4 — Content Placement & Alignment
 
 **Goal:** every section says something true, necessary, and appropriate to where it sits.
 **Primary metric:** mid-page scroll depth and per-section engagement.
+
+**Split the backlog two ways (§3).** **A** and **D** are defects — an empty page
+customers are actively sent to, a cross-sell pointing at the wrong product, a
+contact form on the privacy policy. No version of the site wins with those; fix
+them in the control. **B**, **C** and the merged use-case grid are choices — they
+become variant templates and get tested.
 
 **A. Fill the content customers are actively being sent to.**
 - **`/pages/gpod-compatibility-guide` is completely empty** (`body: ""`) while promoted in the main nav, the footer, *and* the support hub's own card. Compatibility anxiety is a top pre-purchase blocker and its landing page has nothing on it.
@@ -252,7 +329,7 @@ newsletter last.
 
 ---
 
-## 8. Sprint 5 — AOV: Bundles & Attach
+## 9. Sprint 5 — AOV: Bundles & Attach
 
 **Goal:** raise AOV without touching traffic.
 **Primary metric:** AOV $109.24 → $119 (≈ **+$69K/yr**).
@@ -274,7 +351,7 @@ newsletter last.
 
 ---
 
-## 9. Sprint 6 — Capture & Retention
+## 10. Sprint 6 — Capture & Retention
 
 **Goal:** stop renting 100% of demand at 0.61% conversion.
 **Primary metric:** email-attributed revenue <1% → 5% (≈ **+$37K/yr**, compounding).
@@ -287,7 +364,7 @@ newsletter last.
 
 ---
 
-## 10. Measurement
+## 11. Measurement
 
 Re-run at the end of every sprint; log deltas in the CLAUDE.md decision table:
 
@@ -311,7 +388,7 @@ damaging them is not a win.
 
 ---
 
-## 11. Risks
+## 12. Risks
 
 | Risk | Mitigation |
 |---|---|
@@ -324,15 +401,18 @@ damaging them is not a win.
 
 ---
 
-## 12. Scope notes
+## 13. Scope notes
 
 **What this plan deliberately doesn't do:** no new sections (13 exist, 17 on the
 PDP); no cart or checkout mechanics (both healthy on mobile); no desktop-first
 work (13.7% of sessions, already at 3.45%); no new apps before Sprint 5.
 
-**Known gap in this audit:** the component / design-system pass — token
-consistency, container alignment across custom sections, button-variant count,
-tap targets under 44px, breakpoint drift between `gpod.css` and Modular — did
-**not** complete. Every other finding here is verified; that one is simply
-missing, and should be run before Sprint 2's CSS work begins rather than
-assumed clean.
+**Design-system audit:** re-run and folded in below. Under the variant
+architecture (§3) its token extraction is a **blocking prerequisite** — variants
+assembled from inconsistent spacing, type and button styles produce test results
+that are real but uninterpretable.
+
+**Open item:** `revenuehunt-quizzes` is installed *and enabled* on the store while
+we also ship a native product finder. Two quiz systems is one too many — decide
+which is canonical before Sprint 6 wires quiz→email, or the work gets done twice
+and the data lands in two places.
