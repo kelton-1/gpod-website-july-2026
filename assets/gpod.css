@@ -3485,8 +3485,10 @@ a.gpod-ways__card:hover .gpod-ways__media img {
     --gpod-pdp-media-h: calc(100vh - var(--gpod-pdp-media-top) - 20px);
   }
 
-  /* Undo the first pass: the container must not move inside the column. */
-  .product__images__container {
+  /* Undo the first pass: the container must not move inside the column.
+     Scoped to .product__images so quick view — which renders the same
+     container without that wrapper — keeps the theme's own positioning. */
+  .product__images .product__images__container {
     position: static;
     top: auto;
   }
