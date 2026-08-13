@@ -95,8 +95,24 @@ less broken. The result will be real and uninterpretable. Every variant must be
 assembled from **one shared token set**, so the only difference between arms is
 the variable under test.
 
-That moves the design-system audit from "known gap" to **blocking prerequisite**:
-its token extraction lands before the first variant template is built.
+That moved the design-system audit from "known gap" to **blocking prerequisite**.
+It has now run — the token set is in **`docs/design-tokens.md`**, extracted from
+what's already dominant in `assets/gpod.css` rather than invented.
+
+Three things came back clean and are load-bearing: **container alignment is
+correct across all 13 sections** (every one uses the same classes as the header,
+so left edges align at every breakpoint), **zero `font-family` declarations** in
+the custom layer, and **zero dead CSS**. The fragmentation is entirely in sizing
+and spacing — 6 different section-heading treatments, 7 card-title sizes, 9
+secondary-text sizes, 8 section-padding values, 5 radii, 3 novel breakpoints.
+
+**The trap for variants:** deployed section padding does *not* match schema
+defaults — `pdp-compatibility` and `pdp-how-to` ship at 30/30 against a 50/50
+default, `pdp-specs` at 50/30. A variant built by adding sections from defaults
+renders **looser than the current production page**, and we'd read that as "the
+new layout lost" when what actually lost was the spacing. Reconciling schema
+defaults to the spacing scale is therefore a hard prerequisite for the first
+variant template, not cleanup to do later.
 
 ### Instrumentation must be variant-aware
 
@@ -169,7 +185,33 @@ and the compare picker's change handler do DOM work only.
 - Ads point at legacy IA: `/collections/frontpage/products/*`, `/collections/outdoor`. Add 301s to canonical `/products/*` and the new collections.
 - **`/pages/fourth-of-july` absorbed 2,876 sessions** in a window ending 11 August. Redirect today.
 
-### E. Cleanup
+### E. Component defects — fix in the control
+
+All mechanical, all under an hour together, and all **mobile tap-target or
+keyboard-access failures on primary conversion elements** on a site that is 85%
+mobile. Full list in `docs/design-tokens.md`.
+
+- **Home-hero is the only section of 13 missing the `gpod-section` class**
+  (`sections/home-hero.liquid:27`). Because `assets/theme.css:83` globally applies
+  `body:not(.is-focused) *:focus { outline: none }`, the scoped rule at
+  `gpod.css:45-52` is the reliable keyboard-focus indicator — and it doesn't reach
+  the hero. **"Shop All GPODs" and "Take the Quiz" have no dependable focus ring.**
+  One-word fix.
+- **Compare-table "Shop" CTA renders ≈32px tall** (`gpod.css:157-159` overrides
+  `.btn--small` with literal padding). It's the primary conversion button on every
+  compare table.
+- **Compare-picker `<select>` renders ≈30px tall** (`gpod.css:1022-1033`) — the core
+  interaction of the model swap.
+- **Collection-toolbar pills ≈32px** inside a horizontally scrolling row — mis-tap
+  risk while swiping, on every collection page.
+- `.gpod-compare__empty` fails WCAG AA at ≈2.4:1; the compare picker has no
+  `aria-live` though the near-identical quiz result swap has one; `product-finder`
+  uses an `<h1>` where every sibling uses `<h2>`, which becomes a duplicate-`<h1>`
+  risk the moment variants exist.
+- **`prefers-reduced-motion` appears zero times** in either stylesheet, while
+  Modular runs AOS animations throughout and the home hero autoplays video.
+
+### F. Cleanup
 - Delete PageFly leftovers and seasonal one-offs.
 - Resolve the blank-titled product carrying 1,190 orders / $68,995.
 - **Reset stale product template suffixes** (verified live) — the 2026-07-07 PageFly cleanup deleted the files but never reset the assignments:
@@ -407,10 +449,9 @@ damaging them is not a win.
 PDP); no cart or checkout mechanics (both healthy on mobile); no desktop-first
 work (13.7% of sessions, already at 3.45%); no new apps before Sprint 5.
 
-**Design-system audit:** re-run and folded in below. Under the variant
-architecture (§3) its token extraction is a **blocking prerequisite** — variants
-assembled from inconsistent spacing, type and button styles produce test results
-that are real but uninterpretable.
+**Design-system audit:** complete. Token set and component rules in
+`docs/design-tokens.md`; its defect list is folded into Sprint 1 §E and its
+spacing reconciliation is a hard prerequisite for the first variant template.
 
 **Open item:** `revenuehunt-quizzes` is installed *and enabled* on the store while
 we also ship a native product finder. Two quiz systems is one too many — decide
