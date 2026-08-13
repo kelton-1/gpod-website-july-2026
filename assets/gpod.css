@@ -5,11 +5,46 @@
 
 :root {
   --gpod-accent: #8cc662;
+  --gpod-focus: #284c14;
   --gpod-ink: var(--COLOR-HEADING, #111);
   --gpod-text: var(--COLOR-TEXT, #333);
   --gpod-border: rgba(0, 0, 0, 0.12);
   --gpod-soft: var(--COLOR-BACKGROUND-ACCENT, #f5f6f4);
   --gpod-radius: 10px;
+
+  /* Page shell. Every .container-bounded block — header, footer, product grids,
+     PDP, compare table — centres inside this width. Change it here and the whole
+     site re-aligns together. See "Page shell" below. */
+  --gpod-page-max: 1380px;
+}
+
+/* --------------------------------------------------------------------------
+   Page shell — global max width
+
+   Modular ships .container as `width: calc(100% - 80px)` with NO max-width, so
+   on anything wider than a laptop the header, grids and footer run edge to edge
+   and nothing shares a common column. Capping it is what produces the centred
+   layout and the outer white space.
+
+   1380px is measured from arc.cc, the reference Kelton supplied: at a 1920
+   viewport that leaves 270px either side, which is exactly what Arc renders.
+   Below ~1460px the theme's own 40px gutter still governs, so narrow and
+   mobile layouts are untouched.
+
+   `min(…, 100%)` preserves the overflow guard that theme.css's `max-width: 100%`
+   was providing (this rule replaces it — gpod.css loads after theme.css).
+   -------------------------------------------------------------------------- */
+
+.container {
+  max-width: min(var(--gpod-page-max), 100%);
+}
+
+/* .container-narrow is `calc((100% - 160px) * 0.6)` and also uncapped, so past
+   roughly a 2000px viewport it would compute WIDER than the capped .container
+   and break out of the shell. This pins it to the container's content box.
+   No visual change at 1920 or below — it only engages above that. */
+.container-narrow {
+  max-width: min(calc(var(--gpod-page-max) - 80px), 100%);
 }
 
 .gpod-section .gpod-kicker {
@@ -31,6 +66,296 @@
   margin: 0 0 28px;
 }
 
+/* --------------------------------------------------------------------------
+   PDP purchase area: merchant-owned policy links
+   -------------------------------------------------------------------------- */
+
+.gpod-variant-availability {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gpod-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.gpod-variant-availability__dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border-radius: 50%;
+  background: #b42318;
+}
+
+.gpod-variant-availability.is-available .gpod-variant-availability__dot {
+  background: #2e7d32;
+}
+
+.gpod-shipping-expectation {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: var(--gpod-text);
+  font-size: 0.875rem;
+}
+
+.gpod-shipping-expectation svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.gpod-shipping-expectation p {
+  margin: 0;
+}
+
+.gpod-purchase-policies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  border-top: 1px solid var(--gpod-border);
+  padding-top: 14px;
+}
+
+.gpod-purchase-policies__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  color: var(--gpod-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--gpod-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.gpod-purchase-policies__link svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.gpod-purchase-policies__link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--gpod-focus);
+}
+
+/* Keep the product, price, and purchase controls within a short mobile scroll
+   while retaining every media item and the full-resolution lightbox. */
+@media (max-width: 767px) {
+  .product--compact-mobile-media
+    .product__images__container
+    .product-single__media--image
+    .image-wrapper {
+    height: clamp(320px, 44svh, 420px);
+    padding-top: 0;
+  }
+
+  .product--compact-mobile-media
+    .product__images__container
+    .product-single__media--image
+    .image-wrapper
+    img {
+    object-fit: contain;
+  }
+
+  .product--compact-mobile-media
+    .product__images__container
+    .product-single__media--video,
+  .product--compact-mobile-media
+    .product__images__container
+    .product-single__media--model {
+    height: clamp(320px, 44svh, 420px);
+    padding-top: 0 !important;
+  }
+
+  .product--compact-mobile-media
+    .product__images__container
+    .product-single__media--video
+    .deferred-media__poster,
+  .product--compact-mobile-media
+    .product__images__container
+    .product-single__media--model
+    .deferred-media__poster,
+  .product--compact-mobile-media
+    .product__images__container
+    .product-single__media--video
+    .image-wrapper,
+  .product--compact-mobile-media
+    .product__images__container
+    .product-single__media--model
+    .image-wrapper {
+    height: 100%;
+    padding-top: 0;
+  }
+
+  .product--compact-mobile-media
+    .product__images__container
+    .product-single__media--video
+    img,
+  .product--compact-mobile-media
+    .product__images__container
+    .product-single__media--model
+    img,
+  .product--compact-mobile-media
+    .product__images__container
+    .product-single__media--video
+    video,
+  .product--compact-mobile-media
+    .product__images__container
+    .product-single__media--video
+    iframe,
+  .product--compact-mobile-media
+    .product__images__container
+    .product-single__media--model
+    model-viewer {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+/* Product-grid ratings use Shopify's standard review metafields only. */
+.product-block__rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 7px 0 2px;
+  color: var(--gpod-text);
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.product-block__info--left .product-block__rating {
+  justify-content: flex-start;
+}
+
+.product-block__rating-star {
+  color: var(--gpod-accent);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Paid landing-page hero
+   -------------------------------------------------------------------------- */
+
+.gpod-landing-hero {
+  position: relative;
+  display: flex;
+  min-height: var(--landing-height, 620px);
+  overflow: hidden;
+  color: var(--landing-text, #fff);
+  background: var(--landing-bg, #101410);
+}
+
+.gpod-landing-hero__media,
+.gpod-landing-hero__media img,
+.gpod-landing-hero__overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.gpod-landing-hero__media img {
+  object-fit: cover;
+}
+
+.gpod-landing-hero__overlay {
+  background: #0b0e0a;
+  opacity: var(--landing-overlay, 0.45);
+}
+
+.gpod-landing-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+.gpod-landing-hero__content {
+  width: min(680px, 100%);
+}
+
+.gpod-landing-hero--center .gpod-landing-hero__content {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.gpod-landing-hero h1 {
+  margin: 0;
+  color: inherit;
+  font-size: clamp(2.25rem, 6vw, 4.75rem);
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.gpod-landing-hero__copy {
+  margin-top: 20px;
+  color: inherit;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.55;
+}
+
+.gpod-landing-hero__copy > :last-child {
+  margin-bottom: 0;
+}
+
+.gpod-landing-hero__copy a {
+  color: inherit;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.gpod-landing-hero .btn {
+  margin-top: 28px;
+}
+
+.gpod-landing-hero a:focus-visible,
+.gpod-hero a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--gpod-focus);
+}
+
+@media (max-width: 767px) {
+  .gpod-landing-hero {
+    min-height: var(--landing-height-mobile, 500px);
+  }
+
+  .gpod-landing-hero__inner {
+    align-items: flex-end;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .gpod-landing-hero h1 {
+    font-size: clamp(2.1rem, 11vw, 3.4rem);
+  }
+
+  .gpod-landing-hero .btn {
+    width: 100%;
+  }
+}
+
 .gpod-section--center .gpod-kicker,
 .gpod-section--center .gpod-heading {
   text-align: center;
@@ -47,8 +372,9 @@
 .gpod-section button:focus-visible,
 .gpod-section input:focus-visible,
 .gpod-section summary:focus-visible {
-  outline: 2px solid var(--gpod-accent);
+  outline: 2px solid #fff;
   outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--gpod-focus);
 }
 
 /* --------------------------------------------------------------------------
@@ -116,12 +442,25 @@
   min-width: 170px;
 }
 
-.gpod-compare__product img {
-  width: 110px;
-  height: 110px;
+/* Portrait, not square. Every model in this catalogue is taller than it is
+   wide — the monopod cutouts are ~0.8 after being angled, the Studio tripod is
+   0.2 — so a square box wasted half its width and shrank the product to fit
+   the shorter axis. contain, so nothing is cropped at any ratio. */
+.gpod-compare__product img,
+.gpod-compare__thumb {
+  /* Fill the column rather than sitting at a fixed 110px inside a ~186px
+     card, which left the product looking like a stray icon. The width/height
+     attributes on the tag stay as the intrinsic ratio hint for CLS. */
+  /* min() rather than max-width: one of the app stylesheets (OCU or Fera —
+     both are cross-origin and unreadable) forces max-width: 100% onto images,
+     which silently beat the cap and let a 152px thumbnail render at 295px.
+     Folding the cap into `width` takes max-width out of the argument. */
+  width: min(100%, 152px);
+  height: 168px;
   object-fit: contain;
+  object-position: center bottom;
   display: block;
-  margin-bottom: 8px;
+  margin: 0 auto 10px;
 }
 
 .gpod-compare__title {
@@ -273,10 +612,16 @@
   margin-top: 2px;
 }
 
+/* Hairline columns, not bordered boxes. Four outlined cards in a row is four
+   competing rectangles inside the page shell's rectangle; a single rule above
+   the row and a divider between columns says the same thing with one line.
+   The first column starts on the shell's left edge and the last ends on its
+   right, so the row aligns with the heading above it and every other block. */
 .gpod-compat__grid {
   display: grid;
-  gap: 16px;
+  gap: 0;
   grid-template-columns: 1fr;
+  border-top: 1px solid var(--gpod-border);
 }
 
 @media (min-width: 600px) {
@@ -292,9 +637,28 @@
 }
 
 .gpod-compat__item {
-  border: 1px solid var(--gpod-border);
-  border-radius: var(--gpod-radius);
-  padding: 18px;
+  border: 0;
+  border-radius: 0;
+  padding: 22px 28px 22px 0;
+}
+
+@media (min-width: 600px) {
+  .gpod-compat__item {
+    border-left: 1px solid var(--gpod-border);
+    padding-left: 28px;
+  }
+
+  .gpod-compat__item:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+  .gpod-compat__item:nth-child(2n + 1) {
+    border-left: 0;
+    padding-left: 0;
+  }
 }
 
 .gpod-compat__item svg {
@@ -325,6 +689,19 @@
   .gpod-howto__grid {
     grid-template-columns: 1.1fr 0.9fr;
     align-items: start;
+  }
+
+  /* Two columns of steps when there is no video to sit beside them, rather
+     than one column and a void. */
+  .gpod-howto__grid--no-video {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 820px;
+  }
+
+  .gpod-howto__grid--no-video .gpod-steps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 40px;
   }
 }
 
@@ -566,8 +943,9 @@ a.gpod-support__card:hover {
 }
 
 .gpod-finder__option input:focus-visible + label {
-  outline: 2px solid var(--gpod-accent);
+  outline: 2px solid #fff;
   outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--gpod-focus);
 }
 
 .gpod-finder__nav {
@@ -709,6 +1087,8 @@ a.gpod-support__card:hover {
 .gpod-toolbar__pills {
   display: flex;
   flex-wrap: nowrap;
+  flex: 1 1 520px;
+  min-width: 0;
   gap: 8px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -749,6 +1129,37 @@ a.gpod-support__card:hover {
   color: var(--gpod-ink);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* Keep collection context while getting paid-traffic visitors to products
+   sooner on small screens. */
+@media (max-width: 767px) {
+  .gpod-collection-hero--compact-mobile .banner {
+    height: 320px;
+  }
+
+  .gpod-toolbar__help {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.gpod-collection-count {
+  flex: 0 0 auto;
+  margin: 0 18px 0 0;
+  color: var(--COLOR-LABEL, var(--gpod-text));
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 767px) {
+  .collection-grid__nav .gpod-collection-count {
+    margin-right: 12px;
+  }
+
+  .collection-grid__nav .grid-sort {
+    margin-left: auto;
+  }
 }
 
 /* --------------------------------------------------------------
@@ -911,9 +1322,8 @@ a.gpod-support__card:hover {
   font-weight: 600;
 }
 
-.gpod-hero__stars {
+.gpod-hero__trust-icon {
   display: inline-flex;
-  gap: 2px;
   color: var(--gpod-accent);
 }
 
@@ -1076,10 +1486,12 @@ a.gpod-support__card:hover {
    PDP: benefits strip (outcome-led)
    -------------------------------------------------------------- */
 
+/* Same treatment as the compatibility row — see the note there. */
 .gpod-benefits__grid {
   display: grid;
-  gap: 16px;
+  gap: 0;
   grid-template-columns: 1fr;
+  border-top: 1px solid var(--gpod-border);
 }
 
 @media (min-width: 600px) {
@@ -1089,15 +1501,37 @@ a.gpod-support__card:hover {
 }
 
 @media (min-width: 1024px) {
+  /* auto-fit, not a fixed count. --benefit-cols is never set by the section,
+     so the old default of 3 orphaned a fourth benefit onto its own row; a
+     hardcoded 4 would leave a gap for anyone who authors 3. */
   .gpod-benefits__grid {
-    grid-template-columns: repeat(var(--benefit-cols, 3), 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 }
 
 .gpod-benefits__item {
-  border: 1px solid var(--gpod-border);
-  border-radius: var(--gpod-radius);
-  padding: 22px;
+  border: 0;
+  border-radius: 0;
+  padding: 24px 28px 24px 0;
+}
+
+@media (min-width: 600px) {
+  .gpod-benefits__item {
+    border-left: 1px solid var(--gpod-border);
+    padding-left: 28px;
+  }
+
+  .gpod-benefits__item:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+  .gpod-benefits__item:nth-child(2n + 1) {
+    border-left: 0;
+    padding-left: 0;
+  }
 }
 
 .gpod-benefits__item svg {
@@ -1283,4 +1717,2839 @@ a.gpod-ways__card:hover .gpod-ways__media img {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* --------------------------------------------------------------
+   Collection hero (split) — sections/collection-hero-split.liquid
+
+   Two-column collection header: imagery one side, copy on white the other.
+   Replaces the full-bleed banner, which cropped portrait 4:5 collection
+   images down to a 450px landscape strip.
+
+   The media box is aspect-ratio driven (--chero-ratio, set per section in
+   the theme editor) so a portrait source renders portrait. object-fit:cover
+   is still used, but against a box that matches the source, so there is
+   effectively nothing to crop.
+   -------------------------------------------------------------- */
+
+.gpod-chero {
+  background: var(--chero-bg, #fff);
+  padding-top: var(--chero-pt, 40px);
+  padding-bottom: var(--chero-pb, 40px);
+}
+
+/* Media column sizes to its content rather than taking a fixed half. At a
+   50/50 split the column was ~630px wide, so a portrait 4:5 collection image
+   rendered 630 x 787px and dominated the page. The media is now capped by
+   HEIGHT (see --chero-max-h below) and the column shrinks to whatever width
+   that implies, which keeps portrait and landscape sources on the same
+   optical footing instead of one towering over the other. */
+.gpod-chero__inner {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: center;
+}
+
+/* Image side. Default is media-left; media-right flips the visual order
+   without touching source order, so the heading stays first for screen
+   readers and for the mobile stack. */
+.gpod-chero--media-right .gpod-chero__media {
+  order: 2;
+}
+
+.gpod-chero__media {
+  position: relative;
+  /* One height cap governs every ratio; width is derived from it, so a 4:5
+     portrait and a 16:9 landscape occupy the same vertical space instead of
+     the portrait running ~790px tall.
+
+     Width is an absolute calc, never a percentage. A percentage here against
+     a content-sized grid column is a cyclic dependency — the column sizes to
+     the child, the child sizes to the column — and the box resolved to 0x0.
+     The cap is stepped down by breakpoint instead, which keeps it acyclic. */
+  --chero-max-h: 400px;
+  width: calc(var(--chero-max-h) * var(--chero-ratio, 0.8));
+  aspect-ratio: var(--chero-ratio, 0.8);
+  overflow: hidden;
+  border-radius: var(--gpod-radius, 10px);
+  background: var(--gpod-soft, #f5f6f4);
+}
+
+.gpod-chero__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gpod-chero__content {
+  max-width: 34em;
+}
+
+.gpod-chero__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gpod-accent, #8cc662);
+  margin: 0 0 10px;
+}
+
+.gpod-chero__heading {
+  margin: 0 0 14px;
+  color: var(--chero-ink, #111);
+}
+
+.gpod-chero__copy {
+  color: var(--chero-text, #333);
+  margin: 0;
+}
+
+.gpod-chero__copy > p:last-child {
+  margin-bottom: 0;
+}
+
+.gpod-chero__cta {
+  margin-top: 24px;
+}
+
+/* No collection image (Bundles, Accessories, /collections/all): fall back to
+   a single readable column rather than a broken half-empty grid. This is a
+   real layout, not a degraded one — several collections render this way. */
+.gpod-chero--no-media .gpod-chero__inner {
+  grid-template-columns: 1fr;
+}
+
+.gpod-chero--no-media .gpod-chero__content {
+  max-width: 48em;
+}
+
+/* Mobile: stack, image first. Cap the media height so a portrait 4:5 image
+   does not eat the whole first screen before the products appear — the same
+   concern behind the `compact_mobile` option on the old banner. */
+/* Step the height cap down before the column can crowd the copy. At 1024 a
+   16:9 source would otherwise derive a 711px-wide media box against a ~944px
+   content area, leaving too little for the text. */
+@media only screen and (max-width: 1023px) {
+  .gpod-chero__media {
+    --chero-max-h: 320px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .gpod-chero {
+    /* One number governs the mobile media height. min() so it never eats the
+       first screen on a short device. */
+    --chero-mobile-h: min(42vh, 340px);
+  }
+
+  .gpod-chero__inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .gpod-chero--media-right .gpod-chero__media {
+    order: 0;
+  }
+
+  .gpod-chero__media {
+    /* Back to a full-width box on a single-column stack — the derived width
+       only makes sense while the media shares a row with the copy.
+
+       Keep the AUTHORED ratio here. Hardcoding 1.4 forced a landscape box
+       onto GPOD's portrait product shots (4000x5096), so contain fitted them
+       to the box height and the product rendered as a small strip with white
+       either side — a mobile-only degradation, since desktop honours
+       --chero-ratio. max-height still does the "don't eat the first screen"
+       job: when it clamps, the box simply stops being that ratio. */
+    /* Height-capped, width DERIVED — the same model desktop uses. Setting
+       width:100% + max-height means the cap silently changes the box ratio,
+       and since the image is object-fit: cover that crops the frame: at 375px
+       the box became 335x341 (0.98) against a 0.78 source and sliced the
+       bottom off the shot. Fixing the ratio and deriving the width keeps
+       cover a no-op, so nothing is cropped and nothing is letterboxed. */
+    width: calc(var(--chero-mobile-h) * var(--chero-ratio, 0.8));
+    max-width: 100%;
+    height: var(--chero-mobile-h);
+    aspect-ratio: var(--chero-ratio, 0.8);
+    margin-inline: auto;
+  }
+
+  .gpod-chero__content {
+    max-width: none;
+  }
+}
+
+/* --------------------------------------------------------------
+   Partner / tour marquee intro — sections/section-partner-marquee.liquid
+
+   The marquee's own CSS is inlined and scoped to #pm-{id} (it has to be,
+   because speed/height/direction are per-instance). Only the optional intro
+   block lives here, since it is plain static type and benefits from sitting
+   with the rest of the design system.
+
+   Constrained and centred to match the band it sits above.
+   -------------------------------------------------------------- */
+
+.partner-marquee .pm__intro {
+  max-width: 720px;
+  margin: 0 auto clamp(24px, 3vw, 40px);
+  padding: 0 20px;
+  text-align: center;
+}
+
+/* The eyebrow keeps its own margin when it is the only intro element (a bare
+   logo band), but inside a full intro the title takes over the spacing. */
+.partner-marquee .pm__intro .pm__heading {
+  margin-bottom: 10px;
+}
+
+.partner-marquee .pm__title {
+  margin: 0 0 12px;
+  color: var(--gpod-ink, #111);
+}
+
+.partner-marquee .pm__lede {
+  color: var(--gpod-text, #333);
+  margin: 0;
+}
+
+.partner-marquee .pm__lede > p:last-child {
+  margin-bottom: 0;
+}
+
+.partner-marquee .pm__btn {
+  margin-top: 22px;
+}
+
+/* Trust row inside the collection hero (Arc-style: shield / shipping /
+   returns sitting under the description). Wraps rather than scrolls, so a
+   long label never forces horizontal overflow on a phone. */
+.gpod-chero__trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 26px;
+  margin: 26px 0 0;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  list-style: none;
+}
+
+.gpod-chero__trust-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--chero-text, #333);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.gpod-chero__trust-icon {
+  display: flex;
+  flex: 0 0 20px;
+}
+
+.gpod-chero__trust-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media only screen and (max-width: 767px) {
+  .gpod-chero__trust {
+    gap: 12px 20px;
+    margin-top: 20px;
+  }
+}
+
+/* --------------------------------------------------------------
+   "Bundle & Save" — One Click Upsell app block
+
+   This module is NOT theme code. It is a Vue app injected as an app block
+   (shopify-block-*__one_click_upsell_on_page_*) into the PDP buy box, so
+   there is no Liquid to edit. Everything below is a restyle of someone
+   else's DOM, which is why it is confined to one labelled block.
+
+   What made it read as bolted-on, measured on the GPOD X PDP:
+     - font-family Montserrat, where the theme is Saira / Poppins
+     - --ocu-general-corner-radius: 0px against the theme's 10px
+     - product thumbs ringed in a hard 1px #d7d9db, heavier than the
+       theme hairline rgba(0,0,0,.12)
+     - an 18px bold uppercase heading for a secondary module
+
+   Strategy: drive the app's own --ocu-* custom properties wherever possible
+   (they are a deliberate seam and should survive app updates) and touch
+   .ocu-* class names only where no variable exists. Those class names are
+   internal, so if this module ever looks wrong after an app update, this
+   block is the first place to look.
+
+   !important is required throughout: the app writes --ocu-* AND font-family
+   as INLINE styles on .ocu-widget, and inline styles beat stylesheet rules.
+
+   Not fixable from the theme (needs the OCU app admin):
+     - the heading text "BUNDLE & SAVE  Make selection & then add to cart."
+     - columns per row / carousel vs grid
+   -------------------------------------------------------------- */
+
+#ocu-widget .ocu-widget {
+  --ocu-general-corner-radius: 8px !important;
+  --ocu-product-border-color: rgba(0, 0, 0, 0.12) !important;
+  --ocu-elements-color: rgba(0, 0, 0, 0.28) !important;
+  --ocu-font-color: var(--COLOR-TEXT, #111) !important;
+  --ocu-selectors-color: var(--COLOR-TEXT, #111) !important;
+}
+
+/* Adopt the theme's typefaces. Set on the widget root and inherited down,
+   with the root itself forced because the app sets font-family inline. */
+#ocu-widget,
+#ocu-widget .ocu-widget,
+#ocu-widget .ocu-widget * {
+  font-family: Saira, sans-serif !important;
+}
+
+/* Heading down from 18px bold uppercase to the theme's section-label scale,
+   and the trailing instruction demoted to a quiet second line rather than
+   competing with it on the same baseline. */
+#ocu-widget .ocu-title p {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+#ocu-widget .ocu-title span:first-child {
+  font-family: Poppins, sans-serif !important;
+  font-size: 0.9375rem !important;
+  letter-spacing: 0.04em;
+  color: var(--COLOR-HEADING, #111) !important;
+}
+
+#ocu-widget .ocu-title span + span {
+  font-size: 0.75rem !important;
+  font-weight: 400 !important;
+  opacity: 0.7;
+}
+
+#ocu-widget .ocu-headline {
+  margin-bottom: 10px;
+}
+
+/* Thumbnails: theme hairline and rounding instead of the hard grey ring. */
+#ocu-widget .ocu-product-card__image {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+#ocu-widget .ocu-product-card__container {
+  padding: 4px !important;
+}
+
+#ocu-widget .ocu-products__slide {
+  padding: 0 !important;
+}
+
+/* The single biggest size lever. The app sizes thumbnails off the carousel
+   column width, which at a 500px buy box gives a 132px square per card —
+   the main reason the module dominated the page. Capping the height keeps
+   the app's column maths intact (widths are untouched) while cutting roughly
+   40px per card. object-fit stops the cap distorting the product shot. */
+#ocu-widget .ocu-product-card__image {
+  max-height: 94px !important;
+}
+
+/* The app pins the thumbnail with `aspect-ratio: 1/1` on the <img>, so
+   capping only the wrapper clipped the bottom off every product shot.
+   Clear the ratio and size the image itself; object-fit: contain then letter-
+   boxes the tall 4:5 product renders instead of cropping them. */
+#ocu-widget .ocu-product-card__image img {
+  aspect-ratio: auto !important;
+  height: 94px !important;
+  max-height: 94px !important;
+  width: 100% !important;
+  object-fit: contain !important;
+}
+
+/* A hairline rule instead of a full box. An enclosing container read as more
+   integrated but added ~45px of height, which defeats the point — the brief
+   was that this module is too large. A single rule separates it from the buy
+   box above at almost no cost. */
+#ocu-widget {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  padding-top: 14px;
+}
+
+/* --------------------------------------------------------------
+   Floating header card (Arc-style)
+
+   Reference, measured on arc.cc at a 1920 viewport:
+     shell   1380px wide, centred (270px either side)
+     card    border-radius 10px, rgba(253,253,253,0.65),
+             backdrop-filter blur(27px), shadow 0 13.5px 27px rgba(0,0,0,.2),
+             70px tall, 45px inner padding
+
+   The key decision: the card IS `.container`, not a new wrapper. Because
+   .container is already the 1380px page shell (see "Page shell" above), the
+   header card and every content block below it derive their edges from the
+   same rule — so they cannot drift apart. That is what Kelton was seeing on
+   Arc and it comes free once the shell exists.
+
+   Modular's own geometry is left alone. `.site-header` keeps its 120px / 60px
+   heights because --header-height and --header-initial-height feed the top
+   padding of the first section on every template; changing them would move
+   the fold sitewide. Only the band's background moves to the inner card.
+   -------------------------------------------------------------- */
+
+:root {
+  --gpod-header-card-h: 72px;
+  --gpod-header-card-top: 16px;
+  --gpod-header-card-radius: 12px;
+  --gpod-header-card-pad: 32px;
+  /* Mirrors Modular's own .site-header height. Kept as a variable purely so
+     the dropdown offset below can be derived rather than hardcoded. */
+  --gpod-header-band-h: 120px;
+}
+
+/* The band becomes a positioning shell only — content now scrolls under the
+   floating card, which is the whole point of the treatment. */
+.site-header {
+  background: transparent;
+}
+
+.site-header > .container {
+  height: var(--gpod-header-card-h);
+  margin-top: var(--gpod-header-card-top);
+  padding-left: var(--gpod-header-card-pad);
+  padding-right: var(--gpod-header-card-pad);
+  background: rgba(253, 253, 253, 0.72);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  border-radius: var(--gpod-header-card-radius);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.13);
+  transition: height 0.25s ease, margin-top 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Scroll state: the card does NOT move or resize.
+
+   Modular collapses its band 120px -> 60px on scroll and shrinks the logo with
+   it. Inheriting that was wrong — a floating card should read as one fixed
+   object, and resizing it mid-scroll breaks that illusion. The card now holds
+   72px at top 16px in BOTH states, so it occupies an identical screen position
+   whether the page is at rest or scrolled; only the surface responds.
+
+   The band itself is deliberately left alone. --header-height and
+   --header-initial-height feed offsets all over the theme (banner padding,
+   sticky offsets, search popdown), so collapsing the band is load-bearing.
+   The card simply overhangs the 60px band while scrolled, which is invisible
+   because the band has no background of its own.
+
+   The logo-shrink rule is removed at source in sections/header.liquid rather
+   than fought with !important here — it is emitted inline by that section, so
+   it would otherwise win on document order. */
+.site-header.header--has-scrolled > .container {
+  background: rgba(253, 253, 253, 0.88);
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.17);
+}
+
+/* Band still collapses, so the dropdown offset formula has to track it. */
+.site-header.header--has-scrolled {
+  --gpod-header-band-h: 60px;
+}
+
+/* Browsers without backdrop-filter (older Firefox) get an opaque card rather
+   than an unreadable translucent one. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header > .container {
+    background: #fdfdfd;
+  }
+}
+
+/* Dropdowns flow from the 120px band, not from the card. The card's bottom
+   edge is now at (card-top + card-height) = 88px, so left alone the menus
+   open 32px further from the card than Modular intended, and read detached.
+   Pulling them up by exactly the difference restores the theme's original
+   gap — measured against the card instead of the band. Derived from the
+   variables rather than hardcoded, so changing the card height keeps this
+   correct.
+
+   Measured: natural submenu top 170px, band bottom 120px -> a 50px gap is
+   the theme's intended spacing. This preserves that.  */
+.site-header .submenu,
+.site-header .megamenu {
+  margin-top: calc(
+    var(--gpod-header-card-top) + var(--gpod-header-card-h) - var(--gpod-header-band-h)
+  );
+}
+
+/* The mega-menu panel is absolutely positioned against the card's CONTENT box
+   and then bled `left/right: -80px` to reach the old full-width header's
+   edges. With the card now capped and inset, that bleed overshot: the panel
+   landed at x=32 w=1376 against a card at x=40 w=1360 — 8px proud on each
+   side, visible as a misaligned dropdown, which is the exact complaint this
+   sprint set out to fix.
+
+   Pulling the bleed back to the card's own padding makes the panel resolve to
+   the card's outer edges at every viewport, because both are then derived
+   from the same box. */
+.site-header .megamenu-wrapper {
+  left: calc(-1 * var(--gpod-header-card-pad));
+  right: calc(-1 * var(--gpod-header-card-pad));
+}
+
+/* Modular sets `.container { width: 100% }` below 1023px, which left the card
+   running edge to edge with its rounded corners cropped against the viewport —
+   no float, no inset. The shell rule cannot fix this (100% is narrower than
+   the 1380px cap), so the inset is restored explicitly here. Arc insets its
+   mobile header too. */
+@media only screen and (max-width: 1023px) {
+  .site-header > .container {
+    width: calc(100% - 24px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  :root {
+    --gpod-header-card-h: 52px;
+    --gpod-header-card-top: 8px;
+    --gpod-header-card-radius: 10px;
+    --gpod-header-band-h: 120px;
+  }
+
+  :root {
+    /* .container drops to 20px side padding under 480px; keep the card's
+       inner padding proportional so the logo does not touch the edge. */
+    --gpod-header-card-pad: 16px;
+  }
+
+  /* Same rule on mobile: constant card, only the band tracks the collapse. */
+  .site-header.header--has-scrolled {
+    --gpod-header-band-h: 60px;
+  }
+}
+
+/* Scroll-state CTA in the header card (arc.cc pattern). Collapsed to zero
+   width at rest so it takes no space and cannot be tabbed to, then expands
+   once Modular adds .header--has-scrolled. Width/opacity rather than
+   display:none so the reveal can animate. */
+.header__scroll-cta {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  max-width: 0;
+  /* Horizontal padding has to collapse too. `max-width: 0` alone still leaves
+     the button's own left/right padding in the flow — 50px of dead space in
+     the header at rest, measured. */
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
+  margin-left: 0;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  min-height: 0;
+  transition: max-width 0.28s ease, opacity 0.2s ease, margin-left 0.28s ease,
+    padding 0.28s ease;
+}
+
+.header--has-scrolled .header__scroll-cta {
+  max-width: 200px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-width: 1px;
+  margin-left: 14px;
+  min-height: 36px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* The link is tabindex="-1" while collapsed; restore it to the tab order only
+   when it is actually visible and clickable. */
+.header--has-scrolled .header__scroll-cta:focus-visible {
+  outline: 2px solid var(--gpod-focus, #284c14);
+  outline-offset: 2px;
+}
+
+/* No room for it beside the hamburger, centred logo and three icons on a
+   351px mobile card. */
+@media only screen and (max-width: 1023px) {
+  .header__scroll-cta {
+    display: none;
+  }
+}
+
+/* Collection grid — bring it inside the page shell.
+
+   sections/collection.liquid lays the filter rail and product grid out
+   full-bleed via `.container-wrap`, anchored to the viewport rather than to
+   any shared column. At 1920 that put the grid at x=320 -> 1850 while the
+   header card and every other block sat at 270 -> 1650, so the collection
+   page visibly stepped out of alignment right below the new hero.
+
+   This predates the page-shell cap (the grid ran to 1850 before it, 1710
+   after), but it is exactly the misalignment this sprint set out to remove,
+   and it shows most on the collection pages the hero was just rebuilt for.
+   -------------------------------------------------------------- */
+
+.collection-grid.container-wrap {
+  max-width: min(var(--gpod-page-max), 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --------------------------------------------------------------
+   Colour system — one ink, one action colour
+
+   Set in config/settings_data.json so it stays merchant-editable through the
+   theme editor; only the two things the settings cannot express live here.
+
+   Primary CTA is brand green #8cc662 with a #111 label. The obvious version —
+   green with a white label — is not available: measured 2.03:1, a hard WCAG
+   fail. Green on #111 measures 9.32:1, roughly double Arc's own blue button,
+   so the brand colour finally lands on the thing you want clicked while
+   staying comfortably accessible.
+
+   Green now means exactly one thing: action. Sale/savings badges moved to
+   monochrome (color_saving_badge #8cc662 -> #111111) so the two never compete.
+
+   The four near-identical darks (#000000 / #222222 / #333333 / #2e3234, plus
+   the typo'd duplicate token color_seconsdary_new) collapse to a single ink.
+   Those invisible distinctions were part of why the site read muddy.
+   -------------------------------------------------------------- */
+
+/* Modular only offers square (0px), rounded (3px) or pill (300px). 3px is too
+   tight to read as deliberate and 300px is more than Arc's primary CTA uses.
+   8px sits with the card system (--gpod-radius 10px, header card 12px). */
+:root {
+  --RADIUS: 8px;
+}
+
+/* Sale/urgency badge follows the ink, not the accent. */
+.product-block__badge--sale,
+.badge--sale,
+.product__badge--sale {
+  background-color: #111111;
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------
+   Header stability — visible from the first pixel, never hidden
+
+   Two separate Modular behaviours made the header vanish mid-scroll:
+
+   1. `.site-header` is `position: absolute` and only becomes `fixed` once
+      scrollY passes the header height (120px). For those first 120px the
+      header genuinely scrolls off the top, then pops back in fixed — read
+      as the header "disappearing quickly" leaving the hero.
+
+   2. theme.js adds `header--is-hiding` (a translateY(-100%) animation) when
+      scrolling back up near the top, and runs `showCompactHeader` when the
+      sticky state engages. Both animate the header off and on screen.
+
+   Arc's header is simply always there. So: fixed from scrollY 0, and both
+   animations removed. The card already holds a constant size (see above),
+   so there is nothing left to move.
+
+   Safe to pin at the announcement offset because that bar is currently
+   disabled (--announcement-height-desktop resolves to 0px); the var is used
+   rather than a hardcoded 0 so re-enabling the bar still positions correctly.
+
+   No content jump: the first section already reserves
+   `padding-top: var(--header-initial-height)`, so the layout is unchanged —
+   only the header's positioning context moves.
+   -------------------------------------------------------------- */
+
+.site-header.header--sticky {
+  position: fixed;
+  top: var(--announcement-height-desktop, 0px);
+}
+
+@media only screen and (max-width: 767px) {
+  .site-header.header--sticky {
+    top: var(--announcement-height-mobile, 0px);
+  }
+}
+
+/* Neutralise both slide animations. The class is still applied by theme.js —
+   it is left alone so nothing else that keys off it breaks — but it no longer
+   moves anything. */
+.site-header.header--sticky,
+.site-header.header--sticky.header--has-scrolled,
+.site-header.header--sticky.header--has-scrolled.header--is-hiding {
+  animation: none !important;
+  transform: none !important;
+}
+
+/* --------------------------------------------------------------
+   Credibility band — sections/gpod-proof-band.liquid
+
+   Replaces section-icons-row on the homepage. The old band ran solid
+   #8cc662 behind #333 body text: a 6.24:1 combination that read muddy, and
+   it spent the brand colour on a background while the CTAs were black.
+
+   Inverted here — light surface, near-black type, green on the icon strokes
+   only. That is what makes it crisp, and it keeps green meaning "action"
+   everywhere else on the page.
+   -------------------------------------------------------------- */
+
+.gpod-proof {
+  background: var(--proof-bg, #f5f6f4);
+  padding-top: var(--proof-pt, 72px);
+  padding-bottom: var(--proof-pb, 72px);
+}
+
+.gpod-proof__heading {
+  margin: 0 0 clamp(28px, 3vw, 44px);
+  color: var(--proof-ink, #111);
+  text-align: center;
+}
+
+.gpod-proof__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gpod-proof__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Card treatment: white surface on the tinted band, theme radius, hairline.
+   Deliberately no shadow — the header card is the only lifted surface on the
+   page, and repeating that elevation everywhere flattens the hierarchy. */
+.gpod-proof--cards .gpod-proof__item {
+  background: #fff;
+  border: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  border-radius: var(--gpod-radius, 10px);
+  padding: clamp(22px, 2.4vw, 30px);
+}
+
+.gpod-proof__icon {
+  display: flex;
+  margin-bottom: 18px;
+  color: var(--proof-icon, #8cc662);
+}
+
+.gpod-proof__icon svg {
+  width: 36px;
+  height: 36px;
+}
+
+/* The stat is the load-bearing element — it is why the claim is credible.
+   Sized above the title so the eye lands on the number first. */
+.gpod-proof__stat {
+  margin: 0 0 4px;
+  font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--proof-ink, #111);
+}
+
+.gpod-proof__title {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--proof-ink, #111);
+}
+
+.gpod-proof__text {
+  margin: 0;
+  color: var(--proof-text, #4a4a4a);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.gpod-proof__text > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Mobile: horizontal scroller, NOT a stack.
+
+   Stacking four cards cost ~730px of vertical scroll and pushed everything
+   below the band off the first two screens. A snap-scrolling row keeps the
+   whole band to one card's height, and the partial fifth of the next card at
+   the right edge is what signals there is more to swipe.
+
+   The row bleeds to the viewport edges so the first card starts flush with
+   the container text above it while the last can scroll fully into view. */
+@media only screen and (max-width: 767px) {
+  .gpod-proof__grid {
+    display: flex;
+    grid-template-columns: none;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    margin-left: calc(-1 * var(--gpod-edge, 20px));
+    margin-right: calc(-1 * var(--gpod-edge, 20px));
+    padding-left: var(--gpod-edge, 20px);
+    padding-right: var(--gpod-edge, 20px);
+    scrollbar-width: none;
+  }
+
+  .gpod-proof__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gpod-proof__item {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+
+  .gpod-proof--cards .gpod-proof__item {
+    padding: 20px;
+  }
+
+  .gpod-proof__icon {
+    margin-bottom: 14px;
+  }
+
+  .gpod-proof__icon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .gpod-proof__stat {
+    font-size: 1.5rem;
+  }
+}
+
+/* .container is 40px-gutter down to 1023px, then 20px under 480px. The
+   scroller's negative margin has to match whichever is in play or the row
+   either clips or overflows the page. */
+:root {
+  --gpod-edge: 40px;
+}
+
+@media only screen and (max-width: 479px) {
+  :root {
+    --gpod-edge: 20px;
+  }
+}
+
+/* --------------------------------------------------------------
+   Mobile/desktop dead space above every hero
+
+   Modular reserves `.site-header { height: 120px }` and theme.js publishes
+   that measured height as --header-initial-height, which the first section of
+   every template uses as its top padding. The floating card only occupies
+   16 + 72 = 88px (desktop) and 8 + 52 = 60px (mobile), so the band was
+   reserving 32px of dead space on desktop and 60px on mobile — the white gap
+   above every hero.
+
+   Fixed by shrinking the band rather than overriding the variable: theme.js
+   writes --header-initial-height as an INLINE style on <html>, so a CSS rule
+   cannot win. Reducing the band means JS measures the smaller value and every
+   downstream offset follows automatically.
+
+   Band = card top + card height + a deliberate breathing gap.
+   -------------------------------------------------------------- */
+
+.site-header {
+  height: 104px; /* 16 + 72 + 16 */
+}
+
+.site-header.header--sticky {
+  --gpod-header-band-h: 104px;
+}
+
+@media only screen and (max-width: 767px) {
+  .site-header {
+    height: 72px; /* 8 + 52 + 12 */
+  }
+
+  .site-header.header--sticky {
+    --gpod-header-band-h: 72px;
+  }
+}
+
+/* --------------------------------------------------------------
+   Explore row — sections/gpod-explore.liquid
+
+   Horizontally scrolling category cards, per the arc.cc "Explore our
+   products" row. Scrolls at every breakpoint rather than wrapping to a grid:
+   the overflow is the affordance, and a partial card at the right edge is
+   what tells you there is more.
+   -------------------------------------------------------------- */
+
+.gpod-explore {
+  background: var(--explore-bg, #fff);
+  padding-top: var(--explore-pt, 72px);
+  padding-bottom: var(--explore-pb, 72px);
+}
+
+.gpod-explore__head {
+  margin-bottom: clamp(24px, 3vw, 40px);
+  max-width: 640px;
+}
+
+.gpod-explore__heading {
+  margin: 0 0 10px;
+  color: var(--gpod-ink, #111);
+}
+
+.gpod-explore__lede {
+  margin: 0;
+  color: var(--gpod-text, #333);
+}
+
+.gpod-explore__lede > p:last-child {
+  margin-bottom: 0;
+}
+
+.gpod-explore__row {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0 var(--gpod-edge, 40px) 4px;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* Bleed to the container gutter so the row can scroll edge to edge while
+     the first card still lines up with the heading above it. */
+  margin-left: calc(-1 * var(--gpod-edge, 40px));
+  margin-right: calc(-1 * var(--gpod-edge, 40px));
+}
+
+.gpod-explore__row::-webkit-scrollbar {
+  display: none;
+}
+
+.gpod-explore__card {
+  flex: 0 0 var(--explore-card-w, 300px);
+  scroll-snap-align: start;
+}
+
+.gpod-explore__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  border-radius: var(--gpod-radius, 10px);
+  overflow: hidden;
+  background: #fff;
+  color: inherit;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.gpod-explore__link:hover {
+  border-color: rgba(0, 0, 0, 0.28);
+  transform: translateY(-2px);
+}
+
+.gpod-explore__link:focus-visible {
+  outline: 2px solid var(--gpod-focus, #284c14);
+  outline-offset: 2px;
+}
+
+.gpod-explore__media {
+  display: block;
+  position: relative;
+  aspect-ratio: var(--explore-ratio, 0.8);
+  background: var(--gpod-soft, #f5f6f4);
+  overflow: hidden;
+}
+
+/* Cutouts are trimmed to the product's exact silhouette, so with no inset
+   they run corner to corner and touch the card edge. The gallery images this
+   replaced carried their own white margin, which is why the box had none. */
+.gpod-explore__media--cutout .gpod-explore__img {
+  inset: 9%;
+  width: auto;
+  height: auto;
+  max-width: 82%;
+  max-height: 82%;
+  margin: auto;
+}
+
+.gpod-explore__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* contain, not cover: GPOD's collection art is mostly product-on-white
+     cutouts, and cropping them decapitates the product. */
+  object-fit: contain;
+  display: block;
+}
+
+.gpod-explore__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 18px;
+  /* Push the CTA to the bottom so buttons line up across cards of unequal
+     copy length. */
+  margin-top: auto;
+}
+
+.gpod-explore__title {
+  font-family: var(--FONT-STACK-HEADING, inherit);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--gpod-ink, #111);
+}
+
+.gpod-explore__text {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--gpod-text, #333);
+}
+
+.gpod-explore__count {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b6b6b;
+}
+
+.gpod-explore__cta {
+  margin-top: 12px;
+  pointer-events: none; /* the whole card is the link */
+}
+
+@media only screen and (max-width: 767px) {
+  .gpod-explore__card {
+    flex: 0 0 78%;
+  }
+
+  .gpod-explore__body {
+    padding: 16px;
+  }
+}
+
+/* --------------------------------------------------------------
+   Navigation — floating island on desktop, full-screen drawer on mobile
+
+   Arc opens its menu as a rounded panel inset from the viewport edges with
+   the page dimmed behind it, rather than a full-bleed drawer. Modular has all
+   the machinery already — `.nav-hamburger` is a fixed panel slid in by
+   `.nav--is-visible`, with a toggle and an underlay — but it only ever
+   appears below 1024px, and it is full-height and square.
+
+   Two changes:
+   1. Desktop switches from inline nav links to the hamburger, matching Arc.
+      Modular hides the toggle and the drawer above 1024px, so both are
+      re-enabled and `.nav-standard` is hidden.
+   2. The panel becomes an inset floating island in the same language as the
+      header card (12px radius, translucent + blur, soft shadow).
+
+   Mobile is deliberately untouched: full-screen side nav, as specified.
+
+   TRADE-OFF, worth knowing: this removes the always-visible top-level nav
+   (Shop / Find Your GPOD / Support / About) and the desktop mega-menu. That
+   is exactly what Arc does, but it is one extra click to every category.
+   Reverting is a matter of deleting this block.
+   -------------------------------------------------------------- */
+
+@media only screen and (min-width: 1024px) {
+  /* Re-enable the hamburger affordance above the breakpoint. */
+  .header--is-standard .menuToggle {
+    display: flex;
+  }
+
+  .header--is-standard .nav-standard {
+    display: none;
+  }
+
+  .header--is-standard ~ .nav-hamburger {
+    display: flex;
+  }
+
+  .nav-hamburger {
+    --gpod-island-inset: 16px;
+    /* Sits BELOW the header card, not over it, so the hamburger and logo stay
+       visible while the panel is open — which is what Arc does. Derived from
+       the card variables so it tracks any change to the card's height. */
+    top: calc(
+      var(--gpod-header-card-top) + var(--gpod-header-card-h) + 12px
+    );
+    height: auto;
+    max-height: calc(
+      100vh - var(--gpod-header-card-top) - var(--gpod-header-card-h) - 12px -
+        var(--gpod-island-inset)
+    );
+    /* Measured off arc.cc at a 1508 viewport: the drawer is 390px, solid
+       white, 10px radius, and carries NO shadow — the dimmed page behind it
+       does the separating. My first pass used a translucent blurred surface
+       with an 18/48px shadow, which read heavier and muddied the menu text
+       against whatever was scrolling behind it. Solid is both closer to the
+       reference and more legible. */
+    width: 390px;
+    padding-top: 20px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+  }
+
+  /* The panel parks at `right: 100%` and Modular slides it in with
+     translateX(100%), which lands it flush against the viewport edge with its
+     rounded corners cropped. The inset is applied as a margin rather than by
+     overriding the transform.
+
+     Overriding it was the obvious route and it did not work:
+     `translateX(calc(100% + var(--gpod-island-inset)))` computed to the
+     identity matrix. A var() that is invalid at computed-value time does not
+     fall back to the previous cascade winner — it resets the property to its
+     initial value — so it silently killed Modular's translateX(100%) too and
+     the panel never moved.
+
+     margin-left was the second attempt and also failed: the box is positioned
+     from its RIGHT edge (`right: 100%` with an explicit width, `left: auto`),
+     so a left margin is absorbed rather than shifting it, and the panel
+     landed flush at x=0 with its left corners cropped.
+
+     Moving the parked position works, and the calc carries no var() so there
+     is nothing to invalidate: parked right edge at `100% - 16px` puts the box
+     at x = -374, and Modular's translateX(100%) then lands it at x = 16. */
+  .nav-hamburger {
+    right: calc(100% - 16px);
+  }
+
+  .nav-hamburger .nav-inner {
+    padding-bottom: 22px;
+  }
+
+  .nav-mobile-close {
+    top: 16px;
+    right: 16px;
+  }
+}
+
+/* Modular already dims the page behind the drawer — the rule is
+   `.nav--is-visible:not(.nav--is-hiding) .shopify-section-header .overlay`,
+   and there are several `.overlay` elements in the DOM, so a looser selector
+   both loses on specificity and paints the wrong ones. Matching the theme's
+   own selector and only deepening the value: with no shadow on the island
+   (per Arc), the dim is what separates the panel from the page, and 0.25 is
+   too faint to do that job. */
+.nav--is-visible:not(.nav--is-hiding) .shopify-section-header .overlay {
+  opacity: 0.38;
+}
+
+/* --------------------------------------------------------------
+   Compare — card layout (.gpod-compare--cards)
+
+   For the homepage 3-model picker. The full table stays on the compare page.
+
+   Deliberately still a <table>. assets/gpod.js drives the picker against
+   `thead [data-compare-col]` and `[data-compare-row]`, so restructuring the
+   markup into real cards would mean rewriting that JS too. Restyling the
+   table's columns as cards gets the Apple-compare look with none of that
+   risk — and keeps the row alignment that makes a comparison readable, which
+   a bare card grid would lose.
+
+   `border-collapse: separate` + horizontal `border-spacing` is what creates
+   the gutter between columns; the rounding is applied to the first and last
+   cell of each column.
+   -------------------------------------------------------------- */
+
+.gpod-compare--cards table {
+  border-collapse: separate;
+  border-spacing: 14px 0;
+}
+
+/* The spec-label column is a row header, not a card — it sits outside the
+   card surfaces and carries no border. */
+.gpod-compare--cards thead th:first-child,
+.gpod-compare--cards tbody th {
+  background: transparent;
+  border: 0;
+}
+
+.gpod-compare--cards .gpod-compare__product,
+.gpod-compare--cards tbody td {
+  background: #fff;
+  border-left: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  border-right: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  border-top: 0;
+  border-bottom: 0;
+  padding: 14px 18px;
+  vertical-align: top;
+}
+
+.gpod-compare--cards .gpod-compare__product {
+  border-top: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  border-top-left-radius: var(--gpod-radius, 10px);
+  border-top-right-radius: var(--gpod-radius, 10px);
+  padding-top: 22px;
+}
+
+.gpod-compare--cards tbody tr:last-child td {
+  border-bottom: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  border-bottom-left-radius: var(--gpod-radius, 10px);
+  border-bottom-right-radius: var(--gpod-radius, 10px);
+  padding-bottom: 22px;
+}
+
+/* Zebra the rows very lightly so the eye can track across a card without
+   horizontal rules, which would cut the card into segments. */
+.gpod-compare--cards tbody tr:nth-child(odd) td {
+  background: #fbfbfa;
+}
+
+.gpod-compare--cards .gpod-compare__picker {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 8px 10px;
+  border: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  font-size: 0.875rem;
+}
+
+@media only screen and (max-width: 767px) {
+  .gpod-compare--cards table {
+    border-spacing: 10px 0;
+  }
+
+  .gpod-compare--cards .gpod-compare__product,
+  .gpod-compare--cards tbody td {
+    padding: 12px 14px;
+  }
+}
+
+/* --------------------------------------------------------------
+   Customer proof band — sections/gpod-reviews.liquid
+
+   Dark strip directly under the hero: aggregate score left, scrolling quote
+   cards right. Dark on purpose — it separates the hero from the product
+   content below and gives the page one high-contrast band rather than an
+   unbroken run of white sections.
+   -------------------------------------------------------------- */
+
+.gpod-reviews {
+  background: var(--rev-bg, #111);
+  color: var(--rev-ink, #fff);
+  padding-top: var(--rev-pt, 56px);
+  padding-bottom: var(--rev-pb, 56px);
+}
+
+.gpod-reviews__inner {
+  display: grid;
+  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+}
+
+.gpod-reviews__score {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-bottom: 14px;
+}
+
+.gpod-reviews__stars {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--rev-star, #8cc662);
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.gpod-reviews__stars--sm {
+  font-size: 0.9rem;
+}
+
+.gpod-reviews__star.is-empty {
+  opacity: 0.28;
+}
+
+.gpod-reviews__avg {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.gpod-reviews__count {
+  font-size: 0.875rem;
+  opacity: 0.72;
+}
+
+.gpod-reviews__heading {
+  margin: 0 0 10px;
+  color: inherit;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
+.gpod-reviews__link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--rev-star, #8cc662);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.gpod-reviews__track {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0 0 4px;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.gpod-reviews__track::-webkit-scrollbar {
+  display: none;
+}
+
+.gpod-reviews__card {
+  flex: 0 0 268px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border-radius: var(--gpod-radius, 10px);
+  background: var(--rev-card-bg, #1c1c1c);
+}
+
+.gpod-reviews__quote {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.gpod-reviews__quote > p:last-child {
+  margin-bottom: 0;
+}
+
+.gpod-reviews__author {
+  margin-top: auto;
+  font-size: 0.8125rem;
+  font-style: normal;
+  opacity: 0.62;
+}
+
+@media only screen and (max-width: 899px) {
+  .gpod-reviews__inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Bleed the card track to the viewport edges so it reads as scrollable
+     rather than as a clipped grid. */
+  .gpod-reviews__track {
+    margin-left: calc(-1 * var(--gpod-edge, 40px));
+    margin-right: calc(-1 * var(--gpod-edge, 40px));
+    padding-left: var(--gpod-edge, 40px);
+    padding-right: var(--gpod-edge, 40px);
+  }
+
+  .gpod-reviews__card {
+    flex: 0 0 78%;
+  }
+}
+
+/* --------------------------------------------------------------
+   Cart drawer — right-side island, mirroring the menu island
+
+   Modular ships the cart as a full-screen white takeover
+   (`.cart-drawer { width: 100%; height: 100vh }` with the inner `.cart`
+   sliding in from translateX(80%)). Arc slides a panel in from the right
+   instead, matched to its menu drawer — left for navigation, right for cart.
+   That symmetry is a large part of why their site feels considered.
+
+   Desktop becomes a 400px island with the same surface, radius and inset as
+   the menu. Mobile stays full-screen, same as the menu and same as Arc.
+
+   The inner `.cart` transform is neutralised: it exists to slide content
+   across a full-width surface, and inside a 400px panel it just pushes the
+   contents off their own edge.
+   -------------------------------------------------------------- */
+
+@media only screen and (min-width: 1024px) {
+  .cart-drawer {
+    --gpod-cart-inset: 16px;
+    left: auto;
+    right: var(--gpod-cart-inset);
+    top: calc(var(--gpod-header-card-top) + var(--gpod-header-card-h) + 12px);
+    width: 400px;
+    height: auto;
+    max-height: calc(
+      100vh - var(--gpod-header-card-top) - var(--gpod-header-card-h) - 12px -
+        var(--gpod-cart-inset)
+    );
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+  }
+
+  .cart-drawer .scroll {
+    height: auto;
+    max-height: calc(
+      100vh - var(--gpod-header-card-top) - var(--gpod-header-card-h) - 12px -
+        var(--gpod-cart-inset)
+    );
+    padding: 22px 0;
+  }
+
+  /* Full-width slide-in behaviour, disabled inside a fixed-width panel. */
+  .cart-drawer .cart,
+  .cart-drawer .cart.is-open {
+    transform: none;
+    min-height: 0;
+  }
+
+  .cart-drawer .cart__title {
+    padding-top: 0;
+  }
+
+  /* .cart-wrapper carries `.container`, which is capped at the 1380 page
+     shell — inside a 400px panel that cap is irrelevant but its 40px gutters
+     are not, so they are tightened to the panel's own padding. */
+  .cart-drawer .cart-wrapper.container {
+    width: 100%;
+    max-width: none;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  /* Dim the page behind the cart the same way the menu does. */
+  .cart--is-visible .shopify-section-header .overlay {
+    opacity: 0.38;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+}
+
+/* Cart line items inside the island.
+
+   Modular lays each line out as a table row — product / price / quantity /
+   total cells sized for a full-width cart page. Dropped into a 400px panel
+   those cells ran to x=1680 against a panel edge at 1424, so the product
+   image, quantity stepper and totals all spilled out of the drawer.
+
+   Restacked as a two-column grid: thumbnail left, everything else in a
+   readable column right. Scoped to .cart-drawer so the /cart page keeps its
+   table. */
+@media only screen and (min-width: 1024px) {
+  .cart-drawer .cart__table,
+  .cart-drawer .cart__table-row,
+  .cart-drawer .cart__table-cell {
+    display: block;
+    width: auto;
+    float: none;
+    text-align: left;
+  }
+
+  .cart-drawer .cart__table-row {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    column-gap: 14px;
+    row-gap: 6px;
+    align-items: start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  }
+
+  .cart-drawer .cart__table-cell--product {
+    grid-column: 1 / -1;
+  }
+
+  .cart-drawer .cart-product {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    column-gap: 14px;
+    align-items: start;
+  }
+
+  .cart-drawer .cart-product__thumb {
+    width: 72px;
+    flex: 0 0 72px;
+  }
+
+  .cart-drawer .cart__table-cell--price,
+  .cart-drawer .cart__table-cell--total {
+    grid-column: 2;
+    font-weight: 600;
+  }
+
+  .cart-drawer .cart__table-cell--quantity {
+    grid-column: 2;
+    max-width: 140px;
+  }
+
+  /* Nothing inside the panel may exceed it. */
+  .cart-drawer .cart-wrapper * {
+    max-width: 100%;
+  }
+}
+
+/* --------------------------------------------------------------
+   Compare — mobile reflow to a spec-major layout
+
+   The horizontally scrolling table was unusable at 375: a 690px track inside
+   a 333px window, 1,475px tall, with spec values like "Stakes directly into
+   turf; add GPOD Base 2.0 for hard surfaces" crushed into ~150px columns.
+   Narrowing the columns further only makes the wrapping worse — the values
+   are sentences, not numbers, so columns are the wrong axis on a phone.
+
+   Inverted: each SPEC becomes a block, and the models are listed inside it as
+   label/value pairs. No horizontal scroll, values get the full width, and it
+   still reads as a comparison because the models sit directly under each
+   other within a spec.
+
+   Applies to BOTH layouts (cards and table) since the problem is the table
+   itself, not the card styling.
+   -------------------------------------------------------------- */
+
+@media only screen and (max-width: 767px) {
+  /* Left as overflow-x: auto. Setting it to `visible` let the thead's
+     horizontal model strip (3 x 210px) escape the scroller and push the whole
+     page sideways — the tbody no longer needs to scroll, but the strip still
+     does. */
+  .gpod-compare__scroller {
+    overflow-x: auto;
+    overflow-y: visible;
+  }
+
+  /* Column headers become a horizontal strip of model cards above the specs,
+     so the picker and price stay reachable without scrolling a table. */
+  .gpod-compare thead tr {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .gpod-compare thead tr::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gpod-compare thead th:first-child {
+    display: none; /* the empty spec-label corner */
+  }
+
+  .gpod-compare thead .gpod-compare__product {
+    scroll-snap-align: start;
+  }
+
+  /* Spec rows: each becomes a titled block. */
+  /* width:100% is load-bearing, not tidiness. A `display:block` table sizes to
+     its content, and the thead's `flex-basis: %` children then resolve against
+     that content width — the two inflate each other and cells came out 640px
+     wide inside a 375px viewport, overflowing the page. */
+  .gpod-compare table,
+  .gpod-compare tbody,
+  .gpod-compare tbody tr {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    /* The table carries `min-width: 640px` from the horizontal-scroll design.
+       min-width beats max-width, so without this reset the table stayed 640px
+       inside a 335px scroller and pushed the whole page sideways. */
+    min-width: 0;
+  }
+
+  .gpod-compare thead .gpod-compare__product {
+    /* px, not %, for the same reason. */
+    flex: 0 0 210px;
+  }
+
+  .gpod-compare tbody tr {
+    margin-top: 18px;
+    padding-top: 0;
+    border: 0;
+  }
+
+  .gpod-compare tbody th[scope='row'] {
+    display: block;
+    padding: 0 0 8px;
+    border: 0;
+    background: transparent;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6b6b6b;
+  }
+
+  /* Each value carries its model name, injected from the data attribute that
+     the Liquid renders and gpod.js keeps in sync. */
+  .gpod-compare tbody td {
+    display: grid;
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: minmax(84px, 34%) minmax(0, 1fr);
+    gap: 12px;
+    padding: 8px 0;
+    border: 0;
+    border-top: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .gpod-compare tbody td::before {
+    content: attr(data-compare-model);
+    font-weight: 600;
+    color: var(--gpod-ink, #111);
+  }
+
+  /* Card layout's column rounding and zebra are meaningless once the table is
+     spec-major — they would stripe individual values instead of columns. */
+  .gpod-compare--cards table {
+    border-spacing: 0;
+  }
+
+  .gpod-compare--cards tbody tr:nth-child(odd) td,
+  .gpod-compare--cards tbody td {
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .gpod-compare--cards tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  /* No sideways scrolling left to prompt. */
+  .gpod-compare__hint--mobile {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------
+   Header icon cleanup
+   -------------------------------------------------------------- */
+
+/* The white block behind the hamburger. Modular paints `.diamond-bar` a solid
+   44x42 white rectangle as part of its open/close morph; against the white
+   header card that reads as a stray box around the icon. */
+#hamburger-menu .diamond-bar {
+  background-color: transparent;
+}
+
+/* Slim the icon set down. Modular ships 22px user/search and a 26x27 cart at
+   1px stroke, which sits heavy in a 72px card next to a centred wordmark. */
+.header__icons .icon,
+.header__icons svg {
+  width: 19px;
+  height: 19px;
+  stroke-width: 1.4px;
+}
+
+.header__icons .cartToggle svg,
+.header__icons .icon-cart {
+  width: 21px;
+  height: 21px;
+}
+
+.menuToggle #hamburger-menu {
+  width: 20px;
+  height: 14px;
+}
+
+.menuToggle .icon-bar,
+.menuToggle #hamburger-bar {
+  width: 20px;
+  height: 1.6px;
+}
+
+/* --------------------------------------------------------------
+   Marquee logo backgrounds
+
+   Several supplied logo PNGs (PGA TOUR most visibly) carry a baked-in white
+   rectangle rather than transparency, which shows as a card behind the mark
+   while every neighbouring logo floats free.
+
+   `multiply` drops pure white to nothing against the white band — a CSS fix
+   for what is really an asset problem. The real fix is re-exporting those
+   files with alpha; this stops it looking broken until then.
+   -------------------------------------------------------------- */
+.partner-marquee .pm__item img {
+  mix-blend-mode: multiply;
+}
+
+/* --------------------------------------------------------------
+   PDP — grid rebalance, sticky media, collapsible description
+
+   Measured on the GPOD X PDP at 1440 before this change:
+     media column   x=80  w=590  ends at y=874
+     info column    x=770 w=500  ends at y=1874
+     description    820px of that, inside the buy column
+   -> a 1,000px tall empty band beside a wall of body copy. Arc's two columns
+   end within 125px of each other and both are sticky.
+
+   Three changes, in order of impact:
+   1. the description collapses (see snippets/product.liquid)
+   2. the media column becomes sticky so it tracks the longer info column
+   3. the split moves from 590/500 with a 100px gutter toward Arc's
+      proportions — more image, tighter buy column, smaller gutter
+   -------------------------------------------------------------- */
+
+@media only screen and (min-width: 1024px) {
+  .product__images__container {
+    /* Sticky under the floating header card, using the same variables so it
+       tracks any change to the card's height. */
+    position: sticky;
+    top: calc(var(--gpod-header-card-top) + var(--gpod-header-card-h) + 20px);
+    align-self: start;
+  }
+
+  /* Media wider, buy column tighter. Modular hardcodes
+     `grid-template-columns: 590px 590px` with a 100px gutter — a 50/50 split
+     that both shrank the product shot and stretched the buy copy to an
+     uncomfortable measure. Arc runs roughly 62/34 with a 56px gutter.
+
+     fr units rather than fixed px so it still adapts between 1024 and the
+     1380 shell cap. minmax(0, …) prevents the grid's default `min-width:auto`
+     from letting a wide image push the column past its share. */
+  .product__container {
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    gap: 56px;
+  }
+
+  /* The slider was capped at 85% of its column, so widening the column alone
+     would have left the extra space empty. */
+  .product__images--medium .product__images__slider,
+  .product__images--medium .product__images__scroller {
+    width: 100%;
+    max-width: none;
+  }
+
+  .product__info__wrapper {
+    max-width: none;
+  }
+}
+
+/* Collapsible description */
+.product__description-toggle {
+  border-top: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  border-bottom: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+}
+
+.product__description-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--FONT-STACK-HEADING, inherit);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gpod-ink, #111);
+}
+
+/* Safari still paints the default disclosure triangle without this. */
+.product__description-summary::-webkit-details-marker {
+  display: none;
+}
+
+.product__description-summary:focus-visible {
+  outline: 2px solid var(--gpod-focus, #284c14);
+  outline-offset: 2px;
+}
+
+.product__description-chevron {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  transition: transform 0.2s ease;
+}
+
+.product__description-toggle[open] .product__description-chevron {
+  transform: rotate(180deg);
+}
+
+.product__description-toggle .product__description {
+  padding-bottom: 20px;
+}
+
+/* --------------------------------------------------------------
+   PDP model picker (P0-4)
+
+   arc.cc's variant grid, measured: #f2f2f2 card at 10px radius, 17/14
+   padding, header row with the current selection at 17px/500, then a
+   flex-wrap grid of 74x74 tiles at 10px radius with the price at 14px
+   directly underneath.
+
+   Ours links to sibling products rather than switching variants, so the
+   current tile is marked with aria-current rather than a checked input.
+   -------------------------------------------------------------- */
+
+.gpod-model-picker {
+  background: #f4f5f3;
+  border-radius: var(--gpod-radius, 10px);
+  padding: 16px 14px;
+}
+
+.gpod-model-picker__head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.gpod-model-picker__label {
+  font-size: 0.8125rem;
+  color: #6b6b6b;
+}
+
+.gpod-model-picker__current {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gpod-ink, #111);
+}
+
+.gpod-model-picker__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gpod-model-picker__item {
+  flex: 0 0 auto;
+}
+
+.gpod-model-picker__tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  /* Wide enough for a two-line full product title ('GPOD Studio 2.0') without
+     hyphenating. Five tiles wrap to 2 rows in a ~450px buy column. */
+  width: 92px;
+  min-height: 118px;
+  padding: 6px 4px 8px;
+  border: 1px solid transparent;
+  border-radius: var(--gpod-radius, 10px);
+  background: #fff;
+  color: inherit;
+  text-align: center;
+  transition: border-color 0.15s ease;
+}
+
+.gpod-model-picker__tile:hover {
+  border-color: rgba(0, 0, 0, 0.24);
+}
+
+/* The tile for the page you are on. Two signals, not one: colour alone would
+   not survive a greyscale or colour-blind read. */
+.gpod-model-picker__item.is-current .gpod-model-picker__tile {
+  border-color: var(--gpod-ink, #111);
+  box-shadow: inset 0 0 0 1px var(--gpod-ink, #111);
+}
+
+.gpod-model-picker__tile:focus-visible {
+  outline: 2px solid var(--gpod-focus, #284c14);
+  outline-offset: 2px;
+}
+
+.gpod-model-picker__thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 56px;
+}
+
+.gpod-model-picker__thumb img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.gpod-model-picker__name {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--gpod-ink, #111);
+  text-wrap: balance;
+}
+
+.gpod-model-picker__price {
+  font-size: 0.75rem;
+  color: #6b6b6b;
+}
+
+/* --------------------------------------------------------------
+   PDP type scale (P1-2)
+
+   Measured before: H1 'GPOD X' was 28.8px/800 — and so was every section H2
+   ('Specs & what you get', 'THE BREAKDOWN', 'Related products'). The product
+   name and the section headings were identical, so there was no hierarchy.
+   Price was 19.55px/400, lighter AND smaller than the title above it, and the
+   CTA label was 16px/400 — the quietest type in the buy box.
+
+   Poppins/Saira are kept; they are just used with steps.
+   -------------------------------------------------------------- */
+
+.product__title {
+  font-size: clamp(1.875rem, 2.6vw, 2.125rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.product__info .product__price,
+.product__price--single {
+  font-size: 1.625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* The CTA carries the most important words on the page. */
+.product__form-submit,
+.shop-bar .product__form-submit {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.product__form--shop-bar .product__form-submit {
+  font-size: 1rem;
+}
+
+/* Section headings step down from the product title rather than matching it. */
+.gpod-section .gpod-heading,
+.product-section__title {
+  font-size: clamp(1.5rem, 2.2vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+/* Body copy: 1.50 leading with normal tracking read loose next to Arc's 1.20.
+   1.4 keeps it comfortable without the airiness. */
+.product__info .rte,
+.product__description {
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+}
+
+/* --------------------------------------------------------------
+   Stat band — sections/gpod-stat-band.liquid
+
+   Replaces the four-up credibility band. Two columns: the claim (headline
+   number + proportional bars + supporting line) and a spec list.
+
+   The bars are drawn from --bar-pct, computed in Liquid against the largest
+   value in the set, so the graphic cannot drift out of sync with the numbers
+   printed next to it.
+   -------------------------------------------------------------- */
+
+.gpod-statband {
+  background: var(--stat-bg, #0d0d0d);
+  color: var(--stat-ink, #fff);
+  padding-top: var(--stat-pt, 88px);
+  padding-bottom: var(--stat-pb, 88px);
+}
+
+.gpod-statband__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 64px;
+  align-items: start;
+}
+
+.gpod-statband__kicker {
+  margin: 0 0 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* clamp() rather than a breakpoint step: the number is the whole point of the
+   section, so it should stay as large as the column allows at every width. */
+.gpod-statband__stat {
+  margin: 0;
+  font-size: clamp(4rem, 9vw, 7.5rem);
+  font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: -0.045em;
+}
+
+.gpod-statband__unit {
+  margin-left: 0.12em;
+  font-size: 0.3em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  vertical-align: baseline;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.gpod-statband__caption {
+  margin: 18px 0 0;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+/* ONE grid for the whole set, with each row contributing its cells via
+   `display: contents`.
+
+   The obvious version — a grid per row — draws every bar from a different
+   left edge, because "GPOD" and "Aluminum alignment-stick mount" size their
+   label columns independently. Two bars that do not share an origin are not
+   a comparison. A single grid gives all rows one label column, so the tracks
+   start and end on the same two lines. */
+.gpod-statband__bars {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr) max-content;
+  align-items: center;
+  column-gap: 16px;
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+}
+
+.gpod-statband__bar {
+  display: contents;
+}
+
+/* With `display: contents` the row box is gone, so the rules go on the cells.
+   `display: contents` removes the element from the box tree, not the DOM, so
+   `.is-highlight .cell` selectors below still match. */
+.gpod-statband__bar > * {
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.gpod-statband__bar:last-child > * {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.gpod-statband__bar-label,
+.gpod-statband__bar-value {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.62);
+  white-space: nowrap;
+}
+
+.gpod-statband__bar-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.gpod-statband__bar.is-highlight .gpod-statband__bar-label,
+.gpod-statband__bar.is-highlight .gpod-statband__bar-value {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Three nested elements, because the grid cell has to do three jobs: carry
+   the row's padding and hairline (track), draw the full-width groove (rail),
+   and draw the proportional fill. */
+.gpod-statband__bar-track {
+  display: flex;
+  align-items: center;
+}
+
+.gpod-statband__bar-rail {
+  flex: 1 1 auto;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.gpod-statband__bar-fill {
+  display: block;
+  width: var(--bar-pct, 100%);
+  height: 100%;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.gpod-statband__bar.is-highlight .gpod-statband__bar-fill {
+  background: #fff;
+}
+
+.gpod-statband__text {
+  margin-top: 28px;
+  max-width: 46ch;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.gpod-statband__text > p:last-child {
+  margin-bottom: 0;
+}
+
+.gpod-statband__cta {
+  margin-top: 28px;
+}
+
+/* Spec list — hairline rows, label left, value right. No icons: the point of
+   this column is that it is dense and factual, which icons undo. */
+.gpod-statband__specs {
+  margin: 0;
+  padding-top: 6px;
+}
+
+.gpod-statband__spec {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.gpod-statband__spec:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.gpod-statband__spec dt {
+  margin: 0;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.gpod-statband__spec dd {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-align: right;
+  color: #fff;
+}
+
+@media only screen and (max-width: 1023px) {
+  .gpod-statband__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 44px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .gpod-statband {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  /* Two rows per bar: the label spans the full width, the track and value
+     share the row below it. A three-column row at 375px leaves the track
+     under 120px and the proportion stops reading. The label carries the separator; the cells do
+     not, or the rule breaks into two stubs with the column gap showing
+     through. The closing rule goes on the list itself. */
+  .gpod-statband__bars {
+    grid-template-columns: minmax(0, 1fr) max-content;
+    column-gap: 12px;
+    margin-top: 32px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .gpod-statband__bar > *,
+  .gpod-statband__bar:last-child > * {
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  .gpod-statband__bar-label {
+    grid-column: 1 / -1;
+    white-space: normal;
+    padding: 12px 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .gpod-statband__bar-track,
+  .gpod-statband__bar-value {
+    padding: 6px 0 12px;
+  }
+
+  .gpod-statband__spec {
+    padding: 13px 0;
+  }
+}
+
+/* --------------------------------------------------------------
+   Navigation — drill-down panels (snippets/navigation.liquid)
+
+   Replaces Modular's accordion inside the hamburger nav. Each level is a
+   panel that covers the level before it; assets/gpod.js drives the state and
+   sets the container height (the panels are out of flow, so nothing else can
+   size it).
+
+   Specificity note: the theme hides submenus with `.nav-hamburger .submenu`
+   (two classes) and styles level 2 with `.nav-hamburger .submenu-item
+   .submenu` (three). Every override below is written as
+   `.nav-hamburger .gpod-drill .gpod-drill__panel` so it is three classes and
+   beats both — gpod.css loads after theme.css, so equal specificity is enough
+   but not obviously enough to rely on.
+   -------------------------------------------------------------- */
+
+/* The island is 390px but Modular pins the menu column to 230px above 768px,
+   which left the nav text in a narrow ribbon inside a wide panel. Rows should
+   span the panel — that edge-to-edge alignment is most of what makes Arc's
+   menu read as designed. */
+@media only screen and (min-width: 768px) {
+  .nav-hamburger .nav-inner-wrapper {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .nav-hamburger .nav-inner {
+    padding: 0 24px;
+  }
+
+  .nav-hamburger .nav-inner-wrapper {
+    margin-bottom: 24px;
+  }
+}
+
+/* Desktop only. The island's close button is pinned to its top-right corner
+   and, with only the island's own 20px of top padding, the first row sat
+   alongside it with its tap target running underneath. On mobile the theme
+   already reserves 70px at the top of the drawer, so adding this there just
+   pushes the menu further down a screen that was already criticised for dead
+   space above the nav. */
+@media only screen and (min-width: 1024px) {
+  .nav-hamburger .nav-inner-wrapper {
+    padding-top: 44px;
+  }
+}
+
+/* Modular separates the account/search block with a 2px rule, which is the
+   heaviest line in the panel and lands right where the eye exits the menu. */
+.nav-hamburger .nav-user {
+  border-top: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  padding-top: 22px;
+}
+
+/* gpod.js sets the height inline to the level currently showing, which gives
+   the panels a definite box to take `height: 100%` from. overflow:hidden is
+   what lets a short level cover a long one: the taller level underneath is
+   cut at the same edge rather than showing its tail. It also clips the parked
+   panels, so the slide reads as entering from the panel's right edge. */
+.gpod-drill {
+  position: relative;
+  overflow: hidden;
+  transition: height 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-hamburger .gpod-drill__list {
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  /* Also load-bearing. The theme makes `.nav-hamburger .menu` position:
+     relative, which made the <ul> — not .gpod-drill — the containing block
+     for the panels, so `height: 100%` resolved against the root list's height
+     instead of the container's. */
+  position: static;
+}
+
+/* Rows ---------------------------------------------------------- */
+
+/* `position: static` is load-bearing, not tidying. The theme sets
+   `position: relative` on every .menu-item / .submenu-item, which makes the
+   <li> the containing block for the panel nested inside it — so a level-2
+   panel opened from "Monopods" started at the Monopods ROW rather than at the
+   top of the panel, leaving the level-1 header and its first rows visible
+   above it. Static <li>s hand the job to the right ancestor: .gpod-drill for
+   level 1, and the level-1 panel (itself absolute) for level 2. */
+.nav-hamburger .gpod-drill .menu-item,
+.nav-hamburger .gpod-drill .submenu-item {
+  position: static;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.nav-hamburger .gpod-drill .menu-item > a,
+.nav-hamburger .gpod-drill .menu-item > button,
+.nav-hamburger .gpod-drill .submenu-item > a,
+.nav-hamburger .gpod-drill .submenu-item > button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+  padding: 15px 0;
+  border: 0;
+  border-bottom: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.1));
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.nav-hamburger .gpod-drill .menu-item > a,
+.nav-hamburger .gpod-drill .menu-item > button {
+  font-size: 1.0625rem;
+  font-weight: 500;
+}
+
+.nav-hamburger .gpod-drill .submenu-item > a,
+.nav-hamburger .gpod-drill .submenu-item > button {
+  font-size: 0.9375rem;
+}
+
+.nav-hamburger .gpod-drill .menu-item:last-child > a,
+.nav-hamburger .gpod-drill .menu-item:last-child > button,
+.nav-hamburger .gpod-drill .submenu-item:last-child > a,
+.nav-hamburger .gpod-drill .submenu-item:last-child > button {
+  border-bottom: 0;
+}
+
+.nav-hamburger .gpod-drill .menu-item > a:hover,
+.nav-hamburger .gpod-drill .menu-item > button:hover,
+.nav-hamburger .gpod-drill .submenu-item > a:hover,
+.nav-hamburger .gpod-drill .submenu-item > button:hover {
+  color: var(--gpod-focus, #284c14);
+}
+
+/* The theme's shared icon is a down chevron; a drill row points right. */
+.nav-hamburger .gpod-drill .gpod-drill__open .icon-arrow {
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  transform: rotate(-90deg);
+  opacity: 0.4;
+}
+
+/* "View all Shop" — the parent's own page, which the drill row can no longer
+   reach because it became a button. Set apart so it does not read as just
+   another child category. */
+.nav-hamburger .gpod-drill .submenu-item--all > a {
+  font-weight: 500;
+  color: var(--gpod-focus, #284c14);
+}
+
+/* Panels -------------------------------------------------------- */
+
+.nav-hamburger .gpod-drill .gpod-drill__panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: auto;
+  width: 100%;
+  /* Full height so a short level still covers a long one. Resolves against
+     .gpod-drill for level 1 and against the level-1 panel for level 2 — both
+     have a definite height, the first from gpod.js and the second from this
+     very rule. */
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--COLOR-BACKGROUND, #fff);
+  /* Undo the accordion: the theme collapses submenus with max-height 0 and
+     reveals them by raising it. Here the panel is always full height and
+     visibility is carried by the transform. */
+  max-height: none;
+  /* Clips this level's own overflow when the container has shrunk to a
+     shorter child — see the note on .gpod-drill. */
+  overflow: hidden;
+  opacity: 1;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.32s;
+  z-index: 2;
+}
+
+.nav-hamburger .gpod-drill .gpod-drill__panel.is-active {
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0);
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0s;
+}
+
+.nav-hamburger .gpod-drill .gpod-drill__panel > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Panel head — the back button carries the parent's name, so the shopper can
+   always read where they are and where "back" goes. */
+.nav-hamburger .gpod-drill .gpod-drill__head {
+  padding-bottom: 4px;
+  /* Clear the close button, which is pinned to the panel's top-right corner
+     and would otherwise sit on top of the back row's tap target. */
+  padding-right: 44px;
+}
+
+.nav-hamburger .gpod-drill .gpod-drill__back {
+  display: flex;
+  align-items: center;
+  /* The theme's base button rule centres flex content; a back row reads from
+     the left edge like every other row in the panel. */
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  /* 44px minimum. The label is 13px uppercase, so the box came out at 36px —
+     under the tap-target floor, on the control a shopper hits most often in
+     this menu. */
+  padding: 12px 0 14px;
+  min-height: 44px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-hamburger .gpod-drill .gpod-drill__back .icon-arrow {
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  transform: rotate(90deg);
+  opacity: 0.55;
+}
+
+.nav-hamburger .gpod-drill .gpod-drill__back:hover {
+  color: var(--gpod-focus, #284c14);
+}
+
+/* Undo the level-2 box and indent the theme draws around nested submenus. */
+.nav-hamburger .gpod-drill .submenu-item .gpod-drill__panel {
+  border: 0;
+  padding: 0;
+}
+
+.nav-hamburger .gpod-drill .submenu-item .gpod-drill__panel .submenu-item {
+  font-size: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gpod-drill,
+  .nav-hamburger .gpod-drill .gpod-drill__panel {
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------------
+   PDP media — frame and thumbnails
+
+   Two things were making the gallery look broken rather than art-directed:
+
+   1. Thumbnails were square boxes with object-fit: cover over a 0.78
+      portrait image, so each one showed a horizontal slice of the middle of
+      the frame. On this catalogue's photography the middle of the frame is
+      usually the branding band, so the strip read as twelve near-identical
+      grey smudges. snippets/media-thumb.liquid now emits a 0.8 box; this
+      switches the fit so nothing is cropped.
+
+   2. The main image sat on bare white with no frame, so a product that
+      occupies a narrow column of a mostly-empty photo looked like a mistake.
+      A soft tile with generous padding turns the same photo into a deliberate
+      product plate — the standard fix when you cannot reshoot.
+   -------------------------------------------------------------- */
+
+/* Background and radius only. Padding on .image-wrapper is NOT available
+   here: that element carries the padding-top aspect-ratio box that gives the
+   slide its height, so adding padding to it collapses every Flickity cell to
+   ~40px. Inset the image with a transform-free inset on the <img> instead. */
+/* WHITE plate with a hairline, not a soft grey tile. The gallery photos have
+   their own white background baked in, so a grey tile just draws a white
+   rectangle inside a grey one — a box in a box, worse than no frame. The
+   hairline gives the media a defined edge that lines up with the buy column
+   without fighting the photography. (mix-blend-mode: multiply would knock the
+   white out, as it does for the partner logos, but not every product's
+   gallery is studio-white — the lifestyle frames would go grey.) */
+.product__images .product-single__media--image {
+  background: #fff;
+  border: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  border-radius: var(--gpod-radius, 10px);
+  overflow: hidden;
+}
+
+.product__images .product-single__media--image img {
+  object-fit: contain;
+  padding: 3% 7%;
+}
+
+/* Thumbnails ---------------------------------------------------- */
+
+/* Do NOT re-lay-out .product__images__slider-nav. Flickity owns that element
+   when it initialises — it absolutely positions the cells inside a viewport —
+   so setting display:flex + overflow on it made the whole strip disappear.
+   Only the thumbnails themselves are restyled below; Flickity keeps sizing
+   and scrolling them.
+
+   The no-JS fallback (`:not(.flickity-enabled)`) is a wrapping flex row from
+   the theme, which is fine. */
+
+.product-single__thumbnail {
+  display: block;
+  border-radius: 8px;
+  background: var(--gpod-soft, #f5f6f4);
+  overflow: hidden;
+  border: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.product-single__thumbnail img,
+.product-single__thumbnail .image-wrapper {
+  /* contain, not cover — the whole point of the fix. */
+  object-fit: contain;
+}
+
+.product-single__media-thumb.is-active .product-single__thumbnail,
+.product-single__thumbnail:hover {
+  border-color: var(--gpod-ink, #111);
+}
+
+
+/* Key specs strip — the `key-specs` block in snippets/product.liquid.
+   Four hairline-separated stats directly under the price, so the first screen
+   says what the product IS before it asks for a decision. */
+.gpod-keyspecs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  border-bottom: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+}
+
+.gpod-keyspecs__item {
+  padding: 12px 14px 12px 0;
+  border-right: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+}
+
+.gpod-keyspecs__item:last-child {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.gpod-keyspecs__item:not(:first-child) {
+  padding-left: 14px;
+}
+
+.gpod-keyspecs dt {
+  margin: 0 0 3px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--gpod-text, #555);
+  opacity: 0.7;
+}
+
+.gpod-keyspecs dd {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--gpod-ink, #111);
+}
+
+/* Two-up on phones: four columns at 375px leaves ~78px per cell, which wraps
+   "MagSafe GPUCK" onto three lines. */
+@media only screen and (max-width: 767px) {
+  .gpod-keyspecs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gpod-keyspecs__item:nth-child(2n) {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  .gpod-keyspecs__item:nth-child(2n + 1) {
+    padding-left: 0;
+  }
+
+  .gpod-keyspecs__item:nth-child(n + 3) {
+    border-top: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.12));
+  }
+}
+
+/* Model picker on phones — one scrolling row, not a wrapping grid.
+
+   Five tiles wrapping to two rows took ~400px of the buy column and pushed
+   the primary Add to Cart to 1335px down the page at 375px wide. A single
+   snap-scrolling row is the same mechanic used for the Explore and compare
+   rows, and recovers ~230px of the first screens.
+
+   The negative margin + matching padding lets the row bleed to the viewport
+   edge so it reads as scrollable, while the first tile stays on the buy
+   column's left edge. */
+@media only screen and (max-width: 767px) {
+  .gpod-model-picker__grid {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-left: calc(-1 * var(--gpod-edge, 20px));
+    margin-right: calc(-1 * var(--gpod-edge, 20px));
+    padding-left: var(--gpod-edge, 20px);
+    padding-right: var(--gpod-edge, 20px);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gpod-model-picker__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gpod-model-picker__item {
+    scroll-snap-align: start;
+  }
+}
+
+/* PDP buy column: left-aligned on phones, matching desktop.
+
+   Modular centres the vendor, title and price below 768px. Centred type in a
+   left-aligned column reads as a different page rather than a narrower one,
+   and it breaks the vertical line that the key-spec strip, model picker and
+   Add to Cart all sit on. This was P1-3 in the PDP audit. */
+@media only screen and (max-width: 767px) {
+  .product__info .product__title__wrapper {
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .product__info .product__title,
+  .product__info .product__price {
+    text-align: left;
+    justify-content: flex-start;
+  }
+
+  /* The Fera review stars block sits above the title and centres with it. */
+  .product__info .shopify-block[id*="fera"] {
+    text-align: left;
+  }
+}
+
+/* --------------------------------------------------------------
+   PDP education rows on phones — scroll, don't stack
+
+   Benefits, compatibility and pairs-with all stacked their items vertically
+   below 600px: 4 + 4 + 5 items at full width added ~2,800px to the mobile
+   PDP. Same mechanic as the Explore row and the model picker — one snap-
+   scrolling line, bleeding to the viewport edge so it reads as scrollable,
+   with the first item still on the shell's left line.
+   -------------------------------------------------------------- */
+
+@media only screen and (max-width: 599px) {
+  .gpod-benefits__grid,
+  .gpod-compat__grid,
+  .gpod-pairs__grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    margin-left: calc(-1 * var(--gpod-edge, 20px));
+    margin-right: calc(-1 * var(--gpod-edge, 20px));
+    padding-left: var(--gpod-edge, 20px);
+    padding-right: var(--gpod-edge, 20px);
+    /* Without this the row silently scrolls itself 20px on load: `scroll-snap-
+       align: start` snaps to the SCROLLPORT edge, which sits inside the
+       padding, so the browser cancelled the inset and the first item landed
+       on x=0 while the heading above it sat at x=20. scroll-padding moves the
+       snap line out to match. */
+    scroll-padding-left: var(--gpod-edge, 20px);
+  }
+
+  .gpod-benefits__grid::-webkit-scrollbar,
+  .gpod-compat__grid::-webkit-scrollbar,
+  .gpod-pairs__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gpod-benefits__item,
+  .gpod-compat__item,
+  .gpod-pairs__card {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+
+  /* The divider moves to the right edge of each item: on a horizontal row a
+     left border on the first item would sit on the shell line. */
+  .gpod-benefits__item,
+  .gpod-compat__item {
+    padding: 20px 22px 20px 0;
+    border-right: 1px solid var(--gpod-border);
+    margin-right: 22px;
+  }
+
+  .gpod-benefits__item:last-child,
+  .gpod-compat__item:last-child {
+    border-right: 0;
+    margin-right: 0;
+  }
+
+  /* Pairs cards keep their outline — they are links to other products, and
+     the border is the tap affordance. */
+  .gpod-pairs__card {
+    margin-right: 12px;
+  }
+}
+
+/* FAQ heading — left, like every other section on the page.
+
+   Modular centres `.page-title` inside the FAQ section. On the PDP that puts
+   the one centred heading on a page where the buy column, the benefit row,
+   the compatibility row, the how-to steps and the spec table all start on the
+   same left line. Scoped to .faq-section so other templates keep the theme's
+   centred treatment. */
+.faq-section .page-title {
+  text-align: left;
+  /* The theme also caps .page-title at 1000px and centres it with auto
+     margins, which put the heading at x=207 while the questions beneath it
+     started at x=80 — the heading was not aligned to its own body. */
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.faq-section .page-title__heading,
+.faq-section .page-title__subheading {
+  margin-left: 0;
+  margin-right: 0;
+  text-align: left;
+}
+
+/* --------------------------------------------------------------
+   Instagram feed — one scrolling row, not two stacked rows
+
+   The app renders a grid of posts ~4,600px down the product page: 564px of
+   grid (689px of section) on desktop. One row is enough to signal "there is
+   a community here"; a second row is scroll cost carrying no new argument.
+
+   Hiding the overflow posts with :nth-child was the first attempt and it is
+   wrong — the app re-lays-out its own grid (measured at 5 columns on one
+   render and 3 on the next, at the SAME viewport), so any fixed cutoff
+   orphans a partial row. Switching the flow to a single column-track row
+   makes the result independent of how many columns the app decides on, and
+   keeps every post instead of deleting some.
+
+   The block is an app embed (mp-instagram-feed); its settings live in the
+   app admin, not the theme, so the post count cannot be reduced at source.
+
+   Selector notes: the grid element carries no class of its own and every
+   other class in this subtree is a hashed CSS-module name that will change
+   on an app update. `Mageplaza-MediaBlock__Container` is the one stable
+   hook. If the app restructures, these rules stop matching and the feed
+   reverts to its own layout — a safe failure, unlike a max-height, which
+   would have failed by slicing a row of images in half.
+   -------------------------------------------------------------- */
+
+.mp-instagram-feed [class*="Mageplaza-MediaBlock__Container"] > div:nth-child(2) {
+  /* Still a grid — only the flow changes, so the app's own gap and item
+     styling survive. */
+  grid-auto-flow: column;
+  grid-template-columns: none;
+  grid-template-rows: none;
+  grid-auto-columns: clamp(132px, 20vw, 220px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--gpod-edge, 20px);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mp-instagram-feed [class*="Mageplaza-MediaBlock__Container"] > div:nth-child(2)::-webkit-scrollbar {
+  display: none;
+}
+
+.mp-instagram-feed [class*="Mageplaza-MediaBlock__Container"] > div:nth-child(2) > * {
+  scroll-snap-align: start;
+}
+
+/* Account / search rows in the slide-in menu. Modular renders these at 29px,
+   the two smallest tap targets in the drawer. */
+.nav-hamburger .nav-user__link {
+  display: block;
+  min-height: 44px;
+  padding: 11px 0;
+  line-height: 22px;
+}
+
+/* Related products heading — left, like every other section heading on the
+   PDP. The theme centres `.page-title` here (same rule family as the FAQ),
+   which left one centred heading at the bottom of a page whose six other
+   headings all start on the same left line (measured: all six at x=20 on
+   mobile). */
+.related-products .page-title,
+.related-products .page-title h2 {
+  text-align: left;
+}
+
+/* `.page-title` is capped at 1000px and centred with auto margins theme-wide,
+   which is what pushed this heading to x=287. */
+.related-products .page-title {
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* `.page-title` wraps its heading in a SECOND .container nested inside the
+   section's own, so the heading picked up two layers of gutter and landed at
+   x=287 while its product cards started at x=43.
+
+   Desktop only. Below 768px there is just one gutter's worth of inset to
+   begin with, and zeroing it put the heading flush against the viewport edge
+   at x=0 while every other heading on the page sat at x=20. */
+@media only screen and (min-width: 768px) {
+  .related-products .page-title > .container {
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* Tap targets in the PDP education sections. Measured at 375px: the
+   "Guides & troubleshooting" button came out 30px and the "Compare models"
+   link 23px — both are standalone calls to action, not inline body links, so
+   both need a real target. Inline links inside paragraphs are deliberately
+   left alone; padding those out would wreck the type. */
+@media only screen and (max-width: 767px) {
+  .gpod-howto .btn--small,
+  .gpod-benefits .btn--small,
+  .gpod-compat .btn--small {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .gpod-pdp-specs__compare {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
 }
