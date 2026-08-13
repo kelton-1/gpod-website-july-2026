@@ -3409,14 +3409,6 @@ a.gpod-ways__card:hover .gpod-ways__media img {
    -------------------------------------------------------------- */
 
 @media only screen and (min-width: 1024px) {
-  .product__images__container {
-    /* Sticky under the floating header card, using the same variables so it
-       tracks any change to the card's height. */
-    position: sticky;
-    top: calc(var(--gpod-header-card-top) + var(--gpod-header-card-h) + 20px);
-    align-self: start;
-  }
-
   /* Media wider, buy column tighter. Modular hardcodes
      `grid-template-columns: 590px 590px` with a 100px gutter — a 50/50 split
      that both shrank the product shot and stretched the buy copy to an
@@ -3440,6 +3432,102 @@ a.gpod-ways__card:hover .gpod-ways__media img {
 
   .product__info__wrapper {
     max-width: none;
+  }
+}
+
+/* --------------------------------------------------------------
+   PDP sticky media — the sticky unit is the whole column
+
+   The first pass stuck `.product__images__container` (the slider only). The
+   thumbnail rail, `.product__images__slider-nav-holder`, is its NEXT SIBLING
+   and stayed in normal flow, so on every PDP where the buy column is taller
+   than the media — which is all of them, once the bundle app, key specs and
+   model picker are in the box — the pinned image slid down over a rail that
+   had not moved. Measured on Pauly P at 1440x900: the image frame travelled
+   129px past the top of the rail, painting the thumbnails across the middle
+   of the product shot. That is the "carousel does this on scroll" report.
+
+   Two rules follow from that:
+
+   1. Stick `.product__images` — the grid cell that holds BOTH the slider and
+      the rail — so they travel together and cannot overlap. `align-self:
+      start` stops the cell stretching to the row height, which is what gave
+      the old sticky element its 129px of travel in the first place.
+
+   2. Once the column is one sticky block, anything below the fold inside it
+      is unreachable while pinned — so the frame is capped to leave room for
+      the rail. Portrait gallery shots are ~0.79, i.e. 981px tall in a 771px
+      column, taller than a 900px laptop viewport on their own. The cap keeps
+      image + rail on screen at every desktop height; the theme already sets
+      object-fit: contain on the media, so a capped frame letterboxes rather
+      than crops.
+
+   Reserve: 118px rail (108px Flickity viewport + 5px margins) + 20px slack.
+
+   Below 700px of viewport height there is not enough room for a capped frame
+   worth looking at, so the media simply stays in flow — no sticky, therefore
+   no overlap either.
+   -------------------------------------------------------------- */
+
+@media only screen and (min-width: 1024px) and (min-height: 700px) {
+  .product__images {
+    --gpod-pdp-media-top: calc(
+      var(--gpod-header-card-top) + var(--gpod-header-card-h) + 20px
+    );
+    --gpod-pdp-media-h: calc(100vh - var(--gpod-pdp-media-top) - 138px);
+    position: sticky;
+    top: var(--gpod-pdp-media-top);
+    align-self: start;
+  }
+
+  /* Single-media products render no rail, so the frame gets that space back. */
+  .product__images:has(.product__images__slider--single) {
+    --gpod-pdp-media-h: calc(100vh - var(--gpod-pdp-media-top) - 20px);
+  }
+
+  /* Undo the first pass: the container must not move inside the column. */
+  .product__images__container {
+    position: static;
+    top: auto;
+  }
+
+  /* The frame's height comes from a padding-top ratio box, which max-height
+     cannot clamp (padding is outside the content box). Swapping to the
+     aspect-ratio property keeps the natural sizing — height still resolves
+     from the column width — and makes the box clampable. */
+  .product__images .product-single__media--image .image-wrapper {
+    padding-top: 0;
+    height: auto;
+    aspect-ratio: var(--aspect-ratio, 1);
+    max-height: var(--gpod-pdp-media-h);
+  }
+
+  /* Video and model slides carry the ratio as an inline padding-top, so the
+     override needs !important; snippets/media.liquid passes the ratio as a
+     custom property for this. */
+  .product__images .product-single__media--video,
+  .product__images .product-single__media--model {
+    padding-top: 0 !important;
+    aspect-ratio: var(--aspect-ratio, 1.7778);
+    max-height: var(--gpod-pdp-media-h);
+  }
+
+  .product__images .product-single__media--video .deferred-media__poster,
+  .product__images .product-single__media--model .deferred-media__poster,
+  .product__images .product-single__media--video .image-wrapper,
+  .product__images .product-single__media--model .image-wrapper {
+    height: 100%;
+    padding-top: 0;
+  }
+
+  .product__images .product-single__media--video img,
+  .product__images .product-single__media--model img,
+  .product__images .product-single__media--video video,
+  .product__images .product-single__media--video iframe,
+  .product__images .product-single__media--model model-viewer {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 }
 

@@ -78,7 +78,7 @@
       {%- endif -%}
 
     {%- when 'external_video' -%}
-      <deferred-media class="product-single__media product-single__media--video deferred-media" data-deferred-media style="padding-top: {{ media_padding_top }}%;">
+      <deferred-media class="product-single__media product-single__media--video deferred-media" data-deferred-media style="padding-top: {{ media_padding_top }}%; --aspect-ratio: {{ media_aspect_ratio }};">
         <button type="button" class="deferred-media__poster" aria-label="{{ 'general.accessibility.view' | t }} {{ media.alt | strip_html | escape }}" data-deferred-media-button>
           <span class="deferred-media__poster-button">
             {%- render 'icon-media-video' -%}
@@ -96,7 +96,7 @@
         </template>
       </deferred-media>
     {%- when 'video' -%}
-      <deferred-media class="product-single__media product-single__media--video product-single__media--{{ media.id }} deferred-media" data-deferred-media style="padding-top: {{ media_padding_top }}%;">
+      <deferred-media class="product-single__media product-single__media--video product-single__media--{{ media.id }} deferred-media" data-deferred-media style="padding-top: {{ media_padding_top }}%; --aspect-ratio: {{ media_aspect_ratio }};">
         <button type="button" class="deferred-media__poster" aria-label="{{ 'general.accessibility.view' | t }} {{ media.alt | strip_html | escape }}" data-deferred-media-button>
           <span class="deferred-media__poster-button">
             {%- render 'icon-media-video' -%}
@@ -110,7 +110,7 @@
         </template>
       </deferred-media>
     {%- when 'model' -%}
-      <deferred-media class="product-single__media product-single__media--model product-single__media--{{ media.id }} deferred-media" data-deferred-media style="padding-top: {{ media_padding_top }}%;">
+      <deferred-media class="product-single__media product-single__media--model product-single__media--{{ media.id }} deferred-media" data-deferred-media style="padding-top: {{ media_padding_top }}%; --aspect-ratio: {{ media_aspect_ratio }};">
         <button type="button" class="deferred-media__poster" aria-label="{{ 'general.accessibility.view' | t }} {{ media.alt | strip_html | escape }}" data-deferred-media-button>
           <span class="deferred-media__poster-button">
             {%- render 'icon-media-model' -%}
@@ -124,7 +124,7 @@
         </template>
       </deferred-media>
     {%- else -%}
-      <div class="product-single__media" style="padding-top: {{ media_padding_top }}%;">
+      <div class="product-single__media" style="padding-top: {{ media_padding_top }}%; --aspect-ratio: {{ media_aspect_ratio }};">
         {{ media | media_tag: class: 'media-item', image_size: image_size }}
       </div>
   {%- endcase -%}
