@@ -4314,9 +4314,27 @@ a.gpod-ways__card:hover .gpod-ways__media img {
   object-fit: contain;
 }
 
-.product-single__media-thumb.is-active .product-single__thumbnail,
+/* Current-slide state. This targeted `.is-active` until 2026-08-14, a class
+   nothing ever sets — Flickity's asNavFor marks the selected nav cell
+   `is-nav-selected`, so the rule never fired and the only indicator was
+   theme.css's `.is-nav-selected .product-single__thumbnail::before`: a 1px
+   line in --border over a transparent tint, easy to miss on a 12-thumb rail.
+
+   The border colour alone can't carry it (1px is the reserved width, and
+   widening it would shift every thumb by a pixel), so the second pixel comes
+   from an inset shadow, which costs no layout. The theme's ::before line is
+   dropped on the selected thumb — kept, it read as a double rule. */
+.product-single__media-thumb.is-nav-selected .product-single__thumbnail,
 .product-single__thumbnail:hover {
   border-color: var(--gpod-ink, #111);
+}
+
+.product-single__media-thumb.is-nav-selected .product-single__thumbnail {
+  box-shadow: inset 0 0 0 1px var(--gpod-ink, #111);
+}
+
+.product-single__media-thumb.is-nav-selected .product-single__thumbnail::before {
+  border: 0;
 }
 
 
@@ -4406,6 +4424,22 @@ a.gpod-ways__card:hover .gpod-ways__media img {
     padding-left: var(--gpod-edge, 20px);
     padding-right: var(--gpod-edge, 20px);
     -webkit-overflow-scrolling: touch;
+    /* Same right-edge fade as the benefits/compat/pairs rows below — see the
+       note there. Here the tiles dissolve into the picker card's own grey
+       rather than into the page white. */
+    --gpod-row-fade: 40px;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      #000 0,
+      #000 calc(100% - var(--gpod-row-fade)),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      #000 0,
+      #000 calc(100% - var(--gpod-row-fade)),
+      transparent 100%
+    );
   }
 
   .gpod-model-picker__grid::-webkit-scrollbar {
@@ -4473,6 +4507,33 @@ a.gpod-ways__card:hover .gpod-ways__media img {
        on x=0 while the heading above it sat at x=20. scroll-padding moves the
        snap line out to match. */
     scroll-padding-left: var(--gpod-edge, 20px);
+    /* Right-edge fade, so the 22% of the next card that peeks reads as "there
+       is more, swipe" instead of as a headline clipped mid-word — which is
+       how it read on a 390px phone ("Set up be… / between").
+
+       Masking the scroller itself is what avoids new markup: the mask is
+       painted on the scrollport, so it stays at the viewport edge while the
+       content moves under it. An ::after inside the row would scroll away
+       with the cards, and an overlay on the section would need a wrapper to
+       match the row's height.
+
+       Cost: at the far end of the scroll the last card's right edge carries
+       the same fade. Over the white page that is only visible on the item's
+       divider rule, which is the cheapest possible price for dropping the JS
+       a scroll-position-aware fade would need. */
+    --gpod-row-fade: 44px;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      #000 0,
+      #000 calc(100% - var(--gpod-row-fade)),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      #000 0,
+      #000 calc(100% - var(--gpod-row-fade)),
+      transparent 100%
+    );
   }
 
   .gpod-benefits__grid::-webkit-scrollbar,
