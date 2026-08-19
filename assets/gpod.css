@@ -4803,20 +4803,12 @@ body.cart--is-visible .gpod-cmp__tray {
 .gpod-cmp__chip {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 4px 6px 4px 4px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
+  gap: 6px;
+  padding: 5px 8px 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
   font-size: 0.8125rem;
   max-width: 220px;
-}
-
-.gpod-cmp__chip img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  border-radius: 4px;
-  background: #fff;
 }
 
 .gpod-cmp__chip-title {

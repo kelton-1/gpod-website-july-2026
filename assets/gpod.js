@@ -454,17 +454,11 @@
     }
 
     function chip(pick) {
+      /* Name only, no thumbnail. Every model is a tall thin pole, so a 32px
+         contained thumbnail rendered as a hairline sliver — the same trap the
+         shop bar hit. The names are short and are the identifying bit anyway. */
       var li = document.createElement('li');
       li.className = 'gpod-cmp__chip';
-      if (pick.image) {
-        var img = document.createElement('img');
-        img.src = pick.image;
-        img.alt = '';
-        img.width = 40;
-        img.height = 40;
-        img.loading = 'lazy';
-        li.appendChild(img);
-      }
       var name = document.createElement('span');
       name.className = 'gpod-cmp__chip-title';
       name.textContent = pick.title || pick.handle;
@@ -527,16 +521,10 @@
 
         var titleEl = card.querySelector('.product-block__title');
 
-        /* Grid images are lazy-loaded, so at decoration time src can still be a
-           placeholder. Read it when the shopper actually picks the card, by
-           which point the image they just looked at has loaded. Scoped to the
-           image container so a badge or icon <img> can't win. */
         function pickFromCard() {
-          var imgEl = card.querySelector('.product-block__image img') || card.querySelector('img');
           return {
             handle: handle,
-            title: titleEl ? titleEl.textContent.replace(/\s+/g, ' ').trim() : handle,
-            image: imgEl ? (imgEl.currentSrc || imgEl.getAttribute('src') || '') : ''
+            title: titleEl ? titleEl.textContent.replace(/\s+/g, ' ').trim() : handle
           };
         }
 
