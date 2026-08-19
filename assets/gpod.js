@@ -1,6 +1,8 @@
 /**
  * GPOD redesign scripts.
- * Currently: the product finder quiz (sections/product-finder.liquid).
+ * Drill-down nav, product finder quiz, compare picker + focused compare view,
+ * collection compare tray, support hub filter, collection count, PDP variant
+ * availability, sticky shop bar, hero motion.
  * Vanilla JS, no dependencies; safe to load deferred on any page.
  */
 (function () {
@@ -281,7 +283,9 @@
           td.setAttribute('data-compare-model', (candidate && candidate.title) || '');
           if (value) {
             td.textContent = value;
-            any = true;
+            // Only a column the shopper can see keeps the row on screen —
+            // the focused view below hides the columns they did not pick.
+            if (!td.hidden) any = true;
           } else {
             td.innerHTML = '<span class="gpod-compare__empty" aria-label="Not applicable">—</span>';
           }
@@ -314,7 +318,308 @@
       }
     });
 
+    /* ----------------------------------------------------------
+       Focused view. ?models=a,b previously just filled the first two
+       columns and left the rest of the lineup sitting beside them,
+       burying the comparison the shopper actually asked for. Now the
+       unpicked columns are hidden, with a control to bring them back.
+       ---------------------------------------------------------- */
+
+    var focusEl = root.querySelector('[data-compare-focus]');
+    var showAllBtn = root.querySelector('[data-compare-showall]');
+    var focusTextEl = root.querySelector('[data-compare-focus-text]');
+
+    function setColumnsVisible(shownCount) {
+      table.querySelectorAll('[data-compare-col]').forEach(function (cell) {
+        var idx = parseInt(cell.getAttribute('data-compare-col'), 10);
+        cell.hidden = shownCount !== null && idx >= shownCount;
+      });
+    }
+
+    if (wanted.length && wanted.length < cols.length) {
+      setColumnsVisible(wanted.length);
+      if (focusEl) {
+        focusEl.hidden = false;
+        if (focusTextEl) {
+          focusTextEl.textContent =
+            'Showing the ' + wanted.length + ' model' + (wanted.length === 1 ? '' : 's') + ' you picked.';
+        }
+      }
+      if (showAllBtn) {
+        showAllBtn.addEventListener('click', function () {
+          setColumnsVisible(null);
+          if (focusEl) focusEl.hidden = true;
+          renderCells();
+        });
+      }
+    }
+
     if (wanted.length) renderCells();
+  }
+
+  /* --------------------------------------------------------------
+     Collection compare tray (sections/collection-toolbar.liquid)
+     Adds a "Compare" checkbox to every product card in the grid and
+     collects picks in a floating tray. Picks live in sessionStorage
+     so a shopper can gather models across several collections, then
+     deep-link into the compare table with ?models=.
+     -------------------------------------------------------------- */
+
+  var COMPARE_STORE_KEY = 'gpod:compare';
+
+  function readComparePicks() {
+    try {
+      var parsed = JSON.parse(window.sessionStorage.getItem(COMPARE_STORE_KEY) || '[]');
+      if (!Array.isArray(parsed)) return [];
+      return parsed.filter(function (item) {
+        return item && typeof item.handle === 'string' && item.handle;
+      });
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function writeComparePicks(picks) {
+    try {
+      window.sessionStorage.setItem(COMPARE_STORE_KEY, JSON.stringify(picks));
+    } catch (e) {
+      /* private mode — the tray still works for this page view */
+    }
+  }
+
+  function handleFromUrl(href) {
+    if (!href) return '';
+    var parts = href.split('/products/');
+    if (parts.length < 2) return '';
+    return parts[1].split('?')[0].split('#')[0].replace(/\/$/, '');
+  }
+
+  function initCompareSelect(root) {
+    if (root.hasAttribute('data-gpod-ready')) return;
+    var grid = document.querySelector('[data-collection-products]');
+    if (!grid) return;
+    root.setAttribute('data-gpod-ready', '');
+
+    var max = parseInt(root.getAttribute('data-max'), 10) || 3;
+    var compareUrl = root.getAttribute('data-compare-url') || '/pages/compare-gpod-models';
+    var tray = root.querySelector('[data-cmp-tray]');
+    var itemsEl = root.querySelector('[data-cmp-items]');
+    var countEl = root.querySelector('[data-cmp-count]');
+    var goEl = root.querySelector('[data-cmp-go]');
+    var clearEl = root.querySelector('[data-cmp-clear]');
+    var hintEl = root.querySelector('[data-cmp-hint]');
+    if (!tray || !itemsEl || !goEl) return;
+
+    var picks = readComparePicks();
+    var boxes = [];
+
+    function indexOfHandle(handle) {
+      for (var i = 0; i < picks.length; i++) {
+        if (picks[i].handle === handle) return i;
+      }
+      return -1;
+    }
+
+    function chip(pick) {
+      var li = document.createElement('li');
+      li.className = 'gpod-cmp__chip';
+      if (pick.image) {
+        var img = document.createElement('img');
+        img.src = pick.image;
+        img.alt = '';
+        img.width = 40;
+        img.height = 40;
+        img.loading = 'lazy';
+        li.appendChild(img);
+      }
+      var name = document.createElement('span');
+      name.className = 'gpod-cmp__chip-title';
+      name.textContent = pick.title || pick.handle;
+      li.appendChild(name);
+
+      var remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'gpod-cmp__chip-remove';
+      remove.setAttribute('aria-label', 'Remove ' + (pick.title || pick.handle) + ' from compare');
+      remove.innerHTML = '&times;';
+      remove.addEventListener('click', function () {
+        var at = indexOfHandle(pick.handle);
+        if (at > -1) picks.splice(at, 1);
+        commit();
+      });
+      li.appendChild(remove);
+      return li;
+    }
+
+    function sync() {
+      itemsEl.innerHTML = '';
+      picks.forEach(function (pick) {
+        itemsEl.appendChild(chip(pick));
+      });
+
+      var handles = picks.map(function (pick) { return pick.handle; });
+      goEl.href = compareUrl + (compareUrl.indexOf('?') > -1 ? '&' : '?') + 'models=' + handles.join(',');
+      if (countEl) countEl.textContent = picks.length ? String(picks.length) : '';
+      goEl.classList.toggle('is-disabled', picks.length < 2);
+      goEl.setAttribute('aria-disabled', picks.length < 2 ? 'true' : 'false');
+      if (hintEl) hintEl.hidden = picks.length >= 2;
+      tray.hidden = picks.length === 0;
+      root.classList.toggle('has-picks', picks.length > 0);
+
+      boxes.forEach(function (entry) {
+        var chosen = indexOfHandle(entry.handle) > -1;
+        entry.input.checked = chosen;
+        entry.input.disabled = !chosen && picks.length >= max;
+        entry.label.classList.toggle('is-checked', chosen);
+        entry.label.title = entry.input.disabled ? 'Remove a model to compare another' : '';
+      });
+    }
+
+    function commit() {
+      writeComparePicks(picks);
+      sync();
+    }
+
+    function decorate() {
+      Array.prototype.slice.call(grid.querySelectorAll('.product-block')).forEach(function (card) {
+        if (card.hasAttribute('data-cmp-decorated')) return;
+        card.setAttribute('data-cmp-decorated', '');
+
+        var link = card.querySelector('[data-product-link]') || card.querySelector('.product-block__title a');
+        var handle = handleFromUrl(link && link.getAttribute('href'));
+        if (!handle) return;
+
+        var host = card.querySelector('.product-block__info') || card.querySelector('.product-block__inner');
+        if (!host) return;
+
+        var titleEl = card.querySelector('.product-block__title');
+        var imgEl = card.querySelector('img');
+        var pick = {
+          handle: handle,
+          title: titleEl ? titleEl.textContent.replace(/\s+/g, ' ').trim() : handle,
+          image: imgEl ? (imgEl.currentSrc || imgEl.getAttribute('src') || '') : ''
+        };
+
+        var label = document.createElement('label');
+        label.className = 'gpod-cmp__toggle';
+        var input = document.createElement('input');
+        input.type = 'checkbox';
+        input.className = 'gpod-cmp__checkbox';
+        var text = document.createElement('span');
+        text.textContent = 'Compare';
+        label.appendChild(input);
+        label.appendChild(text);
+        host.appendChild(label);
+
+        input.addEventListener('change', function () {
+          var at = indexOfHandle(handle);
+          if (input.checked) {
+            if (at === -1) {
+              if (picks.length >= max) {
+                input.checked = false;
+                return;
+              }
+              picks.push(pick);
+            }
+          } else if (at > -1) {
+            picks.splice(at, 1);
+          }
+          commit();
+        });
+
+        boxes.push({ handle: handle, input: input, label: label });
+      });
+    }
+
+    if (clearEl) {
+      clearEl.addEventListener('click', function () {
+        picks = [];
+        commit();
+      });
+    }
+
+    goEl.addEventListener('click', function (event) {
+      if (picks.length < 2) event.preventDefault();
+    });
+
+    decorate();
+    sync();
+
+    // Filters, sorting and pagination swap the grid contents over ajax.
+    if (window.MutationObserver) {
+      new MutationObserver(function () {
+        boxes = boxes.filter(function (entry) {
+          return entry.input.isConnected;
+        });
+        decorate();
+        sync();
+      }).observe(grid, { childList: true, subtree: true });
+    }
+  }
+
+  /* --------------------------------------------------------------
+     Support hub instant filter (sections/support-hub.liquid)
+     Filters guide cards and troubleshooting entries as you type.
+     Honours ?q= so we can link straight to an answer.
+     -------------------------------------------------------------- */
+
+  function initSupportFilter(root) {
+    if (root.hasAttribute('data-gpod-filter-ready')) return;
+    var input = root.querySelector('[data-support-filter]');
+    if (!input) return;
+    root.setAttribute('data-gpod-filter-ready', '');
+
+    var countEl = root.querySelector('[data-support-count]');
+    var emptyEl = root.querySelector('[data-support-empty]');
+    var groups = Array.prototype.slice.call(root.querySelectorAll('[data-support-group]'));
+    var items = Array.prototype.slice.call(root.querySelectorAll('[data-support-item]'));
+    var opened = [];
+
+    function apply() {
+      var query = input.value.toLowerCase().replace(/\s+/g, ' ').trim();
+      var words = query ? query.split(' ') : [];
+
+      opened.forEach(function (details) { details.open = false; });
+      opened = [];
+
+      var shown = 0;
+      items.forEach(function (item) {
+        var haystack = (item.textContent || '').toLowerCase();
+        var match = words.every(function (word) {
+          return haystack.indexOf(word) > -1;
+        });
+        item.hidden = !match;
+        if (!match) return;
+        shown++;
+        if (words.length && item.tagName === 'DETAILS' && !item.open) {
+          item.open = true;
+          opened.push(item);
+        }
+      });
+
+      groups.forEach(function (group) {
+        var visible = Array.prototype.slice.call(group.querySelectorAll('[data-support-item]')).some(function (item) {
+          return !item.hidden;
+        });
+        group.hidden = !visible;
+      });
+
+      if (countEl) {
+        countEl.textContent = words.length
+          ? shown + (shown === 1 ? ' result' : ' results') + ' for “' + input.value.trim() + '”'
+          : '';
+      }
+      if (emptyEl) emptyEl.hidden = !(words.length && shown === 0);
+      root.classList.toggle('is-filtering', words.length > 0);
+    }
+
+    input.addEventListener('input', apply);
+    input.addEventListener('search', apply);
+
+    var params = new URLSearchParams(window.location.search);
+    var initial = params.get('q');
+    if (initial) input.value = initial;
+    apply();
   }
 
   /* --------------------------------------------------------------
@@ -597,6 +902,8 @@
     document.querySelectorAll('[data-gpod-drill]').forEach(initNavDrilldown);
     document.querySelectorAll('[data-gpod-finder]').forEach(initFinder);
     document.querySelectorAll('[data-compare-picker]').forEach(initComparePicker);
+    document.querySelectorAll('[data-gpod-compare-select]').forEach(initCompareSelect);
+    document.querySelectorAll('[data-gpod-support]').forEach(initSupportFilter);
     document.querySelectorAll('[data-collection-products]').forEach(initCollectionCount);
     document.querySelectorAll('[data-gpod-variant-availability]').forEach(initVariantAvailability);
     document.querySelectorAll('[data-shop-bar]').forEach(initShopBarSubmit);
@@ -617,6 +924,10 @@
     if (finder) initFinder(finder);
     var compare = event.target.closest('[data-compare-picker]') || event.target.querySelector('[data-compare-picker]');
     if (compare) initComparePicker(compare);
+    var compareSelect = event.target.querySelector('[data-gpod-compare-select]');
+    if (compareSelect) initCompareSelect(compareSelect);
+    var support = event.target.querySelector('[data-gpod-support]');
+    if (support) initSupportFilter(support);
     var collectionProducts = event.target.querySelector('[data-collection-products]');
     if (collectionProducts) initCollectionCount(collectionProducts);
     var availability = event.target.querySelector('[data-gpod-variant-availability]');

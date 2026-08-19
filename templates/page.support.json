@@ -129,7 +129,13 @@
         "text": "<p>Everything you need to get filming — and quick fixes for the most common questions we get.</p>",
         "faq_heading": "Troubleshooting",
         "padding_top": 50,
-        "padding_bottom": 60
+        "padding_bottom": 60,
+        "enable_filter": true,
+        "filter_label": "What do you need help with?",
+        "filter_placeholder": "Try “stuck extension”, “remote”, “MagSafe”",
+        "empty_text": "No guide matches that yet — our team will answer directly.",
+        "empty_link_text": "Contact support",
+        "empty_link": "/pages/contact-us"
       }
     }
   },

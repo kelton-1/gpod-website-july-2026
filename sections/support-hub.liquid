@@ -11,6 +11,7 @@
 
 <section class="gpod-section gpod-support container-wrap section-padding"
   data-section-type="support-hub"
+  {% if section.settings.enable_filter %}data-gpod-support{% endif %}
   style="{{ style }}"
 >
   <div class="container">
@@ -24,15 +25,32 @@
       <div class="gpod-lede">{{ section.settings.text }}</div>
     {%- endif -%}
 
+    {%- if section.settings.enable_filter -%}
+      <div class="gpod-support__filter">
+        <label class="gpod-support__filter-label" for="support-filter-{{ section.id }}">
+          {{- section.settings.filter_label | escape -}}
+        </label>
+        <input
+          type="search"
+          id="support-filter-{{ section.id }}"
+          class="gpod-support__filter-input"
+          placeholder="{{ section.settings.filter_placeholder | escape }}"
+          autocomplete="off"
+          data-support-filter
+        >
+        <p class="gpod-support__filter-count" data-support-count aria-live="polite"></p>
+      </div>
+    {%- endif -%}
+
     {%- assign guide_blocks = section.blocks | where: 'type', 'guide' -%}
     {%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
 
     {%- if guide_blocks.size > 0 -%}
-      <div class="gpod-support__grid">
+      <div class="gpod-support__grid" data-support-group>
         {%- for block in guide_blocks -%}
           {%- assign tag = 'div' -%}
           {%- if block.settings.link != blank -%}{%- assign tag = 'a' -%}{%- endif -%}
-          <{{ tag }}{% if block.settings.link != blank %} href="{{ block.settings.link }}"{% endif %} class="gpod-support__card" {{ block.shopify_attributes }}>
+          <{{ tag }}{% if block.settings.link != blank %} href="{{ block.settings.link }}"{% endif %} class="gpod-support__card" data-support-item {{ block.shopify_attributes }}>
             {%- case block.settings.icon -%}
               {%- when 'video' -%}
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="M16 10.5 22 7v10l-6-3.5z"/></svg>
@@ -59,16 +77,29 @@
     {%- endif -%}
 
     {%- if faq_blocks.size > 0 -%}
-      {%- if section.settings.faq_heading != blank -%}
-        <h2 class="gpod-heading" id="troubleshooting">{{ section.settings.faq_heading | escape }}</h2>
-      {%- endif -%}
-      <div class="gpod-accordion">
-        {%- for block in faq_blocks -%}
-          <details {{ block.shopify_attributes }}>
-            <summary>{{ block.settings.question | escape }}</summary>
-            <div class="gpod-accordion__body">{{ block.settings.answer }}</div>
-          </details>
-        {%- endfor -%}
+      <div data-support-group>
+        {%- if section.settings.faq_heading != blank -%}
+          <h2 class="gpod-heading" id="troubleshooting">{{ section.settings.faq_heading | escape }}</h2>
+        {%- endif -%}
+        <div class="gpod-accordion">
+          {%- for block in faq_blocks -%}
+            <details data-support-item {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.question | escape }}</summary>
+              <div class="gpod-accordion__body">{{ block.settings.answer }}</div>
+            </details>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.enable_filter -%}
+      <div class="gpod-support__empty" data-support-empty hidden>
+        <p>{{ section.settings.empty_text | escape }}</p>
+        {%- if section.settings.empty_link != blank and section.settings.empty_link_text != blank -%}
+          <a class="btn btn--primary btn--solid" href="{{ section.settings.empty_link }}">
+            {{- section.settings.empty_link_text | escape -}}
+          </a>
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>
@@ -96,6 +127,46 @@
       "id": "text",
       "label": "Intro text",
       "default": "<p>Everything you need to get filming — and quick fixes for the most common questions we get.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Search"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filter",
+      "label": "Enable instant search",
+      "default": true,
+      "info": "Filters guide cards and troubleshooting answers as the customer types. A ?q=stuck link opens the page pre-filtered."
+    },
+    {
+      "type": "text",
+      "id": "filter_label",
+      "label": "Search label",
+      "default": "What do you need help with?"
+    },
+    {
+      "type": "text",
+      "id": "filter_placeholder",
+      "label": "Search placeholder",
+      "default": "Try “stuck extension”, “remote”, “MagSafe”"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "No-results text",
+      "default": "No guide matches that yet — our team will answer directly."
+    },
+    {
+      "type": "text",
+      "id": "empty_link_text",
+      "label": "No-results button label",
+      "default": "Contact support"
+    },
+    {
+      "type": "url",
+      "id": "empty_link",
+      "label": "No-results button link"
     },
     {
       "type": "text",

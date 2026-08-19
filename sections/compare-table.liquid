@@ -61,6 +61,17 @@
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
+      {%- comment -%}
+        Revealed by gpod.js when ?models= narrows the table to a shopper's
+        picks — from the collection compare tray, or any link.
+      {%- endcomment -%}
+      <div class="gpod-compare__focus" data-compare-focus hidden>
+        <span data-compare-focus-text></span>
+        <button type="button" class="gpod-compare__showall" data-compare-showall>
+          {{ section.settings.showall_label | default: 'Show all models' | escape }}
+        </button>
+      </div>
+
       <div class="gpod-compare__scroller" tabindex="0" role="region" aria-label="{{ section.settings.heading | default: 'Product comparison' | escape }}">
         <table data-compare-table>
           <caption class="visually-hidden">{{ section.settings.heading | default: 'Product comparison' | escape }}</caption>
@@ -265,8 +276,14 @@
       "type": "checkbox",
       "id": "enable_picker",
       "label": "Interactive model picker",
-      "info": "Adds a dropdown to each column so shoppers can swap in any model. Supports ?models=handle,handle links.",
+      "info": "Adds a dropdown to each column so shoppers can swap in any model. A ?models=handle,handle link — from the collection compare tray — narrows the table to just those models.",
       "default": false
+    },
+    {
+      "type": "text",
+      "id": "showall_label",
+      "label": "\"Show all\" button label",
+      "default": "Show all models"
     },
     {
       "type": "text",

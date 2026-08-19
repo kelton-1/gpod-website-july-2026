@@ -2,6 +2,12 @@
   Collection cross-navigation: pills for sibling collections plus
   "compare / quiz" helper links. The pill matching the current collection
   is highlighted automatically.
+
+  Also hosts the compare tray: a "Compare" checkbox is added to every
+  product card in the grid, and picks collect in a floating tray that
+  deep-links into the compare table (?models=). Picks survive navigation
+  between collections, so a shopper can gather a monopod and a tripod
+  before comparing. Logic lives in assets/gpod.js (initCompareSelect).
 {% endcomment %}
 
 {%- capture style -%}
@@ -49,6 +55,33 @@
       </div>
     </nav>
   </div>
+
+  {%- if section.settings.enable_compare_select -%}
+    {%- assign compare_url = section.settings.compare_link | default: '/pages/compare-gpod-models' -%}
+    <div
+      class="gpod-cmp"
+      data-gpod-compare-select
+      data-max="{{ section.settings.compare_max }}"
+      data-compare-url="{{ compare_url }}"
+    >
+      <div class="gpod-cmp__tray" data-cmp-tray hidden role="region" aria-label="{{ section.settings.tray_label | default: 'Compare' | escape }}">
+        <div class="gpod-cmp__tray-inner">
+          <p class="gpod-cmp__label" aria-live="polite">
+            {{ section.settings.tray_label | escape }}
+            <span class="gpod-cmp__count" data-cmp-count></span>
+          </p>
+          <ul class="gpod-cmp__items" data-cmp-items></ul>
+          <div class="gpod-cmp__actions">
+            <span class="gpod-cmp__hint" data-cmp-hint>{{ section.settings.tray_hint | escape }}</span>
+            <a class="gpod-cmp__go btn btn--primary btn--solid" data-cmp-go href="{{ compare_url }}">
+              {{- section.settings.tray_cta | escape -}}
+            </a>
+            <button type="button" class="gpod-cmp__clear" data-cmp-clear>{{ section.settings.tray_clear | escape }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
 </div>
 
 {% schema %}
@@ -77,6 +110,50 @@
       "type": "url",
       "id": "quiz_link",
       "label": "Quiz link"
+    },
+    {
+      "type": "header",
+      "content": "Compare tray"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_compare_select",
+      "label": "Add compare checkboxes to product cards",
+      "default": true,
+      "info": "Shoppers tick up to three models, then jump to the compare table with only those models shown."
+    },
+    {
+      "type": "range",
+      "id": "compare_max",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Models a shopper can pick",
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "tray_label",
+      "label": "Tray label",
+      "default": "Comparing"
+    },
+    {
+      "type": "text",
+      "id": "tray_hint",
+      "label": "Tray hint (shown with one pick)",
+      "default": "Pick one more to compare"
+    },
+    {
+      "type": "text",
+      "id": "tray_cta",
+      "label": "Tray button",
+      "default": "Compare side by side"
+    },
+    {
+      "type": "text",
+      "id": "tray_clear",
+      "label": "Tray clear label",
+      "default": "Clear"
     },
     {
       "type": "header",
