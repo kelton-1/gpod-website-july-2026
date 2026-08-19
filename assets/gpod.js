@@ -231,14 +231,35 @@
       return th.getAttribute('data-compare-initial') || '';
     });
 
-    // ?models=a,b,c preselects columns left to right.
+    /* ?models=a,b preselects columns. Each requested model goes to the column
+       that already renders it where one exists, and only otherwise to the
+       leftmost spare column. Assigning left-to-right regardless — the first
+       cut of this — put a pick into a column that another column already held,
+       so "Show all models" below then showed that model twice. */
     var params = new URLSearchParams(window.location.search);
     var wanted = (params.get('models') || '').split(',').filter(function (h) {
       return byHandle[h];
     });
-    wanted.forEach(function (h, i) {
-      if (i < selection.length) selection[i] = h;
+
+    var takenCols = {};
+    var focusCols = [];
+
+    wanted.forEach(function (handle) {
+      var at = -1;
+      cols.forEach(function (th, i) {
+        if (at === -1 && !takenCols[i] && th.getAttribute('data-compare-initial') === handle) at = i;
+      });
+      if (at === -1) {
+        for (var i = 0; i < cols.length; i++) {
+          if (!takenCols[i]) { at = i; break; }
+        }
+      }
+      if (at === -1) return;
+      takenCols[at] = true;
+      focusCols.push(at);
+      selection[at] = handle;
     });
+    focusCols.sort(function (a, b) { return a - b; });
 
     function renderCard(th, candidate) {
       var card = th.querySelector('[data-compare-card]');
@@ -329,20 +350,20 @@
     var showAllBtn = root.querySelector('[data-compare-showall]');
     var focusTextEl = root.querySelector('[data-compare-focus-text]');
 
-    function setColumnsVisible(shownCount) {
+    function setColumnsVisible(shown) {
       table.querySelectorAll('[data-compare-col]').forEach(function (cell) {
         var idx = parseInt(cell.getAttribute('data-compare-col'), 10);
-        cell.hidden = shownCount !== null && idx >= shownCount;
+        cell.hidden = shown !== null && shown.indexOf(idx) === -1;
       });
     }
 
-    if (wanted.length && wanted.length < cols.length) {
-      setColumnsVisible(wanted.length);
+    if (focusCols.length && focusCols.length < cols.length) {
+      setColumnsVisible(focusCols);
       if (focusEl) {
         focusEl.hidden = false;
         if (focusTextEl) {
           focusTextEl.textContent =
-            'Showing the ' + wanted.length + ' model' + (wanted.length === 1 ? '' : 's') + ' you picked.';
+            'Showing the ' + focusCols.length + ' model' + (focusCols.length === 1 ? '' : 's') + ' you picked.';
         }
       }
       if (showAllBtn) {
@@ -409,6 +430,18 @@
     var clearEl = root.querySelector('[data-cmp-clear]');
     var hintEl = root.querySelector('[data-cmp-hint]');
     if (!tray || !itemsEl || !goEl) return;
+
+    /* A fixed element is positioned against the nearest ancestor that
+       establishes a containing block, and the theme transforms .body-wrap to
+       slide the page for its off-canvas nav — which would drop the tray at the
+       bottom of the document instead of the bottom of the screen. Park it on
+       <body>, where nothing can trap it. */
+    if (tray.parentElement !== document.body) {
+      document.querySelectorAll('body > [data-cmp-tray]').forEach(function (stale) {
+        if (stale !== tray) stale.remove();
+      });
+      document.body.appendChild(tray);
+    }
 
     var picks = readComparePicks();
     var boxes = [];
@@ -493,12 +526,19 @@
         if (!host) return;
 
         var titleEl = card.querySelector('.product-block__title');
-        var imgEl = card.querySelector('img');
-        var pick = {
-          handle: handle,
-          title: titleEl ? titleEl.textContent.replace(/\s+/g, ' ').trim() : handle,
-          image: imgEl ? (imgEl.currentSrc || imgEl.getAttribute('src') || '') : ''
-        };
+
+        /* Grid images are lazy-loaded, so at decoration time src can still be a
+           placeholder. Read it when the shopper actually picks the card, by
+           which point the image they just looked at has loaded. Scoped to the
+           image container so a badge or icon <img> can't win. */
+        function pickFromCard() {
+          var imgEl = card.querySelector('.product-block__image img') || card.querySelector('img');
+          return {
+            handle: handle,
+            title: titleEl ? titleEl.textContent.replace(/\s+/g, ' ').trim() : handle,
+            image: imgEl ? (imgEl.currentSrc || imgEl.getAttribute('src') || '') : ''
+          };
+        }
 
         var label = document.createElement('label');
         label.className = 'gpod-cmp__toggle';
@@ -519,7 +559,7 @@
                 input.checked = false;
                 return;
               }
-              picks.push(pick);
+              picks.push(pickFromCard());
             }
           } else if (at > -1) {
             picks.splice(at, 1);

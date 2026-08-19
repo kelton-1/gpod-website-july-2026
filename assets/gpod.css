@@ -4996,6 +4996,8 @@ body:has(.gpod-cmp.has-picks) .site-footer {
 [hidden].gpod-compare__focus,
 .gpod-support [data-support-item][hidden],
 .gpod-support [data-support-group][hidden],
+[hidden].gpod-cmp__tray,
+.gpod-cmp__tray [hidden],
 .gpod-cmp [hidden] {
   display: none !important;
 }
