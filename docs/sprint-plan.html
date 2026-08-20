@@ -1,0 +1,603 @@
+<title>GPOD Mobile Funnel Sprints</title>
+<style>
+  /* ---------- tokens: light is the base, both themes defined at token level ---------- */
+  :root {
+    --ground:      #F1F4F3;
+    --panel:       #FFFFFF;
+    --panel-sunk:  #E7ECEA;
+    --rule:        #D3DBD8;
+    --rule-soft:   #E2E8E6;
+    --ink:         #0C1614;
+    --ink-soft:    #3D4E4A;
+    --ink-mute:    #667873;
+    --accent:      #0A8E75;
+    --accent-soft: #D6EFE8;
+    --critical:    #B23F35;
+    --critical-soft:#F6E0DD;
+    --warn:        #A8741F;
+    --warn-soft:   #F5E8D0;
+    --bar-track:   #DCE4E1;
+    --shadow:      0 1px 2px rgba(12,22,20,.06), 0 8px 24px -12px rgba(12,22,20,.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0A100F;
+      --panel:       #131B19;
+      --panel-sunk:  #0E1615;
+      --rule:        #263230;
+      --rule-soft:   #1C2624;
+      --ink:         #E8EEEC;
+      --ink-soft:    #B3C2BE;
+      --ink-mute:    #7E908B;
+      --accent:      #35C9A6;
+      --accent-soft: #12312A;
+      --critical:    #E5776A;
+      --critical-soft:#2E1815;
+      --warn:        #D9A44E;
+      --warn-soft:   #2C2213;
+      --bar-track:   #222E2C;
+      --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #0A100F;
+    --panel:       #131B19;
+    --panel-sunk:  #0E1615;
+    --rule:        #263230;
+    --rule-soft:   #1C2624;
+    --ink:         #E8EEEC;
+    --ink-soft:    #B3C2BE;
+    --ink-mute:    #7E908B;
+    --accent:      #35C9A6;
+    --accent-soft: #12312A;
+    --critical:    #E5776A;
+    --critical-soft:#2E1815;
+    --warn:        #D9A44E;
+    --warn-soft:   #2C2213;
+    --bar-track:   #222E2C;
+    --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+
+  /* ---------- type roles: brand Helvetica for display, mono for evidence ---------- */
+  :root {
+    --display: "Helvetica Neue", Helvetica, "Arial Nova", Arial, sans-serif;
+    --body: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16.5px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px 120px; }
+  .prose { max-width: 68ch; }
+
+  /* ---------- masthead ---------- */
+  header.masthead {
+    border-bottom: 1px solid var(--rule);
+    padding: 72px 0 40px;
+    margin-bottom: 56px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin: 0 0 22px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    font-size: clamp(2.5rem, 7vw, 4.4rem);
+    line-height: .98;
+    margin: 0 0 24px;
+    text-wrap: balance;
+  }
+  .standfirst {
+    font-size: clamp(1.05rem, 2.2vw, 1.28rem);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 60ch;
+    margin: 0;
+  }
+  .standfirst strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- section headings ---------- */
+  section { margin-bottom: 76px; }
+  h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: -0.022em;
+    font-size: clamp(1.55rem, 3.4vw, 2.1rem);
+    line-height: 1.12;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: -0.012em;
+    font-size: 1.13rem;
+    margin: 34px 0 10px;
+  }
+  .sec-lede { color: var(--ink-mute); margin: 0 0 30px; max-width: 62ch; }
+  p { margin: 0 0 16px; }
+  a { color: var(--accent); }
+
+  /* ---------- the funnel diagnosis ---------- */
+  .diagnosis { display: grid; gap: 20px; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 720px) { .diagnosis { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 26px 26px 30px;
+    box-shadow: var(--shadow);
+  }
+  .card--loss { border-top: 3px solid var(--critical); }
+  .card--win  { border-top: 3px solid var(--accent); }
+  .card h4 {
+    font-family: var(--display);
+    font-size: 1.02rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+  }
+  .card .note { font-size: .87rem; color: var(--ink-mute); margin: 0 0 22px; }
+
+  .metric { margin-bottom: 20px; }
+  .metric:last-child { margin-bottom: 0; }
+  .metric-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 12px; margin-bottom: 7px;
+  }
+  .metric-label { font-size: .84rem; color: var(--ink-soft); }
+  .metric-val {
+    font-family: var(--mono); font-size: 1.02rem; font-weight: 600;
+    font-variant-numeric: tabular-nums; letter-spacing: -.02em;
+  }
+  .track { height: 9px; background: var(--bar-track); border-radius: 1px; overflow: hidden; }
+  .fill { height: 100%; border-radius: 1px; }
+  .fill--crit { background: var(--critical); }
+  .fill--acc  { background: var(--accent); }
+  .fill--mute { background: var(--ink-mute); opacity: .5; }
+
+  .verdict {
+    margin-top: 26px;
+    background: var(--panel-sunk);
+    border-left: 3px solid var(--accent);
+    padding: 20px 24px;
+    border-radius: 0 3px 3px 0;
+  }
+  .verdict p { margin: 0; }
+  .verdict strong { font-weight: 650; }
+
+  /* ---------- numbers strip ---------- */
+  .figures {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--rule); border: 1px solid var(--rule); border-radius: 4px;
+    overflow: hidden; margin-bottom: 34px;
+  }
+  @media (max-width: 720px) { .figures { grid-template-columns: repeat(2, 1fr); } }
+  .fig { background: var(--panel); padding: 20px 18px; }
+  .fig dt {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--ink-mute); margin-bottom: 9px;
+  }
+  .fig dd {
+    margin: 0; font-family: var(--display); font-weight: 700;
+    font-size: 1.62rem; letter-spacing: -.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .fig .sub { display:block; font-family: var(--body); font-size: .78rem; font-weight: 400; color: var(--ink-mute); letter-spacing: 0; margin-top: 3px; }
+
+  /* ---------- tables ---------- */
+  .scroller { overflow-x: auto; border: 1px solid var(--rule); border-radius: 4px; background: var(--panel); }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+  thead th {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-mute); font-weight: 500;
+    background: var(--panel-sunk); border-bottom: 1px solid var(--rule);
+    position: sticky; top: 0;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  code {
+    font-family: var(--mono); font-size: .855em;
+    background: var(--panel-sunk); border: 1px solid var(--rule-soft);
+    padding: .08em .38em; border-radius: 3px; color: var(--ink-soft);
+  }
+
+  /* ---------- sprint blocks ---------- */
+  .sprint {
+    display: grid; grid-template-columns: 92px 1fr; gap: 28px;
+    padding: 30px 0; border-top: 1px solid var(--rule);
+  }
+  @media (max-width: 720px) { .sprint { grid-template-columns: 1fr; gap: 10px; } }
+  .sprint-num {
+    font-family: var(--display); font-weight: 700;
+    font-size: 2.6rem; line-height: 1; letter-spacing: -.045em;
+    color: var(--ink-mute); opacity: .45;
+    font-variant-numeric: tabular-nums;
+  }
+  .sprint-body h3 { margin-top: 0; font-size: 1.3rem; }
+  .sprint-metric {
+    font-family: var(--mono); font-size: .8rem; color: var(--ink-mute);
+    margin: 0 0 16px; letter-spacing: .01em;
+  }
+  .sprint-metric b { color: var(--accent); font-weight: 600; }
+  ul { margin: 0 0 14px; padding-left: 1.15em; }
+  li { margin-bottom: 9px; }
+  li::marker { color: var(--ink-mute); }
+
+  /* ---------- flags ---------- */
+  .flag {
+    display: inline-block; font-family: var(--mono);
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    padding: 3px 7px; border-radius: 3px; vertical-align: 2px; margin-right: 8px;
+  }
+  .flag--blocker { background: var(--critical-soft); color: var(--critical); }
+  .flag--switch  { background: var(--accent-soft);   color: var(--accent); }
+  .flag--gap     { background: var(--warn-soft);     color: var(--warn); }
+
+  .callout {
+    border: 1px solid var(--rule); border-left: 3px solid var(--critical);
+    background: var(--panel); border-radius: 0 4px 4px 0;
+    padding: 22px 26px; margin: 0 0 24px; box-shadow: var(--shadow);
+  }
+  .callout h4 { font-family: var(--display); font-size: 1rem; margin: 0 0 8px; letter-spacing: -.01em; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout--gap { border-left-color: var(--warn); }
+
+  footer.foot {
+    border-top: 1px solid var(--rule); padding-top: 26px;
+    font-size: .84rem; color: var(--ink-mute);
+  }
+  footer.foot code { font-size: .82em; }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">GPOD Golf · Conversion Plan · 11 Aug 2026</p>
+    <h1>The leak is<br>before the button.</h1>
+    <p class="standfirst">
+      85% of GPOD's traffic is mobile, and it converts at 44% of desktop's rate. But mobile shoppers who
+      reach the cart convert <strong>better</strong> than desktop. The entire deficit sits upstream of Add to Cart —
+      which makes it a narrow, attackable target worth <strong>$186K–$373K a year</strong>.
+    </p>
+  </header>
+
+  <section>
+    <h2>The diagnosis</h2>
+    <p class="sec-lede">Trailing 90 days of live Shopify analytics, 13 May – 11 Aug 2026.</p>
+
+    <dl class="figures">
+      <div class="fig"><dt>Sessions</dt><dd>80,560<span class="sub">85.2% mobile</span></dd></div>
+      <div class="fig"><dt>Orders</dt><dd>1,736<span class="sub">60% from mobile</span></dd></div>
+      <div class="fig"><dt>Net sales</dt><dd>$187.6K<span class="sub">90 days</span></dd></div>
+      <div class="fig"><dt>AOV</dt><dd>$109.24<span class="sub">blended</span></dd></div>
+    </dl>
+
+    <div class="diagnosis">
+      <div class="card card--loss">
+        <h4>Where mobile loses</h4>
+        <p class="note">Session → add to cart</p>
+
+        <div class="metric">
+          <div class="metric-head"><span class="metric-label">Mobile</span><span class="metric-val">3.20%</span></div>
+          <div class="track"><div class="fill fill--crit" style="width:38.2%"></div></div>
+        </div>
+        <div class="metric">
+          <div class="metric-head"><span class="metric-label">Desktop</span><span class="metric-val">8.38%</span></div>
+          <div class="track"><div class="fill fill--mute" style="width:100%"></div></div>
+        </div>
+        <p class="note" style="margin:20px 0 0">Mobile adds to cart <strong>2.6× less often</strong>. On 68,674 sessions that is the whole story.</p>
+      </div>
+
+      <div class="card card--win">
+        <h4>Where mobile wins</h4>
+        <p class="note">Everything after the cart</p>
+
+        <div class="metric">
+          <div class="metric-head"><span class="metric-label">Cart → order · mobile</span><span class="metric-val">47.4%</span></div>
+          <div class="track"><div class="fill fill--acc" style="width:100%"></div></div>
+        </div>
+        <div class="metric">
+          <div class="metric-head"><span class="metric-label">Cart → order · desktop</span><span class="metric-val">41.2%</span></div>
+          <div class="track"><div class="fill fill--mute" style="width:86.9%"></div></div>
+        </div>
+        <div class="metric">
+          <div class="metric-head"><span class="metric-label">Checkout → order · mobile</span><span class="metric-val">49.6%</span></div>
+          <div class="track"><div class="fill fill--acc" style="width:100%"></div></div>
+        </div>
+        <div class="metric">
+          <div class="metric-head"><span class="metric-label">Checkout → order · desktop</span><span class="metric-val">29.1%</span></div>
+          <div class="track"><div class="fill fill--mute" style="width:58.7%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="verdict">
+      <p><strong>Cart and checkout are not the problem — they are the healthiest part of the funnel.</strong>
+      Effort spent there is misdirected. What fails is everything a phone user sees between landing and
+      tapping Add to Cart: comprehension, product differentiation, proof, and page weight.</p>
+    </div>
+
+    <h3>Two facts that set the agenda</h3>
+    <div class="prose">
+      <p><strong>Paid social is 54.7% of sessions and converts at 0.61%</strong> — 7.7× worse than organic search
+      (4.68%). It is almost entirely mobile, and <strong>51.8% of all sessions land on the home page</strong>. The home
+      page is not a brand page; it is GPOD's primary cold-traffic mobile landing page and should be judged as one.</p>
+      <p><strong>Email drove 57 sessions in 90 days.</strong> Klaviyo is installed and idle. The business rents 100%
+      of its demand at 0.61% conversion.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>What the audit found</h2>
+    <p class="sec-lede">Five parallel code audits against the repo and the live store. Four completed.</p>
+
+    <div class="callout">
+      <h4>The redesign would ship broken</h4>
+      <p>Four defects reach customers the moment it publishes — a 404 on the home page's primary CTA, a mobile
+      menu that cannot reach any product collection, an unedited placeholder FAQ on every PDP, and
+      <strong>"John Doe" testimonials</strong> on all four use-case collections. The decision log records those
+      testimonials as "hidden until filled"; they are not hidden. Blocks carry <code>settings: {}</code>, so Shopify
+      falls back to schema defaults and the section's own guard passes on them.</p>
+    </div>
+
+    <div class="callout" style="border-left-color: var(--accent)">
+      <h4>Eleven revenue features are already built and switched off</h4>
+      <p>A free-shipping progress bar implemented <em>twice</em> with its $50 threshold already set. Trust badges.
+      Complementary products. Recently-viewed. Express checkout in the cart drawer. The highest-ROI day in this
+      plan is a settings pass, not a build.</p>
+    </div>
+
+    <h3>Corrections to our own assumptions</h3>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>We assumed</th><th>Verified reality</th></tr></thead>
+        <tbody>
+          <tr><td>Mobile needs a sticky Add to Cart bar</td><td>It already has one, and has since the original baseline. With a sticky ATC live, mobile ATC is <em>still</em> 3.20% — evidence the constraint is comprehension, not button access.</td></tr>
+          <tr><td>Variant pickers need mobile work</td><td>All 17 products are single-variant. ~250 lines of picker logic never render.</td></tr>
+          <tr><td>Pauly P is buried by bad merchandising</td><td>It has <strong>1 unit in stock</strong> and is flagged pre-order. Not buried — unbuyable.</td></tr>
+          <tr><td>Pocket G is "coming soon"</td><td>Live with <strong>38 units</strong>, but missing from type collections, the menu, the quiz, and the compare picker, which still points at a dead handle.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Day One</h2>
+    <p class="sec-lede">Before any sprint starts. Every item is already built or is a one-value change.</p>
+
+    <div class="scroller">
+      <table>
+        <thead><tr><th>Change</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="flag flag--blocker">404</span>Point the home hero CTA at <code>/collections/frontpage</code></td>
+            <td>"Shop All GPODs" currently targets <code>/collections/all-products</code>, which <strong>does not exist</strong> — live query returns null. It is the top CTA on the page taking 51.8% of sessions.</td>
+          </tr>
+          <tr>
+            <td><span class="flag flag--blocker">Nav</span>Set <code>mobile_menu_behaviour</code> to <code>link</code>, or add "Shop all …" leaf links</td>
+            <td>Tapping <strong>Monopods, Tripods &amp; Bases, Bundles or Accessories</strong> on mobile only expands an accordion — it never navigates. Those four collections have no mobile nav path at all, which defeats the redesign's core fix for "can't tell products apart."</td>
+          </tr>
+          <tr><td><span class="flag flag--switch">On</span>Free-shipping progress bar</td><td>Implemented twice, threshold already set to $50, switched off.</td></tr>
+          <tr><td><span class="flag flag--switch">On</span>Express checkout in cart drawer</td><td>No Shop Pay / PayPal / Google Pay in cart, though the PDP has them.</td></tr>
+          <tr><td><span class="flag flag--switch">On</span>PDP trust &amp; warranty row</td><td>The only trust copy on the PDP is disabled. (Fix its typos first.)</td></tr>
+          <tr><td><span class="flag flag--switch">On</span>Complementary products · Recently viewed</td><td>Both native, both installed, both dark.</td></tr>
+          <tr><td><span class="flag flag--switch">On</span>Cart item-count badge</td><td>The count only renders in one icon variant. Today the cart icon never shows a number.</td></tr>
+          <tr><td><span class="flag flag--gap">Data</span>Fix Organization <code>sameAs</code></td><td>Reads setting IDs that don't exist, so every social link resolves to null.</td></tr>
+          <tr><td><span class="flag flag--gap">Data</span>Reset 6 stale template suffixes</td><td>Includes the #1 seller (5,717 orders) and GPOD X, which is flagged pre-order with 521 units in stock.</td></tr>
+          <tr><td><span class="flag flag--gap">Data</span>Add GTINs / barcodes</td><td>GPOD, GPOD X, Pauly P, Studio 2.0, Base 2.0, G Plate and all three bundles have blank barcodes — suppressing Advantage+ and PMax eligibility on exactly the SKUs carrying the ad budget, for a business that is 55% paid social.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Build parallel, never in place</h2>
+    <p class="sec-lede">Set up now so Intelligems can split traffic later without rework.</p>
+
+    <div class="prose">
+      <p>A change we want to learn from ships as a <strong>new</strong> template or section alongside the existing
+      one — never as an edit that overwrites it. An overwritten template has no control arm, so it can never be
+      tested, only believed.</p>
+    </div>
+
+    <div class="scroller" style="margin-bottom:24px">
+      <table>
+        <thead><tr><th>Intelligems constraint</th><th>What it forces</th></tr></thead>
+        <tbody>
+          <tr><td>Variants must live in the <strong>published</strong> theme, and the template currently in use must be the control</td><td>Variants ship to production dormant — so they must be finished work, not scratch. They're one config change from live traffic.</td></tr>
+          <tr><td><strong>The home page cannot be template-tested.</strong> Shopify blocks switching the <code>index</code> template</td><td>Home layout tests run as <strong>Theme Tests</strong> — duplicate theme, split at theme level, script installed in both. This matters most: <code>/</code> is 51.8% of sessions.</td></tr>
+          <tr><td>Losing variants are deleted; stale cookies redirect to control</td><td>Variants are cheap to create and cheap to retire — provided we actually retire them. The current stale-template mess is what happens when we don't.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <p><strong>Names encode the hypothesis, not a version.</strong> <code>product.specs-first.json</code>, not
+      <code>product.v2.json</code> — by the fourth test nobody remembers what v2 was. One hypothesis per file.</p>
+    </div>
+
+    <div class="callout" style="border-left-color: var(--accent)">
+      <h4>Defects get fixed in the control. Choices get tested as variants.</h4>
+      <p>An empty compatibility page, a 404 CTA, a "John Doe" testimonial and a factually wrong sentence about the
+      Bluetooth remote are not hypotheses — there is no version of the site where they win. Fix those everywhere,
+      immediately. Spend the testing budget on the genuinely open questions: section order, how much detail belongs
+      above the fold, whether the quiz beats the compare table as the primary decision aid.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The design system</h2>
+    <p class="sec-lede">A prerequisite, not a nicety — variants built from inconsistent tokens test which arm looks less broken.</p>
+
+    <h3>What came back clean</h3>
+    <div class="prose">
+      <p><strong>Container alignment is correct across all 13 custom sections</strong> — every one uses the same
+      classes as the header, so left edges align at every breakpoint. <strong>Zero <code>font-family</code>
+      declarations</strong> in the custom layer. <strong>Zero dead CSS.</strong> That's unusual for CSS built this
+      fast, and it's worth protecting.</p>
+    </div>
+
+    <h3>Where it fragmented</h3>
+    <div class="figures" style="margin-top:18px">
+      <div class="fig"><dt>Heading treatments</dt><dd>6<span class="sub">for one role</span></dd></div>
+      <div class="fig"><dt>Card-title sizes</dt><dd>7<span class="sub">no scale</span></dd></div>
+      <div class="fig"><dt>Secondary-text sizes</dt><dd>9<span class="sub">0.7–1rem</span></dd></div>
+      <div class="fig"><dt>Section-padding values</dt><dd>8<span class="sub">no scale</span></dd></div>
+    </div>
+
+    <div class="callout">
+      <h4>The trap for A/B variants</h4>
+      <p><strong>Deployed section padding doesn't match schema defaults.</strong> <code>pdp-compatibility</code> and
+      <code>pdp-how-to</code> ship at 30/30 against a 50/50 default; <code>pdp-specs</code> at 50/30. A variant built
+      by adding sections from defaults renders <em>looser than the current production page</em> — and we'd read that
+      as "the new layout lost," when what actually lost was the spacing. Reconciling defaults to the spacing scale
+      blocks the first variant template.</p>
+    </div>
+
+    <div class="callout">
+      <h4>Four defects on primary conversion elements, all on mobile</h4>
+      <p><strong>Home-hero is the only section of 13 missing the <code>gpod-section</code> class.</strong> Because the
+      theme globally applies <code>outline: none</code> to focus, the scoped focus rule never reaches the hero — so
+      "Shop All GPODs" and "Take the Quiz" have <strong>no dependable keyboard focus ring</strong>. One-word fix.</p>
+      <p>The compare-table "Shop" CTA renders ≈32px tall, the compare picker ≈30px, and collection-toolbar pills ≈32px
+      — all under the 44px minimum, on the primary mobile interactions. <code>prefers-reduced-motion</code> appears
+      <strong>zero times</strong> in either stylesheet, while the theme runs scroll animations throughout and the home
+      hero autoplays video.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Six sprints</h2>
+    <p class="sec-lede">One week each. A part-time developer should read these as two-week sprints, halving scope and keeping the order.</p>
+
+    <div class="sprint">
+      <div class="sprint-num">01</div>
+      <div class="sprint-body">
+        <h3>Ship &amp; Instrument</h3>
+        <p class="sprint-metric">Metric: mobile ATC rate holds at <b>≥ 3.20%</b></p>
+        <ul>
+          <li><strong>Pre-flight content gate.</strong> A grep for <code>John Doe</code>, <code>Use this answer block</code> and <code>Use this testimonial</code> across templates must return nothing before anything publishes.</li>
+          <li><strong>Staged publish.</strong> Rollback theme first, then PDP alone for 72h, then home, collections, support. Revert trigger declared in advance.</li>
+          <li><strong>Instrumentation.</strong> <code>gpod.js</code> emits zero analytics events — the quiz, compare picker and pairs-with are all unmeasurable. Nothing downstream can be proven until this exists.</li>
+          <li><strong>Fix where ads land.</strong> 301 the legacy IA URLs. Redirect a stale July 4th page that absorbed <strong>2,876 sessions</strong> in a window ending 11 August.</li>
+          <li><strong>Component defects</strong> — the missing focus ring on the hero CTAs, and three sub-44px tap targets on primary mobile conversion elements. Under an hour together.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sprint">
+      <div class="sprint-num">02</div>
+      <div class="sprint-body">
+        <h3>The Mobile PDP — shorten the decision</h3>
+        <p class="sprint-metric">Metric: mobile ATC <b>3.20% → 4.00%</b> · ≈ +$92K/yr · ships as <b>template variants</b></p>
+        <ul>
+          <li><strong>Cap the hero image height.</strong> It's uncapped, so a 4:5 portrait shot renders ~488px tall at 390px wide and pushes Add to Cart below the fold; a square shot doesn't. The catalog mixes both — this single variable decides whether ATC clears the fold.</li>
+          <li><strong>Promote specs and compatibility</strong> — they sit at positions 6 and 7, behind ~2,300px of scroll, despite answering the #1 documented complaint. Ships as <code>product.specs-first.json</code>; the current template stays as control.</li>
+          <li><strong>Collapse the raw description</strong> — 500–700px of untruncated legacy copy duplicating a metafield the specs section already renders. Ships as <code>product.compact.json</code>, cutting the PDP from 17 sections to ~10.</li>
+          <li><strong>Fix the remote-pairing contradiction.</strong> Every PDP tells customers to pair a Bluetooth remote, including on GPOD, whose own metafield says no remote is included.</li>
+          <li><strong>Gate monopod content off accessories.</strong> "Extend from the top down" renders on five products that don't telescope.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sprint">
+      <div class="sprint-num">03</div>
+      <div class="sprint-body">
+        <h3>Social Landing &amp; Speed</h3>
+        <p class="sprint-metric">Metric: social CVR <b>0.61% → 0.90%</b> · ≈ +$56K/yr · runs as a <b>Theme Test</b></p>
+        <ul>
+          <li><strong>Performance is conversion work.</strong> The live home page ships <strong>798KB of HTML</strong> (387KB of it inline JS), <strong>288 image tags</strong> and 19 sections, behind a render-blocking 426KB stylesheet, with an autoplay video as the LCP element.</li>
+          <li><strong>Keep the H1</strong> — "WE MAKE FILMING YOUR SWING EASY." is good. The promise isn't the problem; the page weight in front of it is.</li>
+          <li><strong>Ship the nav simplification.</strong> The live site has nine top-level items; the redesign's four-item IA is a real improvement sitting unpublished.</li>
+          <li><strong>Make support findable.</strong> The support and compatibility pages have empty page bodies, so search can't index them — and the FAQ's indexed body is stale pre-redesign HTML, so search returns it for terms the visible page never mentions.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sprint">
+      <div class="sprint-num">04</div>
+      <div class="sprint-body">
+        <h3>Content Placement &amp; Alignment</h3>
+        <p class="sprint-metric">Metric: mid-page scroll depth <b>+20%</b></p>
+        <ul>
+          <li><strong>Fill what customers are actively sent to.</strong> The Compatibility Guide — promoted in the nav, the footer <em>and</em> the support hub — is completely empty. The Instructions page has no remote-pairing content despite being the link that promises it.</li>
+          <li><strong>Cut duplication.</strong> The home page runs the same use-case grid twice and tells the founder's story twice before anything helps a visitor choose.</li>
+          <li><strong>Move the quiz up.</strong> It answers the single most-documented customer problem and currently sits last, at position 12 of 12.</li>
+          <li><strong>Fix content that contradicts its placement</strong> — a "pairs well with" block keyed for the GPUCK that points at the Caddy; a contact form appended to the privacy policy.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sprint">
+      <div class="sprint-num">05</div>
+      <div class="sprint-body">
+        <h3>AOV — Bundles &amp; Attach</h3>
+        <p class="sprint-metric">Metric: AOV <b>$109.24 → $119</b> · ≈ +$69K/yr</p>
+        <ul>
+          <li><strong>Bundles are the proven lever</strong> — $141–$185 AOV against $88 for a solo GPOD, on 1,681 orders already.</li>
+          <li><strong>Tell the savings story.</strong> Compare-at prices are already exactly the sum of components; no copy anywhere says "buy separately for $X."</li>
+          <li><strong>Make cross-sell transactional.</strong> "Add it to your setup" is a link to another product page — it restarts the decision instead of completing it.</li>
+          <li><strong>Build-a-bundle</strong>, using the Peak Design pattern already researched. A bundle app sits installed and idle.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sprint">
+      <div class="sprint-num">06</div>
+      <div class="sprint-body">
+        <h3>Capture &amp; Retention</h3>
+        <p class="sprint-metric">Metric: email-attributed revenue <b>&lt;1% → 5%</b></p>
+        <ul>
+          <li><strong>The quiz captures nothing.</strong> A visitor who just told us their use case, device and priority is the highest-intent lead on the site, and the result screen has no email field at all. Every completion is a lead thrown away.</li>
+          <li><strong>Point back-in-stock at the SKUs that run dry</strong> — Pauly P at 1 unit, Base 2.0 at 11, G Bundle 3 oversold. Two capture mechanisms are already installed.</li>
+          <li><strong>Post-purchase onboarding</strong> — setup, remote pairing, Sportsbox redemption and the stuck-extension fix. Cuts support load, protects reviews, seeds repurchase.</li>
+          <li><strong>Test capture placement carefully.</strong> An aggressive mobile popup can suppress ATC. Any interstitial ships as an A/B test against the north-star metric, never default-on.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How we'll know</h2>
+    <p class="sec-lede">Four queries, re-pulled at the end of every sprint, logged in the decision table.</p>
+    <div class="prose">
+      <p>North star is <strong>mobile add-to-cart rate</strong>. Closing 25% of the desktop gap is +419 orders per
+      90 days — <strong>+$186K/year</strong>. Closing half is <strong>+$373K/year</strong>.</p>
+      <p><strong>Guard rails:</strong> hold cart→order at 47.4% and checkout→order at 49.6%. Those are currently
+      healthy. A change that lifts ATC while damaging them is not a win.</p>
+    </div>
+
+    <div class="callout callout--gap">
+      <h4>Open decision</h4>
+      <p><strong>RevenueHunt Quizzes is installed and enabled</strong> on the store, alongside the native product
+      finder we built. Two quiz systems is one too many — decide which is canonical before Sprint 6 wires quiz→email
+      capture, or that work gets done twice and the data lands in two places.</p>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Full detail and evidence in <code>docs/sprint-plan.md</code> · measurement baseline and queries in
+    <code>docs/funnel-baseline.md</code> · branch <code>claude/dtc-website-sprint-plan-guzmiy</code>.
+    All figures pulled from live Shopify analytics on 11 August 2026.
+  </footer>
+
+</div>
