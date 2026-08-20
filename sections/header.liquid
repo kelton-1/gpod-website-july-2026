@@ -273,15 +273,28 @@
 
     "logo": {{ logo | img_url: image_size | prepend: "https:" | json }},
   {%- endif -%}
-  "sameAs": [
-    {{ settings.instagram_link | json }},
-    {{ settings.facebook_link | json }},
-    {{ settings.twitter_link | json }},
-    {{ settings.youtube_link | json }},
-    {{ settings.vimeo_link | json }},
-    {{ settings.pinterest_link | json }},
-    {{ settings.tumblr_link | json }}
-  ],
+  {%- comment -%}
+    These read `*_url`, which is what config/settings_schema.json actually
+    defines. They previously read `*_link`, plus `vimeo_link`/`tumblr_link`
+    which do not exist as settings at all — so every entry resolved to null
+    and Google received `"sameAs": [null, null, null, null, null, null, null]`.
+    Blank channels are dropped rather than emitted as empty strings.
+  {%- endcomment -%}
+  {%- assign social_settings = settings.instagram_url | append: '|' | append: settings.facebook_url | append: '|' | append: settings.twitter_url | append: '|' | append: settings.youtube_url | append: '|' | append: settings.tiktok_url | append: '|' | append: settings.linkedin_url | append: '|' | append: settings.pinterest_url | split: '|' -%}
+  {%- capture social_same_as -%}
+    {%- assign social_first = true -%}
+    {%- for social_url in social_settings -%}
+      {%- assign trimmed = social_url | strip -%}
+      {%- if trimmed != blank -%}
+        {%- unless social_first %},{% endunless -%}
+        {{- trimmed | json -}}
+        {%- assign social_first = false -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if social_same_as != blank -%}
+    "sameAs": [{{ social_same_as }}],
+  {%- endif -%}
   "url": {{ shop.url | append: page.url | json }}
 }
 </script>

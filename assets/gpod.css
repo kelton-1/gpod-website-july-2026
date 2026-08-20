@@ -493,7 +493,16 @@
   margin-bottom: 8px;
 }
 
+/* 44px is the floor for a touch target (WCAG 2.5.5 / Apple HIG). Measured at
+   80x34 on a 390px phone — and this is the compare table's only way into a
+   product, on the section built to answer "which one do I buy". Padding alone
+   cannot fix it: the button is inline-flex, so the height comes from the line
+   box. */
 .gpod-compare__cta.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
   padding: 8px 18px;
 }
 
@@ -1097,6 +1106,10 @@ a.gpod-support__card:hover {
 
 .gpod-toolbar__pill {
   flex: 0 0 auto;
+  /* Same 44px floor as the compare CTA above; these were ~32px. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   border: 1.5px solid var(--gpod-border);
   border-radius: 999px;
   padding: 8px 16px;
@@ -1433,6 +1446,10 @@ a.gpod-support__card:hover {
   display: block;
   width: 100%;
   margin-bottom: 10px;
+  /* Per-column <select> on the compare page — the mechanism for choosing what
+     to compare, measured ~30px. Same 44px touch floor as the pills and the
+     compare CTA. */
+  min-height: 44px;
   padding: 7px 8px;
   font-size: 0.85rem;
   font-weight: 600;
@@ -3436,102 +3453,39 @@ a.gpod-ways__card:hover .gpod-ways__media img {
 }
 
 /* --------------------------------------------------------------
-   PDP sticky media — the sticky unit is the whole column
+   PDP media — no sticky, deliberately
 
-   The first pass stuck `.product__images__container` (the slider only). The
-   thumbnail rail, `.product__images__slider-nav-holder`, is its NEXT SIBLING
-   and stayed in normal flow, so on every PDP where the buy column is taller
-   than the media — which is all of them, once the bundle app, key specs and
-   model picker are in the box — the pinned image slid down over a rail that
-   had not moved. Measured on Pauly P at 1440x900: the image frame travelled
-   129px past the top of the rail, painting the thumbnails across the middle
-   of the product shot. That is the "carousel does this on scroll" report.
+   History, because this has moved twice:
 
-   Two rules follow from that:
+   1. A pass in early August made the media column sticky to close a
+      ~1,000px dead band beside the buy column, but stuck
+      `.product__images__container` — the slider only. The thumbnail rail is
+      its next sibling and stayed in flow, so the pinned image slid down over
+      the rail and painted the thumbnails across the product shot. That is the
+      bug Paul reported on 2026-08-13 (129px of travel on Pauly P at
+      1440x900).
 
-   1. Stick `.product__images` — the grid cell that holds BOTH the slider and
-      the rail — so they travel together and cannot overlap. `align-self:
-      start` stops the cell stretching to the row height, which is what gave
-      the old sticky element its 129px of travel in the first place.
+   2. The fix made `.product__images` the sticky unit so the slider and rail
+      travelled together. That works, but a sticky column has to fit the
+      viewport or the rail is stranded below the fold while pinned — so the
+      frame had to be capped to `100vh - header - rail`, which rendered the
+      hero shot 656px tall instead of 981px on a 1440x900 laptop.
 
-   2. Once the column is one sticky block, anything below the fold inside it
-      is unreachable while pinned — so the frame is capped to leave room for
-      the rail. Portrait gallery shots are ~0.79, i.e. 981px tall in a 771px
-      column, taller than a 900px laptop viewport on their own. The cap keeps
-      image + rail on screen at every desktop height; the theme already sets
-      object-fit: contain on the media, so a capped frame letterboxes rather
-      than crops.
+   3. This is the end state: no sticky, no cap, media at full size in normal
+      flow. Two measurements decided it. The dead band that motivated the
+      sticky pass is now 0-263px, not 1,000 — the buy column grew a key-specs
+      strip and a model picker, so the two columns nearly match (media ~1,099
+      vs info 1,110 on Pauly P, 1,362 on GPOD X). Trading a third of the
+      product image for 263px of whitespace is the wrong way round, and on a
+      PDP the product shot is the product.
 
-   Reserve: 118px rail (108px Flickity viewport + 5px margins) + 20px slack.
+   Nothing here is sticky, so there is nothing that can overlap the rail. The
+   grid rebalance above (1.7fr / 1fr) stays — that part was a clear win.
 
-   Below 700px of viewport height there is not enough room for a capped frame
-   worth looking at, so the media simply stays in flow — no sticky, therefore
-   no overlap either.
+   `snippets/media.liquid` still emits `--aspect-ratio` on the video and model
+   wrappers. Unused now; kept because it is the hook any future clamp needs,
+   and the padding-top ratio box cannot be clamped without it.
    -------------------------------------------------------------- */
-
-@media only screen and (min-width: 1024px) and (min-height: 700px) {
-  .product__images {
-    --gpod-pdp-media-top: calc(
-      var(--gpod-header-card-top) + var(--gpod-header-card-h) + 20px
-    );
-    --gpod-pdp-media-h: calc(100vh - var(--gpod-pdp-media-top) - 138px);
-    position: sticky;
-    top: var(--gpod-pdp-media-top);
-    align-self: start;
-  }
-
-  /* Single-media products render no rail, so the frame gets that space back. */
-  .product__images:has(.product__images__slider--single) {
-    --gpod-pdp-media-h: calc(100vh - var(--gpod-pdp-media-top) - 20px);
-  }
-
-  /* Undo the first pass: the container must not move inside the column.
-     Scoped to .product__images so quick view — which renders the same
-     container without that wrapper — keeps the theme's own positioning. */
-  .product__images .product__images__container {
-    position: static;
-    top: auto;
-  }
-
-  /* The frame's height comes from a padding-top ratio box, which max-height
-     cannot clamp (padding is outside the content box). Swapping to the
-     aspect-ratio property keeps the natural sizing — height still resolves
-     from the column width — and makes the box clampable. */
-  .product__images .product-single__media--image .image-wrapper {
-    padding-top: 0;
-    height: auto;
-    aspect-ratio: var(--aspect-ratio, 1);
-    max-height: var(--gpod-pdp-media-h);
-  }
-
-  /* Video and model slides carry the ratio as an inline padding-top, so the
-     override needs !important; snippets/media.liquid passes the ratio as a
-     custom property for this. */
-  .product__images .product-single__media--video,
-  .product__images .product-single__media--model {
-    padding-top: 0 !important;
-    aspect-ratio: var(--aspect-ratio, 1.7778);
-    max-height: var(--gpod-pdp-media-h);
-  }
-
-  .product__images .product-single__media--video .deferred-media__poster,
-  .product__images .product-single__media--model .deferred-media__poster,
-  .product__images .product-single__media--video .image-wrapper,
-  .product__images .product-single__media--model .image-wrapper {
-    height: 100%;
-    padding-top: 0;
-  }
-
-  .product__images .product-single__media--video img,
-  .product__images .product-single__media--model img,
-  .product__images .product-single__media--video video,
-  .product__images .product-single__media--video iframe,
-  .product__images .product-single__media--model model-viewer {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-}
 
 /* Collapsible description */
 .product__description-toggle {

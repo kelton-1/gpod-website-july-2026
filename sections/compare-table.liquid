@@ -28,7 +28,7 @@
     assign spec_labels = spec_labels | slice: 0, max_specs
   endif
   assign picker = section.settings.enable_picker
-  assign default_candidates = 'gpodmagsafe,gpodx,gpod-pauly-p2,gpod-travel-1,gpod-studio,indoor-base-for-gpod-gpod-mini,gpod-anywhere-tripod,gpod-mini,g-bundle-one-gpod-with-gpod-base,g-bundle-two-gpod-x-with-gpod-base,g-bundle-three-gpod-pauly-p-and-gpod-base,gpod-travel-sportsbox-3d-player-annual-swing-analysis'
+  assign default_candidates = 'gpodmagsafe,gpodx,gpod-pauly-p2,gpod-travel-1,gpod-studio,indoor-base-for-gpod-gpod-mini,gpod-pocket-g,gpod-mini,g-bundle-one-gpod-with-gpod-base,g-bundle-two-gpod-x-with-gpod-base,g-bundle-three-gpod-pauly-p-and-gpod-base,gpod-travel-sportsbox-3d-player-annual-swing-analysis'
   assign candidate_handles = section.settings.candidate_handles | default: default_candidates | split: ','
 
   assign applicable_collection = section.settings.applicable_collection

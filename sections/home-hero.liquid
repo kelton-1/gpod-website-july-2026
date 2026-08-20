@@ -24,7 +24,13 @@
   --hero-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
 {%- endcapture -%}
 
-<section class="gpod-hero{% if section.settings.mobile_fullscreen %} gpod-hero--mobile-full{% endif %}"
+{%- comment -%}
+  `gpod-section` is load-bearing, not decorative: the theme applies
+  `outline: none` to focus globally, and the custom layer restores a visible
+  focus ring scoped to `.gpod-section`. Without the class the two primary
+  CTAs on the highest-traffic page in the store had no keyboard focus ring.
+{%- endcomment -%}
+<section class="gpod-section gpod-hero{% if section.settings.mobile_fullscreen %} gpod-hero--mobile-full{% endif %}"
   data-section-type="home-hero"
   data-gpod-play-video-mobile="{{ section.settings.play_video_mobile }}"
   style="{{ style }}"

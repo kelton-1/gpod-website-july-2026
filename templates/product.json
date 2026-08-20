@@ -99,7 +99,7 @@
           "type": "model-picker",
           "settings": {
             "label": "Model",
-            "handles": "gpodmagsafe,gpodx,gpod-pauly-p2,gpod-travel-1,gpod-studio",
+            "handles": "gpodmagsafe,gpodx,gpod-pauly-p2,gpod-travel-1,gpod-studio,gpod-pocket-g",
             "hide_if_absent": true
           }
         },
@@ -589,21 +589,29 @@
         "item-1": {
           "type": "item",
           "settings": {
-            "title": "Question",
-            "answer": "<p>Use this answer block to discuss some commonly asked questions you've discovered from your customers interactions. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your product or collection. This section will appear across all products.</p>"
+            "title": "Which phones work with the magnetic mount?",
+            "answer": "<p>All of them. iPhone 12 and newer with MagSafe snap straight on with nothing added. Android phones and older iPhones use the 3M metal plates included with every purchase — stick one on your phone or case and it's just as magnetic.</p>"
           }
         },
         "item-2": {
           "type": "item",
           "settings": {
-            "title": "Question",
-            "answer": "<p>Use this answer block to discuss some commonly asked questions you've discovered from your customers interactions. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your product or collection. This section will appear across all products.</p>"
+            "title": "Does it work with a thick case, iPad, or GoPro?",
+            "answer": "<p>Thick or non-MagSafe cases: put an included metal plate on the case and you're set. iPads and tablets: yes — our magnets hold devices up to 3.5 lbs (we recommend the Studio 2.0 for larger iPads). GoPro and cameras: every magnetic head has a universal 1/4\" camera thread.</p>"
+          }
+        },
+        "item-3": {
+          "type": "item",
+          "settings": {
+            "title": "How much does the GPOD weigh? Will it fit in my golf bag?",
+            "answer": "<p>The original GPOD weighs about 8 ounces — a sleeve of 6 golf balls. Every monopod is designed to ride in a standard golf bag; the GPOD X collapses to 20 inches specifically for bag carry. Exact lengths and weights are on each product page and the <a href=\"/pages/compare-gpod-models\">compare page</a>.</p>"
           }
         }
       },
       "block_order": [
         "item-1",
-        "item-2"
+        "item-2",
+        "item-3"
       ],
       "disabled": true,
       "settings": {

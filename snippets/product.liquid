@@ -90,7 +90,7 @@
   {%- endstyle -%}
 {%- endif -%}
 
-<div class="product product--layout-{{ product_layout }}{% if section.settings.compact_mobile_media %} product--compact-mobile-media{% endif %} container-wrap{% unless is_product-template %} featured-product featured-product--{{ section.id }}{% if onboarding %} onboarding-product{% endif %}{% endunless %}"
+<div class="product product--layout-{{ product_layout }}{% if section.settings.compact_mobile_media %} product--compact-mobile-media{% endif %} container-wrap{% unless is_product_template %} featured-product featured-product--{{ section.id }}{% if onboarding %} onboarding-product{% endif %}{% endunless %}"
   id="Product--{{ section.id }}"
   data-lightbox="{{ lightbox }}"
   {% if scrollable_images %}data-product-scrollable-images{% endif %}
