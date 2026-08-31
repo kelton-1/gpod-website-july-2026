@@ -4,7 +4,7 @@
    ========================================================================== */
 
 :root {
-  --gpod-accent: #8cc662;
+  --gpod-accent: #8AC663;
   --gpod-focus: #284c14;
   --gpod-ink: var(--COLOR-HEADING, #111);
   --gpod-text: var(--COLOR-TEXT, #333);
@@ -88,7 +88,7 @@
 }
 
 .gpod-variant-availability.is-available .gpod-variant-availability__dot {
-  background: #2e7d32;
+  background: #8AC663;
 }
 
 .gpod-shipping-expectation {
@@ -1794,7 +1794,7 @@ a.gpod-ways__card:hover .gpod-ways__media img {
   letter-spacing: 0.14em;
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--gpod-accent, #8cc662);
+  color: var(--gpod-accent, #8AC663);
   margin: 0 0 10px;
 }
 
@@ -2311,14 +2311,14 @@ a.gpod-ways__card:hover .gpod-ways__media img {
    Set in config/settings_data.json so it stays merchant-editable through the
    theme editor; only the two things the settings cannot express live here.
 
-   Primary CTA is brand green #8cc662 with a #111 label. The obvious version —
+   Primary CTA is brand green #8AC663 with a #111 label. The obvious version —
    green with a white label — is not available: measured 2.03:1, a hard WCAG
    fail. Green on #111 measures 9.32:1, roughly double Arc's own blue button,
    so the brand colour finally lands on the thing you want clicked while
    staying comfortably accessible.
 
    Green now means exactly one thing: action. Sale/savings badges moved to
-   monochrome (color_saving_badge #8cc662 -> #111111) so the two never compete.
+   monochrome (color_saving_badge #8AC663 -> #111111) so the two never compete.
 
    The four near-identical darks (#000000 / #222222 / #333333 / #2e3234, plus
    the typo'd duplicate token color_seconsdary_new) collapse to a single ink.
@@ -2392,7 +2392,7 @@ a.gpod-ways__card:hover .gpod-ways__media img {
    Credibility band — sections/gpod-proof-band.liquid
 
    Replaces section-icons-row on the homepage. The old band ran solid
-   #8cc662 behind #333 body text: a 6.24:1 combination that read muddy, and
+   #8AC663 behind #333 body text: a 6.24:1 combination that read muddy, and
    it spent the brand colour on a background while the CTAs were black.
 
    Inverted here — light surface, near-black type, green on the icon strokes
@@ -2440,7 +2440,7 @@ a.gpod-ways__card:hover .gpod-ways__media img {
 .gpod-proof__icon {
   display: flex;
   margin-bottom: 18px;
-  color: var(--proof-icon, #8cc662);
+  color: var(--proof-icon, #8AC663);
 }
 
 .gpod-proof__icon svg {
@@ -2627,6 +2627,12 @@ a.gpod-ways__card:hover .gpod-ways__media img {
      the first card still lines up with the heading above it. */
   margin-left: calc(-1 * var(--gpod-edge, 40px));
   margin-right: calc(-1 * var(--gpod-edge, 40px));
+  /* Same fix as the PDP scrollers below: `scroll-snap-align: start` snaps to
+     the scrollport edge, which sits INSIDE the padding, so without this the
+     row scrolls itself one gutter on load and the first card (Monopods) reads
+     as cut off against the heading. Reported in WEB AUDIT NOTES, Aug 21 2026:
+     "Cannot slide the product categories on desktop. Monopods is cut off." */
+  scroll-padding-left: var(--gpod-edge, 40px);
 }
 
 .gpod-explore__row::-webkit-scrollbar {
@@ -2965,7 +2971,7 @@ a.gpod-ways__card:hover .gpod-ways__media img {
 .gpod-reviews__stars {
   display: inline-flex;
   gap: 2px;
-  color: var(--rev-star, #8cc662);
+  color: var(--rev-star, #8AC663);
   font-size: 1.05rem;
   line-height: 1;
 }
@@ -2999,7 +3005,7 @@ a.gpod-ways__card:hover .gpod-ways__media img {
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: underline;
-  text-decoration-color: var(--rev-star, #8cc662);
+  text-decoration-color: var(--rev-star, #8AC663);
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
 }
@@ -4992,4 +4998,118 @@ body:has(.gpod-cmp.has-picks) .site-footer {
 .gpod-cmp__tray [hidden],
 .gpod-cmp [hidden] {
   display: none !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Product card one-liner (WEB AUDIT NOTES, Aug 21 2026)
+   "Where products are displayed as thumbnails, add one line or a few bullets
+   briefly describing the product so a shopper can quickly understand and
+   compare the differences between the products." Flagged under BOTH Homepage
+   and Shop general notes, and it answers the #1 documented customer problem:
+   shoppers cannot tell GPOD models apart (docs/customer-insights.md).
+
+   Copy comes from the existing gpod.best_for product metafield, so there is no
+   second source of truth to keep in sync with the PDP spec table and the
+   compare table, which already read the same field.
+
+   Clamped to 2 lines: best_for is a one-line field by convention, but nothing
+   enforces that in the admin, so a long value degrades to an ellipsis instead
+   of pushing prices out of alignment across a grid row.
+   --------------------------------------------------------------------------- */
+.product-block__best-for {
+  margin: 2px 0 6px;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: var(--gpod-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Centre-aligned grids (settings.product_title_position) keep the line centred
+   with the title rather than ragged against it. */
+.product-block__info--center .product-block__best-for {
+  text-align: center;
+}
+
+.gpod-pairs__best-for {
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: var(--gpod-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Horizontal scroller arrows (WEB AUDIT NOTES, Aug 21 2026)
+   "Cannot slide the product categories on desktop. Monopods is cut off."
+   "Review Banner: unable to scroll or expand."
+   Both rows hide their scrollbar, leaving a mouse-only desktop user with no
+   way to move them. Buttons are injected by gpod.js (initScroller), so they
+   only ever exist when the JS that drives them has run.
+
+   Pointer-only by design: touch users can already swipe, and the buttons
+   would just cover content on a narrow screen.
+   --------------------------------------------------------------------------- */
+.gpod-scroller__btn {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gpod-scroller__btn {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--gpod-border);
+    border-radius: 50%;
+    background: #fff;
+    color: var(--gpod-ink);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .gpod-scroller__btn:hover {
+    background: var(--gpod-soft);
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.18);
+  }
+
+  .gpod-scroller__btn[hidden] {
+    display: none;
+  }
+
+  .gpod-scroller__btn--prev { left: 4px; }
+  .gpod-scroller__btn--next { right: 4px; }
+
+  /* On the dark reviews band a white pill reads as a hole punched in the
+     section, so match the band instead. */
+  .gpod-reviews .gpod-scroller__btn {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.28);
+    color: #fff;
+  }
+
+  .gpod-reviews .gpod-scroller__btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gpod-scroller__btn {
+    transition: none;
+  }
 }

@@ -120,6 +120,20 @@
     filter: grayscale(0);
     opacity: 1;
   }
+
+  /* Touch devices have no hover, so the grayscale never lifted and the logos
+     sat grey until tapped (which fires :focus-within) — reported in WEB AUDIT
+     NOTES, Aug 21 2026: "Ticker on mobile stays black/grey as you cannot
+     hover. It only changes colors when you click on it... Mobile, let's just
+     put in full color." Colour is the resting state where hover cannot exist.
+     Keyed on the input device, not a width breakpoint, so a touchscreen
+     laptop is treated as touch. */
+  @media (hover: none) {
+    #pm-{{ uid }} .pm__item img {
+      filter: grayscale(0);
+      opacity: 1;
+    }
+  }
   {%- endif %}
 
   #pm-{{ uid }} .pm__link {

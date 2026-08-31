@@ -926,7 +926,81 @@
     syncHeight();
   }
 
+  /* --------------------------------------------------------------
+     Horizontal scroller arrows
+
+     WEB AUDIT NOTES, Aug 21 2026 reported the same class of bug twice:
+       "Cannot slide the product categories on desktop. Monopods is cut off."
+       "Review Banner: unable to scroll or expand."
+     Both rows are `overflow-x: auto` with the scrollbar hidden, so a mouse
+     user with no trackpad has nothing to grab — the content is reachable
+     only by touch or shift+wheel. This adds real prev/next buttons.
+
+     Progressive enhancement: the buttons are created here rather than in
+     Liquid, so a JS failure leaves the markup exactly as it was (still
+     scrollable by touch) instead of leaving dead controls on the page.
+     -------------------------------------------------------------- */
+
+  function initScroller(track) {
+    if (!track || track.__gpodScroller) return;
+    track.__gpodScroller = true;
+
+    var wrap = track.parentNode;
+    if (!wrap) return;
+
+    // The buttons are positioned against this, so it must not be static.
+    if (getComputedStyle(wrap).position === 'static') wrap.style.position = 'relative';
+
+    function make(dir, label) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'gpod-scroller__btn gpod-scroller__btn--' + dir;
+      b.setAttribute('aria-label', label);
+      // The row itself is focusable and announced; these are a pointer
+      // convenience, so keep them out of the tab order to avoid making
+      // keyboard users tab through two controls that do the same thing.
+      b.tabIndex = -1;
+      b.innerHTML = '<span aria-hidden="true">' + (dir === 'prev' ? '‹' : '›') + '</span>';
+      b.addEventListener('click', function () {
+        // Scroll by ~85% of a viewport so a partially visible card is not
+        // skipped past; scroll-snap lands it cleanly.
+        var by = Math.max(160, Math.round(track.clientWidth * 0.85));
+        track.scrollBy({ left: dir === 'prev' ? -by : by, behavior: 'smooth' });
+      });
+      return b;
+    }
+
+    var prev = make('prev', 'Scroll backward');
+    var next = make('next', 'Scroll forward');
+    wrap.appendChild(prev);
+    wrap.appendChild(next);
+
+    function sync() {
+      // 2px of slack: sub-pixel layout means scrollLeft rarely hits the
+      // exact maximum, which would otherwise leave "next" permanently live.
+      var max = track.scrollWidth - track.clientWidth;
+      var overflows = max > 2;
+      wrap.classList.toggle('gpod-scroller--active', overflows);
+      prev.hidden = !overflows || track.scrollLeft <= 2;
+      next.hidden = !overflows || track.scrollLeft >= max - 2;
+    }
+
+    track.addEventListener('scroll', sync, { passive: true });
+    if (typeof ResizeObserver === 'function') {
+      new ResizeObserver(sync).observe(track);
+    } else {
+      window.addEventListener('resize', sync);
+    }
+    sync();
+  }
+
+  function initScrollers(root) {
+    var scope = root || document;
+    scope.querySelectorAll('.gpod-explore__row, .gpod-reviews__track').forEach(initScroller);
+  }
+
   function init() {
+    initScrollers();
     document.querySelectorAll('[data-gpod-drill]').forEach(initNavDrilldown);
     document.querySelectorAll('[data-gpod-finder]').forEach(initFinder);
     document.querySelectorAll('[data-compare-picker]').forEach(initComparePicker);
@@ -946,6 +1020,7 @@
 
   // Re-init inside the Shopify theme editor when the section reloads.
   document.addEventListener('shopify:section:load', function (event) {
+    initScrollers(event.target);
     var drill = event.target.querySelector('[data-gpod-drill]');
     if (drill) initNavDrilldown(drill);
     var finder = event.target.querySelector('[data-gpod-finder]');
