@@ -429,6 +429,9 @@
     var goEl = root.querySelector('[data-cmp-go]');
     var clearEl = root.querySelector('[data-cmp-clear]');
     var hintEl = root.querySelector('[data-cmp-hint]');
+    /* Captured before sync() ever runs — sync() overwrites this text with the
+       at-max message, so reading it lazily would bank that as the default. */
+    var hintDefault = hintEl ? hintEl.textContent : '';
     if (!tray || !itemsEl || !goEl) return;
 
     /* A fixed element is positioned against the nearest ancestor that
@@ -485,21 +488,50 @@
       });
 
       var handles = picks.map(function (pick) { return pick.handle; });
-      goEl.href = compareUrl + (compareUrl.indexOf('?') > -1 ? '&' : '?') + 'models=' + handles.join(',');
+      var picked = compareUrl + (compareUrl.indexOf('?') > -1 ? '&' : '?') + 'models=' + handles.join(',');
+      goEl.href = picked;
+
+      /* The toolbar also carries a plain "Compare models" link. It used to go
+         to the unfiltered table, so a shopper who ticked two boxes and then
+         clicked it saw the entire lineup — the audit's "comparing more models
+         than what's selected". Point it at the same picks, and only while
+         there are picks to carry, so it still works as a plain entry point. */
+      document.querySelectorAll('[data-cmp-link]').forEach(function (link) {
+        if (!link.__cmpHref) link.__cmpHref = link.getAttribute('href') || compareUrl;
+        link.href = picks.length ? picked : link.__cmpHref;
+      });
+
       if (countEl) countEl.textContent = picks.length ? String(picks.length) : '';
       goEl.classList.toggle('is-disabled', picks.length < 2);
       goEl.setAttribute('aria-disabled', picks.length < 2 ? 'true' : 'false');
-      if (hintEl) hintEl.hidden = picks.length >= 2;
       tray.hidden = picks.length === 0;
       root.classList.toggle('has-picks', picks.length > 0);
+
+      var atMax = picks.length >= max;
 
       boxes.forEach(function (entry) {
         var chosen = indexOfHandle(entry.handle) > -1;
         entry.input.checked = chosen;
-        entry.input.disabled = !chosen && picks.length >= max;
+        entry.input.disabled = !chosen && atMax;
         entry.label.classList.toggle('is-checked', chosen);
-        entry.label.title = entry.input.disabled ? 'Remove a model to compare another' : '';
+        /* A title tooltip was the only signal that a checkbox had gone inert.
+           Titles never fire on touch, and this store is 85% mobile, so the
+           checkbox simply "did nothing" — the audit's second compare bug. The
+           dimming is already handled by .gpod-cmp__toggle:has(input:disabled)
+           in gpod.css; the missing half was the reason, which now goes in the
+           tray hint where it is actually on screen. */
+        entry.label.title = '';
       });
+
+      if (hintEl) {
+        if (atMax) {
+          hintEl.textContent = 'That is ' + max + ' models — remove one to compare a different model.';
+          hintEl.hidden = false;
+        } else {
+          hintEl.textContent = hintDefault;
+          hintEl.hidden = picks.length >= 2;
+        }
+      }
     }
 
     function commit() {
