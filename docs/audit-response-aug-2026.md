@@ -141,6 +141,43 @@ These need Paul or Shawn, and are called out so Thursday can resolve them rather
 
 ---
 
+## Retired copy worth re-homing
+
+Pocket G's `gpod.best_for` was a six-clause paragraph. It was replaced on 2026-09-01 with a
+one-liner matching the other 14 SKUs, because `best_for` renders on product cards and the
+paragraph read as prose beside one-word siblings.
+
+The original content is good — it just needs a component built for it. `sections/pdp-ways-to-use.liquid`
+already exists, takes four labelled slots, and self-hides until images are added. These six are
+almost exactly its four-to-six slots, and Pocket G is the SKU the Playbook explicitly markets
+beyond golf, so it is the natural first candidate once photography exists.
+
+> **Golf** — Overhead putting practice, full swing recording, golf bag mounting, on-course content.
+> **Travel** — Airplane tray table streaming, hands-free FaceTime and movies.
+> **Sports** — Fence-mounted recording for tennis, pickleball, and more.
+> **Work** — Desk stand for Zoom, calls, and notifications at eye level.
+> **Fitness** — Hands-free workout recording.
+> **Content Creation** — Grip, selfie stick, and low/high-angle filming in one tool.
+
+Current one-liners, for reference when writing copy for any new SKU — the house pattern is a
+7–15 word phrase, no trailing period, gerund-led for accessories:
+
+| Product | `best_for` |
+|---|---|
+| GPOD | Simple set-height filming on the course and range |
+| GPOD X | Full height in a packable, collapsible monopod |
+| GPOD Pauly P | Fast height changes with a twist ring — the flagship monopod |
+| GPOD Studio 2.0 | Coaches, fitters, and creators filming every day |
+| GPOD Travel | Travel, indoor practice, and quick setups on hard ground |
+| GPOD : The Pocket G | Five mounts in one, folded down to pocket size |
+| GPOD Caddy | Mounting your phone to a golf cart or any metal surface |
+| GPOD Base 2.0 | Turning any GPOD into an indoor / simulator tripod |
+| GPOD Connect 2.0 | Turning a GPOD + alignment stick into a swing training aid |
+| GPUCK w/MagSafe | Adding or replacing a magnetic head on any 1/4 in thread mount |
+| GPOD G Plate | Anchoring a GPOD to a hard floor or sim bay — no base needed |
+
+---
+
 ## Items that are blocked on assets, not code
 
 Paul's shot list. Tracked in `docs/assets-needed.md`.
