@@ -18,13 +18,13 @@
         "height_desktop": 660,
         "mobile_fullscreen": false,
         "headline": "WE MAKE FILMING YOUR SWING EASY.",
-        "subhead": "Just stick it and swing it.",
+        "subhead": "",
         "show_trust": true,
         "trust_text": "Trusted by 75,000+ Golfers",
-        "cta1_text": "Shop All Products",
-        "cta1_link": "/collections/frontpage",
-        "cta2_text": "Take the Quiz",
-        "cta2_link": "/pages/product-finder-quiz"
+        "cta1_text": "Shop Our Best Sellers",
+        "cta1_link": "/collections/frontpage?sort_by=best-selling",
+        "cta2_text": "",
+        "cta2_link": ""
       }
     },
     "featured_core": {
@@ -737,9 +737,39 @@
 
        Weights are the corrected figures from the spec sheet: GPOD 4.8 oz (NOT
        the 4.4 oz printed on the old comparison slide), iRangeSports Stick EXT
-       27.2 oz. Keep both bar values in oz — the bars are proportional. */
+       27.2 oz. Keep both bar values in oz — the bars are proportional.
+
+       DISABLED 2026-08-31 following WEB AUDIT NOTES, Aug 21 2026: "I don't
+       understand this section – could be misleading as not all products are
+       carbon fiber. And comparing aluminum speaks negatively about our
+       products that are aluminium. 4.8oz at first glance looks like a rating
+       as well."
+
+       Three separate reasons, and the section cannot be re-messaged in place
+       to answer them, because its whole layout is a large number plus
+       proportional bars — there is no non-numeric path through it.
+
+       1. The Brand Playbook (Aug 2026) independently retires this framing
+          under "A Claim to Use Carefully": carbon fiber is true of the GPOD
+          and GPOD X only, while Pauly P, Studio 2.0, Travel and Pocket G are
+          aluminum alloy. Its approved replacement is material-matched-to-use-
+          case prose, which needs a prose section, not this one.
+       2. The bar comparison is against a competitor's mount, not GPOD's own
+          aluminum SKUs — so it is not literally self-disparaging — but the
+          effect Shawn describes is real: a shopper who reads "aluminum =
+          heavy" and then buys an aluminum Pauly P has been told their own
+          product is the worse one.
+       3. The 4.8 oz figure is in dispute across four sources: this template
+          says 4.8, the Brand Playbook says 4.4, and the live PDPs for the
+          GPOD say 7 oz and 8 oz. We should not publish a headline weight
+          while our own PDPs contradict it.
+
+       Kept rather than deleted so the bars and copy survive for whatever
+       replaces it. Re-enable only once the weight is settled and the framing
+       is re-authored. */
     "proof": {
       "type": "gpod-stat-band",
+      "disabled": true,
       "blocks": {
         "bar_gpod": {
           "type": "bar",
@@ -857,7 +887,7 @@
             /* Base 2.0 is the category. */
             "cutout_handle": "indoor-base-for-gpod-gpod-mini",
             "title": "Bases",
-            "text": "Weighted anchors and plates for surfaces you can't stake.",
+            "text": "Weighted anchors and plates for mats and hard floors \u2014 with a G-Peg for grass.",
             "image": "shopify://shop_images/GPOD_BASE_2.0_1rev.png"
           }
         },
@@ -892,7 +922,7 @@
         "exp_bundles"
       ],
       "settings": {
-        "heading": "Explore our products",
+        "heading": "Explore Our Best Sellers",
         "lede": "",
         "cta_label": "Shop now",
         "show_count": false,

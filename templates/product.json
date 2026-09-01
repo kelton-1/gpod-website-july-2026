@@ -269,7 +269,7 @@
           "settings": {
             "icon_name": "shop",
             "title": "Premium Build",
-            "text": "<p>Always crafted using lightweight carbon-fiber for maximum strength and dependability.</p>"
+            "text": "<p>Built in the material each model needs — carbon fiber where every ounce counts, aircraft-grade aluminum alloy where adjustability and durability lead.</p>"
           }
         }
       },
@@ -542,7 +542,7 @@
           "disabled": true,
           "settings": {
             "title": "PREMIUM MATERIALS",
-            "description": "<p>Crafted with light-weight carbon fiber, for exceptional strength, durability, and dependability.</p>",
+            "description": "<p>Engineered in the material the job calls for — lightweight carbon fiber on the GPOD and GPOD X, aircraft-grade aluminum alloy across the adjustable models.</p>",
             "image": "shopify://shop_images/GPOD_Gif.gif",
             "image_position": "left",
             "image_link": "",
@@ -635,8 +635,8 @@
         "item_qCUXAX": {
           "type": "item",
           "settings": {
-            "title": "What is the difference between the GPOD and the GPOD mini?",
-            "answer": "<p>The <a href=\"https://www.gpodgolf.com/products/gpod-mini\" target=\"_blank\">GPOD mini </a>is a magnetic clamp that attaches to an alignment stick. The GPOD has the same magnetic head, however it comes equipped with a carbon fiber body that can be inserted into the ground. The GPOD also has a 360 adjustable mount allowing one to film and view their device at any angle. The magnetic head is attached by a universal 1/4\" screw, which makes the GPOD compatible with all cameras including GoPros.</p>"
+            "title": "What is the difference between the GPOD and the GPOD X?",
+            "answer": "<p>Both are carbon fiber monopods with the same magnetic head and the same pointed end that stakes into the ground. The difference is how they pack: the original GPOD is a single fixed 41 in piece, while the GPOD X is three pieces with a quarter-turn cam lock, collapsing to 20 in for a golf bag pocket and extending to 51 in. Pick the GPOD for the simplest setup, the GPOD X if it has to travel.</p>"
           }
         }
       },
