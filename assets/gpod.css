@@ -1645,12 +1645,45 @@ a.gpod-support__card:hover {
 @media (min-width: 1024px) {
   .gpod-ways__track--grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    /* Column count comes from the section, which drops to 3 above four
+       cards so six read as two rows rather than one very thin row. */
+    grid-template-columns: repeat(var(--WAYS-COLS, 4), 1fr);
     overflow: visible;
   }
   .gpod-ways__track--grid .gpod-ways__card {
     flex: none;
   }
+}
+
+/* Text-only card: shown when a use case has copy but no photography yet.
+   Without the 4:5 image block a bare label and caption float with nothing
+   holding them, so the card supplies its own surface. It keeps the same
+   footprint as a photo card, so a mixed row does not look broken while
+   photography lands one shot at a time. */
+.gpod-ways__card--text {
+  background: var(--gpod-soft);
+  border: 1px solid var(--gpod-border);
+  border-radius: var(--gpod-radius);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gpod-ways__card--text .gpod-ways__label {
+  font-weight: 700;
+}
+
+/* The accent rule reads as a section marker on a plain card, which the
+   photo variant gets from its image instead. */
+.gpod-ways__card--text .gpod-ways__label::before {
+  content: "";
+  display: block;
+  width: 26px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--gpod-accent);
+  margin-bottom: 10px;
 }
 
 .gpod-ways__media {

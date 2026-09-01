@@ -1,0 +1,733 @@
+/* Pocket G product template.
+ * Diverges from product.json in exactly one way: pdp_ways is enabled and
+ * carries the six use cases from the Brand Playbook. They were previously
+ * crammed into the gpod.best_for metafield, which renders on product cards
+ * and has to be one line - six clauses there read as prose beside one-word
+ * siblings. This is the component built for that shape.
+ *
+ * Cards are text-only for now. Pocket G has eight images and every one
+ * carries the burned-in GPOD wordmark the Aug 2026 audit asks us to strip,
+ * so none is usable as lifestyle imagery. Drop a photo into any block once
+ * shot and that card upgrades in place.
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product",
+      "blocks": {
+        "price-and-title": {
+          "type": "price-and-title",
+          "settings": {
+            "show_vendor": true,
+            "padding_bottom": 20
+          }
+        },
+        "fera_product_reviews_summary_acGGHL": {
+          "type": "shopify://apps/fera/blocks/product_reviews_summary/2fbfcfa7-8a04-479f-89a8-0621fa099c51",
+          "settings": {
+            "star_color": "#000000",
+            "size": 16,
+            "show_count": true,
+            "show_avg_rating": false,
+            "alignment": "left",
+            "hide_when_no_reviews": true
+          }
+        },
+        "variant_availability": {
+          "type": "variant-availability",
+          "settings": {
+            "padding_bottom": 12
+          }
+        },
+        "form": {
+          "type": "form",
+          "settings": {
+            "show_quantity": true,
+            "enable_payment_button": true,
+            "show_gift_card_recipient": false,
+            "padding_bottom": 20
+          }
+        },
+        "shipping_expectation": {
+          "type": "shipping-expectation",
+          "settings": {
+            "text": "",
+            "padding_bottom": 12
+          }
+        },
+        "purchase_policy_links": {
+          "type": "policy-links",
+          "settings": {
+            "show_refund_policy": true,
+            "show_shipping_policy": true,
+            "accessibility_label": "Purchase policies",
+            "padding_bottom": 20
+          }
+        },
+        "one_click_upsell_on_page_h96tkz": {
+          "type": "shopify://apps/one-click-upsell/blocks/on-page/bfe6e378-b73a-4871-b8d3-7d6ede22678e",
+          "settings": {}
+        },
+        "hype_discounts_campaigns_ui_tiered_cart_progress_bar_FmXYWE": {
+          "type": "shopify://apps/hype-discounts/blocks/ui-tiered-cart-progress-bar/dad89215-8ec1-431c-8488-2e358677b8c3",
+          "disabled": true,
+          "settings": {
+            "identifier": "Hype-WQTHBHE1-tiered-cart-progress-bar",
+            "font_size": 18,
+            "font_weight": "bold",
+            "header_bg_color": "#1eff00",
+            "header_text_color": "#000000",
+            "body_bg_color": "#ffffff",
+            "body_text_color": "#000000",
+            "product_bg_color": "#ffffff",
+            "max_width": 100,
+            "custom_css": "",
+            "custom_js": ""
+          }
+        },
+        "product-description": {
+          "type": "product-description",
+          "settings": {
+            "padding_bottom": 20
+          }
+        },
+        "complementary_products_HBRVTW": {
+          "type": "complementary-products",
+          "disabled": true,
+          "settings": {
+            "padding_bottom": 20
+          }
+        },
+        "model_picker": {
+          "type": "model-picker",
+          "settings": {
+            "label": "Model",
+            "handles": "gpodmagsafe,gpodx,gpod-pauly-p2,gpod-travel-1,gpod-studio",
+            "hide_if_absent": true
+          }
+        },
+        "key_specs": {
+          "type": "key-specs",
+          "settings": {
+            "keys": "extended_length,collapsed_length,weight,phone_attachment"
+          }
+        }
+      },
+      "block_order": [
+        "fera_product_reviews_summary_acGGHL",
+        "price-and-title",
+        "variant_availability",
+        "key_specs",
+        "model_picker",
+        "form",
+        "shipping_expectation",
+        "one_click_upsell_on_page_h96tkz",
+        "hype_discounts_campaigns_ui_tiered_cart_progress_bar_FmXYWE",
+        "product-description",
+        "complementary_products_HBRVTW",
+        "purchase_policy_links"
+      ],
+      "settings": {
+        "product_layout": "slideshow",
+        "image_size": "medium",
+        "compact_mobile_media": true,
+        "lightbox": true,
+        "show_cart_bar": true,
+        "enable_video_looping": false,
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "pdp_benefits": {
+      "type": "pdp-benefits",
+      "blocks": {
+        "b_solo": {
+          "type": "benefit",
+          "settings": {
+            "icon": "person",
+            "title": "Filming alone, solved",
+            "text": "Stake it, snap your phone on, hit balls. No leaning your phone against a bag and hoping, no asking the next bay for a favor."
+          }
+        },
+        "b_speed": {
+          "type": "benefit",
+          "settings": {
+            "icon": "clock",
+            "title": "Set up between shots, not between sessions",
+            "text": "The mount is a magnet, not a cradle — your phone goes on and comes off one-handed. Filming a swing costs you seconds."
+          }
+        },
+        "b_stable": {
+          "type": "benefit",
+          "settings": {
+            "icon": "anchor",
+            "title": "Footage that holds still",
+            "text": "The stake goes into the turf and stays there. On mats, tile or a sim floor, add the GPOD Base 2.0 and it sits just as planted."
+          }
+        },
+        "b_pack": {
+          "type": "benefit",
+          "settings": {
+            "icon": "bag",
+            "title": "Lives in your golf bag",
+            "text": "Goes in with the clubs and comes out ready. Nothing to assemble, no legs to unfold, nothing to level."
+          }
+        }
+      },
+      "block_order": [
+        "b_solo",
+        "b_speed",
+        "b_stable",
+        "b_pack"
+      ],
+      "settings": {
+        "applicable_collection": "monopods",
+        "heading": "What it fixes",
+        "padding_top": 50,
+        "padding_bottom": 20
+      }
+    },
+    "pdp_ways": {
+      "type": "pdp-ways-to-use",
+      "blocks": {
+        "way_1": {
+          "type": "way",
+          "settings": {
+            "label": "Golf",
+            "caption": "Overhead putting practice, full swing recording, and golf bag mounting on the course.",
+            "link": "",
+            "link_text": "Shop this setup"
+          }
+        },
+        "way_2": {
+          "type": "way",
+          "settings": {
+            "label": "Travel",
+            "caption": "Airplane tray table streaming, plus hands-free FaceTime and movies.",
+            "link": "",
+            "link_text": "Shop this setup"
+          }
+        },
+        "way_3": {
+          "type": "way",
+          "settings": {
+            "label": "Sports",
+            "caption": "Fence-mounted recording for tennis, pickleball and more.",
+            "link": "",
+            "link_text": "Shop this setup"
+          }
+        },
+        "way_4": {
+          "type": "way",
+          "settings": {
+            "label": "Work",
+            "caption": "Desk stand for Zoom, calls and notifications at eye level.",
+            "link": "",
+            "link_text": "Shop this setup"
+          }
+        },
+        "way_5": {
+          "type": "way",
+          "settings": {
+            "label": "Fitness",
+            "caption": "Hands-free workout recording.",
+            "link": "",
+            "link_text": "Shop this setup"
+          }
+        },
+        "way_6": {
+          "type": "way",
+          "settings": {
+            "label": "Content creation",
+            "caption": "Grip, selfie stick, and low or high-angle filming in one tool.",
+            "link": "",
+            "link_text": "Shop this setup"
+          }
+        }
+      },
+      "block_order": [
+        "way_1",
+        "way_2",
+        "way_3",
+        "way_4",
+        "way_5",
+        "way_6"
+      ],
+      "settings": {
+        "kicker": "One Pocket G, six settings",
+        "heading": "Ways to use it",
+        "text": "<p>Five mounts fold out of something the length of a credit card. Here is where people actually use it.</p>",
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "1763423954672c8f0a": {
+      "type": "apps",
+      "settings": {
+        "width": "container-wrap"
+      }
+    },
+    "section_icons_row_Yk6GXG": {
+      "type": "section-icons-row",
+      "blocks": {
+        "text_aNWEFR": {
+          "type": "text",
+          "settings": {
+            "icon_name": "award",
+            "title": "Trusted On Tour",
+            "text": "<p>You'll find GPOD In countless bags on the PGA Tour from pros to coaches and creators.</p>"
+          }
+        },
+        "text_Jc9f8K": {
+          "type": "text",
+          "settings": {
+            "icon_name": "lock",
+            "title": "Lifetime Warranty",
+            "text": "<p>We guarantee that your GPOD will last as long as you need It to.</p>"
+          }
+        },
+        "text_4RhtaA": {
+          "type": "text",
+          "settings": {
+            "icon_name": "shop",
+            "title": "Premium Build",
+            "text": "<p>Built in the material each model needs — carbon fiber where every ounce counts, aircraft-grade aluminum alloy where adjustability and durability lead.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_aNWEFR",
+        "text_Jc9f8K",
+        "text_4RhtaA"
+      ],
+      "disabled": true,
+      "settings": {
+        "alignment": "center",
+        "color_icons_bg": "#8cc662",
+        "color_icons_text": "#333333",
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "pdp_specs": {
+      "type": "pdp-specs",
+      "settings": {
+        "heading": "Specs & what you get",
+        "specs_title": "Specifications",
+        "box_title": "What's in the box",
+        "specs_note": "",
+        "show_compare_link": true,
+        "compare_link": "",
+        "scale_caption": "",
+        "padding_top": 50,
+        "padding_bottom": 30
+      }
+    },
+    "pdp_compat": {
+      "type": "pdp-compatibility",
+      "blocks": {
+        "compat_iphone": {
+          "type": "item",
+          "settings": {
+            "icon": "phone",
+            "title": "iPhone with MagSafe",
+            "text": "iPhone 12 and newer snap straight onto the GPUCK. No plate, no case swap — the magnet is the mount."
+          }
+        },
+        "compat_android": {
+          "type": "item",
+          "settings": {
+            "icon": "android",
+            "title": "Android and older iPhones",
+            "text": "Three metal plates with 3M adhesive are in the box. Stick one to your phone or case and it holds exactly like MagSafe does."
+          }
+        },
+        "compat_tablet": {
+          "type": "item",
+          "settings": {
+            "icon": "tablet",
+            "title": "Tablets",
+            "text": "Use one of the included metal plates. For a full-size iPad, the GPOD Studio 2.0 gives you a wider, steadier footing."
+          }
+        },
+        "compat_camera": {
+          "type": "item",
+          "settings": {
+            "icon": "check",
+            "title": "Cases, grips and wallets",
+            "text": "Most cases are fine — the magnet only needs to reach through. Thick, metal-backed or heavily padded cases are the exception; stick a plate to the outside of the case and you are set."
+          }
+        }
+      },
+      "block_order": [
+        "compat_iphone",
+        "compat_android",
+        "compat_tablet",
+        "compat_camera"
+      ],
+      "settings": {
+        "applicable_collection": "monopods",
+        "heading": "Will it work with your phone?",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "pdp_pairs": {
+      "type": "pdp-pairs-with",
+      "blocks": {
+        "p_base": {
+          "type": "pair",
+          "settings": {
+            "product": "indoor-base-for-gpod-gpod-mini",
+            "usecase": "Convert your monopod into a tripod for indoors and hard surfaces"
+          }
+        },
+        "p_gpuck": {
+          "type": "pair",
+          "settings": {
+            "product": "gpod-caddy",
+            "usecase": "Mount to a cart, rail or any metal surface"
+          }
+        },
+        "p_gplate": {
+          "type": "pair",
+          "settings": {
+            "product": "gpod-gplate",
+            "usecase": "With Connect 2.0, the semi-permanent minimalist setup"
+          }
+        },
+        "p_travel": {
+          "type": "pair",
+          "settings": {
+            "product": "gpod-travel-1",
+            "usecase": "Folds flat for travel and stands on hard ground"
+          }
+        },
+        "p_connect": {
+          "type": "pair",
+          "settings": {
+            "product": "connect",
+            "usecase": "Use your GPOD as a training aid with an alignment stick"
+          }
+        }
+      },
+      "block_order": [
+        "p_base",
+        "p_connect",
+        "p_gplate",
+        "p_gpuck",
+        "p_travel"
+      ],
+      "settings": {
+        "applicable_collection": "monopods",
+        "kicker": "Complete your setup",
+        "heading": "Pairs well with",
+        "padding_top": 40,
+        "padding_bottom": 50
+      }
+    },
+    "pdp_howto": {
+      "type": "pdp-how-to",
+      "blocks": {
+        "step_extend": {
+          "type": "step",
+          "settings": {
+            "title": "Set your height",
+            "text": "GPOD X: a quarter turn on each cam lock, extend, turn it back. Pauly P: twist the oversized ring and slide. The original GPOD is a fixed 41 in, so there is nothing to set."
+          }
+        },
+        "step_attach": {
+          "type": "step",
+          "settings": {
+            "title": "Snap your phone on",
+            "text": "The GPUCK is already mounted on the ball head. An iPhone with MagSafe goes straight on; for anything else, stick one of the three included metal plates to your phone or case first."
+          }
+        },
+        "step_film": {
+          "type": "step",
+          "settings": {
+            "title": "Angle it, then hit",
+            "text": "The ball joint turns a full 360°, so you can set down-the-line, face-on or an overhead putting view and leave it there. Hit record and swing."
+          }
+        },
+        "step_plant": {
+          "type": "step",
+          "settings": {
+            "title": "Plant it",
+            "text": "Push the stake into the turf until it feels firm — a few inches is plenty. On mats, tile or a sim floor, screw on the GPOD Base 2.0 instead."
+          }
+        }
+      },
+      "block_order": [
+        "step_plant",
+        "step_extend",
+        "step_attach",
+        "step_film"
+      ],
+      "settings": {
+        "applicable_collection": "monopods",
+        "kicker": "Under a minute",
+        "heading": "How to use it",
+        "video_url": "",
+        "support_link": "/pages/support-guides",
+        "support_link_text": "Guides & troubleshooting",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "1742914022b79f91bc": {
+      "type": "apps",
+      "blocks": {
+        "fera_product_reviews_rhfFBL": {
+          "type": "shopify://apps/fera/blocks/product_reviews/2fbfcfa7-8a04-479f-89a8-0621fa099c51",
+          "settings": {
+            "heading": "Product Reviews",
+            "layout": "masonry",
+            "star_color": "#000000",
+            "when_no_reviews": "show_from_related"
+          }
+        }
+      },
+      "block_order": [
+        "fera_product_reviews_rhfFBL"
+      ],
+      "settings": {
+        "width": "container-wrap"
+      }
+    },
+    "gpod_compare": {
+      "type": "compare-table",
+      "blocks": {
+        "col_0": {
+          "type": "product",
+          "settings": {
+            "product": "gpodmagsafe",
+            "badge": ""
+          }
+        },
+        "col_1": {
+          "type": "product",
+          "settings": {
+            "product": "gpodx",
+            "badge": ""
+          }
+        },
+        "col_2": {
+          "type": "product",
+          "settings": {
+            "product": "gpod-pauly-p2",
+            "badge": ""
+          }
+        }
+      },
+      "block_order": [
+        "col_0",
+        "col_1",
+        "col_2"
+      ],
+      "settings": {
+        "applicable_collection": "monopods",
+        "kicker": "",
+        "heading": "THE BREAKDOWN",
+        "text": "<p>We've spent countless hours laboring over every painstaking detail to provide you with the best possible magnetic phone mount on the market.</p>",
+        "center_heading": false,
+        "enable_picker": false,
+        "candidate_handles": "",
+        "footnote": "<p>Still unsure? <a href=\"/pages/product-finder-quiz\">Take the 30-second product finder</a> or <a href=\"/pages/contact-us\">ask us directly</a>.</p>",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "max_specs": 4,
+        "layout": "cards"
+      }
+    },
+    "section_product_features_6FAzHV": {
+      "type": "section-product-features",
+      "blocks": {
+        "text_z4QGtf": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "360° ROTATING HEAD",
+            "description": "<p>360-degree adjustable mag-safe magnetic head allows you to capture your swing from any angle, including overhead putting views.</p>",
+            "image": "shopify://shop_images/GPOD_Rotating_Head.gif",
+            "image_position": "right",
+            "image_link": "",
+            "button_text": "",
+            "button_link": "",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        },
+        "text_A7rcUT": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "PREMIUM MATERIALS",
+            "description": "<p>Engineered in the material the job calls for — lightweight carbon fiber on the GPOD and GPOD X, aircraft-grade aluminum alloy across the adjustable models.</p>",
+            "image": "shopify://shop_images/GPOD_Gif.gif",
+            "image_position": "left",
+            "image_link": "",
+            "button_text": "",
+            "button_link": "",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        },
+        "text_9cYQHt": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "UNIVERSAL COMPATABILITY",
+            "description": "<p> Works with all iPhones, other smartphones (using the included metal plates with 3M® Adhesive), and cameras with a 1/4\" thread, including GoPro.</p>",
+            "image": "shopify://shop_images/CloseupMagSafeMagnetGPODCarbonFiberPhoneHolder_c7e9548e-704d-4070-a575-4836ad1f954d.jpg",
+            "image_position": "right",
+            "image_link": "",
+            "button_text": "",
+            "button_link": "",
+            "btn_type": "btn--primary",
+            "btn_size": "",
+            "btn_style": "btn--solid"
+          }
+        }
+      },
+      "block_order": [
+        "text_z4QGtf",
+        "text_A7rcUT",
+        "text_9cYQHt"
+      ],
+      "disabled": true,
+      "settings": {
+        "blocks_alignment": "center",
+        "image_aspect_ratio": 1,
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "faq": {
+      "type": "section-faq",
+      "blocks": {
+        "item-1": {
+          "type": "item",
+          "settings": {
+            "title": "Question",
+            "answer": "<p>Use this answer block to discuss some commonly asked questions you've discovered from your customers interactions. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your product or collection. This section will appear across all products.</p>"
+          }
+        },
+        "item-2": {
+          "type": "item",
+          "settings": {
+            "title": "Question",
+            "answer": "<p>Use this answer block to discuss some commonly asked questions you've discovered from your customers interactions. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your product or collection. This section will appear across all products.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item-1",
+        "item-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "FAQ",
+        "subheading": "Questions and Answers",
+        "layout_split": true,
+        "width": "container",
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "section_faq_h3p3ep": {
+      "type": "section-faq",
+      "blocks": {
+        "item_EpJQ98": {
+          "type": "item",
+          "settings": {
+            "title": "What is so special about the GPOD?",
+            "answer": "<p>GPOD makes the lightest, strongest magnetic mounts for filming your swing. The carbon fiber monopods — the original GPOD and the GPOD X — weigh under 6 oz, and every GPOD mount shares the same adjustable MagSafe magnetic head. No flimsy plastic clamps, and nothing to cradle your phone in.</p>"
+          }
+        },
+        "item_UMTALX": {
+          "type": "item",
+          "settings": {
+            "title": "What is the difference between the GPOD X and the GPOD Magsafe?",
+            "answer": "<p>The <a href=\"https://gpodgolf.com/collections/frontpage/products/gpodx\">GPOD X</a> is a collapsible and extendable version of the GPOD. It can collapse to 20\" and extend to 51\" allowing the user to store in smaller bags and carry ons as well as film at different heights. The original <a href=\"https://gpodgolf.com/collections/frontpage/products/gpodmagsafe\" target=\"_blank\">GPOD for Magsafe </a>is one universal length at 41\". It was specifically engineered to meet most peoples' hand heights at address for optimal swing videos. The original GPOD requires minimal setup which makes it the easiest tool to film your game and content.  </p>"
+          }
+        },
+        "item_qCUXAX": {
+          "type": "item",
+          "settings": {
+            "title": "What is the difference between the GPOD and the GPOD X?",
+            "answer": "<p>Both are carbon fiber monopods with the same magnetic head and the same pointed end that stakes into the ground. The difference is how they pack: the original GPOD is a single fixed 41 in piece, while the GPOD X is three pieces with a quarter-turn cam lock, collapsing to 20 in for a golf bag pocket and extending to 51 in. Pick the GPOD for the simplest setup, the GPOD X if it has to travel.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_EpJQ98",
+        "item_UMTALX",
+        "item_qCUXAX"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "title": "FAQs",
+        "subheading": "YOU'VE GOT QUESTIONS, WE'VE GOT ANSWERS",
+        "layout_split": true,
+        "width": "container",
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "1745947916937339e6": {
+      "type": "apps",
+      "blocks": {
+        "instagram_feed_mp_instagram_block_kyHd8P": {
+          "type": "shopify://apps/mp-instagram-feed/blocks/mp_instagram_block/2e85b90f-5da9-4654-967e-051f1942340c",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "instagram_feed_mp_instagram_block_kyHd8P"
+      ],
+      "settings": {
+        "width": "container-wrap"
+      }
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "related_products_enable": true,
+        "title": "Related products",
+        "padding_top": 50,
+        "padding_bottom": 0
+      }
+    },
+    "recent": {
+      "type": "section-recently-viewed-products",
+      "disabled": true,
+      "settings": {
+        "title": "Recently viewed products",
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    }
+  },
+  "order": [
+    "main",
+    "pdp_benefits",
+    "pdp_ways",
+    "1763423954672c8f0a",
+    "section_icons_row_Yk6GXG",
+    "pdp_compat",
+    "pdp_howto",
+    "pdp_specs",
+    "1742914022b79f91bc",
+    "gpod_compare",
+    "pdp_pairs",
+    "section_product_features_6FAzHV",
+    "faq",
+    "section_faq_h3p3ep",
+    "1745947916937339e6",
+    "related",
+    "recent"
+  ]
+}

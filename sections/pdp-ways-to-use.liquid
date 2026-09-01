@@ -1,27 +1,44 @@
 {% comment %}
   PDP: "Ways to use it" — Huckberry's "Ways to Wear It", adapted. A
-  scroll-snap row of lifestyle cards (grid on wide screens when 4 or
-  fewer), each showing the product in a different setting with a label,
-  caption, and optional link.
+  scroll-snap row of use-case cards (grid on wide screens up to six),
+  each showing a setting with a label, caption, optional photo and link.
 
   Content-pending convention: the section renders NOTHING until at least
-  one block has an image, so it can ship wired into the product template
-  before photography exists (same pattern as pdp-pairs-with).
-{% endcomment %}
+  one block has content, so it can ship wired into the product template
+  before that content exists (same pattern as pdp-pairs-with).
 
-{%- capture style -%}
-  --PT: {{ section.settings.padding_top }}px;
-  --PB: {{ section.settings.padding_bottom }}px;
-{%- endcapture -%}
+  A card needs a label OR a photo — not both. The original rule was
+  photo-only, which meant a product with real, written use cases could not
+  show them until a shoot happened. Pocket G is exactly that case: the
+  Playbook lists six use cases for it (Golf / Travel / Sports / Work /
+  Fitness / Content Creation) and none of them have lifestyle photography
+  yet. Text-first cards ship the content now and upgrade in place the
+  moment a photo is dropped into the block — no template rework.
+{% endcomment %}
 
 {%- liquid
   assign visible = 0
   for block in section.blocks
-    if block.settings.image != blank
+    if block.settings.image != blank or block.settings.label != blank
       assign visible = visible | plus: 1
     endif
   endfor
+
+  comment
+    Column count follows the content: 5 or 6 cards read better as three
+    across two rows than as one very thin row of six.
+  endcomment
+  assign cols = visible
+  if visible > 4
+    assign cols = 3
+  endif
 -%}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+  --WAYS-COLS: {{ cols }};
+{%- endcapture -%}
 
 {%- if visible > 0 -%}
 <section class="gpod-section gpod-ways container-wrap section-padding"
@@ -39,14 +56,15 @@
       <div class="gpod-lede">{{ section.settings.text }}</div>
     {%- endif -%}
 
-    <div class="gpod-ways__track{% if visible <= 4 %} gpod-ways__track--grid{% endif %}" role="list">
+    <div class="gpod-ways__track{% if visible <= 6 %} gpod-ways__track--grid{% endif %}" role="list">
       {%- for block in section.blocks -%}
-        {%- if block.settings.image != blank -%}
+        {%- if block.settings.image != blank or block.settings.label != blank -%}
           {%- assign tag = 'div' -%}
           {%- if block.settings.link != blank -%}
             {%- assign tag = 'a' -%}
           {%- endif -%}
-          <{{ tag }}{% if tag == 'a' %} href="{{ block.settings.link }}"{% endif %} class="gpod-ways__card" role="listitem" {{ block.shopify_attributes }}>
+          <{{ tag }}{% if tag == 'a' %} href="{{ block.settings.link }}"{% endif %} class="gpod-ways__card{% if block.settings.image == blank %} gpod-ways__card--text{% endif %}" role="listitem" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
             <div class="gpod-ways__media">
               <img
                 src="{{ block.settings.image | image_url: width: 520 }}"
@@ -58,6 +76,7 @@
                 alt="{{ block.settings.label | default: section.settings.heading | escape }}"
               >
             </div>
+            {%- endif -%}
             {%- if block.settings.label != blank -%}
               <h3 class="gpod-ways__label">{{ block.settings.label | escape }}</h3>
             {%- endif -%}
@@ -71,7 +90,7 @@
         {%- endif -%}
       {%- endfor -%}
     </div>
-    {%- if visible > 4 -%}
+    {%- if visible > 6 -%}
       <p class="gpod-compare__hint gpod-compare__hint--mobile">Swipe for more →</p>
     {%- endif -%}
   </div>
@@ -135,13 +154,13 @@
           "type": "image_picker",
           "id": "image",
           "label": "Photo",
-          "info": "Card stays hidden until a photo is added. Any ratio works — it crops to 4:5."
+          "info": "Optional. The card shows as soon as it has a Setting label; adding a photo upgrades it. Any ratio works — it crops to 4:5."
         },
         {
           "type": "text",
           "id": "label",
           "label": "Setting",
-          "info": "e.g. 'Range days', 'Sim room', 'On the road'"
+          "info": "Required — the card is hidden without it. e.g. 'Range days', 'Sim room', 'On the road'"
         },
         {
           "type": "text",
