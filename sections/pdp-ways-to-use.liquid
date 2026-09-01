@@ -90,7 +90,12 @@
         {%- endif -%}
       {%- endfor -%}
     </div>
-    {%- if visible > 6 -%}
+    {%- comment -%}
+      The hint is mobile-only in CSS, and on mobile the row is always a
+      scroller whatever the count — so it belongs on any multi-card row,
+      not on the desktop grid-overflow threshold it used to be tied to.
+    {%- endcomment -%}
+    {%- if visible > 1 -%}
       <p class="gpod-compare__hint gpod-compare__hint--mobile">Swipe for more →</p>
     {%- endif -%}
   </div>
