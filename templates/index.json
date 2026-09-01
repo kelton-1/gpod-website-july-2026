@@ -859,36 +859,21 @@
     "explore": {
       "type": "gpod-explore",
       "blocks": {
-        "exp_monopods": {
+        /* Three categories, not five. WEB AUDIT NOTES, Aug 21 2026 asked to
+           "simplify the categories here" to Core Products / Accessories /
+           Bundles. The old split by product TYPE (Monopods / Tripods / Bases)
+           was the July IA; the audit replaces it with a split by tier, which
+           also moves Base 2.0 into Accessories and Caddy into Core Products.
+           The Bases card is retired outright — its copy denied staking while
+           its image showed the G-Peg you stake with. */
+        "exp_core": {
           "type": "card",
           "settings": {
-            "collection": "monopods",
+            "collection": "core-products",
             /* Angled GPOD X — the mid-range monopod, and the one that reads best at card size. */
             "cutout_handle": "gpodx",
-            "title": "Monopods",
-            "text": "Stake-in-the-ground magnetic pods. Fixed or collapsible."
-          }
-        },
-        "exp_tripods": {
-          "type": "card",
-          "settings": {
-            "collection": "tripods-bases",
-            /* Travel over Studio: deployed legs fill a portrait card, where the Studio is 0.2 aspect. */
-            "cutout_handle": "gpod-travel-1",
-            "title": "Tripods",
-            "text": "Free-standing legs for hard ground, mats and studios.",
-            "image": "shopify://shop_images/GPOD_STUDIO_2.0_HERO__IMAGE.png"
-          }
-        },
-        "exp_bases": {
-          "type": "card",
-          "settings": {
-            "collection": "tripods-bases",
-            /* Base 2.0 is the category. */
-            "cutout_handle": "indoor-base-for-gpod-gpod-mini",
-            "title": "Bases",
-            "text": "Weighted anchors and plates for mats and hard floors \u2014 with a G-Peg for grass.",
-            "image": "shopify://shop_images/GPOD_BASE_2.0_1rev.png"
+            "title": "Core Products",
+            "text": "Monopods, tripods and mounts \u2014 every GPOD that holds your phone on its own."
           }
         },
         "exp_accessories": {
@@ -898,7 +883,7 @@
             /* The GPUCK is the accessory people actually search for. */
             "cutout_handle": "replacement-magnet-for-magsafe",
             "title": "Accessories",
-            "text": "Mounts, pucks, clamps and the parts that connect them.",
+            "text": "Bases, pucks, plates and the parts that connect them.",
             "image": "shopify://shop_images/1_9f64aed4-baa0-420e-abd4-51e42867cf60.png"
           }
         },
@@ -915,9 +900,7 @@
         }
       },
       "block_order": [
-        "exp_monopods",
-        "exp_tripods",
-        "exp_bases",
+        "exp_core",
         "exp_accessories",
         "exp_bundles"
       ],
