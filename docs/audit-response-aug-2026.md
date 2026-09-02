@@ -141,16 +141,25 @@ These need Paul or Shawn, and are called out so Thursday can resolve them rather
 
 ---
 
-## Retired copy worth re-homing
+## Re-homed copy — done 2026-09-02
 
-Pocket G's `gpod.best_for` was a six-clause paragraph. It was replaced on 2026-09-01 with a
-one-liner matching the other 14 SKUs, because `best_for` renders on product cards and the
-paragraph read as prose beside one-word siblings.
+Pocket G's `gpod.best_for` was a six-clause paragraph. It was replaced with a one-liner matching
+the other 14 SKUs, because `best_for` renders on product cards and has to be one line.
 
-The original content is good — it just needs a component built for it. `sections/pdp-ways-to-use.liquid`
-already exists, takes four labelled slots, and self-hides until images are added. These six are
-almost exactly its four-to-six slots, and Pocket G is the SKU the Playbook explicitly markets
-beyond golf, so it is the natural first candidate once photography exists.
+The six use cases now live in **`templates/product.pocket-g.json`**, on the PDP, in the
+`pdp-ways-to-use` section built for exactly that shape. Two things had to change to get there:
+
+1. **The section is now text-first.** It only rendered a card that had a photo, which made it
+   useless for a product whose use cases are written but unphotographed. A card now qualifies on
+   a label OR a photo. Dropping a photo into a block upgrades that card in place — no rework.
+2. **Pocket G got its own template.** `product.json` is shared by every PDP, so the content had
+   to go in a suffixed template with `templateSuffix: pocket-g` on the product.
+
+**The cards are text-only on purpose.** Pocket G has eight images and every one carries the
+burned-in GPOD wordmark the audit asks us to strip — they are marketing slides, not lifestyle
+photography. Using them would ship the exact thing Shawn flagged, six times down one page. Two
+of the six use cases (Golf, Work) do have usable-looking shots underneath the branding, so they
+are the cheapest wins whenever the reshoot happens.
 
 > **Golf** — Overhead putting practice, full swing recording, golf bag mounting, on-course content.
 > **Travel** — Airplane tray table streaming, hands-free FaceTime and movies.
