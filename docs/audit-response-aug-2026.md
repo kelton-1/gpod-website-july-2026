@@ -141,6 +141,29 @@ These need Paul or Shawn, and are called out so Thursday can resolve them rather
 
 ---
 
+## Resolved — GPOD weight is 4.4 oz (2026-09-02)
+
+The Brand Playbook is the source of truth and states **4.4 oz** twice: the Product Lineup table
+("Carbon fiber, 4.4 oz") and the GPOD detail section ("Single-piece carbon fiber, 41" fixed length,
+3/8" diameter, 4.4 oz").
+
+An earlier note in this doc claimed the live PDPs published 7 oz and 8 oz. **That was wrong.** The
+active `gpodmagsafe` and `gpodx` descriptions state no weight at all; the 7 oz / 8 oz figures sit on
+`g-pod` and `gpod-carbon-fiber`, which are both DRAFT and never render on the storefront. There was no
+live contradiction — only the repo's own 4.8 oz, which was simply wrong.
+
+The homepage stat band stays retired regardless: the audit rejected it on three separate grounds
+(carbon-fiber framing, disparaging aluminum, reads like a rating), none of which the correct number fixes.
+
+Two real issues remain, both separate from the weight:
+
+- The live GPOD description contradicts itself on material — "1 x Carbon Fiber GPOD" in What's
+  Included and "Machine-milled aluminum alloy components" in Key Features.
+- No live PDP states a weight at all, though weight is a documented pre-purchase question
+  (`docs/customer-insights.md`). 4.4 oz can now go into the PDP spec table safely.
+
+---
+
 ## Re-homed copy — done 2026-09-02
 
 Pocket G's `gpod.best_for` was a six-clause paragraph. It was replaced with a one-liner matching
