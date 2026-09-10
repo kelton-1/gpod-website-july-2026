@@ -273,15 +273,41 @@
 
     "logo": {{ logo | img_url: image_size | prepend: "https:" | json }},
   {%- endif -%}
-  "sameAs": [
-    {{ settings.instagram_link | json }},
-    {{ settings.facebook_link | json }},
-    {{ settings.twitter_link | json }},
-    {{ settings.youtube_link | json }},
-    {{ settings.vimeo_link | json }},
-    {{ settings.pinterest_link | json }},
-    {{ settings.tumblr_link | json }}
-  ],
+  {%- liquid
+    # The theme's social settings are instagram_url, facebook_url, etc. —
+    # this block read *_link ids that exist in no schema, so every entry
+    # rendered null. Emit only the populated ones.
+    assign same_as = ''
+    if settings.instagram_url != blank
+      assign same_as = same_as | append: settings.instagram_url | append: '§'
+    endif
+    if settings.facebook_url != blank
+      assign same_as = same_as | append: settings.facebook_url | append: '§'
+    endif
+    if settings.twitter_url != blank
+      assign same_as = same_as | append: settings.twitter_url | append: '§'
+    endif
+    if settings.tiktok_url != blank
+      assign same_as = same_as | append: settings.tiktok_url | append: '§'
+    endif
+    if settings.youtube_url != blank
+      assign same_as = same_as | append: settings.youtube_url | append: '§'
+    endif
+    if settings.snapchat_url != blank
+      assign same_as = same_as | append: settings.snapchat_url | append: '§'
+    endif
+    if settings.pinterest_url != blank
+      assign same_as = same_as | append: settings.pinterest_url | append: '§'
+    endif
+    if settings.linkedin_url != blank
+      assign same_as = same_as | append: settings.linkedin_url | append: '§'
+    endif
+    if settings.tumblr_url != blank
+      assign same_as = same_as | append: settings.tumblr_url | append: '§'
+    endif
+    assign same_as_list = same_as | split: '§'
+  -%}
+  "sameAs": {{ same_as_list | json }},
   "url": {{ shop.url | append: page.url | json }}
 }
 </script>
