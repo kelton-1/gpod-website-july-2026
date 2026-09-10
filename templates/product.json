@@ -253,7 +253,7 @@
           "settings": {
             "icon_name": "award",
             "title": "Trusted On Tour",
-            "text": "<p>You'll find GPOD In countless bags on the PGA Tour from pros to coaches and creators.</p>"
+            "text": "<p>You'll find GPOD in countless bags on the PGA Tour from pros to coaches and creators.</p>"
           }
         },
         "text_Jc9f8K": {
@@ -261,7 +261,7 @@
           "settings": {
             "icon_name": "lock",
             "title": "Lifetime Warranty",
-            "text": "<p>We guarantee that your GPOD will last as long as you need It to.</p>"
+            "text": "<p>We guarantee that your GPOD will last as long as you need it to.</p>"
           }
         },
         "text_4RhtaA": {
@@ -278,10 +278,9 @@
         "text_Jc9f8K",
         "text_4RhtaA"
       ],
-      "disabled": true,
       "settings": {
         "alignment": "center",
-        "color_icons_bg": "#8cc662",
+        "color_icons_bg": "#8AC663",
         "color_icons_text": "#333333",
         "padding_top": 50,
         "padding_bottom": 50
@@ -681,7 +680,6 @@
     },
     "recent": {
       "type": "section-recently-viewed-products",
-      "disabled": true,
       "settings": {
         "title": "Recently viewed products",
         "padding_top": 50,
