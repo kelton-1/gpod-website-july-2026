@@ -58,6 +58,10 @@
                 <p class="gpod-pairs__usecase">{{ block.settings.usecase | escape }}</p>
               {%- endif -%}
               <h3>{{ pair.title }}</h3>
+              {%- assign pair_best_for = pair.metafields.gpod.best_for.value -%}
+              {%- unless pair_best_for == blank -%}
+                <p class="gpod-pairs__best-for">{{ pair_best_for | escape }}</p>
+              {%- endunless -%}
               <p class="gpod-pairs__price">
                 {{- pair.price | money -}}
                 {%- if pair.compare_at_price > pair.price %} <s>{{ pair.compare_at_price | money }}</s>{% endif -%}

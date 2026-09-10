@@ -429,6 +429,9 @@
     var goEl = root.querySelector('[data-cmp-go]');
     var clearEl = root.querySelector('[data-cmp-clear]');
     var hintEl = root.querySelector('[data-cmp-hint]');
+    /* Captured before sync() ever runs — sync() overwrites this text with the
+       at-max message, so reading it lazily would bank that as the default. */
+    var hintDefault = hintEl ? hintEl.textContent : '';
     if (!tray || !itemsEl || !goEl) return;
 
     /* A fixed element is positioned against the nearest ancestor that
@@ -485,21 +488,50 @@
       });
 
       var handles = picks.map(function (pick) { return pick.handle; });
-      goEl.href = compareUrl + (compareUrl.indexOf('?') > -1 ? '&' : '?') + 'models=' + handles.join(',');
+      var picked = compareUrl + (compareUrl.indexOf('?') > -1 ? '&' : '?') + 'models=' + handles.join(',');
+      goEl.href = picked;
+
+      /* The toolbar also carries a plain "Compare models" link. It used to go
+         to the unfiltered table, so a shopper who ticked two boxes and then
+         clicked it saw the entire lineup — the audit's "comparing more models
+         than what's selected". Point it at the same picks, and only while
+         there are picks to carry, so it still works as a plain entry point. */
+      document.querySelectorAll('[data-cmp-link]').forEach(function (link) {
+        if (!link.__cmpHref) link.__cmpHref = link.getAttribute('href') || compareUrl;
+        link.href = picks.length ? picked : link.__cmpHref;
+      });
+
       if (countEl) countEl.textContent = picks.length ? String(picks.length) : '';
       goEl.classList.toggle('is-disabled', picks.length < 2);
       goEl.setAttribute('aria-disabled', picks.length < 2 ? 'true' : 'false');
-      if (hintEl) hintEl.hidden = picks.length >= 2;
       tray.hidden = picks.length === 0;
       root.classList.toggle('has-picks', picks.length > 0);
+
+      var atMax = picks.length >= max;
 
       boxes.forEach(function (entry) {
         var chosen = indexOfHandle(entry.handle) > -1;
         entry.input.checked = chosen;
-        entry.input.disabled = !chosen && picks.length >= max;
+        entry.input.disabled = !chosen && atMax;
         entry.label.classList.toggle('is-checked', chosen);
-        entry.label.title = entry.input.disabled ? 'Remove a model to compare another' : '';
+        /* A title tooltip was the only signal that a checkbox had gone inert.
+           Titles never fire on touch, and this store is 85% mobile, so the
+           checkbox simply "did nothing" — the audit's second compare bug. The
+           dimming is already handled by .gpod-cmp__toggle:has(input:disabled)
+           in gpod.css; the missing half was the reason, which now goes in the
+           tray hint where it is actually on screen. */
+        entry.label.title = '';
       });
+
+      if (hintEl) {
+        if (atMax) {
+          hintEl.textContent = 'That is ' + max + ' models — remove one to compare a different model.';
+          hintEl.hidden = false;
+        } else {
+          hintEl.textContent = hintDefault;
+          hintEl.hidden = picks.length >= 2;
+        }
+      }
     }
 
     function commit() {
@@ -926,7 +958,81 @@
     syncHeight();
   }
 
+  /* --------------------------------------------------------------
+     Horizontal scroller arrows
+
+     WEB AUDIT NOTES, Aug 21 2026 reported the same class of bug twice:
+       "Cannot slide the product categories on desktop. Monopods is cut off."
+       "Review Banner: unable to scroll or expand."
+     Both rows are `overflow-x: auto` with the scrollbar hidden, so a mouse
+     user with no trackpad has nothing to grab — the content is reachable
+     only by touch or shift+wheel. This adds real prev/next buttons.
+
+     Progressive enhancement: the buttons are created here rather than in
+     Liquid, so a JS failure leaves the markup exactly as it was (still
+     scrollable by touch) instead of leaving dead controls on the page.
+     -------------------------------------------------------------- */
+
+  function initScroller(track) {
+    if (!track || track.__gpodScroller) return;
+    track.__gpodScroller = true;
+
+    var wrap = track.parentNode;
+    if (!wrap) return;
+
+    // The buttons are positioned against this, so it must not be static.
+    if (getComputedStyle(wrap).position === 'static') wrap.style.position = 'relative';
+
+    function make(dir, label) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'gpod-scroller__btn gpod-scroller__btn--' + dir;
+      b.setAttribute('aria-label', label);
+      // The row itself is focusable and announced; these are a pointer
+      // convenience, so keep them out of the tab order to avoid making
+      // keyboard users tab through two controls that do the same thing.
+      b.tabIndex = -1;
+      b.innerHTML = '<span aria-hidden="true">' + (dir === 'prev' ? '‹' : '›') + '</span>';
+      b.addEventListener('click', function () {
+        // Scroll by ~85% of a viewport so a partially visible card is not
+        // skipped past; scroll-snap lands it cleanly.
+        var by = Math.max(160, Math.round(track.clientWidth * 0.85));
+        track.scrollBy({ left: dir === 'prev' ? -by : by, behavior: 'smooth' });
+      });
+      return b;
+    }
+
+    var prev = make('prev', 'Scroll backward');
+    var next = make('next', 'Scroll forward');
+    wrap.appendChild(prev);
+    wrap.appendChild(next);
+
+    function sync() {
+      // 2px of slack: sub-pixel layout means scrollLeft rarely hits the
+      // exact maximum, which would otherwise leave "next" permanently live.
+      var max = track.scrollWidth - track.clientWidth;
+      var overflows = max > 2;
+      wrap.classList.toggle('gpod-scroller--active', overflows);
+      prev.hidden = !overflows || track.scrollLeft <= 2;
+      next.hidden = !overflows || track.scrollLeft >= max - 2;
+    }
+
+    track.addEventListener('scroll', sync, { passive: true });
+    if (typeof ResizeObserver === 'function') {
+      new ResizeObserver(sync).observe(track);
+    } else {
+      window.addEventListener('resize', sync);
+    }
+    sync();
+  }
+
+  function initScrollers(root) {
+    var scope = root || document;
+    scope.querySelectorAll('.gpod-explore__row, .gpod-reviews__track').forEach(initScroller);
+  }
+
   function init() {
+    initScrollers();
     document.querySelectorAll('[data-gpod-drill]').forEach(initNavDrilldown);
     document.querySelectorAll('[data-gpod-finder]').forEach(initFinder);
     document.querySelectorAll('[data-compare-picker]').forEach(initComparePicker);
@@ -946,6 +1052,7 @@
 
   // Re-init inside the Shopify theme editor when the section reloads.
   document.addEventListener('shopify:section:load', function (event) {
+    initScrollers(event.target);
     var drill = event.target.querySelector('[data-gpod-drill]');
     if (drill) initNavDrilldown(drill);
     var finder = event.target.querySelector('[data-gpod-finder]');

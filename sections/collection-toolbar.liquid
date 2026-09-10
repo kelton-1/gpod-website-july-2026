@@ -46,8 +46,16 @@
       {%- endif -%}
 
       <div class="gpod-toolbar__help">
+        {%- comment -%}
+          data-cmp-link: gpod.js rewrites this href to carry the shopper's
+          ?models= picks, exactly as it does for the tray's own button.
+          Without it this link went to the unfiltered table, so a shopper who
+          ticked two boxes and then clicked the toolbar link saw the whole
+          lineup - reported in WEB AUDIT NOTES, Aug 21 2026 as "comparing more
+          models than what's selected".
+        {%- endcomment -%}
         {%- if section.settings.compare_text != blank -%}
-          <a href="{{ section.settings.compare_link | default: '/pages/compare-gpod-models' }}">{{ section.settings.compare_text | escape }}</a>
+          <a href="{{ section.settings.compare_link | default: '/pages/compare-gpod-models' }}" data-cmp-link>{{ section.settings.compare_text | escape }}</a>
         {%- endif -%}
         {%- if section.settings.quiz_text != blank -%}
           <a href="{{ section.settings.quiz_link | default: '/pages/product-finder-quiz' }}">{{ section.settings.quiz_text | escape }}</a>

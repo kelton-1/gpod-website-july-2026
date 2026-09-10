@@ -219,6 +219,11 @@
       <div class="product-block__info product-block__info--{{ settings.product_title_position }}">
         <h3 class="product-block__title"><a href="{{ product.url | within: collection }}">{{ product.title | strip_html }}</a></h3>
 
+        {%- assign best_for = product.metafields.gpod.best_for.value -%}
+        {%- unless best_for == blank -%}
+          <p class="product-block__best-for">{{ best_for | escape }}</p>
+        {%- endunless -%}
+
         <div class="product-block__price">
           <p class="price{% if price_swatches_hover %} price--hover{% endif %}{% if on_sale %} sale{% endif %}">
             {%- liquid
