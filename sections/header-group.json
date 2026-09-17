@@ -17,7 +17,7 @@
         "text_TyGbDr": {
           "type": "text",
           "settings": {
-            "text": "",
+            "text": "<p><a href=\"/collections/bundles\" title=\"Bundles\">Bundles and Base 2.0 Back in Stock!</a></p>",
             "target_url_enabled": false,
             "target_url": "",
             "target_referrer_enabled": false,
@@ -30,7 +30,6 @@
       "block_order": [
         "text_TyGbDr"
       ],
-      "disabled": true,
       "settings": {
         "bg_color": "#8AC663",
         "color": "#ffffff",
