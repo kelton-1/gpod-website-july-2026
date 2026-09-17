@@ -99,6 +99,13 @@
                   {%- endunless -%}
 
                   {%- for sublink in link.links -%}
+                    {%- comment -%}
+                      A leaf child that repeats the parent's URL (a manual
+                      "View All" menu item) would double the auto row above.
+                    {%- endcomment -%}
+                    {%- if sublink.levels == 0 and sublink.url == link.url -%}
+                      {%- continue -%}
+                    {%- endif -%}
                     {%- assign l2 = l1 | append: '-' | append: forloop.index0 -%}
 
                     <li class="submenu-item{% if sublink.levels > 0 %} has-submenu{% endif %}">
@@ -137,6 +144,9 @@
                             {%- endunless -%}
 
                             {%- for subsublink in sublink.links -%}
+                              {%- if subsublink.url == sublink.url -%}
+                                {%- continue -%}
+                              {%- endif -%}
                               <li class="submenu-item">
                                 <a href="{{ subsublink.url }}" class="submenu-item__link visible-nav-link" data-visible-link>
                                   {{- subsublink.title | escape -}}
