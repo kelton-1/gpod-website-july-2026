@@ -6,13 +6,14 @@
   gpod sections: a pick that is blank, unavailable, or already in the cart
   renders nothing, and the whole block disappears when no pick survives.
 
-  Add mechanics ride the theme's own document-level [data-add-to-cart]
-  delegation (theme.js), which posts the surrounding form to /cart/add.js
-  and rebuilds the drawer — no new JS. The handler reads the click target
-  directly (matches, not closest), so the button's icon is pointer-events:
-  none in gpod-cart.css, and it requires a [data-quantity-field] inside
-  the form, hence the hidden quantity input. No-JS fallback is the plain
-  form POST to /cart/add, which lands on the /cart page.
+  Add mechanics live in gpod.js ("Cart drawer upsells"): a plain typed
+  button carrying data-variant-id — deliberately NOT a <form>. This block
+  renders inside the drawer's main cart <form>, and HTML parsers drop a
+  nested form tag, which would silently reparent the inputs and submit
+  button into the cart form (found the hard way: the add button submitted
+  the cart). gpod.js posts /cart/add.js itself, then dispatches
+  theme:cart:update so theme.js's own pipeline rebuilds the line items,
+  totals and badge with all its bindings intact.
 
   Rendered OUTSIDE [data-items-holder]: the holder's contents are replaced
   wholesale by the api-cart-items fetch, and this block must survive that.
@@ -74,13 +75,11 @@
           </span>
         </div>
 
-        <form action="{{ routes.cart_add_url }}" method="post" class="cart-upsell__form">
-          <input type="hidden" name="id" value="{{ upsell_product.selected_or_first_available_variant.id }}">
-          <input type="hidden" name="quantity" value="1" data-quantity-field>
-          <button type="submit" class="cart-upsell__add" data-add-to-cart data-upsell-add aria-label="{{ 'products.form.add_to_cart' | t }} — {{ upsell_product.title | strip_html }}">
-            {%- render 'icon-plus' -%}
-          </button>
-        </form>
+        <button type="button" class="cart-upsell__add" data-upsell-add
+          data-variant-id="{{ upsell_product.selected_or_first_available_variant.id }}"
+          aria-label="Add {{ upsell_product.title | strip_html }} to cart">
+          {%- render 'icon-plus' -%}
+        </button>
       </div>
     {%- endif -%}
   {%- endfor -%}

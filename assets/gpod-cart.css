@@ -381,11 +381,6 @@
   margin-right: 5px;
 }
 
-.cart-upsell__form {
-  margin: 0;
-  line-height: 0;
-}
-
 .cart-upsell__add {
   width: 44px;
   height: 44px;
@@ -399,8 +394,6 @@
   transition: background-color 0.15s ease-out, border-color 0.15s ease-out;
 }
 
-/* theme.js resolves the delegated add-to-cart click on the target itself,
-   so the icon must never be the target. */
 .cart-upsell__add * {
   pointer-events: none;
 }
