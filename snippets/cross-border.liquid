@@ -87,10 +87,13 @@
                   {% if country.iso_code == localization.country.iso_code %}aria-current="true"{% endif %}
                   data-value="{{ country.iso_code }}"
                   data-popout-option>
-                  {%- if show_country_flag -%}
-                    {{ country | image_url: width: 40 | image_tag: loading: 'lazy', class: 'popout__flag' }}
-                  {%- endif -%}
-
+                  {%- comment -%} No flag imgs in the option list: Shopify
+                      renders these 237 <img loading="eager"> (the image_tag
+                      loading param does not survive for country images) at
+                      ~2.5MB decoded on EVERY page — measured 43% of the
+                      homepage's requests. The current-country flag on the
+                      toggle (above) still renders; options are text-only,
+                      which is also easier to scan than 238 flags. {%- endcomment -%}
                   <span>
                     {{ country.name }}
 
