@@ -24,7 +24,11 @@
     "type_nav_caps": false,
     "btn_border_style": "rounded",
     "color_button_primary_bg": "#8cc662",
+    "color_button_primary_text": "#111111",
+    "btn_primary_border_color": "#111111",
     "color_button_secondary_bg": "#ffffff",
+    "color_button_secondary_text": "#111111",
+    "btn_secondary_border_color": "#111111",
     "accent_line": "curved",
     "transition_text": true,
     "transition_grid_items": true,
@@ -56,12 +60,12 @@
     "enable_video_looping": false,
     "cart_icon": "circle",
     "enable_ajax_cart": true,
-    "enable_cart_order_notes": true,
     "enable_additional_buttons": true,
+    "enable_cart_order_notes": true,
     "show_continue_shopping": true,
     "tax_text": "Excluding taxes and shipping",
     "enable_accept_terms": false,
-    "show_free_shipping_message": true,
+    "show_free_shipping_message": false,
     "free_shipping_limit": "50",
     "show_breadcrumbs": true,
     "favicon": "shopify://shop_images/Untitled_3_x_4_in_8.png",
@@ -181,11 +185,6 @@
         "disabled": false,
         "settings": {}
       },
-      "pagefly-page-builder": {
-        "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
-        "disabled": true,
-        "settings": {}
-      },
       "4651250007506174373": {
         "type": "shopify://apps/instagram-feed/blocks/app_embed/2e85b90f-5da9-4654-967e-051f1942340c",
         "disabled": false,
@@ -298,12 +297,13 @@
           "custom_css": "",
           "custom_js": ""
         }
+      },
+      "pagefly-ai-page-builder": {
+        "type": "shopify://apps/pagefly-ai-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
+        "disabled": false,
+        "settings": {}
       }
-    },
-    "color_button_primary_text": "#111111",
-    "btn_primary_border_color": "#111111",
-    "color_button_secondary_text": "#111111",
-    "btn_secondary_border_color": "#111111"
+    }
   },
   "presets": {
     "Mayfair": {

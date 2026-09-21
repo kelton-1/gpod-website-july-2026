@@ -1,0 +1,36 @@
+/* Cart drawer overlap fix — companion to assets/gpod.css (~line 3194).
+   That file's @media (min-width: 1024px) cart-drawer block repoints
+   .cart__table-cell--price/--quantity/--total to grid-column: 2 but never
+   resets grid-row, so they inherit the base theme's named-area row span
+   and stack on top of each other. It also caps thumb width but not
+   min-width, so theme.css's 110px min-width still applies and the
+   thumbnail overlaps the title text.
+
+   Loaded after gpod.css (see layout/theme.liquid), so matching selector
+   specificity is enough to win on source order — same convention gpod.css
+   itself uses over theme.css. */
+@media only screen and (min-width: 1024px) {
+  .cart-drawer .cart-product__thumb {
+    min-width: 72px;
+  }
+
+  .cart-drawer .cart__table-cell--price,
+  .cart-drawer .cart__table-cell--total {
+    grid-row: auto;
+  }
+
+  .cart-drawer .cart__table-cell--quantity {
+    grid-row: auto;
+  }
+
+  /* theme.css gives the page-dimming .overlay a z-index of 9999, but the
+     desktop cart-drawer (also theme.css, positioned/sized by gpod.css)
+     only gets 1012. The overlay ends up stacked above the drawer's own
+     close button and every control inside it, so clicks never reach
+     them — the drawer looks open but nothing responds. Raise the drawer
+     above the overlay. */
+  .cart-drawer {
+    z-index: 10000;
+  }
+}
+
