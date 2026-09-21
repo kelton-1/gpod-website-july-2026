@@ -39,7 +39,7 @@
         "form": {
           "type": "form",
           "settings": {
-            "show_quantity": true,
+            "show_quantity": false,
             "enable_payment_button": true,
             "show_gift_card_recipient": false,
             "padding_bottom": 20

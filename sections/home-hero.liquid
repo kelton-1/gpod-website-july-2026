@@ -32,7 +32,7 @@
   <div class="gpod-hero__media" aria-hidden="true">
     {%- if media_type == 'video' and video != blank -%}
       <div class="gpod-hero__layer{% if has_mobile_media %} gpod-hero__layer--desktop{% endif %}">
-        {{ video | video_tag: autoplay: false, loop: true, muted: true, playsinline: true, controls: false, preload: 'none', image_size: '1600x' }}
+        {{ video | video_tag: autoplay: false, loop: true, muted: true, playsinline: true, controls: false, preload: 'none', image_size: '1200x' }}
       </div>
       {%- if has_mobile_media -%}
         <div class="gpod-hero__layer gpod-hero__layer--mobile">

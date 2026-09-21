@@ -44,7 +44,7 @@
         "form": {
           "type": "form",
           "settings": {
-            "show_quantity": true,
+            "show_quantity": false,
             "enable_payment_button": true,
             "padding_bottom": 16
           }
