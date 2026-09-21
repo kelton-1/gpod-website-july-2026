@@ -1,0 +1,32 @@
+/* PDP sticky media vs. sticky shop bar — companion to assets/gpod.css
+   (~line 3511, "PDP sticky media" block).
+
+   That block pins .product__images (product photo + thumbnail rail) and
+   caps its height to leave room for the rail: `100vh - top - 138px`
+   (118px rail + 20px slack). It never accounts for .shop-bar, a
+   completely separate fixed-position "Add to cart" bar (theme.css
+   ~line 15551) that slides in from the bottom once the main Add to Cart
+   button scrolls out of view — same min-width: 1024px breakpoint.
+
+   Measured live: .shop-bar renders at 76px tall (taller than its 48px
+   base CSS height once the price/variant/button content is laid out),
+   positioned bottom: 0, z-index: 200. The sticky media column's own
+   z-index is auto, so once a shopper scrolls far enough for the shop
+   bar to appear, it paints over the bottom ~58px of the pinned column —
+   covering the last thumbnail(s) and the rail's next/prev arrows while
+   the shopper is actively browsing product photos.
+
+   Fix: reserve the shop bar's height too, on both the multi-image and
+   single-image (no rail) variants, so the sticky column never extends
+   into that space in the first place. 90px covers the measured 76px
+   with a small margin. */
+@media only screen and (min-width: 1024px) and (min-height: 700px) {
+  .product__images {
+    --gpod-pdp-media-h: calc(100vh - var(--gpod-pdp-media-top) - 138px - 90px);
+  }
+
+  .product__images:has(.product__images__slider--single) {
+    --gpod-pdp-media-h: calc(100vh - var(--gpod-pdp-media-top) - 20px - 90px);
+  }
+}
+

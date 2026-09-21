@@ -1,0 +1,44 @@
+/* Cart icon: actual cart glyph + a real numeric badge, instead of a bare
+   number in a circle.
+
+   sections/header.liquid only rendered the item-count badge
+   (.cartToggle-items / cart_item_count) inside the settings.cart_icon ==
+   'circle' branch — the 'cart' branch (an actual shopping-cart SVG,
+   snippets/icon-cart.liquid) rendered no count at all. Moved that badge
+   div out of the if/else in header.liquid so it renders either way, and
+   switched settings.cart_icon to 'cart' (config/settings_data.json) to
+   get the actual cart glyph.
+
+   icon-cart.liquid's SVG has a second path — a small filled circle,
+   theme.css ~line 7181 (`.icon-cart path:last-child`) — that the theme
+   already uses as a decorative "cart has items" dot (hidden when empty,
+   bounces on add). It's not a number, and it sits in the same top-right
+   corner where a count badge belongs, so it's hidden here in favor of
+   the real number. */
+.cartToggle .icon-cart path:last-child {
+  display: none;
+}
+
+.cartToggle .cartToggle-items {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--BTN-PRIMARY-BG-COLOR, #8cc662);
+  /* Backport deviation from the live hotfix: the badge shipped with #fff
+     numerals on brand green (~1.9:1). Dark ink matches the 2026-09-17
+     announcement-bar contrast fix and the button text setting. */
+  color: #111111;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: center;
+}
+
+.cartToggle--empty .cartToggle-items {
+  display: none;
+}
+

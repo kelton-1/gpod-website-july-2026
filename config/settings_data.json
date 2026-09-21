@@ -58,7 +58,7 @@
     "enable_payment_button": true,
     "color_swatches_style": "circle",
     "enable_video_looping": false,
-    "cart_icon": "circle",
+    "cart_icon": "cart",
     "enable_ajax_cart": true,
     "enable_additional_buttons": true,
     "enable_cart_order_notes": true,
