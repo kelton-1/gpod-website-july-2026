@@ -1073,3 +1073,27 @@
     if (hero) initHeroMotion(hero);
   });
 })();
+
+/* Cart drawer upsells (snippets/cart-upsells.liquid).
+
+   theme.js owns the add itself via its document-level [data-add-to-cart]
+   delegation; all this does is retire the card once its product has been
+   sent to the cart, because the rebuilt line items make the suggestion
+   redundant. Cards are server-rendered per page load, so a removal
+   re-offers the product on the next navigation — deliberate. */
+(function () {
+  'use strict';
+
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest ? event.target.closest('[data-upsell-add]') : null;
+    if (!button) return;
+
+    var card = button.closest('[data-upsell-item]');
+    if (!card) return;
+
+    // Give theme.js's own click handler time to read the form and post it.
+    window.setTimeout(function () {
+      card.classList.add('is-added');
+    }, 400);
+  });
+})();

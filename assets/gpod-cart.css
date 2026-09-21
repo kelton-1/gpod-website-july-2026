@@ -1,0 +1,473 @@
+/* --------------------------------------------------------------
+   Cart drawer — interior redesign of the right-side island
+
+   gpod.css (~line 3111) established the island: a 400px panel inset from
+   the header, mirroring the menu drawer. This file redesigns what lives
+   inside it. The moves, in order of what they cost the old drawer:
+
+   1. The line item becomes one composed row — thumb, title, stepper,
+      line total — instead of four stacked table cells reading as a
+      spreadsheet. The unit-price cell is hidden in the drawer: with the
+      line total updating live it only ever duplicated the number.
+   2. Title pins to the top, checkout pins to the bottom; only the items
+      scroll. The buyer never loses the way out or the way forward.
+   3. Order notes collapse behind a disclosure (details/summary in
+      site-cart.liquid) instead of parking an open textarea between
+      subtotal and the checkout button.
+   4. "Complete your setup" suggestions (snippets/cart-upsells.liquid)
+      and a payment/reassurance row earn the drawer its screen space.
+
+   Loads after gpod.css and gpod-cart-drawer-fix.css (see theme.liquid),
+   so equal-specificity rules here win on source order — the same
+   convention those files use over theme.css. Everything item-layout is
+   scoped to .cart-drawer at ≥1024px: the /cart page keeps its table, and
+   the sub-1024 drawer keeps Modular's mobile layout, which QA'd clean.
+   Tokens per docs/design-tokens.md.
+   -------------------------------------------------------------- */
+
+/* ===== 1. Drawer chrome: pinned title, pinned checkout ===== */
+
+@media only screen and (min-width: 1024px) {
+  .cart-drawer .scroll {
+    padding: 0;
+  }
+
+  .cart-drawer .cart__title {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    margin: 0 -22px;
+    padding: 18px 22px 14px;
+    background: #fff;
+    border-bottom: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.08));
+    font-size: 1.125rem;
+    letter-spacing: -0.01em;
+  }
+
+  .cart-drawer .cart-wrapper.container {
+    padding-top: 0;
+  }
+
+  .cart-drawer .cart-close {
+    top: 10px;
+    right: 12px;
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--gpod-radius-pill, 999px);
+    transition: background-color 0.15s ease-out;
+  }
+
+  .cart-drawer .cart-close:hover {
+    background: var(--gpod-soft, #f5f6f4);
+  }
+
+  .cart-drawer .checkout-buttons {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    margin: 0 -22px;
+    padding: 14px 22px 18px;
+    background: #fff;
+    border-top: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.08));
+  }
+
+  .cart-drawer .cart__table {
+    border: 0;
+  }
+}
+
+/* ===== 2. Line items: one composed row ===== */
+
+@media only screen and (min-width: 1024px) {
+  .cart-drawer .cart__table-row {
+    grid-template-columns: 72px minmax(0, 1fr) auto;
+    grid-template-areas:
+      'product product product'
+      '.       controls total';
+    column-gap: 14px;
+    row-gap: 10px;
+    padding: 16px 0;
+  }
+
+  .cart-drawer .cart__table-cell--product {
+    grid-area: product;
+  }
+
+  .cart-drawer .cart-product__thumb {
+    border-radius: calc(var(--gpod-radius-md, 10px) - 4px);
+    overflow: hidden;
+    background: var(--gpod-soft, #f5f6f4);
+  }
+
+  .cart-drawer .cart-product__title {
+    font-size: var(--gpod-small-size, 0.875rem);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  /* The line total updates live; a second, static unit price in a
+     one-column drawer is the same number printed twice. */
+  .cart-drawer .cart__table-cell--price {
+    display: none;
+  }
+
+  .cart-drawer .cart__table-cell--quantity {
+    grid-area: controls;
+    max-width: none;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .cart-drawer .cart__table-cell--total {
+    grid-area: total;
+    justify-self: end;
+    align-self: center;
+    font-weight: 600;
+    font-size: var(--gpod-small-size, 0.875rem);
+  }
+
+  .cart-drawer .cart-product__quantity {
+    margin: 0;
+  }
+
+  .cart-drawer .counter.input-group {
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    border: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.08));
+    border-radius: var(--gpod-radius-pill, 999px);
+    overflow: hidden;
+  }
+
+  .cart-drawer .inputCounter {
+    width: 34px;
+    height: 34px;
+    border: 0;
+    text-align: center;
+    font-size: var(--gpod-small-size, 0.875rem);
+    font-weight: 600;
+    -moz-appearance: textfield;
+  }
+
+  .cart-drawer .inputCounter::-webkit-outer-spin-button,
+  .cart-drawer .inputCounter::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .cart-drawer .inputCounter__btn {
+    position: static;
+    width: 32px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: none;
+    opacity: 0.8;
+    transition: opacity 0.15s ease-out, background-color 0.15s ease-out;
+  }
+
+  .cart-drawer .inputCounter__btn:hover {
+    opacity: 1;
+    background: var(--gpod-soft, #f5f6f4);
+  }
+
+  .cart-drawer .inputCounter__btn svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* DOM order is minus → input → plus handled by absolute positioning on
+     the /cart page; in the flex pill, reorder visually to − 1 +. */
+  .cart-drawer .inputCounter__btn--down {
+    order: -1;
+  }
+
+  .cart-drawer .cart-product__remove {
+    font-size: 0.8125rem;
+    color: var(--gpod-muted-text, rgba(0, 0, 0, 0.6));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.15s ease-out;
+  }
+
+  .cart-drawer .cart-product__remove:hover {
+    color: var(--gpod-ink, #000);
+  }
+
+  .cart-drawer .cart-product__savings {
+    font-size: 0.8125rem;
+    color: var(--gpod-accent, #8ac663);
+    font-weight: 600;
+  }
+}
+
+/* ===== 3. Totals + order notes disclosure (all widths, drawer + page) ===== */
+
+.cart-drawer .cart-totals {
+  padding-top: 4px;
+}
+
+.cart-drawer .cart-total-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 0 2px;
+}
+
+.cart-drawer .cart-total-price__value {
+  font-weight: 700;
+}
+
+.cart-drawer .cart-tax-info {
+  font-size: 0.8125rem;
+  color: var(--gpod-muted-text, rgba(0, 0, 0, 0.6));
+  margin: 0 0 10px;
+}
+
+.order-notes {
+  margin: 0 0 12px;
+}
+
+.order-notes__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--gpod-muted-text, rgba(0, 0, 0, 0.6));
+  transition: color 0.15s ease-out;
+}
+
+.order-notes__label::-webkit-details-marker {
+  display: none;
+}
+
+.order-notes__label:hover {
+  color: var(--gpod-ink, #000);
+}
+
+.order-notes__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.order-notes__icon svg {
+  width: 10px;
+  height: 10px;
+  transition: transform 0.2s ease-out;
+}
+
+.order-notes[open] .order-notes__icon svg {
+  transform: rotate(45deg);
+}
+
+.order-notes__content {
+  display: block;
+  width: 100%;
+  min-height: 72px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.08));
+  border-radius: calc(var(--gpod-radius-md, 10px) - 4px);
+  font-size: var(--gpod-small-size, 0.875rem);
+  resize: vertical;
+}
+
+.order-notes__content:focus-visible {
+  outline: 2px solid var(--gpod-accent, #8ac663);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .order-notes__icon svg,
+  .cart-drawer .cart-close,
+  .cart-drawer .inputCounter__btn,
+  .cart-upsell__add {
+    transition: none;
+  }
+}
+
+/* ===== 4. Complete your setup ===== */
+
+.cart-upsell {
+  margin: 4px 0 18px;
+  padding: 14px 16px 6px;
+  background: var(--gpod-soft, #f5f6f4);
+  border-radius: var(--gpod-radius-md, 10px);
+}
+
+.cart-upsell__heading {
+  margin: 0 0 4px;
+  font-size: var(--gpod-small-size, 0.875rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.cart-upsell__item {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 12px;
+  padding: 10px 0;
+}
+
+.cart-upsell__item + .cart-upsell__item {
+  border-top: 1px solid var(--gpod-border, rgba(0, 0, 0, 0.08));
+}
+
+.cart-upsell__item.is-added {
+  display: none;
+}
+
+.cart-upsell:has(.cart-upsell__item.is-added):not(:has(.cart-upsell__item:not(.is-added))) {
+  display: none;
+}
+
+.cart-upsell__thumb {
+  display: block;
+  width: 48px;
+  height: 48px;
+  border-radius: calc(var(--gpod-radius-md, 10px) - 4px);
+  overflow: hidden;
+  background: #fff;
+}
+
+.cart-upsell__thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cart-upsell__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.cart-upsell__title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--gpod-ink, #000);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.cart-upsell__title:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cart-upsell__price {
+  font-size: 0.8125rem;
+  color: var(--gpod-muted-text, rgba(0, 0, 0, 0.6));
+}
+
+.cart-upsell__price s {
+  margin-right: 5px;
+}
+
+.cart-upsell__form {
+  margin: 0;
+  line-height: 0;
+}
+
+.cart-upsell__add {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gpod-ink, #000);
+  border-radius: var(--gpod-radius-pill, 999px);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease-out, border-color 0.15s ease-out;
+}
+
+/* theme.js resolves the delegated add-to-cart click on the target itself,
+   so the icon must never be the target. */
+.cart-upsell__add * {
+  pointer-events: none;
+}
+
+.cart-upsell__add svg {
+  width: 12px;
+  height: 12px;
+}
+
+.cart-upsell__add:hover {
+  background: var(--gpod-accent, #8ac663);
+  border-color: var(--gpod-accent, #8ac663);
+}
+
+.cart-upsell__add:focus-visible {
+  outline: 2px solid var(--gpod-accent, #8ac663);
+  outline-offset: 2px;
+}
+
+.cart-upsell__add[disabled] {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ===== 5. Reassurance row ===== */
+
+.cart-trust {
+  margin-top: 14px;
+  text-align: center;
+}
+
+.cart-trust__text {
+  margin: 0 0 8px;
+  font-size: 0.8125rem;
+  color: var(--gpod-muted-text, rgba(0, 0, 0, 0.6));
+}
+
+.cart-trust__payments {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cart-trust__icon {
+  height: 22px;
+  width: auto;
+  border-radius: 3px;
+}
+
+/* ===== 6. Empty state + focus, drawer-wide ===== */
+
+.cart-drawer .cart__empty {
+  padding: 48px 0 40px;
+  text-align: center;
+}
+
+.cart-drawer .cart__empty p:not(.cart__title) {
+  color: var(--gpod-muted-text, rgba(0, 0, 0, 0.6));
+  margin-bottom: 20px;
+}
+
+.cart-drawer a:focus-visible,
+.cart-drawer button:focus-visible,
+.cart-drawer input:focus-visible,
+.cart-drawer summary:focus-visible {
+  outline: 2px solid var(--gpod-accent, #8ac663);
+  outline-offset: 2px;
+}

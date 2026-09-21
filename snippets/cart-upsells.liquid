@@ -1,0 +1,95 @@
+{%- comment -%}
+  Cart drawer add-on suggestions ("Complete your setup").
+
+  Merchant-configured in Theme settings → Cart: three product picks, a
+  heading, and an enable switch. Self-hiding, matching the theme's other
+  gpod sections: a pick that is blank, unavailable, or already in the cart
+  renders nothing, and the whole block disappears when no pick survives.
+
+  Add mechanics ride the theme's own document-level [data-add-to-cart]
+  delegation (theme.js), which posts the surrounding form to /cart/add.js
+  and rebuilds the drawer — no new JS. The handler reads the click target
+  directly (matches, not closest), so the button's icon is pointer-events:
+  none in gpod-cart.css, and it requires a [data-quantity-field] inside
+  the form, hence the hidden quantity input. No-JS fallback is the plain
+  form POST to /cart/add, which lands on the /cart page.
+
+  Rendered OUTSIDE [data-items-holder]: the holder's contents are replaced
+  wholesale by the api-cart-items fetch, and this block must survive that.
+  gpod.js hides a card once its product is added (the rebuilt line items
+  make it redundant within the same open drawer).
+{%- endcomment -%}
+
+{%- liquid
+  # A global `product` setting returns a product object on current Shopify
+  # and a bare handle string on older serializations — `.handle | default:`
+  # covers both.
+  assign upsell_candidates = ''
+  if settings.cart_upsell_product_1 != blank
+    assign upsell_handle_1 = settings.cart_upsell_product_1.handle | default: settings.cart_upsell_product_1
+    assign upsell_candidates = upsell_candidates | append: upsell_handle_1 | append: ','
+  endif
+  if settings.cart_upsell_product_2 != blank
+    assign upsell_handle_2 = settings.cart_upsell_product_2.handle | default: settings.cart_upsell_product_2
+    assign upsell_candidates = upsell_candidates | append: upsell_handle_2 | append: ','
+  endif
+  if settings.cart_upsell_product_3 != blank
+    assign upsell_handle_3 = settings.cart_upsell_product_3.handle | default: settings.cart_upsell_product_3
+    assign upsell_candidates = upsell_candidates | append: upsell_handle_3 | append: ','
+  endif
+  assign upsell_handles = upsell_candidates | split: ','
+
+  assign in_cart_handles = ''
+  for line_item in cart.items
+    assign in_cart_handles = in_cart_handles | append: line_item.product.handle | append: ','
+  endfor
+-%}
+
+{%- capture upsell_cards -%}
+  {%- for handle in upsell_handles -%}
+    {%- assign upsell_product = all_products[handle] -%}
+    {%- liquid
+      assign already_in_cart = false
+      assign handle_token = upsell_product.handle | append: ','
+      if in_cart_handles contains handle_token
+        assign already_in_cart = true
+      endif
+    -%}
+    {%- if upsell_product.available and already_in_cart == false -%}
+      <div class="cart-upsell__item" data-upsell-item data-upsell-handle="{{ upsell_product.handle }}">
+        <a class="cart-upsell__thumb" href="{{ upsell_product.url }}" tabindex="-1" aria-hidden="true">
+          {%- liquid
+            assign image = upsell_product.featured_image
+            render 'image' image: image, width: '112', sizes: '56px', widths: '56, 112, 168', alt: '', loading: 'lazy', modifier: 'cart-upsell__thumb-img'
+          -%}
+        </a>
+
+        <div class="cart-upsell__meta">
+          <a class="cart-upsell__title" href="{{ upsell_product.url }}">{{ upsell_product.title | strip_html }}</a>
+          <span class="cart-upsell__price">
+            {%- if upsell_product.compare_at_price > upsell_product.price -%}
+              <s>{{ upsell_product.compare_at_price | money }}</s>
+            {%- endif -%}
+            {{ upsell_product.price | money }}
+          </span>
+        </div>
+
+        <form action="{{ routes.cart_add_url }}" method="post" class="cart-upsell__form">
+          <input type="hidden" name="id" value="{{ upsell_product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="quantity" value="1" data-quantity-field>
+          <button type="submit" class="cart-upsell__add" data-add-to-cart data-upsell-add aria-label="{{ 'products.form.add_to_cart' | t }} — {{ upsell_product.title | strip_html }}">
+            {%- render 'icon-plus' -%}
+          </button>
+        </form>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- assign upsell_cards_stripped = upsell_cards | strip -%}
+{%- if upsell_cards_stripped != blank -%}
+  <div class="cart-upsell" data-cart-upsells>
+    <p class="cart-upsell__heading">{{ settings.cart_upsell_heading | default: 'Complete your setup' }}</p>
+    {{ upsell_cards }}
+  </div>
+{%- endif -%}

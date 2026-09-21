@@ -52,27 +52,36 @@
           </button>
         </div>
 
-        <div class="cart__table-header med_hide">
-          <div class="cart__table-row">
-            <div class="cart__table-cell cart__table-cell--product">
-              {{- 'cart.labels.product' | t -}}
-            </div>
-            <div class="cart__table-cell cart__table-cell--price">
-              {{- 'cart.labels.price' | t -}}
-            </div>
-            <div class="cart__table-cell cart__table-cell--quantity">
-              {{- 'cart.labels.quantity' | t -}}
-            </div>
-            <div class="cart__table-cell cart__table-cell--total">
-              {{- 'cart.labels.total' | t -}}
+        {%- comment -%} The column-label header belongs to the full-width
+            /cart page table. Inside the 400px drawer island it read as a
+            spreadsheet; each line item labels itself there. {%- endcomment -%}
+        {%- if template == 'cart' -%}
+          <div class="cart__table-header med_hide">
+            <div class="cart__table-row">
+              <div class="cart__table-cell cart__table-cell--product">
+                {{- 'cart.labels.product' | t -}}
+              </div>
+              <div class="cart__table-cell cart__table-cell--price">
+                {{- 'cart.labels.price' | t -}}
+              </div>
+              <div class="cart__table-cell cart__table-cell--quantity">
+                {{- 'cart.labels.quantity' | t -}}
+              </div>
+              <div class="cart__table-cell cart__table-cell--total">
+                {{- 'cart.labels.total' | t -}}
+              </div>
             </div>
           </div>
-        </div>
+        {%- endif -%}
 
         <div class="cart__table-body" data-items-holder>
           {%- render 'cart-line-items' cart: cart -%}
         </div>
       </div>
+
+      {%- if settings.cart_upsell_enable and template != 'cart' -%}
+        {%- render 'cart-upsells' cart: cart -%}
+      {%- endif -%}
 
       <div class="checkout-buttons" data-foot-holder>
         {%- if show_free_shipping_message and free_shipping_limit != blank -%}
@@ -181,11 +190,20 @@
             <p class="cart-tax-info">{{ tax_text }}</p>
           {%- endif -%}
 
+          {%- comment -%} Order notes stay available but collapse behind a
+              disclosure — an open memo field between subtotal and checkout
+              is a task the cart never asked the buyer to do. Native
+              details/summary, so it costs no JS and survives the drawer's
+              api-cart-items rebuilds (it sits outside the items holder). {%- endcomment -%}
           {%- if enable_cart_order_notes -%}
-            <div class="order-notes">
-              <label class="order-notes__label" for="order-notes">{{ 'cart.labels.add_a_note' | t }}</label>
-              <textarea id="order-notes" class="order-notes__content" name="note"></textarea>
-            </div>
+            <details class="order-notes">
+              <summary class="order-notes__label">
+                <span class="order-notes__icon" aria-hidden="true">{%- render 'icon-plus' -%}</span>
+                {{- 'cart.labels.add_a_note' | t -}}
+              </summary>
+              <label class="visually-hidden" for="order-notes">{{ 'cart.labels.add_a_note' | t }}</label>
+              <textarea id="order-notes" class="order-notes__content" name="note">{{ cart.note }}</textarea>
+            </details>
           {%- endif -%}
 
           <div class="cart__buttons-wrapper">
@@ -212,6 +230,19 @@
             {%- endif -%}
 
             <input type="submit" name="update" value="{{ 'cart.labels.update' | t }}" class="cart__update{% unless enable_ajax_cart %} cart__update--visible{% endunless %}" data-update-cart>
+
+            {%- if settings.cart_show_trust_row -%}
+              <div class="cart-trust">
+                {%- if settings.cart_trust_text != blank -%}
+                  <p class="cart-trust__text">{{ settings.cart_trust_text }}</p>
+                {%- endif -%}
+                <div class="cart-trust__payments" aria-label="{{ 'general.payment.method' | t }}">
+                  {%- for type in shop.enabled_payment_types limit: 6 -%}
+                    {{- type | payment_type_svg_tag: class: 'cart-trust__icon' -}}
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endif -%}
           </div>
         </div>
       </div>

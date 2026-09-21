@@ -714,6 +714,54 @@
       "label": "Minimum spend for free shipping",
       "default": "100",
       "info": "Use round numbers. Exclude currency, symbols, and letters. [More info](https://help.shopify.com/en/manual/shipping/setting-up-and-managing-your-shipping/free-shipping-rates#free-shipping-over-a-certain-value)"
+    },
+    {
+      "type": "header",
+      "content": "Complete your setup (cart drawer)"
+    },
+    {
+      "type": "checkbox",
+      "id": "cart_upsell_enable",
+      "label": "Suggest add-on products in the cart drawer",
+      "info": "Products already in the cart are hidden automatically.",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "cart_upsell_heading",
+      "label": "Heading",
+      "default": "Complete your setup"
+    },
+    {
+      "type": "product",
+      "id": "cart_upsell_product_1",
+      "label": "Suggestion 1"
+    },
+    {
+      "type": "product",
+      "id": "cart_upsell_product_2",
+      "label": "Suggestion 2"
+    },
+    {
+      "type": "product",
+      "id": "cart_upsell_product_3",
+      "label": "Suggestion 3"
+    },
+    {
+      "type": "header",
+      "content": "Cart reassurance"
+    },
+    {
+      "type": "checkbox",
+      "id": "cart_show_trust_row",
+      "label": "Show payment methods and shipping reassurance under checkout",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "cart_trust_text",
+      "label": "Reassurance text",
+      "default": "Ships within 1 business day · 14-day returns"
     }
   ]
 },
