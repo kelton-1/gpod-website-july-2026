@@ -18,7 +18,7 @@
         "price-and-title": {
           "type": "price-and-title",
           "settings": {
-            "show_vendor": true,
+            "show_vendor": false,
             "padding_bottom": 20
           }
         },

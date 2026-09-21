@@ -14,7 +14,7 @@
       "blocks": {
         "price-and-title": {
           "type": "price-and-title",
-          "settings": { "show_vendor": true, "padding_bottom": 20 }
+          "settings": { "show_vendor": false, "padding_bottom": 20 }
         },
         "fera_product_reviews_summary_acGGHL": {
           "type": "shopify:\/\/apps\/fera\/blocks\/product_reviews_summary\/2fbfcfa7-8a04-479f-89a8-0621fa099c51",
