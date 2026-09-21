@@ -1076,16 +1076,20 @@
 
 /* Cart drawer upsells (snippets/cart-upsells.liquid).
 
-   The card's add button is a plain typed button (a nested <form> inside
-   the drawer's cart form gets dropped by the HTML parser, reparenting its
-   fields into the cart form — so the add path is owned here). On click:
-   post /cart/add.js directly, retire the card, then dispatch
-   theme:cart:update from inside the items holder — theme.js's cart class
-   listens there and runs its full official pipeline (api-cart-items
-   rebuild, totals, free-shipping maths, header badge, fresh bindings).
-   The change call it makes (variant id -> quantity 1) is idempotent with
-   the add that just happened. Cards are server-rendered per page load, so
-   a removal re-offers the product on the next navigation — deliberate. */
+   The card's add control is a plain typed button: a <form> can't render
+   here because the module sits inside the drawer's main cart form, and
+   HTML parsers drop nested form tags (found the hard way — the add button
+   became the cart form's submit). theme.js's add pipeline is delegated on
+   document and keyed to a [data-add-to-cart] button inside a real form,
+   and it does everything right: single POST to /cart/add.js, then the
+   full drawer rebuild (line items via api-cart-items, totals, free
+   shipping, header badge, fresh bindings). So the handler hands it a
+   real form: a detached one, built off-DOM from the button's variant id,
+   clicked programmatically, removed after. Verified against the theme's
+   own contract rather than its internals — the same markup shape every
+   product form on the site uses. Cards are server-rendered per page load,
+   so a removed product is re-offered on the next navigation; within one
+   session the added card just retires (is-added). */
 (function () {
   'use strict';
 
@@ -1099,28 +1103,25 @@
     event.preventDefault();
     button.setAttribute('disabled', 'disabled');
 
-    fetch(theme.routes.root + 'cart/add.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-      body: JSON.stringify({ id: Number(variantId), quantity: 1 })
-    })
-      .then(function (response) { return response.json(); })
-      .then(function (result) {
-        if (result.status) throw new Error(result.description || 'Could not add to cart');
+    var ghost = document.createElement('form');
+    ghost.setAttribute('action', theme.routes.root + 'cart/add');
+    ghost.setAttribute('method', 'post');
+    ghost.setAttribute('aria-hidden', 'true');
+    ghost.style.display = 'none';
+    ghost.innerHTML =
+      '<input type="hidden" name="id" value="' + Number(variantId) + '">' +
+      '<input type="hidden" name="quantity" value="1" data-quantity-field>' +
+      '<button type="submit" data-add-to-cart></button>';
+    document.body.appendChild(ghost);
 
-        var card = button.closest('[data-upsell-item]');
-        if (card) card.classList.add('is-added');
+    ghost.querySelector('[data-add-to-cart]').dispatchEvent(
+      new MouseEvent('click', { bubbles: true, cancelable: true })
+    );
 
-        var holder = document.querySelector('.cart-drawer [data-items-holder]') || document.querySelector('[data-items-holder]');
-        if (holder) {
-          holder.dispatchEvent(new CustomEvent('theme:cart:update', {
-            bubbles: true,
-            detail: { id: String(variantId), quantity: 1 }
-          }));
-        }
-      })
-      .catch(function () {
-        button.removeAttribute('disabled');
-      });
+    var card = button.closest('[data-upsell-item]');
+    window.setTimeout(function () {
+      if (card) card.classList.add('is-added');
+      ghost.remove();
+    }, 600);
   });
 })();
