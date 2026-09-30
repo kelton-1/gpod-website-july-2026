@@ -1083,12 +1083,10 @@
   text-transform: uppercase;
 }
 
-.ts-vs__colhead--gpod {
-  border-radius: var(--ts-r-sm) var(--ts-r-sm) 0 0;
-  background: var(--ts-forest);
-  color: #fff;
-  padding: 10px 8px 4px;
-}
+/* The wordmark is green + black, so it sits on the page colour above the
+   forest column (as in the Figma header cell), not on the forest itself. */
+.ts-vs__colhead--gpod { padding: 10px 8px; color: var(--ts-ink); }
+.ts-vs__row:nth-child(2) .ts-vs__cell--gpod { border-radius: var(--ts-r-sm) var(--ts-r-sm) 0 0; }
 
 .ts-vs__colhead--gpod img { width: 100%; max-width: 88px; height: auto; }
 
