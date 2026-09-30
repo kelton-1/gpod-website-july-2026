@@ -1,0 +1,93 @@
+{%- comment -%}
+  "The Real Comparison" — Tenscope Round 2 (mobile 100:862, desktop 28:2250).
+  Centered head + Shop Now, then a three-column checklist: feature | GPOD
+  (forest column, green check tiles) | Others (red ×).
+
+  Re-gridded for phones: the Figma frame puts the table 170px past the
+  right edge of a 390px screen; here the two answer columns are fixed-width
+  and the label column flexes, so it fits any width without scrolling.
+
+  Styles: assets/gpod-ts.css §8.
+{%- endcomment -%}
+
+{{ 'gpod-ts.css' | asset_url | stylesheet_tag }}
+
+{%- assign heading_id = 'TsVs-' | append: section.id -%}
+
+<section class="ts ts-vs ts-section" data-section-id="{{ section.id }}" data-section-type="home-versus" aria-labelledby="{{ heading_id }}">
+  <div class="ts-wrap">
+    <div class="ts-head ts-head--center">
+      <div class="ts-head__titles">
+        {%- if section.settings.kicker != blank -%}<p class="ts-kicker">{{ section.settings.kicker | escape }}</p>{%- endif -%}
+        <h2 class="ts-h2" id="{{ heading_id }}">{{ section.settings.heading | escape }}</h2>
+      </div>
+      {%- if section.settings.text != blank -%}<div class="ts-body ts-head__lede">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.settings.cta_label != blank -%}
+        <a class="ts-btn" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">{{ section.settings.cta_label | escape }}</a>
+      {%- endif -%}
+    </div>
+
+    <div class="ts-vs__table" role="table" aria-label="{{ section.settings.brand_label | escape }} compared with {{ section.settings.other_label | escape }}">
+      <div class="ts-vs__row" role="row">
+        <span class="ts-vs__corner" role="columnheader"><span class="ts-visually-hidden">Feature</span></span>
+        <span class="ts-vs__colhead ts-vs__colhead--gpod" role="columnheader">
+          {%- if section.settings.logo != blank -%}
+            {{- section.settings.logo | image_url: width: 240 | image_tag: loading: 'lazy', alt: section.settings.brand_label -}}
+          {%- else -%}
+            {{- section.settings.brand_label | escape -}}
+          {%- endif -%}
+        </span>
+        <span class="ts-vs__colhead" role="columnheader">{{ section.settings.other_label | escape }}</span>
+      </div>
+      {%- for block in section.blocks -%}
+        <div class="ts-vs__row" role="row" {{ block.shopify_attributes }}>
+          <span class="ts-vs__label" role="rowheader">{{ block.settings.label | escape }}</span>
+          <span class="ts-vs__cell ts-vs__cell--gpod" role="cell">
+            {%- if block.settings.gpod -%}
+              <span class="ts-icon-tile ts-vs__yes">{% render 'ts-icon', name: 'check-circle' %}</span><span class="ts-visually-hidden">Yes</span>
+            {%- else -%}
+              <span class="ts-vs__no" style="color:#fff">{% render 'ts-icon', name: 'x' %}</span><span class="ts-visually-hidden">No</span>
+            {%- endif -%}
+          </span>
+          <span class="ts-vs__cell ts-vs__cell--other" role="cell">
+            {%- if block.settings.others -%}
+              <span class="ts-icon-tile ts-vs__yes">{% render 'ts-icon', name: 'check-circle' %}</span><span class="ts-visually-hidden">Yes</span>
+            {%- else -%}
+              <span class="ts-vs__no">{% render 'ts-icon', name: 'x' %}</span><span class="ts-visually-hidden">No</span>
+            {%- endif -%}
+          </span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "GPOD vs others",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The Real Comparison" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Breakdown" },
+    { "type": "richtext", "id": "text", "label": "Intro", "default": "<p>We've spent countless hours laboring over every painstaking detail to provide you with the best possible magnetic phone mount on the market.</p>" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop Now" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "image_picker", "id": "logo", "label": "Brand column logo" },
+    { "type": "text", "id": "brand_label", "label": "Brand column name", "default": "GPOD" },
+    { "type": "text", "id": "other_label", "label": "Other column name", "default": "Others" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "limit": 10,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Feature", "default": "360° Adjustable Magnetic Head" },
+        { "type": "checkbox", "id": "gpod", "label": "GPOD has it", "default": true },
+        { "type": "checkbox", "id": "others", "label": "Others have it", "default": false }
+      ]
+    }
+  ],
+  "presets": [ { "name": "GPOD vs others", "blocks": [ { "type": "row" } ] } ]
+}
+{% endschema %}

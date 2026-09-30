@@ -1,0 +1,42 @@
+{%- comment -%}
+  Closing CTA — Tenscope Round 2 (mobile 100:937, desktop 28:2323).
+  Full-bleed photo panel (rounded at desktop) with the headline and one
+  green button, fading to the dark footer below it.
+
+  Paul's board comment #17: "can we have an actual gpod behind the golfer?"
+  — the image is a setting; pick a shot with the GPOD in frame.
+
+  Styles: assets/gpod-ts.css §9.
+{%- endcomment -%}
+
+{{ 'gpod-ts.css' | asset_url | stylesheet_tag }}
+
+{%- assign heading_id = 'TsClose-' | append: section.id -%}
+
+<section class="ts ts-close" style="--ts-close-pos: {{ section.settings.focal }}; --ts-close-bg: {{ section.settings.page_bg }};" data-section-id="{{ section.id }}" data-section-type="home-closing" aria-labelledby="{{ heading_id }}">
+  <div class="ts-close__panel">
+    {%- if section.settings.image != blank -%}
+      {{- section.settings.image | image_url: width: 2400 | image_tag: widths: '600, 900, 1400, 1920, 2400', sizes: '100vw', loading: 'lazy', alt: '' -}}
+    {%- endif -%}
+    <h2 class="ts-h2 ts-close__title" id="{{ heading_id }}">{{ section.settings.heading | escape }}</h2>
+    {%- if section.settings.cta_label != blank -%}
+      <a class="ts-btn" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">{{ section.settings.cta_label | escape }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Closing CTA",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image", "info": "Show a GPOD in the shot." },
+    { "type": "text", "id": "focal", "label": "Focal point", "default": "50% 30%" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Film your golf swing in seconds" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop Now" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "color", "id": "page_bg", "label": "Background around the panel (desktop)", "default": "#ffffff" }
+  ],
+  "presets": [ { "name": "Closing CTA" } ]
+}
+{% endschema %}

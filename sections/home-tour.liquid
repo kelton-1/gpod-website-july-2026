@@ -1,0 +1,131 @@
+{%- comment -%}
+  "On Tour / In the Bags of the Best" — Tenscope Round 2 (mobile 100:432, desktop 28:1803).
+  Forest player cards (rail on phones, 4-up grid ≥1024px), then the
+  "75,000+ golfers filming with GPOD" stat card flanked by tour logos.
+
+  Player cards with no photo are shown only inside the theme editor, so a
+  missing upload never ships an empty tile to customers.
+
+  Styles: assets/gpod-ts.css §6. Behaviour: assets/gpod-ts.js (rails).
+{%- endcomment -%}
+
+{{ 'gpod-ts.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'gpod-ts.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign heading_id = 'TsTour-' | append: section.id
+  assign players = section.blocks | where: 'type', 'player'
+  assign logos = section.blocks | where: 'type', 'logo'
+  assign half = logos.size | divided_by: 2.0 | ceil
+-%}
+
+<section class="ts ts-tour ts-section" data-section-id="{{ section.id }}" data-section-type="home-tour" aria-labelledby="{{ heading_id }}">
+  <div class="ts-wrap" data-ts-rail>
+    <div class="ts-head">
+      <div class="ts-head__titles">
+        {%- if section.settings.kicker != blank -%}<p class="ts-kicker">{{ section.settings.kicker | escape }}</p>{%- endif -%}
+        <h2 class="ts-h2" id="{{ heading_id }}">{{ section.settings.heading | escape }}</h2>
+      </div>
+    </div>
+
+    <ul class="ts-track ts-tour__grid" role="list" data-ts-track tabindex="0" aria-label="{{ section.settings.heading | escape }}">
+      {%- for block in players -%}
+        {%- if block.settings.image == blank and request.design_mode == false -%}{%- continue -%}{%- endif -%}
+        <li class="ts-player" {{ block.shopify_attributes }}>
+          <div class="ts-player__media" style="--ts-pos: {{ block.settings.focal | default: '50% 25%' }};">
+            {%- if block.settings.image != blank -%}
+              {{- block.settings.image | image_url: width: 700 | image_tag: widths: '320, 480, 700', sizes: '(min-width: 1024px) 24vw, 80vw', loading: 'lazy', alt: block.settings.name -}}
+            {%- endif -%}
+          </div>
+          <div class="ts-player__body">
+            <h3 class="ts-h3">{{ block.settings.name | escape }}</h3>
+            {%- if block.settings.role != blank -%}<p class="ts-player__role">{{ block.settings.role | escape }}</p>{%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    <div class="ts-rail__foot" data-ts-rail-foot hidden>
+      <div class="ts-rail__bar" data-ts-rail-bar aria-hidden="true"><span></span></div>
+      <div class="ts-rail__nav">
+        <button type="button" class="ts-rail__btn" data-ts-rail-prev aria-label="Previous players">{% render 'ts-icon', name: 'arrow-left' %}</button>
+        <button type="button" class="ts-rail__btn" data-ts-rail-next aria-label="Next players">{% render 'ts-icon', name: 'arrow-right' %}</button>
+      </div>
+    </div>
+
+    {%- if section.settings.stat != blank or logos.size > 0 -%}
+      <div class="ts-tour__proof">
+        {%- if logos.size > 0 -%}
+          <ul class="ts-logos ts-logos--left" role="list">
+            {%- for block in logos limit: half -%}
+              <li {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 280 | image_tag: loading: 'lazy', alt: block.settings.name }}{%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.stat != blank -%}
+          <div class="ts-stat">
+            {%- if section.settings.stat_pill != blank -%}
+              <p class="ts-stat__pill">
+                <span class="ts-stars" aria-hidden="true">{%- for i in (1..5) -%}{% render 'ts-icon', name: 'star-fill' %}{%- endfor -%}</span>
+                {{ section.settings.stat_pill | escape }}
+              </p>
+            {%- endif -%}
+            <p class="ts-stat__num">{{ section.settings.stat | escape }}</p>
+            {%- if section.settings.stat_label != blank -%}<p class="ts-stat__label">{{ section.settings.stat_label | escape }}</p>{%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if logos.size > 1 -%}
+          <ul class="ts-logos ts-logos--right" role="list">
+            {%- for block in logos offset: half -%}
+              <li {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 280 | image_tag: loading: 'lazy', alt: block.settings.name }}{%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Tour players",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "On Tour" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "In the Bags of the Best" },
+    { "type": "header", "content": "Stat card" },
+    { "type": "text", "id": "stat_pill", "label": "Pill", "default": "Rated by Verified Buyers" },
+    { "type": "text", "id": "stat", "label": "Number", "default": "75,000+" },
+    { "type": "text", "id": "stat_label", "label": "Label", "default": "golfers filming with GPOD" }
+  ],
+  "blocks": [
+    {
+      "type": "player",
+      "name": "Player",
+      "limit": 12,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "text", "id": "focal", "label": "Focal point", "default": "50% 25%" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Player name" },
+        { "type": "text", "id": "role", "label": "Role", "default": "Professional Golfer" }
+      ]
+    },
+    {
+      "type": "logo",
+      "name": "Tour logo",
+      "limit": 10,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Logo" },
+        { "type": "text", "id": "name", "label": "Name (alt text)" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Tour players" } ]
+}
+{% endschema %}

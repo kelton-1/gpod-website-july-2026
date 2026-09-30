@@ -1,0 +1,42 @@
+{%- comment -%}
+  Line icons for the Tenscope home sections (assets/gpod-ts.css).
+  Drawn on a 24px grid to match the Phosphor set the Figma file uses
+  (Package, SealCheck, Star, Magnet …) without shipping the library.
+  Always decorative: the label beside the icon carries the meaning.
+
+  Usage: {% render 'ts-icon', name: 'package' %}
+{%- endcomment -%}
+{%- case name -%}
+  {%- when 'package' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.8 20.4 7.5v9L12 21.2 3.6 16.5v-9L12 2.8Z"/><path d="M3.9 7.6 12 12.2l8.1-4.6M12 12.2v9M7.8 5.1l8.3 4.7"/></svg>
+  {%- when 'seal-check' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.5c1.1 0 1.8 1.2 2.8 1.5 1 .3 2.3-.3 3.1.4.8.7.5 2 .9 3 .4 1 1.7 1.6 1.7 2.7 0 1.1-1.3 1.7-1.7 2.7-.4 1 .1 2.3-.6 3.1-.7.8-2.1.5-3.1.9-1 .4-1.6 1.7-2.7 1.7s-1.8-1.3-2.8-1.7c-1-.4-2.4-.1-3.1-.9-.7-.8-.2-2.1-.6-3.1-.4-1-1.7-1.6-1.7-2.7 0-1.1 1.3-1.7 1.7-2.7.4-1 .1-2.3.9-3 .8-.7 2.1-.1 3.1-.4 1-.3 1.7-1.5 2.8-1.5Z"/><path d="m8.6 12.3 2.4 2.4 4.6-4.9"/></svg>
+  {%- when 'star' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 3.2 2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6-4.4-4.2 6-.8L12 3.2Z"/></svg>
+  {%- when 'star-fill' -%}
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="m12 2.6 2.8 5.8 6.4.9-4.7 4.5 1.2 6.3L12 17.1l-5.7 3 1.2-6.3-4.7-4.5 6.4-.9L12 2.6Z"/></svg>
+  {%- when 'magnet' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 4h4.2v7.5a2.8 2.8 0 0 0 5.6 0V4H19v7.6a7 7 0 0 1-14 0V4Z"/><path d="M5 8h4.2M14.8 8H19"/></svg>
+  {%- when 'truck' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>
+  {%- when 'shield' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3 4.5 5.8v5.7c0 4.5 3.1 7.9 7.5 9.5 4.4-1.6 7.5-5 7.5-9.5V5.8L12 3Z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/></svg>
+  {%- when 'golfer' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="4.5" r="1.8"/><path d="M12 7v6l-3 7M12 13l3 7M8 9.5l4-1.5 5-2.5M17 6.5l2.5-3"/></svg>
+  {%- when 'plus' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>
+  {%- when 'check' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+  {%- when 'check-circle' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.5"/><path d="m8.2 12.3 2.6 2.6 5-5.3"/></svg>
+  {%- when 'x' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  {%- when 'arrow-left' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+  {%- when 'arrow-right' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  {%- when 'chevron-right' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9.5 6 6 6-6 6"/></svg>
+  {%- when 'play' -%}
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 5.6v12.8c0 .8.9 1.3 1.6.8l10-6.4a1 1 0 0 0 0-1.6l-10-6.4c-.7-.5-1.6 0-1.6.8Z"/></svg>
+{%- endcase -%}

@@ -10,986 +10,645 @@
 {
   "sections": {
     "hero": {
-      "type": "home-hero",
+      "type": "home-hero-proof",
       "settings": {
-        "media_type": "video",
-        "video_bg": "shopify://files/videos/GPOD OG Range Use.MOV",
-        "overlay_opacity": 45,
-        "height_desktop": 660,
-        "mobile_fullscreen": false,
-        "headline": "WE MAKE FILMING YOUR SWING EASY.",
-        "subhead": "",
-        "show_trust": true,
-        "trust_text": "Trusted by 75,000+ Golfers",
-        "cta1_text": "Shop Our Best Sellers",
-        "cta1_link": "/collections/frontpage?sort_by=best-selling",
-        "cta2_text": "",
-        "cta2_link": ""
-      }
-    },
-    "featured_core": {
-      "type": "section-collection",
-      "settings": {
-        "title": "EXPLORE GPOD:",
-        "show_description": false,
-        "featured_collection": "frontpage",
-        "products_layout": "grid",
-        "products_rows": 1,
-        "show_button": true,
-        "btn_type": "btn--primary",
-        "btn_size": "btn--large",
-        "btn_style": "btn--solid",
-        "color_style": "black",
-        "padding_top": 40,
-        "padding_bottom": 40
+        "image": "shopify://shop_images/GPOD_Lifestyle_Range_1.jpg",
+        "focal_desktop": "50% 60%",
+        "focal_mobile": "36% 50%",
+        "overlay": 20,
+        "height_mobile": 640,
+        "height_desktop": 830,
+        "top_space_mobile": 112,
+        "top_space_desktop": 150,
+        "pill": "Trusted by 75,000+ golfers",
+        "heading": "Film your golf swing in seconds",
+        "subheading": "Set your angle, snap on your phone, and swing. Stable, hands-free video wherever you practice.",
+        "cta_label": "Shop Now",
+        "cta_link": "/collections/frontpage?sort_by=best-selling",
+        "trust_label": "Why golfers trust GPOD"
       },
-      "disabled": true
-    },
-    "usecases": {
-      "type": "home-use-cases",
       "blocks": {
-        "tile_outdoor": {
-          "type": "tile",
+        "trust_returns": {
+          "type": "trust",
           "settings": {
-            "collection": "outdoor",
-            "title": "OUTDOOR"
+            "icon": "package",
+            "label": "14-day returns",
+            "link": "/policies/refund-policy"
           }
         },
-        "tile_indoor": {
-          "type": "tile",
+        "trust_warranty": {
+          "type": "trust",
           "settings": {
-            "collection": "indoor",
-            "title": "INDOOR"
+            "icon": "seal-check",
+            "label": "1-year warranty"
+          }
+        },
+        "trust_reviews": {
+          "type": "trust",
+          "settings": {
+            "icon": "star",
+            "label": "5.0 rating • +561 Reviews"
+          }
+        },
+        "trust_magsafe": {
+          "type": "trust",
+          "settings": {
+            "icon": "magnet",
+            "label": "Works with MagSafe"
           }
         }
       },
       "block_order": [
-        "tile_outdoor",
-        "tile_indoor"
-      ],
-      "settings": {
-        "kicker": "",
-        "heading": "",
-        "center_heading": true,
-        "padding_top": 60,
-        "padding_bottom": 40
-      },
-      "disabled": true
+        "trust_returns",
+        "trust_warranty",
+        "trust_reviews",
+        "trust_magsafe"
+      ]
     },
-    "compare": {
-      "type": "compare-table",
+    "spotlight": {
+      "type": "home-spotlight",
+      "settings": {
+        "product": "gpodx",
+        "heading": "GPOD : GPOD X",
+        "text": "<p>GPOD X: The Collapsible, Portable Monopod for On-the-Go Content</p><p>Introducing the GPOD X, the revolutionary portable monopod designed for creators - athletes and spectators - on the move. This compact and lightweight monopod features a 3-piece carbon fiber body that extends from 20 inches to 51 inches giving you the flexibility to capture stunning footage from any angle and height.</p>",
+        "use_cutout": true,
+        "show_count": false,
+        "cta_label": "Buy GPOD X for [price]"
+      },
       "blocks": {
-        "col_0": {
+        "chip_puck": {
+          "type": "chip",
+          "settings": {
+            "label": "GPUCK with MagSafe® Magnetic Mount"
+          }
+        },
+        "chip_body": {
+          "type": "chip",
+          "settings": {
+            "label": "Carbon Fiber GPOD X"
+          }
+        },
+        "chip_head": {
+          "type": "chip",
+          "settings": {
+            "label": "Adjustable Ball Head"
+          }
+        },
+        "chip_plates": {
+          "type": "chip",
+          "settings": {
+            "label": "Metal Plates with 3M® Adhesive"
+          }
+        }
+      },
+      "block_order": [
+        "chip_puck",
+        "chip_body",
+        "chip_head",
+        "chip_plates"
+      ]
+    },
+    "popular": {
+      "type": "home-product-rail",
+      "settings": {
+        "kicker": "Popular",
+        "heading": "Most Popular Products",
+        "cta_label": "Shop Now",
+        "cta_link": "/collections/frontpage",
+        "show_rating": false,
+        "collection": "frontpage",
+        "limit": 8
+      },
+      "blocks": {
+        "p_1": {
+          "type": "product",
+          "settings": {
+            "product": "g-bundle-two-gpod-x-with-gpod-base",
+            "badge": "Best Seller",
+            "badge_style": "accent"
+          }
+        },
+        "p_2": {
           "type": "product",
           "settings": {
             "product": "gpodmagsafe",
-            "badge": "The original"
+            "badge_style": "forest"
           }
         },
-        "col_1": {
+        "p_3": {
           "type": "product",
           "settings": {
             "product": "gpodx",
-            "badge": "Most popular"
+            "badge_style": "forest"
           }
         },
-        "col_2": {
+        "p_4": {
+          "type": "product",
+          "settings": {
+            "product": "gpod-pocket-g",
+            "badge_style": "forest"
+          }
+        },
+        "p_5": {
+          "type": "product",
+          "settings": {
+            "product": "gpod-travel-1",
+            "badge_style": "forest"
+          }
+        },
+        "p_6": {
           "type": "product",
           "settings": {
             "product": "gpod-pauly-p2",
-            "badge": "Flagship"
+            "badge_style": "forest"
+          }
+        },
+        "p_7": {
+          "type": "product",
+          "settings": {
+            "product": "gpod-studio",
+            "badge_style": "forest"
           }
         }
       },
       "block_order": [
-        "col_0",
-        "col_1",
-        "col_2"
-      ],
-      "settings": {
-        "kicker": "Which GPOD is right for you?",
-        "heading": "Compare models",
-        "text": "<p>Swap any model into a column to compare height, weight and how it stands up.</p>",
-        "center_heading": false,
-        "padding_top": 60,
-        "padding_bottom": 60,
-        "layout": "cards",
-        "enable_picker": true,
-        "candidate_handles": "gpodmagsafe,gpodx,gpod-pauly-p2,gpod-travel-1,gpod-studio,indoor-base-for-gpod-gpod-mini,gpod-mini,gpod-pocket-g",
-        "footnote": "<p><a href=\"/pages/compare-gpod-models\">See the full breakdown</a> or <a href=\"/pages/product-finder-quiz\">take the 30-second finder</a>.</p>",
-        "max_specs": 4
-      }
+        "p_1",
+        "p_2",
+        "p_3",
+        "p_4",
+        "p_5",
+        "p_6",
+        "p_7"
+      ]
     },
-    "overlay": {
-      "type": "section-image-with-text-overlay",
+    "breakdown": {
+      "type": "home-feature-cards",
+      "settings": {
+        "kicker": "Why Golfers Switch",
+        "heading": "The Breakdown",
+        "cta_label": "Shop Now",
+        "cta_link": "/collections/frontpage"
+      },
       "blocks": {
-        "subheading_TqgUfr": {
-          "type": "subheading",
+        "card_materials": {
+          "type": "card",
           "settings": {
-            "subheading": "Offer valid for U.S. only"
+            "image": "shopify://shop_images/GPODX_Close-up.jpg",
+            "title": "Premium materials",
+            "text": "Lightweight carbon fiber and aluminum alloy, strong enough to trust in wind, light enough to forget it's in your bag."
           }
         },
-        "heading_hA9x49": {
-          "type": "heading",
+        "card_head": {
+          "type": "card",
           "settings": {
-            "title": "GET A FREE GPOD NOW"
+            "image": "shopify://shop_images/GPOD_Rotating_Head.gif",
+            "title": "360° rotating head",
+            "text": "Adjust to any angle, including straight overhead for putting — no fumbling with a phone clamp mid-round."
           }
         },
-        "text_Bdf3LB": {
-          "type": "text",
+        "card_stick": {
+          "type": "card",
           "settings": {
-            "text": "<p>Yep. This is real life. Get a free GPOD now ( $110 value) when you purchase any one of our three <a href=\"/collections/bundles\" title=\"Bundles\">G-Bundle’s</a> while supplies last. <strong>Just add the bundle of your choosing to your cart as well as the </strong><a href=\"/products/gpodmagsafe\" title=\"GPOD\"><strong>GPOD Magsafe </strong></a><strong>and we'll cancel out the cost of the GPOD Magsafe! </strong>Limit one free GPOD per customer.</p>"
-          }
-        },
-        "button_9CnAcL": {
-          "type": "button",
-          "settings": {
-            "button_text": "SHOP G-BUNDLES",
-            "button_link": "shopify://collections/bundles",
-            "btn_type": "btn--primary",
-            "btn_size": "",
-            "btn_style": "btn--solid"
+            "image": "shopify://shop_images/GPODX_Hero_Shot_2_be99715f-cd04-4316-b16e-df908d240e88.png",
+            "title": "Stick it and swing it",
+            "text": "Push it into the turf, snap your phone on, hit record. No apps, no setup, no waiting on a buddy to film you."
           }
         }
       },
       "block_order": [
-        "subheading_TqgUfr",
-        "heading_hA9x49",
-        "text_Bdf3LB",
-        "button_9CnAcL"
-      ],
-      "disabled": true,
-      "name": "Image with text overlay",
-      "settings": {
-        "banner_image": "shopify://shop_images/GPOD_X_and_Bryson.jpg",
-        "height": "five-fifty-height-hero",
-        "banner_image_mobile": "shopify://shop_images/GPODX_Hero_Shot_2_be99715f-cd04-4316-b16e-df908d240e88.png",
-        "height_mobile": "five-fifty-height-hero--mobile",
-        "heading_tag": "h2",
-        "text_position": "center",
-        "color_text": "#ffffff",
-        "color_overlay": "#333333",
-        "overlay_opacity": 85
-      }
-    },
-    "icons": {
-      "type": "section-icons-row",
-      "blocks": {
-        "icon_tour": {
-          "type": "text",
-          "settings": {
-            "icon_name": "award",
-            "title": "PREMIUM MATERIALS",
-            "text": "<p>Crafted with light-weight carbon fiber, for exceptional strength, durability, and dependability.</p>"
-          }
-        },
-        "icon_warranty": {
-          "type": "text",
-          "settings": {
-            "icon_name": "sync",
-            "title": "360° ROTATING HEAD",
-            "text": "<p>360-degree adjustable mag-safe magnetic head allows you to capture your swing from any angle, including overhead putting views.</p>"
-          }
-        },
-        "icon_build": {
-          "type": "text",
-          "settings": {
-            "icon_name": "phone",
-            "title": "JUST STICK IT AND SWING IT",
-            "text": "<p>It's really that easy.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "icon_tour",
-        "icon_warranty",
-        "icon_build"
-      ],
-      "settings": {
-        "alignment": "center",
-        "color_icons_bg": "#8cc662",
-        "color_icons_text": "#333333",
-        "padding_top": 50,
-        "padding_bottom": 50
-      },
-      "disabled": true
-    },
-    "quiz_cta": {
-      "type": "section-rich-text",
-      "blocks": {
-        "cta_sub": {
-          "type": "subheading",
-          "settings": {
-            "subheading": ""
-          }
-        },
-        "cta_head": {
-          "type": "heading",
-          "settings": {
-            "title": "FIND THE BEST GPOD PRODUCT FOR YOU BY TAKING OUR SHORT QUIZ BELOW:"
-          }
-        },
-        "cta_text": {
-          "type": "text",
-          "settings": {
-            "content": "<p>Just answer a few quick questions about how you plan on using your GPOD product and we'll tell which GPOD product is best.</p>"
-          }
-        },
-        "cta_btn": {
-          "type": "button",
-          "settings": {
-            "button_text": "Take the Quiz",
-            "button_link": "/pages/product-finder-quiz",
-            "btn_type": "btn--primary",
-            "btn_size": "btn--large",
-            "btn_style": "btn--solid"
-          }
-        }
-      },
-      "block_order": [
-        "cta_sub",
-        "cta_head",
-        "cta_text",
-        "cta_btn"
-      ],
-      "settings": {
-        "padding_top": 80,
-        "padding_bottom": 80
-      }
-    },
-    "brand_statement": {
-      "type": "home-brand-statement",
-      "disabled": true,
-      "settings": {
-        "kicker": "Why GPOD exists",
-        "statement": "Capturing the moment shouldn’t get in the way of the moment.",
-        "text": "<p>Whether you’re filming a golf swing, coaching a student, or creating content on the move, your gear should work with you — not against you.</p><p>I created GPOD after years of dealing with unstable tripods, awkward phone clamps, and missed shots caused by slow, frustrating setups. There had to be a better way.</p><p>GPOD was designed to set up in seconds, stay put in tough conditions, and let you focus on what you’re actually there to do.</p><p><strong>Less time setting up. More time creating.</strong></p>",
-        "signature": "— Paul Park",
-        "signature_role": "Founder",
-        "layout": "letter",
-        "color_style": "dark",
-        "padding_top": 84,
-        "padding_bottom": 84
-      }
+        "card_materials",
+        "card_head",
+        "card_stick"
+      ]
     },
     "founder": {
-      "type": "section-image-with-text",
-      "disabled": true,
+      "type": "home-founder",
+      "settings": {
+        "logo": "shopify://shop_images/GPOD_logo.png",
+        "heading": "Built By A Golfer For Golfers",
+        "text": "<p>As a professional golfer, I, Paul Park, understand the relentless pursuit of improvement that drives every player, from weekend warriors to seasoned pros.</p><p>Like you, I've spent countless hours seeking that perfect swing, relying on lessons and video analysis. That's why I created GPOD Golf – a game-changing solution designed to simplify and enhance your swing analysis.</p>",
+        "cta_label": "About Us",
+        "cta_link": "/pages/about-us"
+      },
       "blocks": {
-        "founder_img": {
-          "type": "gallery_image",
+        "photo_1": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/GPOD_Lifestyle_Range_1.jpg"
+          }
+        },
+        "photo_2": {
+          "type": "photo",
           "settings": {
             "image": "shopify://shop_images/BW_FO_Paul.jpg"
           }
+        },
+        "photo_3": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/GPOD_Paul_Park.jpg"
+          }
+        },
+        "photo_4": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/GPOD_X_and_Bryson.jpg"
+          }
+        },
+        "photo_5": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/GPOD_Pauly_P_Indoor_1.jpg"
+          }
         }
       },
       "block_order": [
-        "founder_img"
-      ],
-      "settings": {
-        "width": "container-wrap",
-        "color_style": "white",
-        "slide_height": "five-fifty-height-hero",
-        "slide_image_position": "right",
-        "slide_image_size": "fifty",
-        "subheading": "From frustration to innovation",
-        "title": "Designed by a pro who lives on the range",
-        "content": "<p>As a professional golfer, Paul Park spent countless hours on video analysis — and just as many fighting unstable phone holders. GPOD is his answer: one-handed magnetic attachment, tour-grade stability, and hardware that disappears into your bag until you need it.</p>",
-        "cta": "Read our story",
-        "link": "/pages/about-us",
-        "btn_type": "btn--primary",
-        "btn_size": "",
-        "btn_style": "btn--outline",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
+        "photo_1",
+        "photo_2",
+        "photo_3",
+        "photo_4",
+        "photo_5"
+      ]
     },
     "tour": {
-      "type": "section-image-with-text-overlay",
+      "type": "home-tour",
+      "settings": {
+        "kicker": "On Tour",
+        "heading": "In the Bags of the Best",
+        "stat_pill": "Rated by Verified Buyers",
+        "stat": "75,000+",
+        "stat_label": "golfers filming with GPOD"
+      },
       "blocks": {
-        "tour_sub": {
-          "type": "subheading",
+        "player_1": {
+          "type": "player",
           "settings": {
-            "subheading": "Trusted where it counts"
+            "image": "shopify://shop_images/GPOD_X_and_Bryson.jpg",
+            "focal": "50% 25%",
+            "name": "Bryson DeChambeau",
+            "role": "Professional Golfer"
           }
         },
-        "tour_head": {
-          "type": "heading",
+        "player_2": {
+          "type": "player",
           "settings": {
-            "title": "FIND US ON TOUR:"
+            "focal": "50% 25%",
+            "name": "Xander Schauffele",
+            "role": "Professional Golfer"
           }
         },
-        "tour_text": {
-          "type": "text",
+        "player_3": {
+          "type": "player",
           "settings": {
-            "text": "<p>Joaquín Niemann · Beatriz Recari · Christina Kim · Kelly Tan · George Gankas · Jeff Leishman — and more players and coaches filming with GPOD every week on the PGA, LPGA, LIV, and Korn Ferry Tours.</p>"
+            "focal": "50% 25%",
+            "name": "Lydia Ko",
+            "role": "Professional Golfer"
           }
         },
-        "tour_btn": {
-          "type": "button",
+        "player_4": {
+          "type": "player",
           "settings": {
-            "button_text": "See who's using GPOD",
-            "button_link": "/pages/on-tour",
-            "btn_type": "btn--primary",
-            "btn_size": "",
-            "btn_style": "btn--solid"
+            "focal": "50% 25%",
+            "name": "Cameron Young",
+            "role": "Professional Golfer"
+          }
+        },
+        "player_5": {
+          "type": "player",
+          "settings": {
+            "focal": "50% 25%",
+            "name": "Billy Horschel",
+            "role": "Professional Golfer"
+          }
+        },
+        "player_6": {
+          "type": "player",
+          "settings": {
+            "focal": "50% 25%",
+            "name": "Amy Yang",
+            "role": "Professional Golfer"
+          }
+        },
+        "player_7": {
+          "type": "player",
+          "settings": {
+            "focal": "50% 25%",
+            "name": "Akshay Bhatia",
+            "role": "Professional Golfer"
+          }
+        },
+        "player_8": {
+          "type": "player",
+          "settings": {
+            "focal": "50% 25%",
+            "name": "Yuka Saso",
+            "role": "Professional Golfer"
+          }
+        },
+        "logo_1": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/gpod-tour-pga-tour.png",
+            "name": "PGA TOUR"
+          }
+        },
+        "logo_2": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/gpod-tour-epson-tour.png",
+            "name": "Epson Tour"
+          }
+        },
+        "logo_3": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/gpod-tour-dp-world-tour.png",
+            "name": "DP World Tour"
+          }
+        },
+        "logo_4": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/gpod-tour-korn-ferry-tour.png",
+            "name": "Korn Ferry Tour"
+          }
+        },
+        "logo_5": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/gpod-tour-pga-tour-americas.png",
+            "name": "PGA TOUR Americas"
+          }
+        },
+        "logo_6": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/gpod-tour-asian-tour.png",
+            "name": "Asian Tour"
+          }
+        },
+        "logo_7": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/gpod-tour-liv-golf.png",
+            "name": "LIV Golf"
           }
         }
       },
       "block_order": [
-        "tour_head"
-      ],
-      "settings": {
-        "banner_image": "shopify://shop_images/Lifestyle_Shot_joaco.jpg",
-        "height": "five-fifty-height-hero",
-        "height_mobile": "five-fifty-height-hero--mobile",
-        "heading_tag": "h2",
-        "text_position": "center",
-        "color_text": "#ffffff",
-        "color_overlay": "#101410",
-        "overlay_opacity": 45
-      },
-      "disabled": true
-    },
-    "sportsbox": {
-      "type": "section-split-content",
-      "disabled": true,
-      "blocks": {
-        "sb_img": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/GPOD_Sportsbox_Logo_Lockup.png"
-          }
-        },
-        "sb_text": {
-          "type": "text",
-          "settings": {
-            "subheading": "Official partner",
-            "title": "Film it. Then measure it.",
-            "content": "<p>GPOD teams up with Sportsbox AI to turn your swing videos into 3D data — body angles, sway, and turn numbers your coach can actually use. Grab the GPOD Travel + Sportsbox 3D bundle and get a full year of swing analysis with your setup.</p>",
-            "button_text": "Shop the Sportsbox bundle",
-            "button_link": "/products/gpod-travel-sportsbox-3d-player-annual-swing-analysis",
-            "btn_type": "btn--primary",
-            "btn_size": "",
-            "btn_style": "btn--outline"
-          }
-        }
-      },
-      "block_order": [
-        "sb_img",
-        "sb_text"
-      ],
-      "settings": {
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
-    },
-    "community": {
-      "type": "section-newsletter",
-      "disabled": true,
-      "settings": {
-        "color": "#ffffff",
-        "background": "#101410",
-        "title": "Join the GPOD community",
-        "content": "<p>Swing tips, drills, and first access to new gear. Film something good? Tag <strong>@gpodgolf</strong> — we feature player videos every week.</p>",
-        "padding_top": 70,
-        "padding_bottom": 70
-      }
-    },
-    "gpodder": {
-      "type": "home-use-cases",
-      "disabled": true,
-      "blocks": {
-        "id_golfer": {
-          "type": "tile",
-          "settings": {
-            "collection": "on-the-course",
-            "title": "Golfer",
-            "text": "Film every swing, anywhere you play"
-          }
-        },
-        "id_coach": {
-          "type": "tile",
-          "settings": {
-            "collection": "coaching-studio",
-            "title": "Coach",
-            "text": "Steady angles for every lesson"
-          }
-        },
-        "id_creator": {
-          "type": "tile",
-          "settings": {
-            "title": "Creator",
-            "link": "/pages/product-finder-quiz",
-            "image": "shopify://shop_images/Pauly_P_DSLR.png",
-            "text": "Your camera crew that fits in a pocket"
-          }
-        },
-        "id_parent": {
-          "type": "tile",
-          "settings": {
-            "title": "Sports Parent",
-            "link": "/pages/product-finder-quiz",
-            "image": "shopify://shop_images/fathers.jpg",
-            "text": "Capture every game-day moment"
-          }
-        },
-        "id_hiker": {
-          "type": "tile",
-          "settings": {
-            "collection": "travel-ready",
-            "title": "Hiker",
-            "text": "Summit views, hands-free"
-          }
-        },
-        "id_traveler": {
-          "type": "tile",
-          "settings": {
-            "collection": "travel-ready",
-            "title": "Traveler",
-            "image": "shopify://shop_images/GPODX_Hero_Shot_2_be99715f-cd04-4316-b16e-df908d240e88.png",
-            "text": "Packs into any carry-on"
-          }
-        },
-        "id_photographer": {
-          "type": "tile",
-          "settings": {
-            "collection": "tripods-bases",
-            "title": "Photographer",
-            "text": "A stable base for any shot"
-          }
-        }
-      },
-      "block_order": [
-        "id_golfer",
-        "id_coach",
-        "id_creator",
-        "id_parent",
-        "id_hiker",
-        "id_traveler",
-        "id_photographer"
-      ],
-      "settings": {
-        "kicker": "One tool, many games",
-        "heading": "Why become a GPODDER?",
-        "text": "<p>Wherever you point a camera, GPOD holds it steady. Find yourself below.</p>",
-        "center_heading": true,
-        "grid_style": "compact",
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
-    },
-    "tour_marquee": {
-      "type": "section-partner-marquee",
-      "blocks": {
-        "tour_pga": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-tour-pga-tour.png",
-            "logo_name": "PGA TOUR",
-            "logo_scale": 115,
-            "logo_url": ""
-          }
-        },
-        "tour_lpga": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-tour-lpga.png",
-            "logo_name": "LPGA",
-            "logo_scale": 110,
-            "logo_url": ""
-          }
-        },
-        "tour_liv": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-tour-liv-golf.png",
-            "logo_name": "LIV Golf",
-            "logo_scale": 90,
-            "logo_url": ""
-          }
-        },
-        "tour_dpworld": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-tour-dp-world-tour.png",
-            "logo_name": "DP World Tour",
-            "logo_scale": 115,
-            "logo_url": ""
-          }
-        },
-        "tour_kornferry": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-tour-korn-ferry-tour.png",
-            "logo_name": "Korn Ferry Tour",
-            "logo_scale": 115,
-            "logo_url": ""
-          }
-        },
-        "tour_asian": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-tour-asian-tour.png",
-            "logo_name": "Asian Tour",
-            "logo_scale": 100,
-            "logo_url": ""
-          }
-        },
-        "tour_epson": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-tour-epson-tour.png",
-            "logo_name": "Epson Tour",
-            "logo_scale": 100,
-            "logo_url": ""
-          }
-        },
-        "tour_japan": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-tour-japan-golf-tour.png",
-            "logo_name": "Japan Golf Tour",
-            "logo_scale": 105,
-            "logo_url": ""
-          }
-        },
-        "tour_latam": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-tour-pga-tour-latinoamerica.png",
-            "logo_name": "PGA TOUR Latinoamérica",
-            "logo_scale": 115,
-            "logo_url": ""
-          }
-        },
-        "tour_americas": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-tour-pga-tour-americas.png",
-            "logo_name": "PGA TOUR Americas",
-            "logo_scale": 115,
-            "logo_url": ""
-          }
-        }
-      },
-      "block_order": [
-        "tour_pga",
-        "tour_lpga",
-        "tour_liv",
-        "tour_dpworld",
-        "tour_kornferry",
-        "tour_asian",
-        "tour_epson",
-        "tour_japan",
-        "tour_latam",
-        "tour_americas"
-      ],
-      "settings": {
-        "heading": "FIND US ON TOUR",
-        "heading_size": 13,
-        "heading_color": "#6b6b6b",
-        "speed": 60,
-        "direction": "left",
-        "pause_on_hover": true,
-        "logo_height": 56,
-        "logo_height_mobile": 38,
-        "max_logo_width": 200,
-        "gap": 72,
-        "grayscale": true,
-        "new_tab": true,
-        "background": "",
-        "edge_fade": 80,
-        "padding_top": 56,
-        "padding_bottom": 24
-      }
-    },
-    "partner_marquee": {
-      "type": "section-partner-marquee",
-      "blocks": {
-        "partner_sportsbox": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-partner-sportsbox-ai.png",
-            "logo_name": "Sportsbox AI",
-            "logo_scale": 100,
-            "logo_url": ""
-          }
-        },
-        "partner_titleist": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-partner-titleist.png",
-            "logo_name": "Titleist",
-            "logo_scale": 100,
-            "logo_url": ""
-          }
-        },
-        "partner_netreturn": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-partner-net-return.png",
-            "logo_name": "The Net Return",
-            "logo_scale": 100,
-            "logo_url": ""
-          }
-        },
-        "partner_thestack": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-partner-the-stack.png",
-            "logo_name": "The Stack",
-            "logo_scale": 95,
-            "logo_url": ""
-          }
-        },
-        "partner_mustard": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-partner-mustard-golf.png",
-            "logo_name": "Mustard Golf",
-            "logo_scale": 100,
-            "logo_url": ""
-          }
-        },
-        "partner_flightscope": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-partner-flightscope.png",
-            "logo_name": "FlightScope",
-            "logo_scale": 100,
-            "logo_url": ""
-          }
-        },
-        "partner_ggolf": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-partner-g-golf.png",
-            "logo_name": "G Golf",
-            "logo_scale": 90,
-            "logo_url": ""
-          }
-        },
-        "partner_fiveiron": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-partner-five-iron-golf.png",
-            "logo_name": "Five Iron Golf",
-            "logo_scale": 100,
-            "logo_url": ""
-          }
-        },
-        "partner_hazy": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-partner-hazy-golf.png",
-            "logo_name": "Hazy Golf",
-            "logo_scale": 100,
-            "logo_url": ""
-          }
-        },
-        "partner_rapsodo": {
-          "type": "item_logo",
-          "settings": {
-            "logo_image": "shopify://shop_images/gpod-partner-rapsodo-golf.png",
-            "logo_name": "Rapsodo Golf",
-            "logo_scale": 100,
-            "logo_url": ""
-          }
-        }
-      },
-      "block_order": [
-        "partner_sportsbox",
-        "partner_titleist",
-        "partner_netreturn",
-        "partner_thestack",
-        "partner_mustard",
-        "partner_flightscope",
-        "partner_ggolf",
-        "partner_fiveiron",
-        "partner_hazy",
-        "partner_rapsodo"
-      ],
-      "settings": {
-        "heading": "AND THE BRANDS WE BUILD WITH",
-        "heading_size": 13,
-        "heading_color": "#6b6b6b",
-        "speed": 60,
-        "direction": "right",
-        "pause_on_hover": true,
-        "logo_height": 56,
-        "logo_height_mobile": 38,
-        "max_logo_width": 200,
-        "gap": 72,
-        "grayscale": true,
-        "new_tab": true,
-        "background": "",
-        "edge_fade": 80,
-        "padding_top": 8,
-        "padding_bottom": 56,
-        "lede": "<p>Launch monitors, swing capture, simulators and training tools — the gear golfers already use, alongside a GPOD.</p>"
-      }
-    },
-    /* Replaced the four-up credibility band on 2026-07-31. Four equal icon
-       cards made four claims of equal weight, which is the most generic
-       module on a Shopify homepage — restyling it was not going to fix that.
-       One number, drawn to true proportion, carries more.
-
-       Weights are the corrected figures from the spec sheet: GPOD 4.8 oz (NOT
-       the 4.4 oz printed on the old comparison slide), iRangeSports Stick EXT
-       27.2 oz. Keep both bar values in oz — the bars are proportional.
-
-       DISABLED 2026-08-31 following WEB AUDIT NOTES, Aug 21 2026: "I don't
-       understand this section – could be misleading as not all products are
-       carbon fiber. And comparing aluminum speaks negatively about our
-       products that are aluminium. 4.8oz at first glance looks like a rating
-       as well."
-
-       Three separate reasons, and the section cannot be re-messaged in place
-       to answer them, because its whole layout is a large number plus
-       proportional bars — there is no non-numeric path through it.
-
-       1. The Brand Playbook (Aug 2026) independently retires this framing
-          under "A Claim to Use Carefully": carbon fiber is true of the GPOD
-          and GPOD X only, while Pauly P, Studio 2.0, Travel and Pocket G are
-          aluminum alloy. Its approved replacement is material-matched-to-use-
-          case prose, which needs a prose section, not this one.
-       2. The bar comparison is against a competitor's mount, not GPOD's own
-          aluminum SKUs — so it is not literally self-disparaging — but the
-          effect Shawn describes is real: a shopper who reads "aluminum =
-          heavy" and then buys an aluminum Pauly P has been told their own
-          product is the worse one.
-       3. The 4.8 oz figure is in dispute across four sources: this template
-          says 4.8, the Brand Playbook says 4.4, and the live PDPs for the
-          GPOD say 7 oz and 8 oz. We should not publish a headline weight
-          while our own PDPs contradict it.
-
-       Kept rather than deleted so the bars and copy survive for whatever
-       replaces it. Re-enable only once the weight is settled and the framing
-       is re-authored. */
-    "proof": {
-      "type": "gpod-stat-band",
-      "disabled": true,
-      "blocks": {
-        "bar_gpod": {
-          "type": "bar",
-          "settings": {
-            "label": "GPOD",
-            "value": "4.8",
-            "unit": "oz",
-            "highlight": true
-          }
-        },
-        "bar_alt": {
-          "type": "bar",
-          "settings": {
-            "label": "Aluminum alignment-stick mount",
-            "value": "27.2",
-            "unit": "oz",
-            "highlight": false
-          }
-        },
-        "spec_shaft": {
-          "type": "spec",
-          "settings": {
-            "label": "Shaft",
-            "value": "Carbon fiber"
-          }
-        },
-        "spec_head": {
-          "type": "spec",
-          "settings": {
-            "label": "Head",
-            "value": "Machined aluminum"
-          }
-        },
-        "spec_rotation": {
-          "type": "spec",
-          "settings": {
-            "label": "Rotation",
-            "value": "360° ball joint"
-          }
-        },
-        "spec_mount": {
-          "type": "spec",
-          "settings": {
-            "label": "Phone mount",
-            "value": "MagSafe + 3 adhesive plates"
-          }
-        },
-        "spec_setup": {
-          "type": "spec",
-          "settings": {
-            "label": "Setup",
-            "value": "Stake it and swing"
-          }
-        },
-        "spec_bag": {
-          "type": "spec",
-          "settings": {
-            "label": "Carry",
-            "value": "Fits a golf bag club slot"
-          }
-        }
-      },
-      "block_order": [
-        "bar_gpod",
-        "bar_alt",
-        "spec_shaft",
-        "spec_head",
-        "spec_rotation",
-        "spec_mount",
-        "spec_setup",
-        "spec_bag"
-      ],
-      "settings": {
-        "kicker": "Why carbon fiber",
-        "stat": "4.8",
-        "stat_unit": "oz",
-        "stat_caption": "A full GPOD, ready to swing.",
-        "text": "<p>The aluminum stick mount it replaces weighs more than five GPODs. That is the difference between a training aid you carry to every session and one that stays in the garage.</p>",
-        "button_label": "Compare all models",
-        "button_link": "/pages/compare-gpod-models",
-        "background_color": "#0d0d0d",
-        "text_color": "#ffffff",
-        "padding_top": 88,
-        "padding_bottom": 88
-      }
-    },
-    "explore": {
-      "type": "gpod-explore",
-      "blocks": {
-        /* Three categories, not five. WEB AUDIT NOTES, Aug 21 2026 asked to
-           "simplify the categories here" to Core Products / Accessories /
-           Bundles. The old split by product TYPE (Monopods / Tripods / Bases)
-           was the July IA; the audit replaces it with a split by tier, which
-           also moves Base 2.0 into Accessories and Caddy into Core Products.
-           The Bases card is retired outright — its copy denied staking while
-           its image showed the G-Peg you stake with. */
-        "exp_core": {
-          "type": "card",
-          "settings": {
-            "collection": "core-products",
-            /* Angled GPOD X — the mid-range monopod, and the one that reads best at card size. */
-            "cutout_handle": "gpodx",
-            "title": "Core Products",
-            "text": "Monopods, tripods and mounts \u2014 every GPOD that holds your phone on its own."
-          }
-        },
-        "exp_accessories": {
-          "type": "card",
-          "settings": {
-            "collection": "accessories",
-            /* The GPUCK is the accessory people actually search for. */
-            "cutout_handle": "replacement-magnet-for-magsafe",
-            "title": "Accessories",
-            "text": "Bases, pucks, plates and the parts that connect them.",
-            "image": "shopify://shop_images/1_9f64aed4-baa0-420e-abd4-51e42867cf60.png"
-          }
-        },
-        "exp_bundles": {
-          "type": "card",
-          "settings": {
-            "collection": "bundles",
-            /* Bundle 2 shows the full contents laid out. */
-            "cutout_handle": "g-bundle-two-gpod-x-with-gpod-base",
-            "title": "Bundles",
-            "text": "A pod and a base together, priced as a set.",
-            "image": "shopify://shop_images/HeroImage_16f80c8f-975b-4ea3-9f9a-727c0c79ff00.png"
-          }
-        }
-      },
-      "block_order": [
-        "exp_core",
-        "exp_accessories",
-        "exp_bundles"
-      ],
-      "settings": {
-        "heading": "Explore Our Best Sellers",
-        "lede": "",
-        "cta_label": "Shop now",
-        "show_count": false,
-        "card_width": 300,
-        "image_ratio": "0.8",
-        "background_color": "#ffffff",
-        "padding_top": 72,
-        "padding_bottom": 72
-      }
+        "player_1",
+        "player_2",
+        "player_3",
+        "player_4",
+        "player_5",
+        "player_6",
+        "player_7",
+        "player_8",
+        "logo_1",
+        "logo_2",
+        "logo_3",
+        "logo_4",
+        "logo_5",
+        "logo_6",
+        "logo_7"
+      ]
     },
     "reviews": {
-      "type": "gpod-reviews",
+      "type": "home-review-wall",
+      "settings": {
+        "kicker": "From the Bag, Not the Boardroom",
+        "heading": "What Golfers are Saying",
+        "score": "4.9 average · 600+ reviews",
+        "batch": 6,
+        "more_label": "Load More"
+      },
       "blocks": {
-        "rev_1": {
-          "type": "quote",
+        "review_1": {
+          "type": "review",
           "settings": {
             "rating": 5,
-            "author": "Patrick E. · Browns Mills, NJ",
-            "quote": "<p>So easy to use and so much faster to record shots than anything i've tried so I can still relax and play without feeling like i am rushing.</p>"
+            "date": "2026-07-17",
+            "text": "Exactly what I was hoping for. It's lightweight, easy to use and doesn't slow down my pace of play. I use a GoPro 13 with a magnetic attachment for easy on, easy off, but I mainly just leave it on and in my bag between shots. As you can see from the video below, it was a windy day, but the GPOD with camera, remained stable. - @RodGolfs",
+            "name": "Rodney G.",
+            "location": "San Antonio, TX",
+            "product": "g-bundle-one-gpod-with-gpod-base",
+            "media_url": "https://media.fera.ai/customer_videos/videos/001/002/496/420/thumb/7_11_2026_Golf_Club_Estrell_24hrs_small.jpg?class=thumb&optimizer=image&v=1784251873",
+            "media_link": "https://gpodgolf.com/products/g-bundle-one-gpod-with-gpod-base?fera=showMedia&feraId=fmed_rJAL031G&utm_source=fera",
+            "media_type": "video"
           }
         },
-        "rev_2": {
-          "type": "quote",
+        "review_2": {
+          "type": "review",
           "settings": {
             "rating": 5,
-            "author": "Jaehong K. · Seoul, South Korea",
-            "quote": "<p>It collapses into your bag nicely. The only thing bad thing right now is that people in my foursome keep asking me to film them...</p>"
+            "date": "2026-05-06",
+            "text": "Definitely recommended!",
+            "name": "Kelton L.",
+            "location": "Saint Charles, MO",
+            "product": "g-bundle-two-gpod-x-with-gpod-base",
+            "media_type": "photo"
           }
         },
-        "rev_3": {
-          "type": "quote",
+        "review_3": {
+          "type": "review",
           "settings": {
             "rating": 5,
-            "author": "Tyler M. · Freedom, NY",
-            "quote": "<p>I love the stability it offers I have played in some wind with the gpod and it has been very stable.</p>"
+            "date": "2026-05-01",
+            "text": "I have a magbak case on my phone and the magnet that comes with the gpod works perfectly with it. No other magnetic tripods work with my phone without having to use an adhesive magnet in between. Best on the market by far",
+            "name": "Anonymous",
+            "product": "gpod-travel-1",
+            "media_url": "https://media.fera.ai/customer_videos/videos/001/002/427/084/thumb/79934459264__95739B9F-4D0E-4BD5-A616-1973FF5BEC4A.jpg?class=thumb&optimizer=image&v=1777651820",
+            "media_link": "https://gpodgolf.com/products/gpod-travel-1?fera=showMedia&feraId=fmed_rIwAlbkQ&utm_source=fera",
+            "media_type": "video"
           }
         },
-        "rev_4": {
-          "type": "quote",
+        "review_4": {
+          "type": "review",
           "settings": {
             "rating": 5,
-            "author": "Stacy W. · Woolwich, NJ",
-            "quote": "<p>LOVE GPOD!!! Seriously I think my coach was going to go crazy with my videos until I bought the GPOD!</p>"
+            "date": "2026-07-02",
+            "text": "Purchasing process was smooth and easy. The product itself was amazing. Customer service was great. I had to call to make an adjustment and they took care of me. I would definitely recommend the brand.",
+            "name": "Craig C.",
+            "location": "Las Vegas, NV",
+            "product": "g-bundle-one-gpod-with-gpod-base",
+            "media_url": "https://media.fera.ai/customer_photos/images/001/002/480/984/original/IMG_5783.jpeg?class=thumb&optimizer=image&v=1783024968",
+            "media_link": "https://gpodgolf.com/products/g-bundle-one-gpod-with-gpod-base?fera=showMedia&feraId=fmed_rJ7BTxek&utm_source=fera",
+            "media_type": "photo"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "date": "2026-08-12",
+            "text": "Great quality and easy to set up!",
+            "name": "Tom G.",
+            "location": "Guilford, CT",
+            "product": "g-bundle-two-gpod-x-with-gpod-base",
+            "media_type": "photo"
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "date": "2026-06-10",
+            "text": "As a popular content creator, this thing is everything I need as a 1 man crew.\n\nNo other words need to be said, it’s just… good",
+            "name": "Champagne J.",
+            "location": "Shelby Township, MI",
+            "product": "g-bundle-three-gpod-pauly-p-and-gpod-base",
+            "media_type": "photo"
+          }
+        },
+        "review_7": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "date": "2025-11-13",
+            "text": "Easy to use, faster and LIGHTER than the tripod I was using.",
+            "name": "Mark C.",
+            "location": "Port St. Lucie, FL",
+            "product": "gpodmagsafe",
+            "media_url": "https://media.fera.ai/customer_videos/videos/001/002/317/469/thumb/1029.jpg?class=thumb&optimizer=image&v=1763074791",
+            "media_link": "https://gpodgolf.com/products/gpodmagsafe?fera=showMedia&feraId=fmed_rIZmLYhA&utm_source=fera",
+            "media_type": "video"
+          }
+        },
+        "review_8": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "date": "2026-05-01",
+            "text": "It is often said that what you get is what you pay for and in GPOD's case, that is certainly true. This is a quality product. The monopod is made of quality materials that are finished well. The MagSafe holds like a champ even with my MagSafe case on my iPhone. If you don't have a MagSafe phone or case, they include an adhesive MagSafe ring that you can attach to either one to make it work.\n\nThe base is heavy. It stays put even in a breeze. Both came quickly and well packaged. It didn't come from China!\n\nAnd what about customer service? I had a few questions and Paul, the owner, answered me directly in only a few minutes. You don't see that very often these days. GPOD cares.\n\nI couldn't recommend Paul and GPOD any higher.",
+            "name": "Matt B.",
+            "location": "Dallas, TX",
+            "product": "g-bundle-two-gpod-x-with-gpod-base",
+            "media_url": "https://media.fera.ai/customer_photos/images/001/002/427/112/original/IMG_0632.jpeg?class=thumb&optimizer=image&v=1777658043",
+            "media_link": "https://gpodgolf.com/products/g-bundle-two-gpod-x-with-gpod-base?fera=showMedia&feraId=fmed_rIwB7b3C&utm_source=fera",
+            "media_type": "photo"
+          }
+        },
+        "review_9": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "date": "2026-07-30",
+            "text": "IT’s very sturdy and works great. Very compact, lightweight, and fits in golf bag easily. Makes recording practice much easier.",
+            "name": "John B.",
+            "location": "Eads, TN",
+            "product": "gpod-travel-1",
+            "media_type": "photo"
+          }
+        },
+        "review_10": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "date": "2026-05-07",
+            "text": "Love the durability and quality of this product! Also it so easy to use and small enough to stow away in my golf bag",
+            "name": "Jason M.",
+            "location": "Dover, DE",
+            "product": "gpod-travel-1",
+            "media_type": "photo"
           }
         }
       },
       "block_order": [
-        "rev_1",
-        "rev_2",
-        "rev_3",
-        "rev_4"
-      ],
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6",
+        "review_7",
+        "review_8",
+        "review_9",
+        "review_10"
+      ]
+    },
+    "versus": {
+      "type": "home-versus",
       "settings": {
-        "heading": "Trusted by 75,000+ golfers.",
-        "collection": "",
-        "link_label": "",
-        "link_url": "",
-        "background_color": "#111111",
-        "text_color": "#ffffff",
-        "card_color": "#1c1c1c",
-        "star_color": "#8cc662",
-        "padding_top": 56,
-        "padding_bottom": 56
+        "kicker": "The Real Comparison",
+        "heading": "The Breakdown",
+        "text": "<p>We've spent countless hours laboring over every painstaking detail to provide you with the best possible magnetic phone mount on the market.</p>",
+        "cta_label": "Shop Now",
+        "cta_link": "/collections/frontpage",
+        "logo": "shopify://shop_images/GPOD_logo.png",
+        "brand_label": "GPOD",
+        "other_label": "Others"
+      },
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "label": "360° Adjustable Magnetic Head",
+            "gpod": true,
+            "others": false
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "label": "Lightweight Carbon Fiber",
+            "gpod": true,
+            "others": false
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "label": "Aluminum Alloy Components",
+            "gpod": true,
+            "others": false
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "label": "Rare-earth Neodymium Magnets",
+            "gpod": true,
+            "others": false
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "label": "Wind-Resistant Stability",
+            "gpod": true,
+            "others": false
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5"
+      ]
+    },
+    "closing": {
+      "type": "home-closing",
+      "settings": {
+        "image": "shopify://shop_images/GPOD_Paul_Park.jpg",
+        "focal": "40% 35%",
+        "heading": "Film your golf swing in seconds",
+        "cta_label": "Shop Now",
+        "cta_link": "/collections/frontpage?sort_by=best-selling",
+        "page_bg": "#ffffff"
       }
     }
   },
   "order": [
     "hero",
-    "reviews",
-    "tour_marquee",
-    "partner_marquee",
-    "explore",
-    "compare",
-    "proof",
-    "quiz_cta",
-    "featured_core",
-    "usecases",
-    "brand_statement",
+    "spotlight",
+    "popular",
+    "breakdown",
     "founder",
     "tour",
-    "gpodder",
-    "overlay",
-    "sportsbox",
-    "icons",
-    "community"
+    "reviews",
+    "versus",
+    "closing"
   ]
 }

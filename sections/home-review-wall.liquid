@@ -1,0 +1,162 @@
+{%- comment -%}
+  "What Golfers are Saying" — Tenscope Round 2 (mobile 100:514, desktop 28:1900).
+  Forest band, masonry of review cards: optional photo/video tile, stars +
+  age, verbatim text, name + location, and a "View Product" strip. One
+  column on phones, 2 at ≥768px, 3 at ≥1024px. "Load More" reveals the
+  rest in batches (assets/gpod-ts.js); with JS off every review shows.
+
+  Review text is entered per block — Fera renders reviews client-side and
+  exposes no Liquid object (see sections/gpod-reviews.liquid for the API
+  used to pull them). The date is stored as YYYY-MM-DD and shown as
+  "N months ago", so it ages correctly instead of freezing.
+
+  Media: upload an image, or paste a media URL (e.g. the Fera thumbnail)
+  and a link (e.g. the Fera "showMedia" PDP link that opens the video).
+
+  Styles: assets/gpod-ts.css §7.
+{%- endcomment -%}
+
+{{ 'gpod-ts.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'gpod-ts.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign heading_id = 'TsWall-' | append: section.id
+  assign now_s = 'now' | date: '%s' | plus: 0
+-%}
+
+<section class="ts ts--dark ts-wall ts-section" data-section-id="{{ section.id }}" data-section-type="home-review-wall" aria-labelledby="{{ heading_id }}">
+  <div class="ts-wrap" data-ts-wall data-ts-batch="{{ section.settings.batch }}">
+    <div class="ts-head ts-head--split">
+      <div class="ts-head__titles">
+        {%- if section.settings.kicker != blank -%}<p class="ts-kicker">{{ section.settings.kicker | escape }}</p>{%- endif -%}
+        <h2 class="ts-h2" id="{{ heading_id }}">{{ section.settings.heading | escape }}</h2>
+      </div>
+      {%- if section.settings.score != blank -%}
+        <p class="ts-wall__score">
+          <span class="ts-stars" aria-hidden="true">{%- for i in (1..5) -%}{% render 'ts-icon', name: 'star-fill' %}{%- endfor -%}</span>
+          <span>{{ section.settings.score }}</span>
+        </p>
+      {%- endif -%}
+    </div>
+
+    <ul class="ts-wall__grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign s = block.settings
+          assign age = s.date
+          if s.date != blank
+            assign then_s = s.date | date: '%s' | plus: 0
+            if then_s > 0
+              assign days = now_s | minus: then_s | divided_by: 86400
+              if days < 1
+                assign age = 'Today'
+              elsif days < 14
+                assign age = days | append: ' days ago'
+                if days == 1
+                  assign age = '1 day ago'
+                endif
+              elsif days < 60
+                assign weeks = days | divided_by: 7
+                assign age = weeks | append: ' weeks ago'
+              elsif days < 365
+                assign months = days | divided_by: 30
+                assign age = months | append: ' months ago'
+              else
+                assign years = days | divided_by: 365
+                assign age = years | append: ' year'
+                if years > 1
+                  assign age = age | append: 's'
+                endif
+                assign age = age | append: ' ago'
+              endif
+            endif
+          endif
+          assign media_link = s.media_link | default: s.product.url
+        -%}
+        <li class="ts-review" data-ts-review {{ block.shopify_attributes }}>
+          {%- if s.media != blank or s.media_url != blank -%}
+            <a class="ts-review__media" href="{{ media_link | default: '#' }}" {% if s.media_type == 'video' %}aria-label="Watch {{ s.name | escape }}'s video"{% else %}aria-label="See {{ s.name | escape }}'s photo"{% endif %}>
+              {%- if s.media != blank -%}
+                {{- s.media | image_url: width: 800 | image_tag: widths: '360, 540, 800', sizes: '(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 90vw', loading: 'lazy', alt: '' -}}
+              {%- else -%}
+                <img src="{{ s.media_url }}" alt="" loading="lazy" decoding="async" width="800" height="576">
+              {%- endif -%}
+              {%- if s.media_type == 'video' -%}<span class="ts-review__play" aria-hidden="true">{% render 'ts-icon', name: 'play' %}</span>{%- endif -%}
+            </a>
+          {%- endif -%}
+
+          <div class="ts-review__body">
+            <div class="ts-review__top">
+              <span class="ts-stars" role="img" aria-label="{{ s.rating }} out of 5 stars">
+                {%- for i in (1..s.rating) -%}{% render 'ts-icon', name: 'star-fill' %}{%- endfor -%}
+              </span>
+              {%- if age != blank -%}<span class="ts-review__date">{{ age }}</span>{%- endif -%}
+            </div>
+            {%- if s.text != blank -%}<blockquote class="ts-review__text">{{ s.text | escape | newline_to_br }}</blockquote>{%- endif -%}
+            <div class="ts-review__who">
+              <span class="ts-review__name">{{ s.name | escape }}</span>
+              {%- if s.location != blank -%}<span class="ts-review__loc">{{ s.location | escape }}</span>{%- endif -%}
+            </div>
+          </div>
+
+          {%- if s.product != blank -%}
+            <a class="ts-review__product" href="{{ s.product.url }}">
+              <span class="ts-review__thumb">
+                {%- if s.product.featured_image != blank -%}{{ s.product.featured_image | image_url: width: 96 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}
+              </span>
+              <span class="ts-review__pinfo">
+                <span class="ts-review__view">View Product</span>
+                <span class="ts-review__ptitle">{{ s.product.title | escape }}</span>
+              </span>
+              <span class="ts-review__arrow" aria-hidden="true">{% render 'ts-icon', name: 'chevron-right' %}</span>
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if section.blocks.size > section.settings.batch -%}
+      <div class="ts-wall__foot" hidden>
+        <button type="button" class="ts-wall__more" data-ts-wall-more>{{ section.settings.more_label | escape }}</button>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Review wall",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "From the Bag, Not the Boardroom" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What Golfers are Saying" },
+    { "type": "text", "id": "score", "label": "Score line", "default": "4.9 average · 600+ reviews" },
+    { "type": "range", "id": "batch", "label": "Reviews shown per batch (mobile)", "min": 3, "max": 12, "step": 1, "default": 6 },
+    { "type": "text", "id": "more_label", "label": "Load more label", "default": "Load More" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "limit": 24,
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "date", "label": "Review date", "info": "YYYY-MM-DD — shown as \"3 months ago\"" },
+        { "type": "textarea", "id": "text", "label": "Review text" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Customer" },
+        { "type": "text", "id": "location", "label": "Location" },
+        { "type": "product", "id": "product", "label": "Product reviewed" },
+        { "type": "header", "content": "Media (optional)" },
+        { "type": "image_picker", "id": "media", "label": "Image" },
+        { "type": "text", "id": "media_url", "label": "…or image URL", "info": "e.g. the Fera thumbnail URL" },
+        { "type": "url", "id": "media_link", "label": "Media link", "info": "e.g. the Fera showMedia link. Blank = product page" },
+        {
+          "type": "select", "id": "media_type", "label": "Media type", "default": "photo",
+          "options": [ { "value": "photo", "label": "Photo" }, { "value": "video", "label": "Video (adds play icon)" } ]
+        }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Review wall" } ]
+}
+{% endschema %}
