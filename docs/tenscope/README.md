@@ -13,6 +13,24 @@ has to read the board again.
 | `spec-desktop-pdp-28-111.txt` | Round 2 desktop product page, Pocket G (current, edited through Sep 30) |
 | `frames/mobile-home-*.jpg` | Renders of the mobile home, top to bottom |
 | `frames/desktop-pdp-*.jpg` | Renders of the Round 2 product page, top to bottom |
+| `frames/round3-home-*.jpg` | Round 3 → "HomePage" (61:1646), desktop, top to bottom — the board's light home option (added 2026-10-01) |
+| `frames/round3-home-v1-*.jpg` | Round 3 → "Homepage v1" (61:1024), desktop — the dark Fjalla One home option (added 2026-10-01) |
+| `capture-figma.js` | How the round3 renders were taken (public viewer in headless Chromium; no Figma login) |
+
+**Node map** (from the viewer's layer panel, 2026-10-01). Kelton's link
+`node-id=61-1871` is the On Tour section inside Round 3 → HomePage.
+
+| Section | HomePage | Homepage v1 | Product page option |
+|---|---|---|---|
+| Round 2 (edited through Sep 30) | 28:1593 | 28:974 | 28:111 |
+| Round 3 (Sep 25 copy of Round 2) | 61:1646 | 61:1024 | 61:161 |
+| mobile (home only) | 100:215 | — | — |
+
+Round 3 → HomePage still carries the pre-feedback copy ("Stick it. Swing it.
+Watch it back." hero, Pocket G spotlight at $49.99). Round 2 → HomePage is the
+same layout after Paul's comments ("Film your golf swing in seconds", GPOD X
+spotlight). Top-level layer "Homepage" (70:2759) is only a CTA-Nav-Button
+component, not a page.
 
 **Spec line format** (one layer per line, indented by depth):
 `TYPE 'layer name' @x,y WxH fill=… stroke=… r=radius auto=V|H gap=… pad=top/left/bottom/right fx=effects`

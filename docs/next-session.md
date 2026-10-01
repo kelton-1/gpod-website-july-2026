@@ -1,5 +1,10 @@
 # Next session — Tenscope rollout handoff (written 2026-10-01)
 
+> **2026-10-01, later:** the order of work is now `docs/sprint-7-plan.md`. The
+> task specs below still apply where that plan points at them. The "replicate as
+> designed" direction below is replaced: our theme may change anything, and the
+> Figma board is reference only.
+
 Read this, then `docs/tenscope-design-review.md` (the Figma spec + every
 comment) and `docs/tenscope/` (layer-level specs + renders of the mobile home
 and the product page; no Figma access needed), then the 2026-09-30 / 2026-10-01 rows of the CLAUDE.md log.
