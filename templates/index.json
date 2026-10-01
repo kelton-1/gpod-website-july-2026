@@ -73,7 +73,8 @@
         "text": "<p>GPOD X: The Collapsible, Portable Monopod for On-the-Go Content</p><p>Introducing the GPOD X, the revolutionary portable monopod designed for creators - athletes and spectators - on the move. This compact and lightweight monopod features a 3-piece carbon fiber body that extends from 20 inches to 51 inches giving you the flexibility to capture stunning footage from any angle and height.</p>",
         "use_cutout": true,
         "show_count": false,
-        "cta_label": "Buy GPOD X for [price]"
+        "cta_label": "Buy GPOD X for [price]",
+        "image": "shopify://shop_images/ts-spotlight-gpodx.png"
       },
       "blocks": {
         "chip_puck": {
@@ -193,7 +194,7 @@
         "card_materials": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/GPODX_Close-up.jpg",
+            "image": "shopify://shop_images/ts-feature-materials.jpg",
             "title": "Premium materials",
             "text": "Lightweight carbon fiber and aluminum alloy, strong enough to trust in wind, light enough to forget it's in your bag."
           }
@@ -201,7 +202,7 @@
         "card_head": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/GPOD_Rotating_Head.gif",
+            "image": "shopify://shop_images/ts-feature-rotating-head.jpg",
             "title": "360° rotating head",
             "text": "Adjust to any angle, including straight overhead for putting — no fumbling with a phone clamp mid-round."
           }
@@ -209,7 +210,7 @@
         "card_stick": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/GPODX_Hero_Shot_2_be99715f-cd04-4316-b16e-df908d240e88.png",
+            "image": "shopify://shop_images/ts-feature-stick-it.jpg",
             "title": "Stick it and swing it",
             "text": "Push it into the turf, snap your phone on, hit record. No apps, no setup, no waiting on a buddy to film you."
           }
@@ -234,31 +235,31 @@
         "photo_1": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/GPOD_Lifestyle_Range_1.jpg"
+            "image": "shopify://shop_images/ts-founder-1.jpg"
           }
         },
         "photo_2": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/BW_FO_Paul.jpg"
+            "image": "shopify://shop_images/ts-founder-2.png"
           }
         },
         "photo_3": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/GPOD_Paul_Park.jpg"
+            "image": "shopify://shop_images/ts-founder-3.jpg"
           }
         },
         "photo_4": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/GPOD_X_and_Bryson.jpg"
+            "image": "shopify://shop_images/ts-founder-4.jpg"
           }
         },
         "photo_5": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/GPOD_Pauly_P_Indoor_1.jpg"
+            "image": "shopify://shop_images/ts-founder-5.jpg"
           }
         }
       },
@@ -283,8 +284,8 @@
         "player_1": {
           "type": "player",
           "settings": {
-            "image": "shopify://shop_images/GPOD_X_and_Bryson.jpg",
-            "focal": "50% 25%",
+            "image": "shopify://shop_images/ts-tour-bryson-dechambeau.jpg",
+            "focal": "50% 30%",
             "name": "Bryson DeChambeau",
             "role": "Professional Golfer"
           }
@@ -292,57 +293,64 @@
         "player_2": {
           "type": "player",
           "settings": {
-            "focal": "50% 25%",
+            "focal": "50% 30%",
             "name": "Xander Schauffele",
-            "role": "Professional Golfer"
+            "role": "Professional Golfer",
+            "image": "shopify://shop_images/ts-tour-xander-schauffele.jpg"
           }
         },
         "player_3": {
           "type": "player",
           "settings": {
-            "focal": "50% 25%",
+            "focal": "50% 30%",
             "name": "Lydia Ko",
-            "role": "Professional Golfer"
+            "role": "Professional Golfer",
+            "image": "shopify://shop_images/ts-tour-lydia-ko.jpg"
           }
         },
         "player_4": {
           "type": "player",
           "settings": {
-            "focal": "50% 25%",
+            "focal": "50% 30%",
             "name": "Cameron Young",
-            "role": "Professional Golfer"
+            "role": "Professional Golfer",
+            "image": "shopify://shop_images/ts-tour-cameron-young.jpg"
           }
         },
         "player_5": {
           "type": "player",
           "settings": {
-            "focal": "50% 25%",
+            "focal": "50% 30%",
             "name": "Billy Horschel",
-            "role": "Professional Golfer"
+            "role": "Professional Golfer",
+            "image": "shopify://shop_images/ts-tour-billy-horschel.jpg"
           }
         },
         "player_6": {
           "type": "player",
           "settings": {
-            "focal": "50% 25%",
+            "focal": "50% 30%",
             "name": "Amy Yang",
-            "role": "Professional Golfer"
+            "role": "Professional Golfer",
+            "image": "shopify://shop_images/ts-tour-amy-yang.jpg"
           }
         },
         "player_7": {
           "type": "player",
           "settings": {
-            "focal": "50% 25%",
+            "focal": "50% 30%",
             "name": "Akshay Bhatia",
-            "role": "Professional Golfer"
+            "role": "Professional Golfer",
+            "image": "shopify://shop_images/ts-tour-akshay-bhatia.jpg"
           }
         },
         "player_8": {
           "type": "player",
           "settings": {
-            "focal": "50% 25%",
+            "focal": "50% 30%",
             "name": "Yuka Saso",
-            "role": "Professional Golfer"
+            "role": "Professional Golfer",
+            "image": "shopify://shop_images/ts-tour-yuka-saso.jpg"
           }
         },
         "logo_1": {
@@ -432,9 +440,9 @@
             "name": "Rodney G.",
             "location": "San Antonio, TX",
             "product": "g-bundle-one-gpod-with-gpod-base",
-            "media_url": "https://media.fera.ai/customer_videos/videos/001/002/496/420/thumb/7_11_2026_Golf_Club_Estrell_24hrs_small.jpg?class=thumb&optimizer=image&v=1784251873",
             "media_link": "https://gpodgolf.com/products/g-bundle-one-gpod-with-gpod-base?fera=showMedia&feraId=fmed_rJAL031G&utm_source=fera",
-            "media_type": "video"
+            "media_type": "video",
+            "media": "shopify://shop_images/ts-review-rodney-g.jpg"
           }
         },
         "review_2": {
@@ -457,9 +465,9 @@
             "text": "I have a magbak case on my phone and the magnet that comes with the gpod works perfectly with it. No other magnetic tripods work with my phone without having to use an adhesive magnet in between. Best on the market by far",
             "name": "Anonymous",
             "product": "gpod-travel-1",
-            "media_url": "https://media.fera.ai/customer_videos/videos/001/002/427/084/thumb/79934459264__95739B9F-4D0E-4BD5-A616-1973FF5BEC4A.jpg?class=thumb&optimizer=image&v=1777651820",
             "media_link": "https://gpodgolf.com/products/gpod-travel-1?fera=showMedia&feraId=fmed_rIwAlbkQ&utm_source=fera",
-            "media_type": "video"
+            "media_type": "video",
+            "media": "shopify://shop_images/ts-review-magbak.jpg"
           }
         },
         "review_4": {
@@ -471,9 +479,9 @@
             "name": "Craig C.",
             "location": "Las Vegas, NV",
             "product": "g-bundle-one-gpod-with-gpod-base",
-            "media_url": "https://media.fera.ai/customer_photos/images/001/002/480/984/original/IMG_5783.jpeg?class=thumb&optimizer=image&v=1783024968",
             "media_link": "https://gpodgolf.com/products/g-bundle-one-gpod-with-gpod-base?fera=showMedia&feraId=fmed_rJ7BTxek&utm_source=fera",
-            "media_type": "photo"
+            "media_type": "photo",
+            "media": "shopify://shop_images/ts-review-craig-c.jpg"
           }
         },
         "review_5": {
@@ -509,9 +517,9 @@
             "name": "Mark C.",
             "location": "Port St. Lucie, FL",
             "product": "gpodmagsafe",
-            "media_url": "https://media.fera.ai/customer_videos/videos/001/002/317/469/thumb/1029.jpg?class=thumb&optimizer=image&v=1763074791",
             "media_link": "https://gpodgolf.com/products/gpodmagsafe?fera=showMedia&feraId=fmed_rIZmLYhA&utm_source=fera",
-            "media_type": "video"
+            "media_type": "video",
+            "media": "shopify://shop_images/ts-review-mark-c.jpg"
           }
         },
         "review_8": {
@@ -523,9 +531,9 @@
             "name": "Matt B.",
             "location": "Dallas, TX",
             "product": "g-bundle-two-gpod-x-with-gpod-base",
-            "media_url": "https://media.fera.ai/customer_photos/images/001/002/427/112/original/IMG_0632.jpeg?class=thumb&optimizer=image&v=1777658043",
             "media_link": "https://gpodgolf.com/products/g-bundle-two-gpod-x-with-gpod-base?fera=showMedia&feraId=fmed_rIwB7b3C&utm_source=fera",
-            "media_type": "photo"
+            "media_type": "photo",
+            "media": "shopify://shop_images/ts-review-matt-b.jpg"
           }
         },
         "review_9": {

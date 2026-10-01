@@ -56,7 +56,7 @@
 <section class="ts ts--dark ts-spot ts-section" data-section-id="{{ section.id }}" data-section-type="home-spotlight">
   <div class="ts-wrap">
     <article class="ts-spot__card">
-      <div class="ts-spot__media{% if section.settings.image != blank %} ts-spot__media--photo{% endif %}">
+      <div class="ts-spot__media{% if section.settings.image != blank and section.settings.image_cover %} ts-spot__media--photo{% endif %}">
         {%- if section.settings.badge != blank -%}<span class="ts-spot__badge">{{ section.settings.badge | escape }}</span>{%- endif -%}
         {%- if section.settings.image != blank -%}
           {{- section.settings.image | image_url: width: 1200 | image_tag: widths: '400, 600, 800, 1200', sizes: '(min-width: 768px) 50vw, 100vw', loading: 'lazy', alt: section.settings.image.alt | default: title -}}
@@ -131,6 +131,7 @@
     { "type": "text", "id": "heading", "label": "Heading", "info": "Blank = product title", "default": "GPOD : GPOD X" },
     { "type": "richtext", "id": "text", "label": "Description", "info": "Blank = product description" },
     { "type": "image_picker", "id": "image", "label": "Image override" },
+    { "type": "checkbox", "id": "image_cover", "label": "Image is a photo (fill the frame)", "info": "Leave off for a cut-out product render on the green plate", "default": false },
     { "type": "checkbox", "id": "use_cutout", "label": "Use the background-free cutout when there is one", "default": true },
     { "type": "text", "id": "badge", "label": "Badge" },
     { "type": "checkbox", "id": "show_count", "label": "Show rating + review count", "default": false },
