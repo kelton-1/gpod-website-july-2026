@@ -1,7 +1,8 @@
 # Next session — Tenscope rollout handoff (written 2026-10-01)
 
 Read this, then `docs/tenscope-design-review.md` (the Figma spec + every
-comment), then the 2026-09-30 / 2026-10-01 rows of the CLAUDE.md log.
+comment) and `docs/tenscope/` (layer-level specs + renders of the mobile home
+and the product page; no Figma access needed), then the 2026-09-30 / 2026-10-01 rows of the CLAUDE.md log.
 
 ## Standing direction from Kelton
 
@@ -169,11 +170,10 @@ Checkout → Customize:
   failed too. Always re-read `theme.files` checksums.
 - The Shopify MCP connection drops mid-session. Re-load it with ToolSearch and
   re-verify the last write.
-- The **Figma connector needs edit access** for screenshots and asset export,
-  and the board is view-only. Reading it worked through the public viewer
-  plus decoding the file's multiplayer data. Those helper scripts lived in
-  the session scratchpad and are gone. Ask Kelton for edit access to the file
-  next time: the connector's `get_design_context` / `download_assets` would
-  replace all of that.
+- **No edit access to Tenscope's Figma** (Kelton, 2026-10-01). The connector can't
+  screenshot or export from it, and you don't need it to: specs, renders and
+  images for every remaining task are captured in `docs/tenscope/` (see its
+  README) and Shopify Files. If the board changes, ask Tenscope for exports
+  or a duplicate in GPOD's own drafts.
 - To get images into Shopify Files: compress into `media/tenscope/`, push, then
   run `fileCreate` with `originalSource` = the raw.githubusercontent URL at that commit.
