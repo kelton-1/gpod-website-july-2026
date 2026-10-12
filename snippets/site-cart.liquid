@@ -12,7 +12,29 @@
   assign accept_terms_text = settings.accept_terms_text
   assign show_free_shipping_message = settings.show_free_shipping_message
   assign free_shipping_limit = settings.free_shipping_limit
+
+  # GPOD cart redesign: store-wide rating + review count under Checkout.
+  # HARDCODED for speed. This used to loop through every product on every
+  # page load (the cart renders site-wide). Update these occasionally
+  # from Fera. Last set: Oct 9 2026 (440 reviews, 5.0 avg, 13 active products).
+  assign gpod_review_total = 440
+  assign gpod_rating_avg = '5.0'
 -%}
+
+{%- comment -%}
+  GPOD pre-order: when any line in the cart is a pre-order item
+  (.gpod-line--preorder, set in cart-line-items.liquid), swap
+  "Ships within 1 business day" for the pre-order ship date. CSS :has()
+  reacts live as the ajax cart re-renders its items. Kept outside the
+  <template> so it always applies.
+{%- endcomment -%}
+{%- style -%}
+  .gpod-ship-pre { display: none; }
+  .gpod-cart:has(.gpod-line--preorder) .gpod-ship-std { display: none; }
+  .gpod-cart:has(.gpod-line--preorder) .gpod-ship-pre { display: inline; }
+  .gpod-line__preorder { font-weight: 600; }
+  .gpod-cart__rating-star { letter-spacing: 1px; white-space: nowrap; }
+{%- endstyle -%}
 
 {%- unless template == 'cart' -%}
 <div class="scroll" data-cart-scroll>
@@ -20,7 +42,7 @@
     <template data-cart-template>
 {%- endunless -%}
 
-<div class="cart" data-cart>
+<div class="cart gpod-cart" data-cart>
   {%- unless template == 'cart' -%}
     <button class="cart-close" aria-label="{{ 'general.accessibility.close' | t }}" data-cart-close>
       {%- render 'icon-close' -%}
@@ -28,18 +50,29 @@
   {%- endunless -%}
 
   <form action="{{ routes.cart_url }}" method="post" novalidate>
-    <div class="cart__empty{% if cart_items_size > 0 %} is-hidden{% endif %}" data-empty-message>
-      <p class="cart__title">{{ 'cart.labels.cart_title' | t }}</p>
+    <div class="cart__empty gpod-cart__empty{% if cart_items_size > 0 %} is-hidden{% endif %}" data-empty-message>
+      <p class="cart__title gpod-cart__title">{{ 'cart.labels.empty_cart' | t }}</p>
 
-      <p>{{ 'cart.labels.empty_cart' | t }}</p>
+      <p class="gpod-cart__empty-text">Find the GPOD that fits your game.</p>
 
-      <a href="{{- routes.all_products_collection_url -}}" data-continue class="btn btn--solid btn--primary">{{ 'cart.labels.continue_shopping' | t }}</a>
+      <a href="{{- routes.all_products_collection_url -}}" data-continue class="btn btn--solid btn--primary gpod-cart__empty-btn">{{ 'cart.labels.continue_shopping' | t }}</a>
     </div>
 
-    <div class="cart__form">
-      <p class="cart__title cart__title--mobile">{{ 'cart.labels.cart_title' | t }}</p>
+    <div class="cart__form gpod-cart__layout">
+      <div class="gpod-cart__main">
+        <div class="gpod-cart__head">
+          <p class="gpod-cart__title">Your cart</p>
+          <span class="gpod-cart__count" data-gpod-cart-count>
+            {{- cart_items_size }} {% if cart_items_size == 1 %}item{% else %}items{% endif -%}
+          </span>
+        </div>
 
-      <div class="cart__table">
+        <p class="gpod-cart__ship-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.2 4.2L19 7"/></svg>
+          <span class="gpod-ship-std">Ships within 1 business day</span>
+          {%- render 'gpod-preorder-ship', context: 'cart-summary' -%}
+        </p>
+
         <div class="cart__errors" data-cart-errors>
           <p class="cart__errors__heading">{{- 'cart.labels.limit_message' | t -}}</p>
 
@@ -52,29 +85,27 @@
           </button>
         </div>
 
-        <div class="cart__table-header med_hide">
-          <div class="cart__table-row">
-            <div class="cart__table-cell cart__table-cell--product">
-              {{- 'cart.labels.product' | t -}}
-            </div>
-            <div class="cart__table-cell cart__table-cell--price">
-              {{- 'cart.labels.price' | t -}}
-            </div>
-            <div class="cart__table-cell cart__table-cell--quantity">
-              {{- 'cart.labels.quantity' | t -}}
-            </div>
-            <div class="cart__table-cell cart__table-cell--total">
-              {{- 'cart.labels.total' | t -}}
-            </div>
-          </div>
-        </div>
-
-        <div class="cart__table-body" data-items-holder>
+        <div class="gpod-cart__items" data-items-holder>
           {%- render 'cart-line-items' cart: cart -%}
         </div>
+
+        <ul class="gpod-cart__trust" aria-label="Why buy from GPOD">
+          <li class="gpod-cart__trust-item">
+            <span class="gpod-cart__trust-icon">{%- render 'gpod-trust-icon', icon: 'shield' -%}</span>
+            <span>1-year<br> warranty</span>
+          </li>
+          <li class="gpod-cart__trust-item">
+            <span class="gpod-cart__trust-icon">{%- render 'gpod-trust-icon', icon: 'returns' -%}</span>
+            <span>14-day<br> returns</span>
+          </li>
+          <li class="gpod-cart__trust-item">
+            <span class="gpod-cart__trust-icon">{%- render 'gpod-trust-icon', icon: 'golfers' -%}</span>
+            <span>In 75,000+<br> golf bags</span>
+          </li>
+        </ul>
       </div>
 
-      <div class="checkout-buttons" data-foot-holder>
+      <div class="checkout-buttons gpod-cart__aside{% if cart_items_size == 0 %} is-hidden{% endif %}" data-foot-holder>
         {%- if show_free_shipping_message and free_shipping_limit != blank -%}
           {%- liquid
             assign limit = free_shipping_limit | plus: 0
@@ -100,7 +131,7 @@
             endif
           -%}
 
-          <div class="cart__message {{ message_state }}" data-cart-message="{% if qualified_shipping_message != blank %}true{% else %}false{% endif %}" data-limit="{{ limit_currency }}" data-cart-total-price="{{ cart_total_price }}">
+          <div class="cart__message gpod-cart__message {{ message_state }}" data-cart-message="{% if qualified_shipping_message != blank %}true{% else %}false{% endif %}" data-limit="{{ limit_currency }}" data-cart-total-price="{{ cart_total_price }}">
             {%- assign percent = limit | minus: subtotal_without_currency | times: 100 | divided_by: limit -%}
             {%- assign percent = 100 | minus: percent -%}
 
@@ -122,98 +153,140 @@
           </div>
         {%- endif -%}
 
-        <div class="cart-totals">
-          {% comment %} Cart level discounts {% endcomment %}
-          <p class="cart-total-price{% if original_subtotal < subtotal or cart_discount_size <= 0 %} is-hidden{% endif %}" data-cart-original-total>
-            <span class="cart-total-price__label">{{- 'cart.labels.subtotal_items' | t -}}</span>
+        <div class="cart-totals gpod-cart__summary">
+          <p class="gpod-cart__summary-title">Order summary</p>
 
-            <span class="cart-total-price__value" data-cart-original-total-price>
-              {%- liquid
-                if original_subtotal == 0
-                  echo 'products.labels.free' | t
-                elsif settings.currency_code_enable
-                  echo original_subtotal | money_with_currency
-                else
-                  echo original_subtotal | money
-                endif
-              -%}
-            </span>
-          </p>
+          <div class="gpod-cart__summary-top">
+            <div class="gpod-cart__total-wrap">
+              <span class="gpod-cart__total-label">Total</span>
+              <span data-cart-total class="gpod-cart__total">
+                {%- liquid
+                  if subtotal == 0
+                    echo 'products.labels.free' | t
+                  else
+                    echo subtotal | money_with_currency
+                  endif
+                -%}
+              </span>
+              <span class="gpod-cart__total-note"><span class="gpod-ship-std">Ships within 1 business day</span>{%- render 'gpod-preorder-ship', context: 'cart-summary' -%}</span>
+            </div>
 
-          <div{% if cart_discount_size < 1 %} class="is-hidden"{% endif %} data-cart-discounts-holder>
-            {%- if cart.cart_level_discount_applications.size > 0 -%}
-              {%- for discount in cart.cart_level_discount_applications -%}
-                <p class="cart-discounts" data-cart-discount>
-                  <span class="cart-discounts__title" data-cart-discount-title>
-                    {{- discount.title -}}
-                  </span>
+            <div class="cart__buttons-wrapper gpod-cart__cta">
+              {%- if enable_accept_terms -%}
+                <input type="checkbox" class="acceptance__input" name="acceptance" id="acceptance" data-cart-acceptance-checkbox>
+                <label for="acceptance" class="acceptance__label" data-cart-acceptance-label>{{ accept_terms_text }}</label>
+                <div class="acceptance__error errors" data-cart-error>{{ 'cart.labels.accept_terms' | t }}</div>
+              {%- endif -%}
 
-                  <span class="cart-discounts__price" data-cart-discount-price>
-                    {%- liquid
-                      echo '-'
-                      if settings.currency_code_enable
-                        echo discount.total_allocated_amount | money_with_currency
-                      else
-                        echo discount.total_allocated_amount | money
-                      endif
-                    -%}
-                  </span>
+              <div class="cart__buttons{% if enable_accept_terms %} cart__buttons--disabled{% endif %}" data-cart-buttons>
+                <fieldset class="cart__button-fieldset" data-cart-buttons-fieldset>
+                  <button class="cart__checkout btn btn--solid btn--primary gpod-cart__checkout" type="submit" name="checkout">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="10.5" width="14" height="10" rx="2.2"/><path d="M8.5 10.5V7.8a3.5 3.5 0 0 1 7 0v2.7"/></svg>
+                    <span>{{ 'cart.labels.checkout' | t }}</span>
+                  </button>
+                </fieldset>
+              </div>
+
+              {%- if gpod_review_total > 0 -%}
+                <p class="gpod-cart__rating" aria-label="Rated {{ gpod_rating_avg }} out of 5 from {{ gpod_review_total }} reviews">
+                  <span class="gpod-cart__rating-star" aria-hidden="true">★★★★★</span>
+                  <strong>{{ gpod_rating_avg }}</strong>
+                  <span aria-hidden="true">·</span>
+                  {{ gpod_review_total }} reviews
                 </p>
-              {%- endfor -%}
-            {%- endif -%}
+              {%- endif -%}
+            </div>
           </div>
 
-          <p class="cart-total-price">
-            <span class="cart-total-price__label">{{- 'cart.labels.subtotal' | t -}}</span>
+          <div class="gpod-cart__rows">
+            {% comment %} Cart level discounts {% endcomment %}
+            <p class="cart-total-price gpod-cart__row{% if original_subtotal < subtotal or cart_discount_size <= 0 %} is-hidden{% endif %}" data-cart-original-total>
+              <span class="cart-total-price__label">{{- 'cart.labels.subtotal' | t -}}</span>
 
-            <span data-cart-total class="cart-total-price__value">
-              {%- liquid
-                if subtotal == 0
-                  echo 'products.labels.free' | t
-                else
-                  echo subtotal | money_with_currency
-                endif
-              -%}
-            </span>
-          </p>
+              <span class="cart-total-price__value" data-cart-original-total-price>
+                {%- liquid
+                  if original_subtotal == 0
+                    echo 'products.labels.free' | t
+                  elsif settings.currency_code_enable
+                    echo original_subtotal | money_with_currency
+                  else
+                    echo original_subtotal | money
+                  endif
+                -%}
+              </span>
+            </p>
 
-          {%- if tax_text -%}
-            <p class="cart-tax-info">{{ tax_text }}</p>
-          {%- endif -%}
+            <div class="gpod-cart__discounts{% if cart_discount_size < 1 %} is-hidden{% endif %}" data-cart-discounts-holder>
+              {%- if cart.cart_level_discount_applications.size > 0 -%}
+                {%- for discount in cart.cart_level_discount_applications -%}
+                  <p class="cart-discounts" data-cart-discount>
+                    <span class="cart-discounts__title" data-cart-discount-title>
+                      {{- discount.title -}}
+                    </span>
 
-          {%- if enable_cart_order_notes -%}
-            <div class="order-notes">
-              <label class="order-notes__label" for="order-notes">{{ 'cart.labels.add_a_note' | t }}</label>
-              <textarea id="order-notes" class="order-notes__content" name="note"></textarea>
+                    <span class="cart-discounts__price" data-cart-discount-price>
+                      {%- liquid
+                        echo '-'
+                        if settings.currency_code_enable
+                          echo discount.total_allocated_amount | money_with_currency
+                        else
+                          echo discount.total_allocated_amount | money
+                        endif
+                      -%}
+                    </span>
+                  </p>
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
+
+            <p class="gpod-cart__row">
+              <span>Shipping</span>
+              <span class="gpod-cart__row-muted">Calculated at checkout</span>
+            </p>
+            <p class="gpod-cart__row">
+              <span>Taxes</span>
+              <span class="gpod-cart__row-muted">Calculated at checkout</span>
+            </p>
+          </div>
+
+          {%- comment -%}
+            Discount codes are applied to the cart itself (cart/update.js, see
+            gpod-cart-on-add.js) so they carry into Apple Pay, Google Pay and
+            Shop Pay, which skip the checkout page's discount field.
+          {%- endcomment -%}
+          <div class="gpod-cart__discount" data-gpod-discount>
+            <div class="gpod-cart__discount-form">
+              <input type="text" class="gpod-cart__discount-input" placeholder="Discount code" aria-label="Discount code" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="done" data-gpod-discount-input>
+              <button type="button" class="gpod-cart__discount-apply" data-gpod-discount-apply>Apply</button>
+            </div>
+            <p class="gpod-cart__discount-msg" role="status" aria-live="polite" data-gpod-discount-msg></p>
+            <div class="gpod-cart__discount-codes" data-gpod-discount-codes></div>
+            <p class="gpod-cart__discount-hint">Works with Apple Pay, Google Pay and Shop Pay.</p>
+          </div>
+
+          {%- if settings.enable_additional_buttons and additional_checkout_buttons -%}
+            <div class="additional-checkout-buttons additional-checkout-buttons--vertical gpod-cart__express">
+              {{ content_for_additional_checkout_buttons }}
             </div>
           {%- endif -%}
 
-          <div class="cart__buttons-wrapper">
-            {%- if enable_accept_terms -%}
-              <input type="checkbox" class="acceptance__input" name="acceptance" id="acceptance" data-cart-acceptance-checkbox>
-              <label for="acceptance" class="acceptance__label" data-cart-acceptance-label>{{ accept_terms_text }}</label>
-              <div class="acceptance__error errors" data-cart-error>{{ 'cart.labels.accept_terms' | t }}</div>
-            {%- endif -%}
-
-            <div class="cart__buttons{% if enable_accept_terms %} cart__buttons--disabled{% endif %}" data-cart-buttons>
-              <fieldset class="cart__button-fieldset" data-cart-buttons-fieldset>
-                <button class="cart__checkout btn btn--solid btn--primary" type="submit" name="checkout">{{ 'cart.labels.checkout' | t }}</button>
-
-                {%- if settings.enable_additional_buttons and additional_checkout_buttons -%}
-                  <div class="additional-checkout-buttons additional-checkout-buttons--vertical">
-                    {{ content_for_additional_checkout_buttons }}
-                  </div>
-                {%- endif -%}
-              </fieldset>
-            </div>
-
-            {%- if show_continue_shopping -%}
-              <a href="{{ routes.all_products_collection_url }}" class="btn btn--outline btn--primary u-center" data-continue>{{ 'cart.labels.continue_shopping' | t }}</a>
-            {%- endif -%}
-
-            <input type="submit" name="update" value="{{ 'cart.labels.update' | t }}" class="cart__update{% unless enable_ajax_cart %} cart__update--visible{% endunless %}" data-update-cart>
-          </div>
+          <input type="submit" name="update" value="{{ 'cart.labels.update' | t }}" class="cart__update{% unless enable_ajax_cart %} cart__update--visible{% endunless %}" data-update-cart>
         </div>
+
+        {%- if enable_cart_order_notes -%}
+          <details class="order-notes gpod-cart__note">
+            <summary class="gpod-cart__note-toggle">
+              <span>{{ 'cart.labels.add_a_note' | t }}</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <label class="visually-hidden" for="order-notes">{{ 'cart.labels.add_a_note' | t }}</label>
+            <textarea id="order-notes" class="order-notes__content gpod-cart__note-input" name="note" placeholder="{{ 'cart.labels.customer_note' | t }}">{{ cart.note }}</textarea>
+          </details>
+        {%- endif -%}
+
+        {%- if show_continue_shopping -%}
+          <a href="{{ routes.all_products_collection_url }}" class="gpod-cart__continue" data-continue>{{ 'cart.labels.continue_shopping' | t }}</a>
+        {%- endif -%}
       </div>
     </div>
   </form>

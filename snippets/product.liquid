@@ -49,7 +49,11 @@
     assign is_single_media = false
   endif
 
-  if product_tags contains '_preorder'
+  comment
+    GPOD: 'preorder-oct' is the tag used for restock pre-orders. (The plain
+    'preorder' tag is left alone; older listings still carry it.)
+  endcomment
+  if product_tags contains '_preorder' or product.tags contains 'preorder-oct'
     assign preorder = true
   endif
 
@@ -404,11 +408,22 @@
 
                 {%- when 'variant-availability' -%}
                   {%- assign current_variant = product.selected_or_first_available_variant -%}
+                  {%- comment -%}
+                    GPOD: pre-order products say "Available for pre-order"
+                    instead of "Item is in stock". data-in-stock carries the
+                    same text so the variant-change script keeps it.
+                  {%- endcomment -%}
+                  {%- liquid
+                    assign availability_in_stock = 'products.inventory.in_stock' | t
+                    if preorder
+                      assign availability_in_stock = 'Available for pre-order'
+                    endif
+                  -%}
                   <div
-                    class="gpod-variant-availability{% if current_variant.available %} is-available{% else %} is-unavailable{% endif %} block-padding"
+                    class="gpod-variant-availability{% if current_variant.available %} is-available{% else %} is-unavailable{% endif %}{% if preorder %} is-preorder{% endif %} block-padding"
                     data-gpod-variant-availability
                     data-section-id="{{ section.id }}"
-                    data-in-stock="{{ 'products.inventory.in_stock' | t | escape }}"
+                    data-in-stock="{{ availability_in_stock | escape }}"
                     data-out-of-stock="{{ 'products.inventory.out_of_stock' | t | escape }}"
                     data-item-unavailable="{{ 'products.inventory.item_unavailable' | t | escape }}"
                     role="status"
@@ -419,7 +434,7 @@
                     <span class="gpod-variant-availability__dot" aria-hidden="true"></span>
                     <span data-gpod-variant-availability-label>
                       {%- if current_variant.available -%}
-                        {{- 'products.inventory.in_stock' | t -}}
+                        {{- availability_in_stock -}}
                       {%- else -%}
                         {{- 'products.inventory.out_of_stock' | t -}}
                       {%- endif -%}

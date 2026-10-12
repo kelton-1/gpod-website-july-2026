@@ -82,6 +82,9 @@
   {{- 'theme.css' | asset_url | stylesheet_tag -}}
   {{- 'gpod.css' | asset_url | stylesheet_tag -}}
   {{- 'gpod-cart-drawer-fix.css' | asset_url | stylesheet_tag -}}
+  {{- 'gpod-cart.css' | asset_url | stylesheet_tag -}}
+  {{- 'gpod-pdp-sticky-fix.css' | asset_url | stylesheet_tag -}}
+  {{- 'gpod-cart-icon-fix.css' | asset_url | stylesheet_tag -}}
 
   {%- comment -%}
     gpod.js was previously pulled in per-section. The drill-down navigation
@@ -200,13 +203,14 @@
   <!-- Theme Javascript ============================================================== -->
   <script src="{{ 'vendor.js' | asset_url }}" defer></script>
   <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  <script src="{{ 'gpod-cart-on-add.js' | asset_url }}" defer></script>
 
   {%- if request.design_mode -%}
     <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer" data-owner-email="{{ shop.email }}" data-owner-id="{{ shop.id }}"></script>
   {%- endif -%}
 
   {{ content_for_header }}
-</head>
+{% include 'pagefly-app-header' %}</head>
 
 {%- assign animations = false -%}
 {%- if settings.transition_text or settings.transition_grid_items or settings.transition_images_fade -%}

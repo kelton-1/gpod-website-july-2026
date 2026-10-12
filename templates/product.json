@@ -15,8 +15,8 @@
         "price-and-title": {
           "type": "price-and-title",
           "settings": {
-            "show_vendor": true,
-            "padding_bottom": 20
+            "show_vendor": false,
+            "padding_bottom": 8
           }
         },
         "fera_product_reviews_summary_acGGHL": {
@@ -33,7 +33,7 @@
         "variant_availability": {
           "type": "variant-availability",
           "settings": {
-            "padding_bottom": 12
+            "padding_bottom": 8
           }
         },
         "form": {
@@ -42,7 +42,7 @@
             "show_quantity": true,
             "enable_payment_button": true,
             "show_gift_card_recipient": false,
-            "padding_bottom": 20
+            "padding_bottom": 12
           }
         },
         "shipping_expectation": {
@@ -52,13 +52,18 @@
             "padding_bottom": 12
           }
         },
-        "purchase_policy_links": {
-          "type": "policy-links",
+        "key_specs": {
+          "type": "key-specs",
           "settings": {
-            "show_refund_policy": true,
-            "show_shipping_policy": true,
-            "accessibility_label": "Purchase policies",
-            "padding_bottom": 20
+            "keys": "extended_length,collapsed_length,weight,phone_attachment"
+          }
+        },
+        "model_picker": {
+          "type": "model-picker",
+          "settings": {
+            "label": "Model",
+            "handles": "gpodmagsafe,gpodx,gpod-pauly-p2,gpod-travel-1,gpod-studio",
+            "hide_if_absent": true
           }
         },
         "one_click_upsell_on_page_h96tkz": {
@@ -95,29 +100,24 @@
             "padding_bottom": 20
           }
         },
-        "model_picker": {
-          "type": "model-picker",
+        "purchase_policy_links": {
+          "type": "policy-links",
           "settings": {
-            "label": "Model",
-            "handles": "gpodmagsafe,gpodx,gpod-pauly-p2,gpod-travel-1,gpod-studio",
-            "hide_if_absent": true
-          }
-        },
-        "key_specs": {
-          "type": "key-specs",
-          "settings": {
-            "keys": "extended_length,collapsed_length,weight,phone_attachment"
+            "show_refund_policy": true,
+            "show_shipping_policy": true,
+            "accessibility_label": "Purchase policies",
+            "padding_bottom": 20
           }
         }
       },
       "block_order": [
-        "fera_product_reviews_summary_acGGHL",
         "price-and-title",
+        "fera_product_reviews_summary_acGGHL",
         "variant_availability",
-        "key_specs",
-        "model_picker",
         "form",
         "shipping_expectation",
+        "key_specs",
+        "model_picker",
         "one_click_upsell_on_page_h96tkz",
         "hype_discounts_campaigns_ui_tiered_cart_progress_bar_FmXYWE",
         "product-description",
@@ -131,7 +131,7 @@
         "lightbox": true,
         "show_cart_bar": true,
         "enable_video_looping": false,
-        "padding_top": 50,
+        "padding_top": 24,
         "padding_bottom": 50
       }
     },
@@ -260,16 +260,16 @@
           "type": "text",
           "settings": {
             "icon_name": "lock",
-            "title": "Lifetime Warranty",
-            "text": "<p>We guarantee that your GPOD will last as long as you need it to.</p>"
+            "title": "1 Year Warranty",
+            "text": "<p>Every GPOD is covered for a full year. If something's not right, we'll make it right.</p>"
           }
         },
         "text_4RhtaA": {
           "type": "text",
           "settings": {
             "icon_name": "shop",
-            "title": "Premium Build",
-            "text": "<p>Built in the material each model needs — carbon fiber where every ounce counts, aircraft-grade aluminum alloy where adjustability and durability lead.</p>"
+            "title": "Designed by Golfers, Built for Golfers",
+            "text": "<p>We're golfers first. We built GPOD because nothing else let us film our swing quickly, alone, and from the right angle. Now it's trusted in over 75,000 golf bags.&nbsp;</p>"
           }
         }
       },
@@ -280,24 +280,10 @@
       ],
       "settings": {
         "alignment": "center",
-        "color_icons_bg": "#8AC663",
+        "color_icons_bg": "#8ac663",
         "color_icons_text": "#333333",
         "padding_top": 50,
         "padding_bottom": 50
-      }
-    },
-    "pdp_specs": {
-      "type": "pdp-specs",
-      "settings": {
-        "heading": "Specs & what you get",
-        "specs_title": "Specifications",
-        "box_title": "What's in the box",
-        "specs_note": "",
-        "show_compare_link": true,
-        "compare_link": "",
-        "scale_caption": "",
-        "padding_top": 50,
-        "padding_bottom": 30
       }
     },
     "pdp_compat": {
@@ -349,63 +335,16 @@
         "padding_bottom": 30
       }
     },
-    "pdp_pairs": {
-      "type": "pdp-pairs-with",
-      "blocks": {
-        "p_base": {
-          "type": "pair",
-          "settings": {
-            "product": "indoor-base-for-gpod-gpod-mini",
-            "usecase": "Convert your monopod into a tripod for indoors and hard surfaces"
-          }
-        },
-        "p_gpuck": {
-          "type": "pair",
-          "settings": {
-            "product": "gpod-caddy",
-            "usecase": "Mount to a cart, rail or any metal surface"
-          }
-        },
-        "p_gplate": {
-          "type": "pair",
-          "settings": {
-            "product": "gpod-gplate",
-            "usecase": "With Connect 2.0, the semi-permanent minimalist setup"
-          }
-        },
-        "p_travel": {
-          "type": "pair",
-          "settings": {
-            "product": "gpod-travel-1",
-            "usecase": "Folds flat for travel and stands on hard ground"
-          }
-        },
-        "p_connect": {
-          "type": "pair",
-          "settings": {
-            "product": "connect",
-            "usecase": "Use your GPOD as a training aid with an alignment stick"
-          }
-        }
-      },
-      "block_order": [
-        "p_base",
-        "p_connect",
-        "p_gplate",
-        "p_gpuck",
-        "p_travel"
-      ],
-      "settings": {
-        "applicable_collection": "monopods",
-        "kicker": "Complete your setup",
-        "heading": "Pairs well with",
-        "padding_top": 40,
-        "padding_bottom": 50
-      }
-    },
     "pdp_howto": {
       "type": "pdp-how-to",
       "blocks": {
+        "step_plant": {
+          "type": "step",
+          "settings": {
+            "title": "Plant it",
+            "text": "Push the stake into the turf until it feels firm — a few inches is plenty. On mats, tile or a sim floor, screw on the GPOD Base 2.0 instead."
+          }
+        },
         "step_extend": {
           "type": "step",
           "settings": {
@@ -426,13 +365,6 @@
             "title": "Angle it, then hit",
             "text": "The ball joint turns a full 360°, so you can set down-the-line, face-on or an overhead putting view and leave it there. Hit record and swing."
           }
-        },
-        "step_plant": {
-          "type": "step",
-          "settings": {
-            "title": "Plant it",
-            "text": "Push the stake into the turf until it feels firm — a few inches is plenty. On mats, tile or a sim floor, screw on the GPOD Base 2.0 instead."
-          }
         }
       },
       "block_order": [
@@ -449,6 +381,20 @@
         "support_link": "/pages/support-guides",
         "support_link_text": "Guides & troubleshooting",
         "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "pdp_specs": {
+      "type": "pdp-specs",
+      "settings": {
+        "heading": "Specs & what you get",
+        "specs_title": "Specifications",
+        "box_title": "What's in the box",
+        "specs_note": "",
+        "show_compare_link": true,
+        "compare_link": "",
+        "scale_caption": "",
+        "padding_top": 50,
         "padding_bottom": 30
       }
     },
@@ -508,13 +454,68 @@
         "heading": "THE BREAKDOWN",
         "text": "<p>We've spent countless hours laboring over every painstaking detail to provide you with the best possible magnetic phone mount on the market.</p>",
         "center_heading": false,
+        "max_specs": 4,
+        "layout": "cards",
         "enable_picker": false,
+        "showall_label": "Show all models",
         "candidate_handles": "",
         "footnote": "<p>Still unsure? <a href=\"/pages/product-finder-quiz\">Take the 30-second product finder</a> or <a href=\"/pages/contact-us\">ask us directly</a>.</p>",
         "padding_top": 60,
-        "padding_bottom": 60,
-        "max_specs": 4,
-        "layout": "cards"
+        "padding_bottom": 60
+      }
+    },
+    "pdp_pairs": {
+      "type": "pdp-pairs-with",
+      "blocks": {
+        "p_base": {
+          "type": "pair",
+          "settings": {
+            "product": "indoor-base-for-gpod-gpod-mini",
+            "usecase": "Convert your monopod into a tripod for indoors and hard surfaces"
+          }
+        },
+        "p_connect": {
+          "type": "pair",
+          "settings": {
+            "product": "connect",
+            "usecase": "Use your GPOD as a training aid with an alignment stick"
+          }
+        },
+        "p_gplate": {
+          "type": "pair",
+          "settings": {
+            "product": "gpod-gplate",
+            "usecase": "With Connect 2.0, the semi-permanent minimalist setup"
+          }
+        },
+        "p_gpuck": {
+          "type": "pair",
+          "settings": {
+            "product": "gpod-caddy",
+            "usecase": "Mount to a cart, rail or any metal surface"
+          }
+        },
+        "p_travel": {
+          "type": "pair",
+          "settings": {
+            "product": "gpod-travel-1",
+            "usecase": "Folds flat for travel and stands on hard ground"
+          }
+        }
+      },
+      "block_order": [
+        "p_base",
+        "p_connect",
+        "p_gplate",
+        "p_gpuck",
+        "p_travel"
+      ],
+      "settings": {
+        "applicable_collection": "monopods",
+        "kicker": "Complete your setup",
+        "heading": "Pairs well with",
+        "padding_top": 40,
+        "padding_bottom": 50
       }
     },
     "section_product_features_6FAzHV": {

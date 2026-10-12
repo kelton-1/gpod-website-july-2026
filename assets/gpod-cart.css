@@ -1,0 +1,926 @@
+/* GPOD cart redesign — cart drawer + /cart page (snippets/site-cart.liquid,
+   snippets/cart-line-items.liquid).
+
+   Layout: "Your cart" header with live item count, ship-time note, line items
+   as cards, trust row, then a dark summary card with the total above the
+   green Checkout CTA (brand primary button), store rating under the CTA, and
+   shipping/tax rows and a discount-code field, with the collapsible order
+   note below the card. On the desktop /cart page the
+   card becomes an "Order summary" sidebar: rows first, then the total, then
+   the CTA.
+
+   The markup uses its own gpod-cart / gpod-line classes instead of Modular's
+   .cart__table-* table classes, so theme.css's table layout (and gpod.css's
+   drawer table overrides) no longer apply. Everything below is scoped to
+   .gpod-cart and sets its own box model, because theme.css still styles the
+   shared hooks it keeps (.cart, .checkout-buttons, .cart-totals, .btn ...). */
+
+.gpod-cart {
+  --gpod-cart-ink: #000;
+  --gpod-cart-muted: rgba(0, 0, 0, 0.56);
+  --gpod-cart-line: rgba(0, 0, 0, 0.1);
+  --gpod-cart-dark: #0d0d0d;
+  --gpod-cart-green: var(--BTN-PRIMARY-BG-COLOR, #8cc662);
+  --gpod-cart-green-ink: #3a7a1d;
+  --gpod-cart-gold: #C9A84C;
+  --gpod-cart-radius: 16px;
+  font-family: var(--BODY-FONT-FAMILY, Saira, sans-serif);
+  color: var(--gpod-cart-ink);
+  text-align: left;
+}
+
+.gpod-cart .is-hidden {
+  display: none !important;
+}
+
+/* ---------- Header ---------- */
+
+.gpod-cart .gpod-cart__layout {
+  display: block;
+  float: none;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.gpod-cart .gpod-cart__head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 0 0 6px;
+  /* clear the drawer's close button (sticky, top-right) */
+  padding-right: 48px;
+}
+
+.gpod-cart .gpod-cart__title {
+  margin: 0;
+  padding: 0;
+  font-family: var(--HEADING-FONT-FAMILY, Poppins, sans-serif);
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--gpod-cart-ink);
+}
+
+.gpod-cart .gpod-cart__count {
+  font-size: 15px;
+  color: var(--gpod-cart-muted);
+}
+
+.gpod-cart .gpod-cart__ship-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gpod-cart-green-ink);
+}
+
+.gpod-cart .gpod-cart__ship-note svg {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Line items ---------- */
+
+.gpod-cart .gpod-cart__items {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.gpod-cart .gpod-line {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  margin: 0 0 12px;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid var(--gpod-cart-line);
+  border-radius: var(--gpod-cart-radius);
+  transition: opacity 0.2s ease;
+}
+
+.gpod-cart .gpod-line.is-loading,
+.gpod-cart .gpod-line.is-disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.gpod-cart .gpod-line__thumb {
+  position: relative;
+  display: block;
+  width: 88px;
+  height: 88px;
+  border-radius: 12px;
+  background: #f4f4f2;
+  overflow: hidden;
+}
+
+.gpod-cart .gpod-line__thumb .image-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background: none;
+}
+
+.gpod-cart .gpod-line__thumb img {
+  position: absolute;
+  inset: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  object-fit: contain;
+  opacity: 1;
+}
+
+.gpod-cart .gpod-line__body {
+  min-width: 0;
+}
+
+.gpod-cart .gpod-line__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.gpod-cart .gpod-line__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.gpod-cart .gpod-line__title {
+  font-family: var(--HEADING-FONT-FAMILY, Poppins, sans-serif);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--gpod-cart-ink);
+  text-decoration: none;
+}
+
+.gpod-cart .gpod-line__subtitle,
+.gpod-cart .gpod-line__meta {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--gpod-cart-muted);
+}
+
+.gpod-cart .gpod-line__remove {
+  flex: 0 0 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin: -4px -4px 0 0;
+  border-radius: 50%;
+  background: #f1f1f1;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.gpod-cart .gpod-line__remove:hover {
+  background: #e4e4e4;
+}
+
+.gpod-cart .gpod-line__remove svg {
+  width: 10px;
+  height: 10px;
+  fill: currentColor;
+}
+
+.gpod-cart .gpod-line__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* Quantity stepper: theme.css positions these buttons for its own layout;
+   flattened into a single pill here. */
+.gpod-cart .gpod-line__qty {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  width: auto;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  border-radius: 999px;
+  background: #fff;
+}
+
+.gpod-cart .gpod-line__qty .inputCounter {
+  order: 2;
+  position: static;
+  width: 34px;
+  height: 34px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--gpod-cart-ink);
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.gpod-cart .gpod-line__qty .inputCounter::-webkit-outer-spin-button,
+.gpod-cart .gpod-line__qty .inputCounter::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.gpod-cart .gpod-line__qty .inputCounter__btn {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--gpod-cart-ink);
+  cursor: pointer;
+  transform: none;
+}
+
+.gpod-cart .gpod-line__qty .inputCounter__btn--down { order: 1; }
+.gpod-cart .gpod-line__qty .inputCounter__btn--up { order: 3; }
+
+.gpod-cart .gpod-line__qty .inputCounter__btn svg {
+  width: 10px;
+  height: 10px;
+  fill: currentColor;
+}
+
+.gpod-cart .gpod-line__price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  line-height: 1.2;
+}
+
+.gpod-cart .gpod-line__price s {
+  font-size: 13px;
+  color: var(--gpod-cart-muted);
+}
+
+.gpod-cart .gpod-line__price-now {
+  font-family: var(--HEADING-FONT-FAMILY, Poppins, sans-serif);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--gpod-cart-ink);
+}
+
+.gpod-cart .gpod-line__each {
+  font-size: 12px;
+  color: var(--gpod-cart-muted);
+}
+
+.gpod-cart .gpod-line__savings,
+.gpod-cart .gpod-line__discounts p {
+  margin: 8px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gpod-cart-green-ink);
+}
+
+/* ---------- Aside: trust, note, summary ---------- */
+
+.gpod-cart .gpod-cart__aside {
+  display: flex;
+  flex-direction: column;
+  float: none;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+
+.gpod-cart .gpod-cart__trust {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 4px 0 0;
+  padding: 16px 0;
+  list-style: none;
+  border-top: 1px solid var(--gpod-cart-line);
+  border-bottom: 1px solid var(--gpod-cart-line);
+}
+
+.gpod-cart .gpod-cart__trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  font-size: 12.5px;
+  line-height: 1.3;
+  text-align: center;
+  color: #222;
+}
+
+.gpod-cart .gpod-cart__trust-item::before {
+  content: none;
+}
+
+.gpod-cart .gpod-cart__trust-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(140, 198, 98, 0.2);
+  color: #2f6b16;
+}
+
+.gpod-cart .gpod-cart__trust-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.gpod-cart .gpod-cart__note {
+  margin: 8px 0 0;
+  padding: 0;
+  border-bottom: 1px solid var(--gpod-cart-line);
+}
+
+.gpod-cart .gpod-cart__note-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.gpod-cart .gpod-cart__note-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.gpod-cart .gpod-cart__note-toggle svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+.gpod-cart .gpod-cart__note[open] .gpod-cart__note-toggle svg {
+  transform: rotate(180deg);
+}
+
+.gpod-cart .gpod-cart__note-input {
+  display: block;
+  width: 100%;
+  min-height: 84px;
+  margin: 0 0 16px;
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  border-radius: 12px;
+  font: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+/* ---------- Summary card ---------- */
+
+.gpod-cart .gpod-cart__summary {
+  display: block;
+  float: none;
+  width: auto;
+  max-width: none;
+  margin: 20px 0 0;
+  padding: 22px 20px;
+  border: 0;
+  border-radius: 20px;
+  background: var(--gpod-cart-dark);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  color: #fff;
+  text-align: left;
+}
+
+.gpod-cart .gpod-cart__summary-title,
+.gpod-cart .gpod-cart__total-note {
+  display: none;
+}
+
+.gpod-cart .gpod-cart__summary-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px 16px;
+}
+
+.gpod-cart .gpod-cart__total-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 2px;
+}
+
+.gpod-cart .gpod-cart__total-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.gpod-cart .gpod-cart__total {
+  font-family: var(--HEADING-FONT-FAMILY, Poppins, sans-serif);
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.gpod-cart .gpod-cart__cta {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.gpod-cart .cart__buttons,
+.gpod-cart .cart__button-fieldset {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.gpod-cart .gpod-cart__checkout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  margin: 0;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--gpod-cart-green);
+  color: var(--BTN-PRIMARY-TEXT-COLOR, #111);
+  font-family: var(--BTN-FONT-STACK, 'Work Sans', sans-serif);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  box-shadow: 0 6px 22px rgba(140, 198, 98, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.gpod-cart .gpod-cart__checkout:hover {
+  background: var(--BTN-PRIMARY-BG-COLOR-BRIGHTER, #7db554);
+  box-shadow: 0 8px 26px rgba(140, 198, 98, 0.45);
+}
+
+.gpod-cart .gpod-cart__checkout:active {
+  transform: translateY(1px);
+}
+
+.gpod-cart .gpod-cart__checkout svg {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.gpod-cart .gpod-cart__rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.gpod-cart .gpod-cart__rating strong {
+  font-weight: 700;
+  color: #fff;
+}
+
+.gpod-cart .gpod-cart__rating-star {
+  color: var(--gpod-cart-gold);
+  font-size: 15px;
+  line-height: 1;
+}
+
+.gpod-cart .gpod-cart__rows {
+  margin: 18px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.gpod-cart .gpod-cart__row,
+.gpod-cart .gpod-cart__rows .cart-discounts {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  padding: 6px 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.gpod-cart .gpod-cart__row-muted {
+  color: rgba(255, 255, 255, 0.6);
+  text-align: right;
+}
+
+.gpod-cart .gpod-cart__rows .cart-discounts {
+  color: var(--gpod-cart-green);
+}
+
+/* Discount code (inside the dark summary card, above the express buttons) */
+.gpod-cart .gpod-cart__discount {
+  margin: 16px 0 0;
+}
+
+.gpod-cart .gpod-cart__discount-form {
+  display: flex;
+  gap: 8px;
+}
+
+.gpod-cart .gpod-cart__discount-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 46px;
+  margin: 0;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.gpod-cart .gpod-cart__discount-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.gpod-cart .gpod-cart__discount-input:focus {
+  outline: none;
+  border-color: var(--gpod-cart-green);
+}
+
+.gpod-cart .gpod-cart__discount-apply {
+  flex: 0 0 auto;
+  height: 46px;
+  margin: 0;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 12px;
+  background: #fff;
+  color: #111;
+  font-family: var(--BTN-FONT-STACK, 'Work Sans', sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.gpod-cart .gpod-cart__discount-apply[disabled] {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.gpod-cart .gpod-cart__discount-msg {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.gpod-cart .gpod-cart__discount-msg:empty {
+  display: none;
+}
+
+.gpod-cart .gpod-cart__discount-msg.is-error {
+  color: #ff9b8f;
+}
+
+.gpod-cart .gpod-cart__discount-msg.is-success {
+  color: var(--gpod-cart-green);
+}
+
+.gpod-cart .gpod-cart__discount-codes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 0;
+}
+
+.gpod-cart .gpod-cart__discount-codes:empty {
+  display: none;
+}
+
+.gpod-cart .gpod-cart__discount-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px 4px 12px;
+  border: 1px solid rgba(140, 198, 98, 0.4);
+  border-radius: 999px;
+  background: rgba(140, 198, 98, 0.16);
+  color: #c4e8a8;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.gpod-cart .gpod-cart__discount-chip button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.gpod-cart .gpod-cart__discount-hint {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.gpod-cart .gpod-cart__express {
+  margin: 16px 0 0;
+}
+
+.gpod-cart .gpod-cart__continue {
+  display: block;
+  margin: 16px auto 4px;
+  font-size: 14px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.7);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Empty state ---------- */
+
+.gpod-cart .gpod-cart__empty {
+  padding: 32px 0 24px;
+  text-align: center;
+}
+
+.gpod-cart .gpod-cart__empty .gpod-cart__title {
+  font-size: 24px;
+}
+
+.gpod-cart .gpod-cart__empty-text {
+  margin: 8px 0 20px;
+  color: var(--gpod-cart-muted);
+}
+
+.gpod-cart .gpod-cart__empty-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 0 28px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+/* No item cards → nothing for the header/foot to describe. */
+.gpod-cart:has(.gpod-cart__empty:not(.is-hidden)) .gpod-cart__head,
+.gpod-cart:has(.gpod-cart__empty:not(.is-hidden)) .gpod-cart__ship-note,
+.gpod-cart:has(.gpod-cart__empty:not(.is-hidden)) .gpod-cart__trust,
+.gpod-cart:has(.gpod-cart__empty:not(.is-hidden)) .gpod-cart__aside {
+  display: none;
+}
+
+/* ---------- /cart page: two columns on desktop ---------- */
+
+@media only screen and (min-width: 1024px) {
+  .template-cart .gpod-cart .gpod-cart__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 400px;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .template-cart .gpod-cart .gpod-cart__head {
+    padding-right: 0;
+  }
+
+  .template-cart .gpod-cart .gpod-cart__title {
+    font-size: 40px;
+  }
+
+  .template-cart .gpod-cart .gpod-line {
+    grid-template-columns: 120px minmax(0, 1fr);
+    padding: 18px;
+  }
+
+  .template-cart .gpod-cart .gpod-line__thumb {
+    width: 120px;
+    height: 120px;
+  }
+
+  .template-cart .gpod-cart .gpod-cart__aside {
+    position: sticky;
+    top: 120px;
+  }
+
+  /* Trust row: one horizontal strip under the items. */
+  .template-cart .gpod-cart .gpod-cart__trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+    margin-top: 4px;
+    padding: 14px 0;
+  }
+
+  .template-cart .gpod-cart .gpod-cart__trust-item {
+    flex-direction: row;
+    gap: 8px;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  .template-cart .gpod-cart .gpod-cart__trust-item br {
+    display: none;
+  }
+
+  .template-cart .gpod-cart .gpod-cart__trust-icon {
+    width: auto;
+    height: auto;
+    background: none;
+  }
+
+  /* Order summary sidebar: title, rows, total, then the CTA. */
+  .template-cart .gpod-cart .gpod-cart__summary {
+    display: flex;
+    flex-direction: column;
+    order: -1;
+    margin-top: 0;
+    padding: 26px 24px;
+  }
+
+  .template-cart .gpod-cart .gpod-cart__summary-title {
+    display: block;
+    order: 0;
+    margin: 0 0 10px;
+    font-family: var(--HEADING-FONT-FAMILY, Poppins, sans-serif);
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 1.15;
+    color: #fff;
+  }
+
+  .template-cart .gpod-cart .gpod-cart__rows {
+    order: 1;
+    margin: 0;
+    padding: 0 0 12px;
+    border-top: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .template-cart .gpod-cart .gpod-cart__discount {
+    order: 2;
+    margin: 16px 0 0;
+  }
+
+  .template-cart .gpod-cart .gpod-cart__summary-top {
+    order: 3;
+    margin-top: 16px;
+    gap: 22px;
+  }
+
+  .template-cart .gpod-cart .gpod-cart__total-wrap {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "label total"
+      "note note";
+    align-items: center;
+    column-gap: 16px;
+    row-gap: 4px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .template-cart .gpod-cart .gpod-cart__total-label {
+    grid-area: label;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #fff;
+  }
+
+  .template-cart .gpod-cart .gpod-cart__total-note {
+    display: block;
+    grid-area: note;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .template-cart .gpod-cart .gpod-cart__total {
+    grid-area: total;
+    justify-self: end;
+    font-size: 32px;
+  }
+
+  .template-cart .gpod-cart .gpod-cart__express {
+    order: 4;
+    margin-top: 12px;
+  }
+}
+
+/* ---------- Drawer below the header card (all breakpoints) ----------
+
+   gpod.css already parks the desktop drawer under the floating header card
+   (>=1024px). Below that, Modular's drawer is a full-screen takeover that
+   covers the header, so the menu, search and logo disappear while the cart
+   is open. Same treatment here: the panel starts under the card and runs to
+   the bottom of the screen, so the header stays visible and usable.
+   gpod-cart-on-add.js closes the cart when the menu or search is opened. */
+
+@media only screen and (max-width: 1023px) {
+  .cart-drawer {
+    top: calc(var(--gpod-header-card-top, 8px) + var(--gpod-header-card-h, 52px) + 8px);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    border-radius: 16px 16px 0 0;
+    background: #fff;
+    box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .cart-drawer .scroll {
+    height: 100%;
+    max-height: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+}
+
+/* theme.js pins the close button with an inline `top` measured from the
+   header cart icon, meant for the old full-screen drawer; inside the panel
+   that pushes it up against (or past) the panel's top edge. */
+.cart-drawer .gpod-cart .cart-close {
+  top: 12px !important;
+}
