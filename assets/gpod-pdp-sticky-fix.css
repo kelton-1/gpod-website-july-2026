@@ -29,4 +29,3 @@
     --gpod-pdp-media-h: calc(100vh - var(--gpod-pdp-media-top) - 20px - 90px);
   }
 }
-

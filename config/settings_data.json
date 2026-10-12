@@ -207,16 +207,6 @@
         "disabled": false,
         "settings": {}
       },
-      "12657775114333427046": {
-        "type": "shopify://apps/countdown-timer-essential/blocks/app_embed/722378e8-5a70-4eae-aa89-9e44e8e9f6de",
-        "disabled": false,
-        "settings": {}
-      },
-      "3138269044488530766": {
-        "type": "shopify://apps/uppromote-affiliate/blocks/core-script/64c32457-930d-4cb9-9641-e24c0d9cf1f4",
-        "disabled": false,
-        "settings": {}
-      },
       "3667842014806057753": {
         "type": "shopify://apps/one-click-upsell/blocks/app-embed/bfe6e378-b73a-4871-b8d3-7d6ede22678e",
         "disabled": false,
@@ -259,17 +249,6 @@
         "disabled": true,
         "settings": {}
       },
-      "9827064043892562090": {
-        "type": "shopify://apps/hype-discounts-campaigns/blocks/hype-link/dad89215-8ec1-431c-8488-2e358677b8c3",
-        "disabled": false,
-        "settings": {
-          "enable_debug": false,
-          "proxy_link": "/apps/hype",
-          "hide_decimals_for_whole_numbers": false,
-          "custom_css": "",
-          "custom_js": ""
-        }
-      },
       "3229191829584207435": {
         "type": "shopify://apps/hype-discounts/blocks/ui-toast/dad89215-8ec1-431c-8488-2e358677b8c3",
         "disabled": true,
@@ -308,6 +287,32 @@
       "pagefly-ai-page-builder": {
         "type": "shopify://apps/pagefly-ai-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
         "disabled": false,
+        "settings": {}
+      },
+      "2567389343055140935": {
+        "type": "shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
+        "disabled": false,
+        "settings": {}
+      },
+      "9827064043892562090": {
+        "type": "shopify://apps/hype-discounts/blocks/hype-link/dad89215-8ec1-431c-8488-2e358677b8c3",
+        "disabled": true,
+        "settings": {
+          "enable_debug": false,
+          "proxy_link": "/apps/hype",
+          "hide_decimals_for_whole_numbers": false,
+          "custom_css": "",
+          "custom_js": ""
+        }
+      },
+      "12657775114333427046": {
+        "type": "shopify://apps/essential-countdown-timer/blocks/app_embed/722378e8-5a70-4eae-aa89-9e44e8e9f6de",
+        "disabled": true,
+        "settings": {}
+      },
+      "3138269044488530766": {
+        "type": "shopify://apps/uppromote-affiliate/blocks/core-script/64c32457-930d-4cb9-9641-e24c0d9cf1f4",
+        "disabled": true,
         "settings": {}
       }
     }

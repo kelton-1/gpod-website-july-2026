@@ -34,3 +34,45 @@
   }
 }
 
+/* Close button scrolls away with cart contents — theme.css's .cart-close
+   is `position: absolute` inside `.scroll` (~line 9740), the SAME element
+   that scrolls when the cart has enough items to overflow (see
+   site-cart.liquid: .scroll > .cart-wrapper > .cart > .cart-close). Once
+   a shopper scrolls down to see later items, the close button and
+   "Shopping Cart" title scroll out of view with them — the only way to
+   close the cart becomes scrolling all the way back to the top first.
+   Confirmed on both mobile and desktop with 6+ items in cart, so this
+   isn't scoped to a breakpoint the way the fixes above are.
+
+   First attempt was `position: fixed`, which turned out not to work:
+   `.cart` (the button's positioned ancestor) carries a `transform`
+   (used for the open/close slide animation — present even at rest, as
+   an identity matrix) and any transform, including an identity one,
+   makes that element the containing block for fixed-position
+   descendants instead of the viewport. So the "fixed" button was still
+   moving with `.cart`'s own scrolled position instead of staying put.
+
+   `position: sticky` sidesteps that entirely — it sticks to the top of
+   its nearest scrolling ancestor (`.scroll`) regardless of transforms
+   further down the tree, which is exactly the behavior needed here, and
+   works the same way at every breakpoint (no media query needed). The
+   float + negative margin keep it from pushing the "Shopping Cart"
+   title down the height of the button once it's back in flow. */
+.cart-drawer .cart-close {
+  position: sticky;
+  top: 16px;
+  right: 16px;
+  left: auto;
+  float: right;
+  margin-bottom: -36px;
+  z-index: 10001;
+  background: #fff;
+  border-radius: 50%;
+}
+
+/* gpod-cart-on-add.js opens the cart drawer after add to cart. The theme still fires
+   its small "added to cart" header popover ~1s later on desktop, which
+   would sit on top of the open drawer, so hide it while the drawer is up. */
+body.cart--is-visible .header-cartPopover {
+  display: none !important;
+}
