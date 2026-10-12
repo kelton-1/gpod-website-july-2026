@@ -46,7 +46,9 @@ price at ~1,750px; ~40 tap targets under 44px (header icons 32px, search 19×25,
 **The PDP at 390px** is still the Sep 17 design (different type and buttons from the new home):
 12,317px = 14.6 screens; Add to Cart at ~1,290px, below the first screen.
 
-**Three themes, none complete.** Live `156088172712` = Sep 17 redesign + hotfixes. July repo
+**Update 2026-10-12:** live is now "Paul Dev (5-star cart rating)" `188905586856` (Paul, Oct 2–8), merged into git at `1858647`. It already ships a rebuilt cart drawer, Base 2.0 pre-order and a reordered buy box, and settles the warranty as **1 year** on the PDP. The variant theme must now be rebuilt from this live, not from `188690301096`. Step 5 below restyles Paul's drawer, not ours. Microsoft Clarity is on (recordings and heatmaps, no A/B).
+
+**Three themes, none complete (as of Oct 1).** Live `156088172712` = Sep 17 redesign + hotfixes. July repo
 theme `154401538216` = live + the cart-drawer redesign + PDP fixes. Tenscope preview
 `188690301096` = live + the new home only. Git `HEAD` holds all of it.
 
@@ -103,7 +105,7 @@ the Brand Playbook's proof points. Several claims contradict each other or the P
 | Claim | Where it appears | Problem |
 |---|---|---|
 | Warranty | "1-year warranty" (Tenscope home trust cards; `product.product-update-page.json`) vs "Lifetime Warranty" (trust row in `product.json` + `product.pocket-g.json`; Tenscope's PDP) | Contradictory; one is wrong |
-| Reviews | 561 / 586+ / 600+ / 622; 4.9 vs 5.0 average | Use Fera's live aggregate everywhere |
+| Reviews | 440 (cart, hardcoded Oct 9) / 561 / 586+ / 600+ / 622; 4.9 vs 5.0 average | Use Fera's live aggregate everywhere |
 | GPOD weight | 4.8 oz (PDP compare, Tenscope) | Playbook says **4.4 oz** (settled 2026-09-02) |
 | Carbon fiber | "Premium materials", "Lightweight Carbon Fiber ✓ / Others ✗" | Audit + Playbook retired the carbon-fiber story; Pocket G, Travel, Studio aren't carbon |
 
