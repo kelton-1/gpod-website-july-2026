@@ -1,0 +1,75 @@
+{%- comment -%}
+  GPOD pre-order shipping note. Single source for the ship date.
+  Applies only to products tagged 'preorder-oct'.
+  Contexts:
+  - 'pdp'          under the main Pre-order button (+ hides restock popup)
+  - 'bar'          sticky bar, next to the price
+  - 'cart'         under a pre-order line item in the cart
+  - 'cart-summary' replacement text for the cart's "Ships within 1 business day"
+                   (no product needed; shown by CSS when a pre-order item is in the cart)
+  To change the date, edit ship_text below.
+{%- endcomment -%}
+{%- assign ship_text = 'Ships before Oct 30' -%}
+
+{%- if context == 'cart-summary' -%}
+  <span class="gpod-ship-pre">Pre-order items: {{ ship_text }}</span>
+{%- elsif product.tags contains 'preorder-oct' -%}
+  {%- if context == 'cart' -%}
+    <span class="gpod-line__meta gpod-line__preorder">Pre-order · {{ ship_text }}</span>
+  {%- else -%}
+    <span class="gpod-preorder-ship{% if context == 'bar' %} gpod-preorder-ship--bar{% else %} gpod-preorder-ship--pdp{% endif %}">{{ ship_text }}</span>
+    {%- style -%}
+      /* PDP: sits tight under the button, full row width */
+      .product__form-buttons:has(.gpod-preorder-ship--pdp) { flex-wrap: wrap; row-gap: 0; }
+      .gpod-preorder-ship--pdp { display: block; flex: 0 0 100%; width: 100%; margin: 6px 0 0; padding: 0; font-size: 14px; font-weight: 600; line-height: 1.3; text-align: center; }
+
+      /* Sticky bar, desktop: green pill next to the price */
+      .gpod-preorder-ship--bar { display: inline-block; flex: 0 0 auto; margin: 0; padding: 4px 10px; border-radius: 999px; background: rgba(140, 198, 98, 0.16); color: #8cc662; font-size: 13px; font-weight: 600; line-height: 1.2; white-space: nowrap; }
+
+      /* Sticky bar, tablet + mobile: its own third line under price/stars */
+      @media only screen and (max-width: 1023px) {
+        .shop-bar__info:has(.gpod-preorder-ship--bar) { grid-template-areas: "title title" "price rating" "ship ship"; row-gap: 0; }
+        .gpod-preorder-ship--bar { grid-area: ship; padding: 0; background: none; font-size: 11px; font-weight: 600; line-height: 1.25; }
+      }
+    {%- endstyle -%}
+    {%- if context == 'pdp' -%}
+      {%- comment -%}
+        Hides the Back in Stock: Restock Alerts popup on pre-order PDPs only.
+        The app injects its box after page load, so this watches for it.
+      {%- endcomment -%}
+      <script>
+        (function () {
+          if (window.__gpodHideRestock) return;
+          window.__gpodHideRestock = true;
+          var TEXT = /(notify me|email me when|back in stock|restock alert)/i;
+          var ATTR = /(back-?in-?stock|restock|notify-?me|\bbis[_-])/i;
+          var SAFE = '[data-product-form-container], .shop-bar, .site-header, .site-footer, .cart-drawer, [data-cart-drawer], [data-cart]';
+          function hide(el) { el.style.setProperty('display', 'none', 'important'); }
+          function fixedAncestor(el) {
+            var n = el;
+            while (n && n !== document.body) {
+              if (getComputedStyle(n).position === 'fixed') return n;
+              n = n.parentElement;
+            }
+            return el;
+          }
+          function scan() {
+            document.querySelectorAll('iframe, div[id], div[class], button[id], button[class]').forEach(function (el) {
+              if (el.closest(SAFE)) return;
+              var sig = (el.id || '') + ' ' + (typeof el.className === 'string' ? el.className : '') + ' ' + (el.getAttribute('src') || '');
+              if (ATTR.test(sig)) hide(el);
+            });
+            document.querySelectorAll('button, a').forEach(function (b) {
+              if (b.closest(SAFE)) return;
+              if (TEXT.test(b.textContent || '')) hide(fixedAncestor(b));
+            });
+          }
+          var t;
+          function queue() { clearTimeout(t); t = setTimeout(scan, 120); }
+          if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+          new MutationObserver(queue).observe(document.documentElement, { childList: true, subtree: true });
+        })();
+      </script>
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}

@@ -1,0 +1,72 @@
+{%- comment -%}
+  "Why Golfers Switch / The Breakdown" — Tenscope Round 2 (mobile 100:391, desktop 28:1598).
+  Centered kicker + H2, three image cards (stacked on phones, 3-up ≥768px),
+  centered Shop Now.
+
+  Styles: assets/gpod-ts.css §4.
+{%- endcomment -%}
+
+{{ 'gpod-ts.css' | asset_url | stylesheet_tag }}
+
+{%- assign heading_id = 'TsFeat-' | append: section.id -%}
+
+<section class="ts ts-feat ts-section" data-section-id="{{ section.id }}" data-section-type="home-feature-cards" aria-labelledby="{{ heading_id }}">
+  <div class="ts-wrap">
+    <div class="ts-head ts-head--center">
+      <div class="ts-head__titles">
+        {%- if section.settings.kicker != blank -%}<p class="ts-kicker">{{ section.settings.kicker | escape }}</p>{%- endif -%}
+        <h2 class="ts-h2" id="{{ heading_id }}">{{ section.settings.heading | escape }}</h2>
+      </div>
+      {%- if section.settings.text != blank -%}<div class="ts-body ts-head__lede">{{ section.settings.text }}</div>{%- endif -%}
+    </div>
+
+    <ul class="ts-feat__grid" role="list">
+      {%- for block in section.blocks -%}
+        <li class="ts-fcard" {{ block.shopify_attributes }}>
+          <div class="ts-fcard__media">
+            {%- if block.settings.image != blank -%}
+              {{- block.settings.image | image_url: width: 900 | image_tag: widths: '360, 540, 720, 900', sizes: '(min-width: 768px) 30vw, 90vw', loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
+            {%- endif -%}
+          </div>
+          <div class="ts-fcard__body">
+            <h3 class="ts-h3 ts-fcard__title">{{ block.settings.title | escape }}</h3>
+            {%- if block.settings.text != blank -%}<p class="ts-body ts-muted">{{ block.settings.text | escape }}</p>{%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if section.settings.cta_label != blank -%}
+      <div class="ts-center ts-feat__cta">
+        <a class="ts-btn" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">{{ section.settings.cta_label | escape }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Feature cards",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Why Golfers Switch" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Breakdown" },
+    { "type": "richtext", "id": "text", "label": "Intro" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop Now" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "limit": 6,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Premium materials" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Feature cards", "blocks": [ { "type": "card" }, { "type": "card" }, { "type": "card" } ] } ]
+}
+{% endschema %}
