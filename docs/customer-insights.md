@@ -103,19 +103,19 @@ Customers describe their *situation*, not a product: "indoor with occasional out
 | GPOD (w/ MagSafe) | `gpodmagsafe` | Monopod | $109.99 | The original |
 | GPOD X | `gpodx` | Monopod | $129.99 | Collapsible/portable, 51" claim, stuck-extension complaints |
 | GPOD Pauly P | `gpod-pauly-p2` | Monopod | $159.99 | Newest flagship monopod/tripod hybrid |
-| GPOD Mini | `gpod-mini` | Camera Accessory | $29.99 | Alignment-stick adapter |
+| ~~GPOD Mini~~ (discontinued 2026-09-01, set to DRAFT) | `gpod-mini` | Camera Accessory | $29.99 | Alignment-stick adapter |
 | GPOD Travel | `gpod-travel-1` | Tripod | $74.99 | Compact MagSafe tripod, highest inventory |
 | GPOD Studio 2.0 | `gpod-studio` | Tripod | $199.99 | Pro/coach tripod |
 | GPOD Base 2.0 | `indoor-base-for-gpod-gpod-mini` | Accessory | $59.99 | Indoor base for monopods |
 | GPOD Connect 2.0 | `connect` | Accessory | $19.99 | Adapter (purpose unclear to customers) |
 | GPUCK w/MagSafe | `replacement-magnet-for-magsafe` | Accessory | $19.99 | Magnetic mount puck |
-| GPOD Caddy | `gpod-caddy` | Accessory | $34.99 | Cart/magnetic-surface mount |
+| GPOD Caddy | `gpod-caddy` | Core | $34.99 | Gen-2 relaunch at $39.99 due Sept 2026 (Playbook). Moves to Core Products under the new taxonomy |
 | GPOD G PLATE | `gpod-gplate` | Accessory | $19.99 | Semi-permanent plate (purpose unclear to customers) |
-| G BUNDLE 1: GPOD + Base 2.0 | `g-bundle-one-gpod-with-gpod-base` | Bundle | $134.99 | |
-| G BUNDLE 2: GPOD X + Base 2.0 | `g-bundle-two-gpod-x-with-gpod-base` | Bundle | $154.99 | |
-| G BUNDLE 3: Pauly P + Base 2.0 | `g-bundle-three-gpod-pauly-p-and-gpod-base` | Bundle | $204.99 | |
-| GPOD Travel + Sportsbox 3D Annual | `gpod-travel-sportsbox-3d-player-annual-swing-analysis` | Tripod bundle | $169.99 | Sportsbox redemption confusion |
-| Pocket G | `gpod-anywhere-tripod` | (new) | $44.99 | "Coming soon", 0 inventory |
+| GPOD + Base Bundle | `g-bundle-one-gpod-with-gpod-base` | Bundle | $134.99 | Renamed 2026-09-01 (was G BUNDLE 1) |
+| GPOD X + Base Bundle | `g-bundle-two-gpod-x-with-gpod-base` | Bundle | $154.99 | Renamed 2026-09-01 (was G BUNDLE 2) |
+| GPOD Pauly P + Base Bundle | `g-bundle-three-gpod-pauly-p-and-gpod-base` | Bundle | $204.99 | Renamed 2026-09-01 (was G BUNDLE 3) |
+| GPOD Travel + Sportsbox Bundle | `gpod-travel-sportsbox-3d-player-annual-swing-analysis` | Tripod bundle | $169.99 | Renamed 2026-09-01. Sportsbox redemption confusion |
+| GPOD : The Pocket G | `gpod-pocket-g` | Core | $49.99 | **Live, 1,160 units.** The old `gpod-anywhere-tripod` handle never existed — it was the source of the stale compare-picker entry |
 | POS Display — Green Grass | `pos-display-green-grass` | B2B | $899.99 | Retail display, probably hide from consumer nav |
 
 ## Priorities for the redesign (derived)
