@@ -9,6 +9,17 @@
   else
     assign sold_out = true
   endif
+
+  # Star rating from the standard reviews metafields (synced by Fera)
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+  assign show_rating = false
+  if rating != blank and rating_count > 0
+    assign show_rating = true
+    assign rating_value = rating.rating | times: 1.0
+    assign rating_max = rating.scale_max | times: 1.0
+    assign rating_percent = rating_value | divided_by: rating_max | times: 100 | round: 1
+  endif
 -%}
 
 {%- style -%}
@@ -102,6 +113,39 @@
     font-weight: 500;
   }
 
+  /* Star rating — campaign gold on the dark bar: pops without competing
+     with the green CTA. Empty stars are a faint gold. */
+  .shop-bar__rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .shop-bar__stars {
+    position: relative;
+    display: inline-block;
+    flex: 0 0 auto;
+    font-size: 15px;
+    letter-spacing: 1px;
+    line-height: 1;
+    color: rgba(201, 168, 76, 0.3);
+  }
+  .shop-bar__stars-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #C9A84C;
+  }
+  .shop-bar__rating-count {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
   .product__form--shop-bar { flex: 0 0 auto; }
   .product__form--shop-bar .product__form-submit {
     min-width: 260px;
@@ -112,7 +156,7 @@
   }
 
   /* Tablet + mobile: the theme hides the bar <=1023px. Reveal it, and stack
-     the name over the price so the CTA keeps a full-size tap target. */
+     the name over the price + stars so the CTA keeps a full-size tap target. */
   @media only screen and (max-width: 1023px) {
     .shop-bar {
       display: flex !important;
@@ -129,12 +173,21 @@
     .shop-bar__info {
       flex: 1 1 auto;
       min-width: 0;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      gap: 1px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        "title title"
+        "price rating";
+      align-items: center;
+      align-content: center;
+      column-gap: 10px;
+      row-gap: 1px;
+      /* Lets the rules below react to how much room the info area actually
+         has (it varies with price length and button text), not screen width. */
+      container-type: inline-size;
     }
     .shop-bar__title {
+      grid-area: title;
       display: block;
       margin: 0;
       max-width: 100%;
@@ -143,10 +196,16 @@
       color: rgba(255, 255, 255, 0.72);
       font-weight: 500;
     }
+    .shop-bar__price { grid-area: price; }
     .shop-bar__price .product__price {
       font-size: 17px;
       line-height: 1.2;
     }
+    /* Never let the star row shrink: a clipped row of 5 reads as a lower
+       rating (e.g. 3.5 stars). The review count gives way first instead. */
+    .shop-bar__rating { grid-area: rating; gap: 4px; min-width: max-content; }
+    .shop-bar__stars { font-size: 12px; letter-spacing: 0.5px; }
+    .shop-bar__rating-count { font-size: 11px; }
     .product__form--shop-bar .product__form-submit {
       min-width: 0;
       padding: 0 26px;
@@ -156,6 +215,23 @@
     .site-footer--push {
       padding-bottom: calc(72px + env(safe-area-inset-bottom));
     }
+  }
+
+  /* Space-based fallbacks for the rating (mobile/tablet only, where the info
+     area is a size container): first drop the review count, and if even the
+     stars won't fit beside the price, hide the rating rather than clip it. */
+  @container (max-width: 205px) {
+    .shop-bar__rating-count { display: none; }
+  }
+  @container (max-width: 150px) {
+    .shop-bar__rating { display: none; }
+  }
+
+  /* Narrow phones: "169 Reviews" won't fit beside price + CTA, so show "(169)" */
+  @media only screen and (max-width: 399px) {
+    .shop-bar__rating-word { display: none; }
+    .shop-bar__rating-num::before { content: "("; }
+    .shop-bar__rating-num::after { content: ")"; }
   }
 
   @media only screen and (max-width: 767px) {
@@ -283,7 +359,12 @@
       >
         <span data-add-to-cart-text>
           {%- unless sold_out -%}
-            {{- 'products.form.submit' | t -}}
+            {%- comment -%} GPOD: products tagged 'preorder-oct' say Pre-order {%- endcomment -%}
+            {%- if product.tags contains 'preorder-oct' -%}
+              {{- 'products.form.preorder' | t -}}
+            {%- else -%}
+              {{- 'products.form.submit' | t -}}
+            {%- endif -%}
           {% else %}
             {{- 'products.form.sold_out' | t -}}
           {%- endunless -%}
@@ -320,6 +401,13 @@
     </div>
 
     <p class="shop-bar__title">{{ product.title | strip_html }}</p>
+
+    {%- if show_rating -%}
+      <div class="shop-bar__rating" aria-label="Rated {{ rating_value }} out of {{ rating_max | round }} stars, {{ rating_count }} reviews">
+        <span class="shop-bar__stars" aria-hidden="true">★★★★★<span class="shop-bar__stars-fill" style="width: {{ rating_percent }}%;">★★★★★</span></span>
+        <span class="shop-bar__rating-count" aria-hidden="true"><span class="shop-bar__rating-num">{{ rating_count }}</span><span class="shop-bar__rating-word"> {{ rating_count | pluralize: 'Review', 'Reviews' }}</span></span>
+      </div>
+    {%- endif -%}
 
     <div class="shop-bar__price" aria-live="polite">{%- liquid
   assign first_variant = product.selected_or_first_available_variant
@@ -398,6 +486,10 @@
     </div>
   {% endif %}
 </div></div>
+    {%- comment -%} GPOD: "Ships before" note, next to the price (own line on mobile) {%- endcomment -%}
+    {%- unless sold_out -%}
+      {%- render 'gpod-preorder-ship', product: product, context: 'bar' -%}
+    {%- endunless -%}
   </div>
   </div>
 </div>

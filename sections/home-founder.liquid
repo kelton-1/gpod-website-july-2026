@@ -1,0 +1,60 @@
+{%- comment -%}
+  "Built by a golfer for golfers" — Tenscope Round 2 (mobile 100:416, desktop 28:1802).
+  Five tilted photo cards, the GPOD wordmark, founder letter, About Us.
+  Tenscope's annotation on this frame: "Would need better images for this
+  section" — the photos are blocks so they can be swapped without code.
+
+  Styles: assets/gpod-ts.css §5.
+{%- endcomment -%}
+
+{{ 'gpod-ts.css' | asset_url | stylesheet_tag }}
+
+{%- assign heading_id = 'TsFounder-' | append: section.id -%}
+
+<section class="ts ts-founder ts-section" data-section-id="{{ section.id }}" data-section-type="home-founder" aria-labelledby="{{ heading_id }}">
+  <div class="ts-wrap">
+    {%- if section.settings.logo != blank -%}
+      <div class="ts-founder__logo">
+        {{- section.settings.logo | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' -}}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="ts-founder__collage" aria-hidden="true">
+        {%- for block in section.blocks limit: 5 -%}
+          <figure class="ts-founder__photo" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{- block.settings.image | image_url: width: 480 | image_tag: widths: '160, 240, 360, 480', sizes: '20vw', loading: 'lazy', alt: '' -}}
+            {%- endif -%}
+          </figure>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="ts-founder__copy">
+      <h2 class="ts-h2 ts-founder__title" id="{{ heading_id }}">{{ section.settings.heading | escape }}</h2>
+      <div class="ts-body ts-founder__text">{{ section.settings.text }}</div>
+      {%- if section.settings.cta_label != blank -%}
+        <a class="ts-btn" href="{{ section.settings.cta_link | default: '/pages/about-us' }}">{{ section.settings.cta_label | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Founder story",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Wordmark" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Built by a golfer for golfers" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>As a professional golfer, I, Paul Park, understand the relentless pursuit of improvement that drives every player, from weekend warriors to seasoned pros.</p><p>Like you, I've spent countless hours seeking that perfect swing, relying on lessons and video analysis. That's why I created GPOD Golf – a game-changing solution designed to simplify and enhance your swing analysis.</p>" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "About Us" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "blocks": [
+    { "type": "photo", "name": "Photo", "limit": 5, "settings": [ { "type": "image_picker", "id": "image", "label": "Image" } ] }
+  ],
+  "presets": [ { "name": "Founder story", "blocks": [ { "type": "photo" }, { "type": "photo" }, { "type": "photo" }, { "type": "photo" }, { "type": "photo" } ] } ]
+}
+{% endschema %}

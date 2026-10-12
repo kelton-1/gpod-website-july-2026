@@ -1,0 +1,99 @@
+{%- comment -%}
+  "Most Popular Products" rail — Tenscope Round 2 (mobile 100:344, desktop 28:1597).
+  Kicker + H2 + Shop Now, then a snap-scrolling row of product cards
+  (4:5 image, name, one-line "best for", price) with a progress bar and
+  prev/next footer.
+
+  Paul's board comment #12: "short descriptions that tell a user real quick
+  what the product is … best for … mark GPOD X + Base Bundle as 'Best Seller'".
+  The line comes from the `gpod.best_for` metafield (block override wins);
+  the badge is per block.
+
+  One block per product so merchandising controls the order. With no
+  blocks, the section falls back to the chosen collection.
+
+  Styles: assets/gpod-ts.css §3. Behaviour: assets/gpod-ts.js (rails).
+{%- endcomment -%}
+
+{{ 'gpod-ts.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'gpod-ts.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign product_blocks = section.blocks | where: 'type', 'product'
+  assign heading_id = 'TsRail-' | append: section.id
+-%}
+
+<section class="ts ts-rail ts-section" data-section-id="{{ section.id }}" data-section-type="home-product-rail" aria-labelledby="{{ heading_id }}">
+  <div class="ts-wrap" data-ts-rail>
+    <div class="ts-head ts-head--split">
+      <div class="ts-head__titles">
+        {%- if section.settings.kicker != blank -%}<p class="ts-kicker">{{ section.settings.kicker | escape }}</p>{%- endif -%}
+        <h2 class="ts-h2" id="{{ heading_id }}">{{ section.settings.heading | escape }}</h2>
+      </div>
+      {%- if section.settings.cta_label != blank -%}
+        <a class="ts-btn ts-rail__cta" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">{{ section.settings.cta_label | escape }}</a>
+      {%- endif -%}
+    </div>
+
+    <ul class="ts-track" role="list" data-ts-track tabindex="0" aria-label="{{ section.settings.heading | escape }}">
+      {%- if product_blocks.size > 0 -%}
+        {%- for block in product_blocks -%}
+          {%- assign p = block.settings.product -%}
+          {%- if p == blank -%}{%- continue -%}{%- endif -%}
+          {%- assign best_for = block.settings.best_for | default: p.metafields.gpod.best_for.value -%}
+          <li {{ block.shopify_attributes }}>
+            {%- render 'ts-product-card', product: p, best_for: best_for, badge: block.settings.badge, badge_style: block.settings.badge_style, show_rating: section.settings.show_rating, index: forloop.index -%}
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for p in section.settings.collection.products limit: section.settings.limit -%}
+          <li>
+            {%- render 'ts-product-card', product: p, best_for: p.metafields.gpod.best_for.value, badge: '', badge_style: 'forest', show_rating: section.settings.show_rating, index: forloop.index -%}
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+
+    <div class="ts-rail__foot" data-ts-rail-foot hidden>
+      <div class="ts-rail__bar" data-ts-rail-bar aria-hidden="true"><span></span></div>
+      <div class="ts-rail__nav">
+        <button type="button" class="ts-rail__btn" data-ts-rail-prev aria-label="Previous products">{% render 'ts-icon', name: 'arrow-left' %}</button>
+        <button type="button" class="ts-rail__btn" data-ts-rail-next aria-label="Next products">{% render 'ts-icon', name: 'arrow-right' %}</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product rail",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Popular" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Most Popular Products" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop Now" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "checkbox", "id": "show_rating", "label": "Show star rating + review count", "default": false },
+    { "type": "header", "content": "Fallback", "info": "Used only when there are no product blocks." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "label": "Products", "min": 3, "max": 12, "step": 1, "default": 8 }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "limit": 12,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "best_for", "label": "Best-for line", "info": "Blank = the product's gpod.best_for metafield" },
+        { "type": "text", "id": "badge", "label": "Badge", "info": "e.g. Best Seller, New" },
+        {
+          "type": "select", "id": "badge_style", "label": "Badge style", "default": "forest",
+          "options": [ { "value": "forest", "label": "Forest green" }, { "value": "accent", "label": "Bright green" } ]
+        }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Product rail" } ]
+}
+{% endschema %}

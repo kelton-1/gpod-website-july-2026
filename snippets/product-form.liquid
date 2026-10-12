@@ -32,6 +32,14 @@
   else
     assign sold_out = true
   endif
+
+  comment
+    GPOD: products tagged 'preorder-oct' show the Pre-order button label.
+    Remove the tag from a product to switch it back to Add to Cart.
+  endcomment
+  if product.tags contains 'preorder-oct'
+    assign preorder = true
+  endif
 -%}
 
 {%- form 'product', product, class: 'product__form', data-enable-color-swatches: enable_theme_swatches, data-product-id: product.id, data-product-form: '', data-hide-errors: gift_card_recipient_feature_active -%}
@@ -372,6 +380,10 @@
         </span>
         {%- render 'icon-check' -%}
       </button>
+      {%- comment -%} GPOD: "Ships before" note directly under the button for pre-order products {%- endcomment -%}
+      {%- unless sold_out -%}
+        {%- render 'gpod-preorder-ship', product: product, context: 'pdp' -%}
+      {%- endunless -%}
     </div>
 
     {%- if show_payment_buttons -%}

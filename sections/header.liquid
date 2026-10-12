@@ -173,12 +173,27 @@
             {%- render 'navigation', is_hamburger_nav: false -%}
           </nav>
 
+          {%- comment -%}
+            Tenscope island (docs/tenscope-design-review.md): a flat row of top-level
+            links on desktop, read from its own menu so the drawer keeps the full
+            drill-down menu. Renders nothing unless a menu is chosen.
+          {%- endcomment -%}
+          {%- if section.settings.ts_links_menu != blank and linklists[section.settings.ts_links_menu].links.size > 0 -%}
+            <nav class="ts-header__links" aria-label="Primary">
+              {%- for link in linklists[section.settings.ts_links_menu].links -%}
+                <a href="{{ link.url }}" class="ts-header__link{% if link.active or link.child_active %} is-active{% endif %}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+              {%- endfor -%}
+            </nav>
+          {%- endif -%}
+
           <div class="header__icons" data-header-icons>
             <a href="#menu" class="menuToggle" data-target="nav" aria-expanded="false" aria-label="{{ 'general.accessibility.menu_toggle' | t }}" data-menu-toggle>
               <div id="hamburger-menu" class="icon-menu" data-hamburger-icon>
                 <div class="diamond-bar"></div>
                 <div id="hamburger-bar" class="icon-bar"></div>
               </div>
+              {%- comment -%} Tenscope island label; inert until the island is switched on via ts_links_menu (styles pending, see docs/next-session.md) {%- endcomment -%}
+              {%- if section.settings.ts_links_menu != blank -%}<span class="ts-menu-label" aria-hidden="true">{{ section.settings.ts_menu_label | default: 'Menu' | escape }}</span>{%- endif -%}
             </a>
 
             {%- if shop.customer_accounts_enabled -%}
@@ -379,6 +394,18 @@
     {
       "type": "header",
       "content": "Menus"
+    },
+    {
+      "type": "link_list",
+      "id": "ts_links_menu",
+      "label": "Desktop link row (Tenscope island)",
+      "info": "Flat links shown in the island at 1024px and up. The drawer still uses the main menu."
+    },
+    {
+      "type": "text",
+      "id": "ts_menu_label",
+      "label": "Menu button label",
+      "default": "Menu"
     },
     {
       "type": "link_list",

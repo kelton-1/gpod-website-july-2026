@@ -1,0 +1,44 @@
+{%- comment -%}
+  Product card for the Tenscope rail (sections/home-product-rail.liquid).
+  Whole card is one link (stretched ::after), so there is a single tab stop.
+
+  Params: product, best_for, badge, badge_style ('forest' | 'accent'),
+          show_rating (bool), index (1-based; first two load eagerly-ish)
+{%- endcomment -%}
+{%- liquid
+  assign rating = product.metafields.reviews.rating.value.rating | default: 0
+  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+  assign loading = 'lazy'
+-%}
+<article class="ts-pcard">
+  <div class="ts-pcard__media">
+    {%- if badge != blank -%}
+      <span class="ts-pcard__badge{% if badge_style == 'accent' %} ts-pcard__badge--accent{% endif %}">{{ badge | escape }}</span>
+    {%- endif -%}
+    {%- if product.featured_image != blank -%}
+      {{- product.featured_image | image_url: width: 900 | image_tag:
+          widths: '340, 480, 680, 900',
+          sizes: '(min-width: 1024px) 24vw, 84vw',
+          loading: loading,
+          alt: product.featured_image.alt | default: product.title -}}
+    {%- endif -%}
+  </div>
+  <div class="ts-pcard__body">
+    <h3 class="ts-h3 ts-pcard__title">
+      <a class="ts-pcard__link" href="{{ product.url }}">{{ product.title | escape }}</a>
+    </h3>
+    {%- if best_for != blank -%}<p class="ts-pcard__for">{{ best_for | escape }}</p>{%- endif -%}
+    <div class="ts-pcard__meta">
+      <p class="ts-pcard__price">
+        {{- product.price | money -}}
+        {%- if product.compare_at_price > product.price -%}<s><span class="ts-visually-hidden">Regular price </span>{{ product.compare_at_price | money }}</s>{%- endif -%}
+      </p>
+      {%- if show_rating and rating_count > 0 -%}
+        <span class="ts-pcard__rating">
+          <span class="ts-stars" aria-hidden="true">{% render 'ts-icon', name: 'star-fill' %}</span>
+          <span><span class="ts-visually-hidden">Rated </span>{{ rating }} ({{ rating_count }}<span class="ts-visually-hidden"> reviews</span>)</span>
+        </span>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

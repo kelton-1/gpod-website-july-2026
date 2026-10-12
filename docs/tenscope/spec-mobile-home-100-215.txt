@@ -1,0 +1,650 @@
+FRAM 'mobile' @20450,-4934 390x9938 fill=#ffffff auto=V gap=0 pad=0/0/0/0
+  FRAM 'Frame 2147235421' @0,0 390x637 fill=#1d1e24 auto=V gap=10 pad=0/0/0/0
+    FRAM 'Homepage' @0,0 390x637 fill=IMG/GRAD(#ffffff,#ffffff@0.00)/IMG/#000000@0.20 auto=V gap=32 pad=0/0/0/0
+      FRAM 'Frame 2147235196' @0,0 390x489 auto=V gap=40 pad=0/0/0/0
+        FRAM 'Frame 2147235467' @0,0 390x78 auto=V gap=10 pad=8/8/8/8
+          FRAM 'Frame 1' @8,8 374x62 fill=#ffffff stroke=#e8eced 1 r=12 auto=H gap=40 pad=12/12/12/12
+            ROUN 'image 1' @13,24 117x14 fill=IMG
+            FRAM 'Frame 2147235160' @275,13 86x36 fill=GRAD(#333333,#1a1a1a) stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=8 auto=H gap=6 pad=6/10/6/10 fx=DROP_SHADOW,DROP_SHADOW
+              FRAM 'List' @10,6 24x24
+                VECT 'Vector' @4,8 16x0 stroke=#ffffff 1.5
+                VECT 'Vector' @4,16 16x0 stroke=#ffffff 1.5
+              TEXT 'Menu' @40,13 36x10 fill=#ffffff font=Inter Display Medium 14/22px ls=0.0%  » Menu
+        FRAM 'Frame 2147235182' @0,118 390x371 auto=V gap=40 pad=0/20/0/20
+          FRAM 'Frame 2147235181' @20,0 350x276 auto=V gap=24 pad=0/0/0/0
+            FRAM 'Frame 2147235183' @0,0 350x132 auto=V gap=16 pad=0/0/0/0
+              FRAM 'CTA-Nav-Button' @66,0 217x36 fill=#143627 stroke=#ffffff@0.24 1 r=8 auto=H gap=6 pad=6/6/6/8 fx=BACKGROUND_BLUR
+                FRAM 'Frame 2147235165' @6,6 24x24 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=4 auto=H gap=55 pad=2/2/2/2 fx=DROP_SHADOW,DROP_SHADOW
+                  FRAM 'add-line' @4,4 16x16
+                    VECT 'Vector' @3,3 9x9 fill=#ffffff
+                TEXT 'Home' @36,8 173x20 fill=#ffffff font=Inter Regular 14/1 ls=-2.0%  » Trusted by 75,000+ golfers
+              TEXT 'Film your golf swing in seconds' @0,52 350x80 fill=#ffffff font=Mona Sans SemiBold 40/1 ls=-1.0%  » Film your golf swing in seconds
+            TEXT 'Set your angle, snap on your phone, and ' @0,156 350x120 fill=#ffffff font=Inter Regular 16/24px ls=-1.0%  » Set your angle, snap on your phone, and swing. GPOD gives you stable, hands-free video on the range, indoors, and wherever you practice — without flimsy clamps or asking someone else to film.
+          FRAM 'Frame 2147235159' @20,316 350x55 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=8 auto=H gap=55 pad=20/24/20/24 fx=DROP_SHADOW,DROP_SHADOW
+            TEXT 'Shop Now' @126,20 97x15 fill=#ffffff font=Inter Variable Medium 20/22px ls=0.0%  » Shop Now
+      FRAM 'Frame 2147235199' @0,521 390x116 fill=GRAD(#ffffff@0.00,#ffffff) auto=H gap=12 pad=20/20/20/20 fx=BACKGROUND_BLUR
+        FRAM 'Frame 2147235189' @20,20 318x76 fill=#143627 r=12 auto=H gap=60 pad=12/12/12/12
+          FRAM 'Frame 2147235186' @12,12 294x52 auto=H gap=12 pad=0/0/0/0
+            FRAM 'Frame 2147235165' @0,0 52x52 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 2.436901807785034 r=10 auto=H gap=134 pad=8/8/8/8 fx=DROP_SHADOW,DROP_SHADOW
+              FRAM 'Package' @8,8 36x36
+                VECT 'Vector' @18,18 0x14 stroke=#ffffff 2.1600000858306885
+                VECT 'Vector' @5,11 27x7 stroke=#ffffff 2.1600000858306885
+                VECT 'Vector' @4,3 27x29 stroke=#ffffff 2.1600000858306885
+                VECT 'Vector' @11,7 13x15 stroke=#ffffff 2.1600000858306885
+            TEXT '14-day returns' @64,14 162x24 fill=#ffffff font=Mona Sans SemiBold 24/24px ls=-2.0%  » 14-day returns
+        FRAM 'Frame 2147235192' @350,20 318x76 fill=#143627 r=12 auto=V gap=60 pad=12/12/12/12
+          FRAM 'Frame 2147235186' @12,12 294x52 auto=H gap=12 pad=0/0/0/0
+            FRAM 'Frame 2147235166' @0,0 52x52 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 2.436901807785034 r=10 auto=H gap=134 pad=8/8/8/8 fx=DROP_SHADOW,DROP_SHADOW
+              FRAM 'SealCheck' @8,8 36x36
+                VECT 'Vector' @3,3 29x29 stroke=#ffffff 2.160128355026245
+                VECT 'Vector' @12,15 11x8 stroke=#ffffff 2.160128355026245
+            TEXT '1-year warranty' @64,14 173x24 fill=#ffffff font=Mona Sans SemiBold 24/24px ls=-2.0%  » 1-year warranty
+        FRAM 'Frame 2147235194' @680,20 318x76 fill=#143627 r=12 auto=V gap=60 pad=12/12/12/12
+          FRAM 'Frame 2147235186' @12,12 294x52 auto=H gap=12 pad=0/0/0/0
+            FRAM 'Frame 2147235166' @0,0 52x52 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 2.436901807785034 r=10 auto=H gap=134 pad=8/8/8/8 fx=DROP_SHADOW,DROP_SHADOW
+              FRAM 'Star' @8,8 36x36
+                VECT 'Vector' @3,3 29x28 stroke=#ffffff 2.25
+            TEXT '5.0 rating •  +561 Reviews' @64,2 230x48 fill=#ffffff font=Mona Sans SemiBold 24/24px ls=-2.0%  » 5.0 rating •  +561 Reviews
+        FRAM 'Frame 2147235193' @1010,20 318x76 fill=#143627 r=12 auto=V gap=60 pad=12/12/12/12
+          FRAM 'Frame 2147235186' @12,12 294x52 auto=H gap=12 pad=0/0/0/0
+            FRAM 'Frame 2147235167' @0,0 52x52 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 2.436901807785034 r=10 auto=H gap=134 pad=8/8/8/8 fx=DROP_SHADOW,DROP_SHADOW
+              FRAM 'Magnet' @8,8 36x36
+                VECT 'Vector' @3,4 28x28 stroke=#ffffff 2.25
+                VECT 'Vector' @18,23 6x6 stroke=#ffffff 2.25
+                VECT 'Vector' @8,12 6x6 stroke=#ffffff 2.25
+            TEXT 'Works with MagSafe' @64,14 230x24 fill=#ffffff font=Mona Sans SemiBold 24/24px ls=-2.0%  » Works with MagSafe
+      FRAM 'CTA-Nav-Button' @444,-1130 260x28 fill=GRAD(#ffffff,#ffffff@0.00) r=124 auto=H gap=8 pad=4/12/4/12 fx=GLASS
+        ROUN 'Rectangle 240649202' @12,10 8x8 fill=#ffffff stroke=#ffffff@0.12 4 r=124
+        TEXT 'Home' @28,4 220x20 fill=#ffffff font=Inter Display Regular 14/1 ls=1.0%  » Early-Stage Digital Health Investors
+  FRAM 'Homepage' @0,637 390x1092 fill=#1d1e24 auto=V gap=124 pad=48/20/48/20
+    FRAM 'Frame 2147235420' @20,48 350x996 auto=V gap=24 pad=0/0/0/0
+      FRAM 'Frame 2147235201' @0,0 350x996 fill=#26272d stroke=#ffffff@0.12 1 r=12 auto=V gap=20 pad=20/20/20/20
+        FRAM 'Frame 2147235418' @21,21 308x308 fill=GRAD(#dbe9bd,#b6ca8a) r=8 auto=V gap=10 pad=0/0/0/0
+          ROUN 'image 51' @0,0 308x308 fill=IMG
+        FRAM 'Frame 2147235206' @21,349 308x626 auto=V gap=32 pad=0/0/0/0
+          FRAM 'Frame 2147235468' @0,0 308x532 auto=V gap=16 pad=0/0/0/0
+            FRAM 'Frame 2147235202' @0,0 308x380 auto=V gap=16 pad=0/0/0/0
+              FRAM 'Frame 2147235201' @0,0 308x76 auto=V gap=12 pad=0/0/0/0
+                FRAM 'Frame 2147235419' @0,0 144x24 auto=H gap=12 pad=0/0/0/0
+                  FRAM 'Frame 2147235347' @0,0 144x24 auto=H gap=6 pad=0/0/0/0
+                    FRAM 'star-fill' @0,0 24x24
+                      VECT 'Vector' @1,1 23x22 fill=#8ac664
+                    FRAM 'star-fill' @30,0 24x24
+                      VECT 'Vector' @1,1 23x22 fill=#8ac664
+                    FRAM 'star-fill' @60,0 24x24
+                      VECT 'Vector' @1,1 23x22 fill=#8ac664
+                    FRAM 'star-fill' @90,0 24x24
+                      VECT 'Vector' @1,1 23x22 fill=#8ac664
+                    FRAM 'star-fill' @120,0 24x24
+                      VECT 'Vector' @1,1 23x22 fill=#8ac664
+                TEXT 'GPOD : GPOD X' @0,36 308x40 fill=#ffffff font=Mona Sans SemiBold 32/40px ls=-1.0%  » GPOD : GPOD X
+              TEXT 'GPOD X: The Collapsible, Portable Monopo' @0,92 308x288 fill=#ffffff@0.80 font=Inter Regular 16/24px ls=-1.0%  » GPOD X: The Collapsible, Portable Monopod for On-the-Go Content ⏎  ⏎ Introducing the GPOD X, the revolutionary portable monopod designed for creators - athletes and spectators - on the move. This compact and lightweight monopod features a 3-piece carbon fiber body that extends from 20 inches to 51 i
+            FRAM 'Frame 2147235200' @0,396 308x136 auto=V gap=8 pad=0/0/0/0
+              FRAM 'CTA-Nav-Button' @0,0 308x28 fill=#ffffff@0.08 stroke=#ffffff@0.12 0.5 r=8 auto=H gap=6 pad=4/4/4/8 fx=DROP_SHADOW,DROP_SHADOW
+                FRAM 'Frame 2147235166' @4,4 20x20 fill=#ffffff@0.24 stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=4 auto=H gap=55 pad=2/2/2/2 fx=DROP_SHADOW,DROP_SHADOW
+                  FRAM 'add-line' @2,2 16x16
+                    VECT 'Vector' @2,2 12x12 fill=#ffffff
+                TEXT 'Home' @30,4 256x20 fill=#ffffff font=Inter Regular 14/1 ls=-2.0%  » GPUCK with MagSafe® Magnetic Mount
+              FRAM 'CTA-Nav-Button' @0,36 308x28 fill=#ffffff@0.08 stroke=#ffffff@0.12 0.5 r=8 auto=H gap=6 pad=4/4/4/8 fx=DROP_SHADOW,DROP_SHADOW
+                FRAM 'Frame 2147235165' @4,4 20x20 fill=#ffffff@0.24 stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=4 auto=H gap=55 pad=2/2/2/2 fx=DROP_SHADOW,DROP_SHADOW
+                  FRAM 'add-line' @2,2 16x16
+                    VECT 'Vector' @2,2 12x12 fill=#ffffff
+                TEXT 'Home' @30,4 138x20 fill=#ffffff font=Inter Regular 14/1 ls=-2.0%  » Carbon Fiber GPOD X
+              FRAM 'CTA-Nav-Button' @0,72 308x28 fill=#ffffff@0.08 stroke=#ffffff@0.12 0.5 r=8 auto=H gap=6 pad=4/4/4/8 fx=DROP_SHADOW,DROP_SHADOW
+                FRAM 'Frame 2147235165' @4,4 20x20 fill=#ffffff@0.24 stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=4 auto=H gap=55 pad=2/2/2/2 fx=DROP_SHADOW,DROP_SHADOW
+                  FRAM 'add-line' @2,2 16x16
+                    VECT 'Vector' @2,2 12x12 fill=#ffffff
+                TEXT 'Home' @30,4 132x20 fill=#ffffff font=Inter Regular 14/1 ls=-2.0%  » Adjustable Ball Head
+              FRAM 'CTA-Nav-Button' @0,108 308x28 fill=#ffffff@0.08 stroke=#ffffff@0.12 0.5 r=8 auto=H gap=6 pad=4/4/4/8 fx=DROP_SHADOW,DROP_SHADOW
+                FRAM 'Frame 2147235166' @4,4 20x20 fill=#ffffff@0.24 stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=4 auto=H gap=55 pad=2/2/2/2 fx=DROP_SHADOW,DROP_SHADOW
+                  FRAM 'add-line' @2,2 16x16
+                    VECT 'Vector' @2,2 12x12 fill=#ffffff
+                TEXT 'Home' @30,4 205x20 fill=#ffffff font=Inter Regular 14/1 ls=-2.0%  » Metal Plates with 3M® Adhesive
+          FRAM 'Frame 2147235160' @0,564 308x62 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=8 auto=H gap=55 pad=20/24/20/24 fx=DROP_SHADOW,DROP_SHADOW
+            TEXT 'Buy Pocket G for $129.99' @38,20 231x22 fill=#ffffff font=Inter Variable Medium 20/22px ls=-3.0%  » Buy Pocket G for $129.99
+  FRAM 'Homepage' @0,1729 390x923 fill=#fafafa auto=V gap=40 pad=40/20/40/20
+    FRAM 'Frame 2147235201' @20,40 350x145 auto=V gap=24 pad=0/0/0/0
+      FRAM 'Frame 2147235423' @0,0 350x66 auto=V gap=12 pad=0/0/0/0
+        FRAM 'Frame 2147235207' @0,0 88x22 auto=H gap=12 pad=0/0/0/0
+          ROUN 'Rectangle 240649204' @0,7 20x8 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#8ac664@0.00,#8ac664) 1 r=4 fx=DROP_SHADOW,DROP_SHADOW
+          TEXT 'Home' @32,0 56x22 fill=#0c0e0a font=Inter Regular 16/1 ls=-2.0%  » Popular
+        TEXT 'Most Popular Products' @0,34 350x32 fill=#0c0e0a font=Mona Sans SemiBold 32/1 ls=-1.0%  » Most Popular Products
+      FRAM 'Frame 2147235424' @0,90 350x55 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=8 auto=H gap=55 pad=20/24/20/24 fx=DROP_SHADOW,DROP_SHADOW
+        TEXT 'Shop Now' @126,20 97x15 fill=#ffffff font=Inter Variable Medium 20/22px ls=0.0%  » Shop Now
+    FRAM 'Frame 2147235408' @20,225 350x658 stroke=#000000@0.04 1 auto=V gap=32 pad=0/0/0/0
+      FRAM 'Frame 2147235407' @0,1 350x581 auto=H gap=12 pad=0/0/0/0
+        FRAM 'play-large-fill' @0,0 338x581 fill=#ffffff stroke=#000000@0.04 1 r=12 auto=V gap=8 pad=8/8/8/8 fx=BACKGROUND_BLUR
+          ROUN 'image 10' @9,9 320x399 fill=IMG r=8
+          FRAM 'Frame 2147235404' @9,416 320x156 auto=V gap=24 pad=12/12/12/12
+            FRAM 'Frame 2147235458' @12,12 296x84 auto=V gap=8 pad=0/0/0/0
+              TEXT 'GPOD' @0,0 73x32 fill=#0c0e0a font=Mona Sans SemiBold 24/32px ls=-1.0%  » GPOD
+              TEXT 'Simple set-height filming on the course ' @0,40 296x44 fill=#0c0e0a@0.80 font=Inter Regular 16/1 ls=-1.0%  » Simple set-height filming on the course and range
+            TEXT '$109.99' @12,120 76x24 fill=#0c0e0a font=Inter Regular 20/24px ls=-1.0%  » $109.99
+        FRAM 'play-large-fill' @350,0 338x581 fill=#ffffff stroke=#000000@0.04 1 r=12 auto=V gap=8 pad=8/8/8/8 fx=BACKGROUND_BLUR
+          ROUN 'image 10' @9,9 320x399 fill=IMG r=8
+          FRAM 'Frame 2147235404' @9,416 320x156 auto=V gap=24 pad=12/12/12/12
+            FRAM 'Frame 2147235458' @12,12 296x84 auto=V gap=8 pad=0/0/0/0
+              TEXT 'GPOD' @0,0 73x32 fill=#0c0e0a font=Mona Sans SemiBold 24/32px ls=-1.0%  » GPOD
+              TEXT 'Simple set-height filming on the course ' @0,40 296x44 fill=#0c0e0a@0.80 font=Inter Regular 16/1 ls=-1.0%  » Simple set-height filming on the course and range
+            TEXT '$109.99' @12,120 76x24 fill=#0c0e0a font=Inter Regular 20/24px ls=-1.0%  » $109.99
+        FRAM 'play-large-fill' @700,0 338x581 fill=#ffffff stroke=#000000@0.04 1 r=12 auto=V gap=8 pad=8/8/8/8 fx=BACKGROUND_BLUR
+          ROUN 'image 10' @9,9 320x399 fill=IMG r=8
+          FRAM 'Frame 2147235404' @9,416 320x156 auto=V gap=24 pad=12/12/12/12
+            FRAM 'Frame 2147235458' @12,12 296x84 auto=V gap=8 pad=0/0/0/0
+              TEXT 'GPOD' @0,0 73x32 fill=#0c0e0a font=Mona Sans SemiBold 24/32px ls=-1.0%  » GPOD
+              TEXT 'Simple set-height filming on the course ' @0,40 296x44 fill=#0c0e0a@0.80 font=Inter Regular 16/1 ls=-1.0%  » Simple set-height filming on the course and range
+            TEXT '$109.99' @12,120 76x24 fill=#0c0e0a font=Inter Regular 20/24px ls=-1.0%  » $109.99
+        FRAM 'play-large-fill' @1050,0 338x581 fill=#ffffff stroke=#000000@0.04 1 r=12 auto=V gap=8 pad=8/8/8/8 fx=BACKGROUND_BLUR
+          ROUN 'image 10' @9,9 320x399 fill=IMG r=8
+          FRAM 'Frame 2147235404' @9,416 320x156 auto=V gap=24 pad=12/12/12/12
+            FRAM 'Frame 2147235458' @12,12 296x84 auto=V gap=8 pad=0/0/0/0
+              TEXT 'GPOD' @0,0 73x32 fill=#0c0e0a font=Mona Sans SemiBold 24/32px ls=-1.0%  » GPOD
+              TEXT 'Simple set-height filming on the course ' @0,40 296x44 fill=#0c0e0a@0.80 font=Inter Regular 16/1 ls=-1.0%  » Simple set-height filming on the course and range
+            TEXT '$109.99' @12,120 76x24 fill=#0c0e0a font=Inter Regular 20/24px ls=-1.0%  » $109.99
+      FRAM 'Frame 2147235237' @0,614 350x44 auto=H gap=48 pad=0/0/0/0
+        FRAM 'Frame 2147235236' @0,19 198x6 fill=#ffffff r=99 auto=V gap=10 pad=0/0/0/0
+          ROUN 'Rectangle 4868' @0,0 96x6 fill=#8ac664 r=99
+        FRAM 'Arrows' @246,0 104x44 auto=H gap=16 pad=0/0/0/0
+          FRAM 'Button' @0,0 44x44 fill=#ffffff stroke=#151515@0.00 1 r=8 auto=H gap=8 pad=12/12/12/12 fx=BACKGROUND_BLUR
+            INST 'Interface' @12,12 20x20
+          FRAM 'Button' @60,0 44x44 fill=#ffffff stroke=#ced5dc 1 r=8 auto=H gap=8 pad=12/12/12/12
+            INST 'Interface' @12,12 20x20
+  FRAM 'Homepage' @0,2652 390x1619 fill=GRAD(#fafafa,#ffffff) auto=V gap=40 pad=40/20/40/20
+    FRAM 'Frame 2147235201' @20,40 350x66 auto=V gap=12 pad=0/0/0/0
+      FRAM 'Frame 2147235207' @88,0 175x22 auto=H gap=12 pad=0/0/0/0
+        ROUN 'Rectangle 240649204' @0,7 20x8 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#8ac664@0.00,#8ac664) 1 r=4 fx=DROP_SHADOW,DROP_SHADOW
+        TEXT 'Home' @32,0 143x22 fill=#0c0e0a font=Inter Regular 16/1 ls=-2.0%  » Why Golfers Switch
+      TEXT 'The Breakdown' @0,34 350x32 fill=#0c0e0a font=Mona Sans SemiBold 32/1 ls=-1.0%  » The Breakdown
+    FRAM 'Frame 2147235406' @20,146 350x1433 auto=V gap=40 pad=0/0/0/0
+      FRAM 'Frame 2147235209' @0,0 350x1338 auto=V gap=12 pad=0/0/0/0
+        FRAM 'Frame 2147235203' @0,0 350x454 fill=#ffffff stroke=#000000@0.04 1 r=12 auto=V gap=10 pad=20/20/20/20
+          FRAM 'Frame 2147235185' @21,21 308x240 fill=IMG r=8
+          FRAM 'Frame 2147235210' @21,271 308x162 auto=V gap=10 pad=12/12/12/12
+            TEXT 'Premium materials' @12,12 284x32 fill=#0c0e0a font=Mona Sans Medium 24/32px ls=-1.0%  » Premium materials
+            TEXT 'Lightweight carbon fiber and aluminum al' @12,54 284x96 fill=#0c0e0a@0.60 font=Inter Regular 16/24px ls=-1.0%  » Lightweight carbon fiber and aluminum alloy, strong enough to trust in wind, light enough to forget it's in your bag.
+        FRAM 'Frame 2147235204' @0,466 350x430 fill=#ffffff stroke=#000000@0.04 1 r=12 auto=V gap=10 pad=20/20/20/20
+          FRAM 'Frame 2147235185' @21,21 308x240 fill=IMG r=8
+          FRAM 'Frame 2147235210' @21,271 308x138 auto=V gap=10 pad=12/12/12/12
+            TEXT '360° rotating head' @12,12 284x32 fill=#0c0e0a font=Mona Sans Medium 24/32px ls=-1.0%  » 360° rotating head
+            TEXT 'Adjust to any angle, including straight ' @12,54 284x72 fill=#0c0e0a@0.60 font=Inter Regular 16/24px ls=-1.0%  » Adjust to any angle, including straight overhead for putting — no fumbling with a phone clamp mid-round.
+        FRAM 'Frame 2147235205' @0,908 350x430 fill=#ffffff stroke=#000000@0.04 1 r=12 auto=V gap=10 pad=20/20/20/20
+          FRAM 'Frame 2147235185' @21,21 308x240 fill=IMG r=8
+          FRAM 'Frame 2147235210' @21,271 308x138 auto=V gap=10 pad=12/12/12/12
+            TEXT 'Stick it and swing it' @12,12 284x32 fill=#0c0e0a font=Mona Sans Medium 24/32px ls=-1.0%  » Stick it and swing it
+            TEXT 'Push it into the turf, snap your phone o' @12,54 284x72 fill=#0c0e0a@0.60 font=Inter Regular 16/24px ls=-1.0%  » Push it into the turf, snap your phone on, hit record. No apps, no setup, no waiting on a buddy to film you.
+      FRAM 'Frame 2147235159' @102,1378 145x55 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=8 auto=H gap=55 pad=20/24/20/24 fx=DROP_SHADOW,DROP_SHADOW
+        TEXT 'Shop Now' @24,20 97x15 fill=#ffffff font=Inter Variable Medium 20/22px ls=0.0%  » Shop Now
+  FRAM 'Content (Desktop)' @0,4271 390x665 fill=#ffffff auto=V gap=48 pad=40/20/40/20
+    FRAM 'Group 2' @20,138 350x90
+      FRAM 'img' @144,0 63x79 fill=#9ecaf1/IMG/IMG/IMG r=1 auto=V gap=11 pad=8/8/8/8
+      FRAM 'img' @287,7 63x79 fill=#9ecaf1/IMG/IMG r=1 auto=V gap=11 pad=8/8/8/8
+      FRAM 'img' @0,12 63x79 fill=#9ecaf1/IMG r=1 auto=V gap=11 pad=8/8/8/8
+      FRAM 'img' @215,2 63x63 fill=#9ecaf1/IMG/IMG/IMG r=1 auto=V gap=11 pad=8/8/8/8
+      FRAM 'img' @72,4 63x63 fill=#9ecaf1/IMG/IMG r=1 auto=V gap=11 pad=8/8/8/8
+    ROUN 'image 9' @111,40 167x20 fill=IMG
+    FRAM 'Content Wrapper' @20,206 350x419 auto=V gap=32 pad=0/0/0/0
+      FRAM 'Frame 2147235449' @0,0 350x332 auto=V gap=24 pad=0/0/0/0
+        TEXT 'Built by a golfer for golfers' @0,0 350x80 fill=#0c0e0a font=Mona Sans SemiBold 40/1 ls=-1.0% TITLE » Built by a golfer for golfers
+        FRAM 'Frame 2147235451' @0,104 350x228 auto=V gap=12 pad=0/0/0/0
+          TEXT 'As a professional golfer, I, Paul Park, ' @0,0 350x96 fill=#0c0e0a font=Inter Regular 16/24px ls=-1.0%  » As a professional golfer, I, Paul Park, understand the relentless pursuit of improvement that drives every player, from weekend warriors to seasoned pros. 
+          TEXT 'Like you, I've spent countless hours see' @0,108 350x120 fill=#0c0e0a font=Inter Regular 16/24px ls=-1.0%  » Like you, I've spent countless hours seeking that perfect swing, relying on lessons and video analysis. That's why I created GPOD Golf – a game-changing solution designed to simplify and enhance your swing analysis.
+      FRAM 'Frame 2147235451' @0,364 350x55 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=8 auto=H gap=55 pad=20/24/20/24 fx=DROP_SHADOW,DROP_SHADOW
+        TEXT 'About Us' @130,20 89x15 fill=#ffffff font=Inter Medium 20/22px ls=0.0%  » About Us
+  FRAM 'Tour' @0,4936 390x801 fill=#ffffff auto=V gap=40 pad=40/20/40/20
+    FRAM 'Frame 2147235201' @20,40 350x66 auto=V gap=32 pad=0/0/0/0
+      FRAM 'Frame 2147235423' @0,0 350x66 auto=V gap=12 pad=0/0/0/0
+        FRAM 'Frame 2147235207' @0,0 90x22 auto=H gap=12 pad=0/0/0/0
+          ROUN 'Rectangle 240649204' @0,7 20x8 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#8ac664@0.00,#8ac664) 1 r=4 fx=DROP_SHADOW,DROP_SHADOW
+          TEXT 'Home' @32,0 58x22 fill=#0c0e0a font=Inter Regular 16/1 ls=-2.0%  » On Tour
+        TEXT 'In the Bags of the Best' @0,34 350x32 fill=#0c0e0a font=Mona Sans SemiBold 32/1 ls=-1.0%  » In the Bags of the Best
+    FRAM 'Frame 2147235405' @20,146 350x366 auto=H gap=12 pad=0/0/0/0
+      FRAM 'play-large-fill' @0,0 311x366 fill=#143627 stroke=#ffffff@0.12 1 r=12 auto=V gap=8 pad=8/8/8/8 fx=BACKGROUND_BLUR
+        ROUN 'image 10' @9,9 293x258 fill=IMG r=8
+        FRAM 'Frame 2147235404' @9,275 293x82 auto=V gap=4 pad=12/12/12/12
+          TEXT 'Bryson DeChambeau' @12,12 269x32 fill=#ffffff font=Mona Sans SemiBold 24/32px ls=-1.0%  » Bryson DeChambeau
+          TEXT 'Professional Golfer' @12,48 269x22 fill=#ffffff@0.80 font=Inter Regular 16/1 ls=-2.0%  » Professional Golfer
+      FRAM 'play-large-fill' @323,0 311x366 fill=#143627 stroke=#ffffff@0.12 1 r=12 auto=V gap=8 pad=8/8/8/8 fx=BACKGROUND_BLUR
+        ROUN 'image 10' @9,9 293x258 fill=IMG r=8
+        FRAM 'Frame 2147235404' @9,275 293x82 auto=V gap=4 pad=12/12/12/12
+          TEXT 'Xander Schauffele' @12,12 269x32 fill=#ffffff font=Mona Sans SemiBold 24/32px ls=-1.0%  » Xander Schauffele
+          TEXT 'Professional Golfer' @12,48 269x22 fill=#ffffff@0.80 font=Inter Regular 16/1 ls=-2.0%  » Professional Golfer
+      FRAM 'play-large-fill' @646,0 311x366 fill=#143627 stroke=#ffffff@0.12 1 r=12 auto=V gap=8 pad=8/8/8/8 fx=BACKGROUND_BLUR
+        ROUN 'image 10' @9,9 293x258 fill=IMG r=8
+        FRAM 'Frame 2147235404' @9,275 293x82 auto=V gap=4 pad=12/12/12/12
+          TEXT 'Lydia Ko' @12,12 269x32 fill=#ffffff font=Mona Sans SemiBold 24/32px ls=-1.0%  » Lydia Ko
+          TEXT 'Professional Golfer' @12,48 269x22 fill=#ffffff@0.80 font=Inter Regular 16/1 ls=-2.0%  » Professional Golfer
+      FRAM 'play-large-fill' @969,0 311x366 fill=#143627 stroke=#ffffff@0.12 1 r=12 auto=V gap=8 pad=8/8/8/8 fx=BACKGROUND_BLUR
+        ROUN 'image 10' @9,9 293x258 fill=IMG r=8
+        FRAM 'Frame 2147235404' @9,275 293x82 auto=V gap=4 pad=12/12/12/12
+          TEXT 'Cameron Young' @12,12 269x32 fill=#ffffff font=Mona Sans SemiBold 24/32px ls=-1.0%  » Cameron Young
+          TEXT 'Professional Golfer' @12,48 269x22 fill=#ffffff@0.80 font=Inter Regular 16/1 ls=-2.0%  » Professional Golfer
+      FRAM 'play-large-fill' @1292,0 311x366 fill=#143627 stroke=#ffffff@0.12 1 r=12 auto=V gap=8 pad=8/8/8/8 fx=BACKGROUND_BLUR
+        ROUN 'image 10' @9,9 293x258 fill=IMG r=8
+        FRAM 'Frame 2147235404' @9,275 293x82 auto=V gap=4 pad=12/12/12/12
+          TEXT 'Billy Horschel' @12,12 269x32 fill=#ffffff font=Mona Sans SemiBold 24/32px ls=-1.0%  » Billy Horschel
+          TEXT 'Professional Golfer' @12,48 269x22 fill=#ffffff@0.80 font=Inter Regular 16/1 ls=-2.0%  » Professional Golfer
+      FRAM 'play-large-fill' @1615,0 311x366 fill=#143627 stroke=#ffffff@0.12 1 r=12 auto=V gap=8 pad=8/8/8/8 fx=BACKGROUND_BLUR
+        ROUN 'image 10' @9,9 293x258 fill=IMG
+        FRAM 'Frame 2147235404' @9,275 293x82 auto=V gap=4 pad=12/12/12/12
+          TEXT 'Amy Yang' @12,12 269x32 fill=#ffffff font=Mona Sans SemiBold 24/32px ls=-1.0%  » Amy Yang
+          TEXT 'Professional Golfer' @12,48 269x22 fill=#ffffff@0.80 font=Inter Regular 16/1 ls=-2.0%  » Professional Golfer
+      FRAM 'play-large-fill' @1938,0 311x366 fill=#143627 stroke=#ffffff@0.12 1 r=12 auto=V gap=8 pad=8/8/8/8 fx=BACKGROUND_BLUR
+        ROUN 'image 10' @9,9 293x258 fill=IMG r=8
+        FRAM 'Frame 2147235404' @9,275 293x82 auto=V gap=4 pad=12/12/12/12
+          TEXT 'Akshay Bhatia' @12,12 269x32 fill=#ffffff font=Mona Sans SemiBold 24/32px ls=-1.0%  » Akshay Bhatia
+          TEXT 'Professional Golfer' @12,48 269x22 fill=#ffffff@0.80 font=Inter Regular 16/1 ls=-2.0%  » Professional Golfer
+      FRAM 'play-large-fill' @2261,0 311x366 fill=#143627 stroke=#ffffff@0.12 1 r=12 auto=V gap=8 pad=8/8/8/8 fx=BACKGROUND_BLUR
+        ROUN 'image 10' @9,9 293x258 fill=IMG r=8
+        FRAM 'Frame 2147235404' @9,275 293x82 auto=V gap=4 pad=12/12/12/12
+          TEXT 'Yuka Saso' @12,12 269x32 fill=#ffffff font=Mona Sans SemiBold 24/32px ls=-1.0%  » Yuka Saso
+          TEXT 'Professional Golfer' @12,48 269x22 fill=#ffffff@0.80 font=Inter Regular 16/1 ls=-2.0%  » Professional Golfer
+    FRAM 'Frame 2147235404' @20,552 350x208 auto=V gap=24 pad=0/0/0/0
+      FRAM 'Frame 2147235201' @0,0 350x130 fill=#143627 stroke=#8ac664@0.47 0.590117335319519 r=14 auto=V gap=14 pad=24/19/24/19 fx=DROP_SHADOW
+        FRAM 'Frame 2147235406' @95,24 160x82 auto=V gap=14 pad=0/0/0/0
+          FRAM 'CTA-Nav-Button' @0,0 160x17 fill=#ffffff@0.12 stroke=#ffffff@0.04 0.2950586676597595 r=5 auto=H gap=4 pad=2/2/2/5 fx=DROP_SHADOW,DROP_SHADOW
+            FRAM 'Frame 2147235347' @2,4 57x9 auto=H gap=2 pad=0/0/0/0
+              FRAM 'star-fill' @0,0 9x9
+                VECT 'Vector' @0,0 9x9 fill=#8ac664
+              FRAM 'star-fill' @12,0 9x9
+                VECT 'Vector' @0,0 9x9 fill=#8ac664
+              FRAM 'star-fill' @24,0 9x9
+                VECT 'Vector' @0,0 9x9 fill=#8ac664
+              FRAM 'star-fill' @35,0 9x9
+                VECT 'Vector' @0,0 9x9 fill=#8ac664
+              FRAM 'star-fill' @47,0 9x9
+                VECT 'Vector' @0,0 9x9 fill=#8ac664
+            TEXT 'Home' @63,2 93x12 fill=#ffffff font=Inter Regular 8/1 ls=-2.0%  » Rated by Verified Buyers
+          FRAM 'Frame 2147235349' @0,31 160x51 auto=V gap=7 pad=0/0/0/0
+            TEXT '75,000+' @0,0 160x32 fill=#ffffff font=Mona Sans SemiBold 32/1 ls=-1.0%  » 75,000+
+            TEXT 'golfers filming with GPOD' @0,39 160x12 fill=#ffffff font=Inter Regular 12/1 ls=-1.0%  » golfers filming with GPOD
+      FRAM 'Frame 2147235469' @-337,154 1024x54 auto=H gap=0 pad=0/0/0/0
+        FRAM 'Frame 2147235424' @0,0 516x54 auto=H gap=64 pad=0/24/0/24
+          ROUN 'image 4' @24,3 35x48 fill=IMG
+          ROUN 'image 8' @123,11 80x32 fill=IMG
+          ROUN 'image 5' @267,0 54x54 fill=IMG
+          ROUN 'image 7' @385,11 107x32 fill=IMG
+        FRAM 'Frame 2147235425' @516,7 507x40 auto=H gap=64 pad=0/24/0/24
+          ROUN 'image 2' @24,0 137x40 fill=IMG
+          ROUN 'image 7' @225,5 91x30 fill=IMG
+          ROUN 'image 3' @380,8 128x24 fill=IMG
+  FRAM 'Homepage' @0,5737 390x1954 fill=#143627 auto=V gap=60 pad=40/20/40/20
+    FRAM 'Frame 2147235201' @20,40 350x130 auto=V gap=12 pad=0/0/0/0
+      FRAM 'Frame 2147235376' @0,0 350x98 auto=V gap=12 pad=0/0/0/0
+        FRAM 'Frame 2147235207' @0,0 278x22 auto=H gap=12 pad=0/0/0/0
+          ROUN 'Rectangle 240649204' @0,7 20x8 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#8ac664@0.00,#8ac664) 1 r=4 fx=DROP_SHADOW,DROP_SHADOW
+          TEXT 'Home' @32,0 246x22 fill=#ffffff font=Inter Regular 16/1 ls=-2.0%  » From the Bag, Not the Boardroom
+        TEXT 'What Golfers are Saying' @0,34 350x64 fill=#ffffff font=Mona Sans SemiBold 32/1 ls=-1.0%  » What Golfers are Saying
+      FRAM 'CTA-Nav-Button' @0,110 280x20 r=8 auto=H gap=6 pad=0/0/0/0
+        FRAM 'Frame 2147235347' @0,2 96x16 auto=H gap=4 pad=0/0/0/0
+          FRAM 'star-fill' @0,0 16x16
+            VECT 'Vector' @0,0 15x14 fill=#8ac664
+          FRAM 'star-fill' @20,0 16x16
+            VECT 'Vector' @0,0 15x14 fill=#8ac664
+          FRAM 'star-fill' @40,0 16x16
+            VECT 'Vector' @0,0 15x14 fill=#8ac664
+          FRAM 'star-fill' @60,0 16x16
+            VECT 'Vector' @0,0 15x14 fill=#8ac664
+          FRAM 'star-fill' @80,0 16x16
+            VECT 'Vector' @0,0 15x14 fill=#8ac664
+        TEXT 'Home' @102,0 178x20 fill=#ffffff font=Inter Regular 14/1 ls=-2.0%  » 4.9 average · 600+ reviews
+    FRAM 'Frame 2147235395' @20,230 350x1684 stroke=#ffffff@0.12 1 auto=V gap=60 pad=0/0/40/0
+      FRAM 'Frame 2147235402' @0,1 350x1534 auto=V gap=12 pad=0/0/0/0
+        FRAM 'Frame 2147235392' @0,0 350x1534 auto=V gap=12 pad=0/0/0/0
+          FRAM 'Frame 2147235397' @0,0 350x672 auto=V gap=12 pad=0/0/0/0
+            FRAM 'Frame 2147235391' @0,0 350x252 fill=IMG r=12 auto=H gap=10 pad=12/12/12/12
+              FRAM 'Frame 2147235165' @145,96 60x60 fill=#ffffff@0.32 stroke=#ffffff@0.12 1.4167758226394653 r=12 auto=H gap=17 pad=6/6/6/6 fx=BACKGROUND_BLUR
+                FRAM 'play-large-fill' @12,12 36x36
+                  VECT 'Vector' @9,4 23x28 fill=#ffffff
+            FRAM 'Frame 2147235380' @0,264 350x408 auto=V gap=0 pad=0/0/0/0
+              FRAM 'Frame 2147235370' @0,0 350x339 fill=#ffffff@0.04 stroke=#ffffff@0.12 1 r=12 auto=V gap=40 pad=20/20/20/20 fx=BACKGROUND_BLUR
+                FRAM 'Frame 2147235379' @21,21 308x235 auto=V gap=20 pad=0/0/0/0
+                  FRAM 'Frame 2147235381' @0,0 308x17 auto=H gap=12 pad=0/0/0/0
+                    FRAM 'Frame 2147235347' @0,1 96x16 auto=H gap=4 pad=0/0/0/0
+                      FRAM 'star-fill' @0,0 16x16
+                        VECT 'Vector' @0,0 15x14 fill=#8ac664
+                      FRAM 'star-fill' @20,0 16x16
+                        VECT 'Vector' @0,0 15x14 fill=#8ac664
+                      FRAM 'star-fill' @40,0 16x16
+                        VECT 'Vector' @0,0 15x14 fill=#8ac664
+                      FRAM 'star-fill' @60,0 16x16
+                        VECT 'Vector' @0,0 15x14 fill=#8ac664
+                      FRAM 'star-fill' @80,0 16x16
+                        VECT 'Vector' @0,0 15x14 fill=#8ac664
+                    TEXT 'Home' @226,0 82x17 fill=#ffffff@0.60 font=Inter Medium 12/1 ls=-2.0% UPPER » 1 Month Ago
+                  TEXT 'Home' @0,37 308x198 fill=#ffffff font=Inter Regular 16/1 ls=-2.0%  » Exactly what I was hoping for. It's lightweight, easy to use and doesn't slow down my pace of play. I use a GoPro 13 with a magnetic attachment for easy on, easy off, but I mainly just leave it on and in my bag between shots. As you can see from the video below, it was a windy day, but the GPOD with
+                FRAM 'Frame 2147235380' @21,296 308x22 auto=H gap=0 pad=0/0/0/0
+                  TEXT 'Home' @0,0 76x22 fill=#ffffff font=Inter Medium 16/1 ls=-2.0%  » Rodney G.
+                  TEXT 'Home' @206,1 102x20 fill=#ffffff@0.50 font=Inter Regular 14/1 ls=-2.0%  » San Antonio, TX
+              FRAM 'Frame 2147235376' @0,339 350x69 fill=#ffffff@0.12 stroke=#ffffff@0.12 1 r=12 auto=V gap=10 pad=12/20/12/20 fx=BACKGROUND_BLUR
+                FRAM 'Frame 2147235377' @21,12 308x44 auto=H gap=12 pad=0/0/0/0
+                  ROUN 'Rectangle 240649216' @0,2 40x40 fill=IMG r=8
+                  FRAM 'Frame 2147235378' @52,0 256x44 auto=H gap=2 pad=0/0/0/0
+                    FRAM 'Frame 2147235387' @0,0 232x44 auto=V gap=2 pad=0/0/0/0
+                      TEXT 'Home' @0,0 232x22 fill=#ffffff font=Inter Medium 16/1 ls=-2.0%  » View Product
+                      TEXT 'Home' @0,24 232x20 fill=#ffffff@0.50 font=Inter Regular 14/1 ls=-2.0%  » GPOD + Base Bundle
+                    FRAM 'Frame 2147235165' @256,0 24x24 fill=#ffffff@0.32 stroke=#ffffff@0.12 0.5667102932929993 r=5 auto=H gap=7 pad=2/2/2/2 fx=BACKGROUND_BLUR
+                      FRAM 'arrow-up-s-line' @3,3 18x18
+                        VECT 'Vector' @4,6 10x6 fill=#ffffff
+          FRAM 'Frame 2147235401' @0,684 350x232 auto=V gap=0 pad=0/0/0/0
+            FRAM 'Frame 2147235370' @0,0 350x163 fill=#ffffff@0.04 stroke=#ffffff@0.12 1 r=12 auto=V gap=40 pad=20/20/20/20 fx=BACKGROUND_BLUR
+              FRAM 'Frame 2147235379' @21,21 308x59 auto=V gap=20 pad=0/0/0/0
+                FRAM 'Frame 2147235381' @0,0 308x17 auto=H gap=12 pad=0/0/0/0
+                  FRAM 'Frame 2147235347' @0,1 96x16 auto=H gap=4 pad=0/0/0/0
+                    FRAM 'star-fill' @0,0 16x16
+                      VECT 'Vector' @0,0 15x14 fill=#8ac664
+                    FRAM 'star-fill' @20,0 16x16
+                      VECT 'Vector' @0,0 15x14 fill=#8ac664
+                    FRAM 'star-fill' @40,0 16x16
+                      VECT 'Vector' @0,0 15x14 fill=#8ac664
+                    FRAM 'star-fill' @60,0 16x16
+                      VECT 'Vector' @0,0 15x14 fill=#8ac664
+                    FRAM 'star-fill' @80,0 16x16
+                      VECT 'Vector' @0,0 15x14 fill=#8ac664
+                  TEXT 'Home' @216,0 92x17 fill=#ffffff@0.60 font=Inter Medium 12/1 ls=-2.0% UPPER » 4 MonthS Ago
+                TEXT 'Home' @0,37 308x22 fill=#ffffff font=Inter Regular 16/1 ls=-2.0%  » Definitely recommended!
+              FRAM 'Frame 2147235377' @21,120 308x22 auto=H gap=0 pad=0/0/0/0
+                TEXT 'Home' @0,0 64x22 fill=#ffffff font=Inter Medium 16/1 ls=-2.0%  » Kelton L.
+                TEXT 'Home' @193,1 115x20 fill=#ffffff@0.50 font=Inter Regular 14/1 ls=-2.0%  » Saint Charles, MO
+            FRAM 'Frame 2147235375' @0,163 350x69 fill=#ffffff@0.12 stroke=#ffffff@0.12 1 r=12 auto=V gap=10 pad=12/20/12/20 fx=BACKGROUND_BLUR
+              FRAM 'Frame 2147235377' @21,12 308x44 auto=H gap=12 pad=0/0/0/0
+                ROUN 'Rectangle 240649216' @0,2 40x40 fill=IMG r=8
+                FRAM 'Frame 2147235378' @52,0 256x44 auto=H gap=2 pad=0/0/0/0
+                  FRAM 'Frame 2147235387' @0,0 232x44 auto=V gap=2 pad=0/0/0/0
+                    TEXT 'Home' @0,0 232x22 fill=#ffffff font=Inter Medium 16/1 ls=-2.0%  » View Product
+                    TEXT 'Home' @0,24 232x20 fill=#ffffff@0.50 font=Inter Regular 14/1 ls=-2.0%  » GPOD X + Base Bundle
+                  FRAM 'Frame 2147235165' @256,0 24x24 fill=#ffffff@0.32 stroke=#ffffff@0.12 0.5667102932929993 r=5 auto=H gap=7 pad=2/2/2/2 fx=BACKGROUND_BLUR
+                    FRAM 'arrow-up-s-line' @3,3 18x18
+                      VECT 'Vector' @4,6 10x6 fill=#ffffff
+          FRAM 'Frame 2147235399' @0,928 350x606 auto=V gap=12 pad=0/0/0/0
+            FRAM 'Frame 2147235392' @0,0 350x252 fill=IMG r=12 auto=H gap=10 pad=12/12/12/12
+              FRAM 'Frame 2147235165' @145,96 60x60 fill=#ffffff@0.32 stroke=#ffffff@0.12 1.4167758226394653 r=12 auto=H gap=17 pad=6/6/6/6 fx=BACKGROUND_BLUR
+                FRAM 'play-large-fill' @12,12 36x36
+                  VECT 'Vector' @9,4 23x28 fill=#ffffff
+            FRAM 'Frame 2147235380' @0,264 350x342 auto=V gap=0 pad=0/0/0/0
+              FRAM 'Frame 2147235370' @0,0 350x273 fill=#ffffff@0.04 stroke=#ffffff@0.12 1 r=12 auto=V gap=40 pad=20/20/20/20 fx=BACKGROUND_BLUR
+                FRAM 'Frame 2147235379' @21,21 308x169 auto=V gap=20 pad=0/0/0/0
+                  FRAM 'Frame 2147235381' @0,0 308x17 auto=H gap=12 pad=0/0/0/0
+                    FRAM 'Frame 2147235347' @0,1 96x16 auto=H gap=4 pad=0/0/0/0
+                      FRAM 'star-fill' @0,0 16x16
+                        VECT 'Vector' @0,0 15x14 fill=#8ac664
+                      FRAM 'star-fill' @20,0 16x16
+                        VECT 'Vector' @0,0 15x14 fill=#8ac664
+                      FRAM 'star-fill' @40,0 16x16
+                        VECT 'Vector' @0,0 15x14 fill=#8ac664
+                      FRAM 'star-fill' @60,0 16x16
+                        VECT 'Vector' @0,0 15x14 fill=#8ac664
+                      FRAM 'star-fill' @80,0 16x16
+                        VECT 'Vector' @0,0 15x14 fill=#8ac664
+                    TEXT 'Home' @216,0 92x17 fill=#ffffff@0.60 font=Inter Medium 12/1 ls=-2.0% UPPER » 4 MonthS Ago
+                  TEXT 'Home' @0,37 308x132 fill=#ffffff font=Inter Regular 16/1 ls=-2.0%  » I have a magbak case on my phone and the magnet that comes with the gpod works perfectly with it. No other magnetic tripods work with my phone without having to use an adhesive magnet in between. Best on the market by far
+                TEXT 'Home' @21,230 362x22 fill=#ffffff font=Inter Medium 16/1 ls=-2.0%  » Anonymous
+              FRAM 'Frame 2147235375' @0,273 350x69 fill=#ffffff@0.12 stroke=#ffffff@0.12 1 r=12 auto=V gap=10 pad=12/20/12/20 fx=BACKGROUND_BLUR
+                FRAM 'Frame 2147235377' @21,12 308x44 auto=H gap=12 pad=0/0/0/0
+                  ROUN 'Rectangle 240649216' @0,2 40x40 fill=IMG r=8
+                  FRAM 'Frame 2147235378' @52,0 256x44 auto=H gap=2 pad=0/0/0/0
+                    FRAM 'Frame 2147235387' @0,0 232x44 auto=V gap=2 pad=0/0/0/0
+                      TEXT 'Home' @0,0 232x22 fill=#ffffff font=Inter Medium 16/1 ls=-2.0%  » View Product
+                      TEXT 'Home' @0,24 232x20 fill=#ffffff@0.50 font=Inter Regular 14/1 ls=-2.0%  » GPOD Travel
+                    FRAM 'Frame 2147235165' @256,0 24x24 fill=#ffffff@0.32 stroke=#ffffff@0.12 0.5667102932929993 r=5 auto=H gap=7 pad=2/2/2/2 fx=BACKGROUND_BLUR
+                      FRAM 'arrow-up-s-line' @3,3 18x18
+                        VECT 'Vector' @4,6 10x6 fill=#ffffff
+      FRAM 'Frame 2147235180' @116,1595 117x48 fill=#ffffff@0.40 stroke=#ffffff@0.24 1 r=12 auto=H gap=12 pad=4/4/4/4 fx=BACKGROUND_BLUR
+        FRAM 'Frame 2147235170' @4,4 109x40 r=8 auto=H gap=55 pad=14/16/14/16
+          TEXT 'Load More' @16,14 77x12 fill=#ffffff font=Inter Display Medium 16/24px ls=0.0%  » Load More
+  FRAM 'Homepage' @0,7691 390x810 fill=#ffffff auto=V gap=40 pad=40/20/40/20
+    FRAM 'Frame 2147235201' @20,40 350x265 auto=V gap=24 pad=0/0/0/0
+      FRAM 'Frame 2147235426' @0,0 350x66 auto=V gap=12 pad=0/0/0/0
+        FRAM 'Frame 2147235207' @81,0 188x22 auto=H gap=12 pad=0/0/0/0
+          ROUN 'Rectangle 240649204' @0,7 20x8 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#8ac664@0.00,#8ac664) 1 r=4 fx=DROP_SHADOW,DROP_SHADOW
+          TEXT 'Home' @32,0 156x22 fill=#0c0e0a font=Inter Regular 16/1 ls=-2.0%  » The Real Comparison
+        TEXT 'The Breakdown' @-80,34 510x32 fill=#0c0e0a font=Mona Sans SemiBold 32/1 ls=-1.0%  » The Breakdown
+      TEXT 'We've spent countless hours laboring ove' @0,90 350x96 fill=#0c0e0a font=Inter Regular 16/24px ls=-1.0%  » We've spent countless hours laboring over every painstaking detail to provide you with the best possible magnetic phone mount on the market.
+      FRAM 'Frame 2147235159' @102,210 145x55 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=8 auto=H gap=55 pad=20/24/20/24 fx=DROP_SHADOW,DROP_SHADOW
+        TEXT 'Shop Now' @24,20 97x15 fill=#ffffff font=Inter Variable Medium 20/22px ls=0.0%  » Shop Now
+    FRAM 'Frame 2147235346' @20,345 350x425 auto=V gap=32 pad=0/0/0/0
+      FRAM 'Frame 2147235346' @0,0 519x425 auto=H gap=0 pad=0/0/0/0
+        FRAM 'Frame 2147235343' @0,0 237x425 auto=H gap=10 pad=48/0/12/0
+          FRAM 'Frame 2147235334' @0,50 237x360 r=12 auto=V gap=12 pad=12/0/12/0
+            FRAM 'Frame 2147235334' @0,12 237x46 r=12 auto=V gap=42 pad=12/12/12/12
+              TEXT 'Home' @12,12 213x22 fill=#000000 font=Inter Regular 14/1 ls=-2.0%  » 360° Adjustable Magnetic Head
+            ROUN 'Rectangle 240649211' @12,63 256x1 fill=#000000@0.04
+            ROUN 'Rectangle 240649212' @12,122 256x1 fill=#000000@0.04
+            ROUN 'Rectangle 240649213' @12,179 256x1 fill=#000000@0.04
+            ROUN 'Rectangle 240649214' @12,237 256x1 fill=#000000@0.04
+            ROUN 'Rectangle 240649215' @12,295 256x1 fill=#000000@0.04
+            FRAM 'Frame 2147235336' @0,70 237x46 r=12 auto=V gap=42 pad=12/12/12/12
+              TEXT 'Home' @12,12 213x22 fill=#000000 font=Inter Regular 14/1 ls=-2.0%  » Lightweight Carbon Fiber
+            FRAM 'Frame 2147235335' @0,128 237x46 r=12 auto=V gap=42 pad=12/12/12/12
+              TEXT 'Home' @12,12 213x22 fill=#000000 font=Inter Regular 14/1 ls=-2.0%  » Aluminum Alloy Components
+            FRAM 'Frame 2147235337' @0,186 237x46 r=12 auto=V gap=42 pad=12/12/12/12
+              TEXT 'Home' @12,12 213x22 fill=#000000 font=Inter Regular 14/1 ls=-2.0%  » Rare-earth Neodymium Magnets
+            FRAM 'Frame 2147235338' @0,244 237x46 r=12 auto=V gap=42 pad=12/12/12/12
+              TEXT 'Home' @12,12 213x22 fill=#000000 font=Inter Regular 14/1 ls=-2.0%  » Wind-Resistant Stability
+            FRAM 'Frame 2147235339' @0,302 237x46 r=12 auto=V gap=42 pad=12/12/12/12
+              TEXT 'Home' @12,12 213x22 fill=#000000 font=Inter Regular 14/1 ls=-2.0%  » Wind-Resistant Stability
+        FRAM 'Frame 2147235342' @237,0 282x425 fill=#fafafa stroke=#000000@0.04 1 r=12 auto=H gap=10 pad=12/12/12/12 fx=DROP_SHADOW,DROP_SHADOW
+          FRAM 'Frame 2147235340' @13,14 256x396 auto=V gap=12 pad=0/0/0/0
+            FRAM 'Frame 2147235337' @0,0 256x22 auto=H gap=12 pad=0/0/0/0
+              FRAM 'Frame 2147235332' @0,2 116x20 auto=V gap=10 pad=0/0/0/0
+                ROUN 'image 1' @4,0 109x20 fill=IMG
+              FRAM 'Frame 2147235335' @128,0 128x22 auto=V gap=10 pad=0/12/0/12
+                TEXT 'Home' @12,0 116x22 fill=#0c0e0a font=Mona Sans Medium 16/1 ls=-2.0%  » OTHERS
+            FRAM 'Frame 2147235339' @0,34 256x362 auto=H gap=12 pad=0/0/0/0
+              FRAM 'Frame 2147235343' @0,0 123x362 fill=#143627 stroke=#0c0e0a@0.04 1 r=8 auto=V gap=12 pad=12/12/12/12
+                FRAM 'Frame 2147235166' @38,13 46x46 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1.6980937719345093 r=7 auto=H gap=93 pad=12/12/12/12 fx=DROP_SHADOW,DROP_SHADOW
+                  VECT 'Vector' @13,13 20x20 fill=#ffffff
+                FRAM 'Frame 2147235172' @38,71 46x46 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1.6980937719345093 r=7 auto=H gap=93 pad=12/12/12/12 fx=DROP_SHADOW,DROP_SHADOW
+                  VECT 'Vector' @13,13 20x20 fill=#ffffff
+                FRAM 'Frame 2147235173' @38,129 46x46 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1.6980937719345093 r=7 auto=H gap=93 pad=12/12/12/12 fx=DROP_SHADOW,DROP_SHADOW
+                  VECT 'Vector' @13,13 20x20 fill=#ffffff
+                FRAM 'Frame 2147235174' @38,187 46x46 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1.6980937719345093 r=7 auto=H gap=93 pad=12/12/12/12 fx=DROP_SHADOW,DROP_SHADOW
+                  VECT 'Vector' @13,13 20x20 fill=#ffffff
+                FRAM 'Frame 2147235175' @38,245 46x46 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1.6980937719345093 r=7 auto=H gap=93 pad=12/12/12/12 fx=DROP_SHADOW,DROP_SHADOW
+                  VECT 'Vector' @13,13 20x20 fill=#ffffff
+                FRAM 'Frame 2147235176' @38,303 46x46 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1.6980937719345093 r=7 auto=H gap=93 pad=12/12/12/12 fx=DROP_SHADOW,DROP_SHADOW
+                  VECT 'Vector' @13,13 20x20 fill=#ffffff
+                ROUN 'Rectangle 240649211' @12,123 99x1 fill=#ffffff@0.24
+                ROUN 'Rectangle 240649216' @12,65 99x1 fill=#ffffff@0.24
+                ROUN 'Rectangle 240649212' @12,182 99x1 fill=#ffffff@0.24
+                ROUN 'Rectangle 240649213' @12,239 99x1 fill=#ffffff@0.24
+                ROUN 'Rectangle 240649214' @12,297 99x1 fill=#ffffff@0.24
+              FRAM 'Frame 2147235344' @135,0 121x360 r=12 auto=V gap=12 pad=12/12/12/12
+                FRAM 'Frame 2147235166' @38,12 46x46 r=7 auto=H gap=93 pad=12/12/12/12
+                  VECT 'Vector' @23,9 20x20 fill=#ca3d3d
+                FRAM 'Frame 2147235178' @38,70 46x46 r=7 auto=H gap=93 pad=12/12/12/12
+                  VECT 'Vector' @23,9 20x20 fill=#ca3d3d
+                FRAM 'Frame 2147235177' @38,128 46x46 r=7 auto=H gap=93 pad=12/12/12/12
+                  VECT 'Vector' @23,9 20x20 fill=#ca3d3d
+                FRAM 'Frame 2147235180' @38,186 46x46 r=7 auto=H gap=93 pad=12/12/12/12
+                  VECT 'Vector' @23,9 20x20 fill=#ca3d3d
+                FRAM 'Frame 2147235179' @38,244 46x46 r=7 auto=H gap=93 pad=12/12/12/12
+                  VECT 'Vector' @23,9 20x20 fill=#ca3d3d
+                FRAM 'Frame 2147235181' @38,302 46x46 r=7 auto=H gap=93 pad=12/12/12/12
+                  VECT 'Vector' @23,9 20x20 fill=#ca3d3d
+                ROUN 'Rectangle 240649211' @12,122 109x1 fill=#000000@0.04
+                ROUN 'Rectangle 240649216' @12,64 109x1 fill=#000000@0.04
+                ROUN 'Rectangle 240649212' @12,181 109x1 fill=#000000@0.04
+                ROUN 'Rectangle 240649213' @12,238 109x1 fill=#000000@0.04
+                ROUN 'Rectangle 240649214' @12,296 109x1 fill=#000000@0.04
+  FRAM 'Homepage' @0,8501 390x1438 r=24 auto=V gap=68 pad=40/20/40/20
+    ROUN 'Rectangle 240649219' @-1358,-123 2314x1560 fill=IMG/IMG/GRAD(#143627@0.00,#241f21)
+    FRAM 'Frame 2147235411' @20,40 350x1358 auto=V gap=40 pad=0/0/0/0
+      FRAM 'Frame 2147235409' @0,0 350x159 r=12 auto=V gap=40 pad=0/0/0/0 fx=BACKGROUND_BLUR
+        TEXT 'Film your golf swing in seconds' @0,0 350x64 fill=#ffffff font=Mona Sans SemiBold 32/1 ls=-1.0%  » Film your golf swing in seconds
+        FRAM 'Frame 2147235159' @102,104 145x55 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=8 auto=H gap=55 pad=20/24/20/24 fx=DROP_SHADOW,DROP_SHADOW
+          TEXT 'Shop Now' @24,20 97x15 fill=#ffffff font=Inter Variable Medium 20/22px ls=0.0%  » Shop Now
+      FRAM 'Frame 2147235410' @0,199 350x1159 fill=#000000@0.32 stroke=#ffffff@0.24 1 r=12 auto=V gap=40 pad=48/20/48/20 fx=BACKGROUND_BLUR
+        FRAM 'Frame 2147235413' @21,49 308x715 auto=V gap=40 pad=0/0/0/0
+          FRAM 'Container' @0,0 308x200 auto=V gap=24 pad=0/0/0/0
+            FRAM 'Frame 2147235415' @0,0 304x76 auto=V gap=11 pad=0/0/0/0
+              VECT 'Vector' @0,0 304x38 fill=#ffffff
+              TEXT 'Link → Register' @0,49 304x27 fill=#ffffff fx=DROP_SHADOW font=Mona Sans Medium 19/27px ls=0.0%  » We Make Filming Your Swing Easy.
+            FRAM 'Frame 2147235410' @0,100 308x100 auto=V gap=12 pad=0/0/0/0
+              FRAM 'Frame 2147235184' @0,0 308x48 auto=V gap=12 pad=0/0/0/0
+                FRAM 'Frame 2147235180' @0,0 308x48 fill=#ffffff@0.40 stroke=#ffffff@0.24 1 r=12 auto=H gap=12 pad=4/4/4/4 fx=BACKGROUND_BLUR
+                  FRAM 'Frame 2147235170' @4,4 170x40 r=8 auto=H gap=55 pad=14/16/14/16
+                    TEXT 'Your Email Address' @16,14 138x12 fill=#ffffff font=Inter Display Medium 16/24px ls=0.0%  » Your Email Address
+                  FRAM 'Frame 2147235158' @213,4 91x40 fill=GRAD(#8ac664,#70ad49) stroke=GRAD(#ffffff@0.00,#ffffff) 1 r=8 auto=H gap=55 pad=14/16/14/16 fx=DROP_SHADOW,DROP_SHADOW
+                    TEXT 'Register' @16,14 59x12 fill=#ffffff font=Inter Display Medium 16/24px ls=0.0%  » Register
+              TEXT 'Plus early access to Pocket G restocks a' @0,60 308x40 fill=#ffffff font=Inter Regular 14/1 ls=-1.0%  » Plus early access to Pocket G restocks and new drops.
+          FRAM 'Frame 2147235414' @0,240 308x475 auto=V gap=16 pad=0/0/0/0
+            FRAM 'Container' @0,0 308x146 auto=V gap=16 pad=0/0/0/0
+              FRAM 'Container' @0,0 308x35 stroke=#ffffff@0.12 1 auto=V gap=0 pad=0/0/16/0
+                TEXT 'Account & Business' @0,0 173x19 fill=#ffffff fx=DROP_SHADOW font=Mona Sans Medium 15/1 ls=0.0% UPPER » Account & Business
+              FRAM 'List' @0,51 308x95 auto=V gap=16 pad=0/0/0/0
+                FRAM 'Item' @0,0 308x21 auto=V gap=0 pad=0/0/0/0
+                  TEXT 'Link → Register' @0,0 308x21 fill=#ffffff fx=DROP_SHADOW font=Inter Regular 15/1 ls=0.0%  » Register
+                FRAM 'Item' @0,37 308x21 auto=V gap=0 pad=0/0/0/0
+                  TEXT 'Link → Corporate Sales' @0,0 308x21 fill=#ffffff fx=DROP_SHADOW font=Inter Regular 15/1 ls=0.0%  » Corporate Sales
+                FRAM 'Item' @0,74 308x21 auto=V gap=0 pad=0/0/0/0
+                  TEXT 'Link → Affiliate Program' @0,0 308x21 fill=#ffffff fx=DROP_SHADOW font=Inter Regular 15/1 ls=0.0%  » Affiliate Program
+            FRAM 'Container' @0,162 308x183 auto=V gap=16 pad=0/0/0/0
+              FRAM 'Container' @0,0 308x35 stroke=#ffffff@0.12 1 auto=V gap=0 pad=0/0/16/0
+                TEXT 'CUSTOMER SUPPORT' @0,0 164x19 fill=#ffffff fx=DROP_SHADOW font=Mona Sans Medium 15/1 ls=0.0% UPPER » CUSTOMER SUPPORT
+              FRAM 'List' @0,51 308x132 auto=V gap=16 pad=0/0/0/0
+                FRAM 'Item' @0,0 308x21 auto=V gap=0 pad=0/0/0/0
+                  TEXT 'Link → FAQs' @0,0 308x21 fill=#ffffff fx=DROP_SHADOW font=Inter Regular 15/1 ls=0.0%  » FAQs
+                FRAM 'Item' @0,37 308x21 auto=V gap=0 pad=0/0/0/0
+                  TEXT 'Link → Search' @0,0 308x21 fill=#ffffff fx=DROP_SHADOW font=Inter Regular 15/1 ls=0.0%  » Search
+                FRAM 'Item' @0,74 308x21 auto=V gap=0 pad=0/0/0/0
+                  TEXT 'Link → Shipping and Returns' @0,0 152x21 fill=#ffffff fx=DROP_SHADOW font=Inter Regular 15/1 ls=0.0%  » Shipping and Returns
+                FRAM 'Item' @0,111 308x21 auto=V gap=0 pad=0/0/0/0
+                  TEXT 'Link → Instructions' @0,0 308x21 fill=#ffffff fx=DROP_SHADOW font=Inter Regular 15/1 ls=0.0%  » Instructions
+            FRAM 'Container' @0,361 308x114 auto=V gap=16 pad=0/0/5/0
+              FRAM 'Container' @0,0 161x109 auto=V gap=16 pad=0/0/0/0
+                FRAM 'Container' @0,0 161x35 stroke=#ffffff@0.12 1 auto=V gap=0 pad=0/0/16/0
+                  TEXT 'LEGAL' @0,0 50x19 fill=#ffffff fx=DROP_SHADOW font=Mona Sans Medium 15/1 ls=0.0% UPPER » LEGAL
+                FRAM 'List' @0,51 161x58 auto=V gap=16 pad=0/0/0/0
+                  FRAM 'Item' @0,0 161x21 auto=V gap=0 pad=0/0/0/0
+                    TEXT 'Link → Privacy Policy' @0,0 161x21 fill=#ffffff fx=DROP_SHADOW font=Inter Regular 15/1 ls=0.0%  » Privacy Policy
+                  FRAM 'Item' @0,37 161x21 auto=V gap=0 pad=0/0/0/0
+                    TEXT 'Link → Terms of Service' @0,0 161x21 fill=#ffffff fx=DROP_SHADOW font=Inter Regular 15/1 ls=0.0%  » Terms of Service
+        FRAM 'Frame 2147235450' @21,804 308x306 auto=V gap=24 pad=0/0/0/0
+          VECT 'Vector' @0,0 308x39 fill=GRAD(#ffffff@0.06,#ffffff@0.02)
+          FRAM 'Frame 2147235414' @0,63 308x243 stroke=#ffffff@0.12 1 auto=V gap=40 pad=32/0/32/0
+            FRAM 'Container' @0,33 308x74 auto=V gap=15 pad=0/0/0/0
+              FRAM 'Form' @0,0 308x39 auto=H gap=0 pad=0/0/0/0
+                FRAM 'Container' @0,0 308x39 auto=V gap=0 pad=0/0/0/0
+                  FRAM 'Button' @0,0 308x39 fill=#ffffff@0.12 stroke=#ffffff@0.10 1 r=8 auto=H gap=8 pad=10/14/11/44
+                    FRAM 'United States' @105,12 20x15 auto=V gap=0 pad=0/0/0/0
+                      FRAM 'us.svg' @0,0 20x15
+                        FRAM 'Clip path group' @0,0 20x15
+                    TEXT 'USD $' @133,11 40x16 fill=#ffffff font=Inter Regular 13/100% ls=0.3 UPPER » USD $
+                    FRAM 'Frame' @285,1 12x37
+                      VECT 'Vector' @0,16 12x6 fill=#ffffff
+              FRAM 'Container' @0,54 308x20 auto=H gap=0 pad=0/0/0/0
+                FRAM 'Container' @0,0 175x20 auto=V gap=0 pad=0/0/0/0
+                  TEXT '© 2026, GPOD GOLF' @0,0 175x20 fill=#ffffff@0.70 fx=DROP_SHADOW font=Inter Regular 14/20px ls=0.0%  » © 2026, GPOD GOLF
+                FRAM 'Container' @175,0 133x20 auto=V gap=0 pad=0/0/0/0
+                  TEXT 'Link → Powered by Shopify' @0,0 133x20 fill=#ffffff@0.70 fx=DROP_SHADOW font=Inter Regular 14/20px ls=0.0%  » Powered by Shopify
+            FRAM 'Container' @0,147 308x96 auto=V gap=24 pad=0/0/0/0
+              FRAM 'List' @0,0 308x56 auto=H gap=4 pad=0/0/4/0
+                FRAM 'Item → Img' @9,0 38x24 fill=#ffffff@0.00 r=3 auto=H gap=0 pad=0/0/0/0 fx=DROP_SHADOW
+                  FRAM 'Frame' @0,0 38x24
+                    VECT 'Vector' @0,0 37x23 stroke=#000000@0.07 1
+                    VECT 'Vector' @0,0 38x24 fill=#0071ce
+                    VECT 'Vector' @0,0 37x23 stroke=#000000@0.07 1
+                    VECT 'Vector' @16,3 21x18 fill=#ffffff
+                FRAM 'Item → Img' @51,0 38x24 fill=#ffffff@0.00 r=3 auto=H gap=0 pad=0/0/0/0 fx=DROP_SHADOW
+                  FRAM 'Frame' @0,0 38x24
+                    VECT 'Vector' @0,0 37x24 fill=#000000
+                    VECT 'Vector' @1,1 36x22 fill=#ffffff
+                    FRAM 'Group' @5,7 28x11
+                      FRAM 'Group' @0,-0 7x9
+                        VECT 'Vector' @4,-0 2x2 fill=#000000
+                        VECT 'Vector' @-0,2 7x7 fill=#000000
+                      FRAM 'Group' @10,1 18x11
+                        VECT 'Vector' @0,-0 6x8 fill=#000000
+                        VECT 'Vector' @6,2 5x6 fill=#000000
+                        VECT 'Vector' @12,2 6x8 fill=#000000
+                FRAM 'Item → Img' @93,0 38x24 fill=#ffffff@0.00 r=3 auto=H gap=0 pad=0/0/0/0 fx=DROP_SHADOW
+                  FRAM 'Frame' @0,0 38x24
+                    VECT 'Vector' @0,0 38x24 fill=#000000
+                    VECT 'Vector' @1,1 36x22 fill=#ffffff
+                    VECT 'Vector' @4,3 31x18 fill=#ffffff
+                    VECT 'Vector' @6,15 25x3 fill=#1e3764
+                    VECT 'Vector' @6,10 13x4 fill=GRAD(#005ab9,#1e3764)
+                    VECT 'Vector' @19,5 13x4 fill=GRAD(#fba900,#ffd800)
+                FRAM 'Item → Img' @135,0 38x24 fill=#ffffff@0.00 r=3 auto=H gap=0 pad=0/0/0/0 fx=DROP_SHADOW
+                  FRAM 'Frame' @0,0 38x24
+                    VECT 'Vector' @0,0 38x24 fill=#000000
+                    VECT 'Vector' @1,1 36x22 fill=#ffffff
+                    VECT 'Vector' @9,5 19x14 fill=#3086c8
+                FRAM 'Item → Img' @177,0 38x24 fill=#ffffff@0.00 r=3 auto=H gap=0 pad=0/0/0/0 fx=DROP_SHADOW
+                  FRAM 'Frame' @0,0 38x24
+                    VECT 'Vector' @0,0 38x24 fill=#000000
+                    VECT 'Vector' @1,1 36x22 fill=#ffffff
+                    VECT 'Vector' @2,7 34x6 fill=#231f20
+                    VECT 'Vector' @17,7 6x6 fill=GRAD(#f89f20,#f79a20,#f68d20,#f58720,#f48120,#f37521)
+                    VECT 'Vector' @17,7 6x6 fill=GRAD(#f58720,#e16f27,#d4602c,#d05b2e)
+                    VECT 'Vector' @36,7 0x0 fill=#231f20
+                    VECT 'Vector' @36,7 1x1 fill=#231f20
+                    VECT 'Vector' @9,13 28x10 fill=#f48120
+                FRAM 'Item → Img' @219,0 38x24 fill=#ffffff@0.00 r=3 auto=H gap=0 pad=0/0/0/0 fx=DROP_SHADOW
+                  FRAM 'Frame' @0,0 38x24
+                    VECT 'Vector' @0,0 38x24 fill=#000000
+                    VECT 'Vector' @1,1 36x22 fill=#ffffff
+                    VECT 'Vector' @17,7 16x10 fill=#5f6368
+                    VECT 'Vector' @10,10 4x4 fill=#4285f4
+                    VECT 'Vector' @6,12 7x4 fill=#34a853
+                    VECT 'Vector' @5,9 2x4 fill=#fbbc04
+                    VECT 'Vector' @6,7 7x4 fill=#ea4335
+                FRAM 'Item → Img' @261,0 38x24 fill=#ffffff@0.00 r=3 auto=H gap=0 pad=0/0/0/0 fx=DROP_SHADOW
+                  FRAM 'Frame' @0,0 38x24
+                    VECT 'Vector' @0,0 38x24 fill=#000000
+                    VECT 'Vector' @1,1 36x22 fill=#fff48d
+                    VECT 'Vector' @3,7 13x11 fill=#ffffff
+                    VECT 'Vector' @7,8 7x8 fill=#cc0066
+                    VECT 'Vector' @4,7 11x10 fill=#232323
+                    VECT 'Vector' @8,11 1x2 fill=#ffffff
+                    VECT 'Vector' @10,11 1x2 fill=#ffffff
+                    VECT 'Vector' @11,11 2x2 fill=#ffffff
+                    VECT 'Vector' @13,11 1x2 fill=#ffffff
+                    VECT 'Vector' @5,11 2x5 fill=#232323
+                    VECT 'Vector' @18,10 17x4 fill=#1d1c1c
+                    VECT 'Vector' @25,13 3x2 fill=#1d1c1c
+                    VECT 'Vector' @24,10 3x2 fill=#1d1c1c
+                    VECT 'Vector' @17,8 0x8 fill=#1d1c1c
+                FRAM 'Item → Img' @93,28 38x24 fill=#ffffff@0.00 r=3 auto=H gap=0 pad=0/0/0/0 fx=DROP_SHADOW
+                  FRAM 'Frame' @0,0 38x24
+                    VECT 'Vector' @0,0 37x23 stroke=#000000@0.07 1
+                    VECT 'Vector' @0,0 38x24 fill=#1c1c1c
+                    VECT 'Vector' @1,1 36x22 fill=#232323
+                    VECT 'Vector' @7,4 15x15 fill=#eb001b
+                    VECT 'Vector' @16,4 15x15 fill=#f79e1b
+                    VECT 'Vector' @16,5 7x12 fill=#ff5f00
+                FRAM 'Item → Img' @135,28 38x24 fill=#ffffff@0.00 r=3 auto=H gap=0 pad=0/0/0/0 fx=DROP_SHADOW
+                  FRAM 'Frame' @0,0 38x24
+                    VECT 'Vector' @0,0 38x24 fill=#000000
+                    VECT 'Vector' @0,0 38x24 fill=#5a31f4
+                    VECT 'Vector' @6,7 25x11 fill=#ffffff
+                FRAM 'Item → Img' @177,28 38x24 fill=#ffffff@0.00 r=3 auto=H gap=0 pad=0/0/0/0 fx=DROP_SHADOW
+                  FRAM 'Frame' @0,0 38x24
+                    VECT 'Vector' @0,0 37x23 stroke=#000000@0.07 1
+                    VECT 'Vector' @0,0 38x24 fill=#142fbd
+                    VECT 'Vector' @1,1 36x22 fill=#1532cb
+                    VECT 'Vector' @5,8 28x8 fill=#ffffff
+              FRAM 'Container' @61,80 186x16 auto=H gap=0 pad=0/0/0/0
+                FRAM 'Container' @0,0 186x16 auto=V gap=0 pad=0/0/0/0
+                  FRAM 'List' @0,0 186x16 auto=H gap=0 pad=0/0/0/0
+                    FRAM 'Item:margin' @0,0 28x16 auto=V gap=0 pad=0/0/0/10
+                      FRAM 'Item' @0,0 18x16 auto=V gap=0 pad=0/0/0/0
+                        FRAM 'Link' @0,0 18x16 auto=H gap=0 pad=0/0/0/0
+                    FRAM 'Item:margin' @28,0 28x16 auto=V gap=0 pad=0/0/0/10
+                      FRAM 'Item' @0,0 18x16 auto=V gap=0 pad=0/0/0/0
+                        FRAM 'Link' @0,0 18x16 auto=H gap=0 pad=0/0/0/0
+                    FRAM 'Item:margin' @56,0 28x16 auto=V gap=0 pad=0/0/0/10
+                      FRAM 'Item' @0,0 18x16 auto=V gap=0 pad=0/0/0/0
+                        FRAM 'Link' @0,0 18x16 auto=H gap=0 pad=0/0/0/0
+                    FRAM 'Item:margin' @84,0 28x16 auto=V gap=0 pad=0/0/0/10
+                      FRAM 'Item' @0,0 18x16 auto=V gap=0 pad=0/0/0/0
+                        FRAM 'Link' @0,0 18x16 auto=H gap=0 pad=0/0/0/0
+                    FRAM 'Item:margin' @112,0 28x16 auto=V gap=0 pad=0/0/0/10
+                      FRAM 'Item' @0,0 18x16 auto=V gap=0 pad=0/0/0/0
+                        FRAM 'Link' @0,0 18x16 auto=H gap=0 pad=0/0/0/0
+                    FRAM 'Item:margin' @140,0 28x16 auto=V gap=0 pad=0/0/0/10
+                      FRAM 'Item' @0,0 18x16 auto=V gap=0 pad=0/0/0/0
+                        FRAM 'Link' @0,0 18x16 auto=H gap=0 pad=0/0/0/0
+                    FRAM 'Item' @168,0 18x16 auto=V gap=0 pad=0/0/0/0
+                      FRAM 'Link' @0,0 18x16 auto=H gap=0 pad=0/0/0/0
+                        FRAM 'Frame' @0,0 18x16
