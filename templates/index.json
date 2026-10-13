@@ -655,7 +655,6 @@
       "block_order": [
         "founder_img"
       ],
-      "disabled": true,
       "settings": {
         "width": "container-wrap",
         "show_nav_arrows": true,
@@ -934,6 +933,26 @@
         "padding_top": 70,
         "padding_bottom": 70
       }
+    },
+    "17919259552eb67c1d": {
+      "type": "apps",
+      "blocks": {
+        "fera_all_reviews_Q4EMGx": {
+          "type": "shopify://apps/fera/blocks/all_reviews/2fbfcfa7-8a04-479f-89a8-0621fa099c51",
+          "settings": {
+            "heading": "Customer Reviews",
+            "layout": "masonry",
+            "star_color": "#000000",
+            "types_to_show": "both"
+          }
+        }
+      },
+      "block_order": [
+        "fera_all_reviews_Q4EMGx"
+      ],
+      "settings": {
+        "width": "container-wrap"
+      }
     }
   },
   "order": [
@@ -954,6 +973,7 @@
     "overlay",
     "sportsbox",
     "icons",
-    "community"
+    "community",
+    "17919259552eb67c1d"
   ]
 }
