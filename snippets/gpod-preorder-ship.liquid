@@ -19,6 +19,12 @@
   {%- else -%}
     <span class="gpod-preorder-ship{% if context == 'bar' %} gpod-preorder-ship--bar{% else %} gpod-preorder-ship--pdp{% endif %}">{{ ship_text }}</span>
     {%- style -%}
+      /* PDP: the buy box's standard ship line ("Ships within 1 business day")
+         would contradict the date above, so drop it in a pre-order buy box.
+         Scoped with :has so a pre-order quick view opened on another product's
+         page cannot hide that page's line. */
+      .product__info:has(.gpod-preorder-ship--pdp) .gpod-shipping-expectation { display: none; }
+
       /* PDP: sits tight under the button, full row width */
       .product__form-buttons:has(.gpod-preorder-ship--pdp) { flex-wrap: wrap; row-gap: 0; }
       .gpod-preorder-ship--pdp { display: block; flex: 0 0 100%; width: 100%; margin: 6px 0 0; padding: 0; font-size: 14px; font-weight: 600; line-height: 1.3; text-align: center; }

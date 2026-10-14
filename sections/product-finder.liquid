@@ -127,6 +127,9 @@
                 <p class="gpod-kicker">Our pick for you</p>
                 <h3>{{ candidate.title }}</h3>
                 <p class="gpod-finder__price"><strong>{{ candidate.price | money }}</strong></p>
+                {%- if candidate.tags contains 'preorder-oct' -%}
+                  <p class="gpod-finder__preorder">{%- render 'gpod-preorder-ship', product: candidate, context: 'cart' -%}</p>
+                {%- endif -%}
                 <p class="gpod-finder__why" data-finder-why></p>
                 <a class="btn btn--primary btn--solid" href="{{ candidate.url }}">See the {{ candidate.title | escape }}</a>
               </div>
@@ -146,6 +149,20 @@
 </section>
 
 <script src="{{ 'gpod.js' | asset_url }}" defer></script>
+
+{% stylesheet %}
+  /* The theme's .btn display rule beats the browser's [hidden] style, so the
+     Back button showed on step 1. Same fix as the [hidden] list in gpod.css. */
+  .gpod-finder__nav [hidden] {
+    display: none !important;
+  }
+
+  .gpod-finder__preorder {
+    margin: 0 0 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

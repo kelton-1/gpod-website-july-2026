@@ -27,7 +27,7 @@
             "icon": "remote",
             "title": "Remote pairing & use",
             "text": "Pair the Bluetooth remote in seconds and use it to start and stop recording from address.",
-            "link": "/pages/instructions"
+            "link": "/pages/support-guides?q=remote"
           }
         },
         "guide_2": {
@@ -36,7 +36,7 @@
             "icon": "app",
             "title": "Activate Sportsbox 3D",
             "text": "Bought a Sportsbox bundle? Here's exactly how to redeem and log in to your subscription.",
-            "link": "/pages/faq"
+            "link": "/pages/support-guides?q=sportsbox"
           }
         },
         "guide_3": {

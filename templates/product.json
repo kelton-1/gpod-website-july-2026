@@ -48,7 +48,7 @@
         "shipping_expectation": {
           "type": "shipping-expectation",
           "settings": {
-            "text": "",
+            "text": "Ships within 1 business day · 14-day returns · 1-year warranty",
             "padding_bottom": 12
           }
         },
