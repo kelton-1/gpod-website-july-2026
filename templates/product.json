@@ -398,6 +398,68 @@
         "padding_bottom": 30
       }
     },
+    "pdp_pairs": {
+      "type": "pdp-pairs-with",
+      "blocks": {
+        "pair_NbLVfD": {
+          "type": "pair",
+          "settings": {
+            "product": "gpod-pocket-g",
+            "usecase": ""
+          }
+        },
+        "p_base": {
+          "type": "pair",
+          "settings": {
+            "product": "indoor-base-for-gpod-gpod-mini",
+            "usecase": "Convert your monopod into a tripod for indoors and hard surfaces"
+          }
+        },
+        "p_connect": {
+          "type": "pair",
+          "settings": {
+            "product": "connect",
+            "usecase": "Use your GPOD as a training aid with an alignment stick"
+          }
+        },
+        "p_gplate": {
+          "type": "pair",
+          "settings": {
+            "product": "gpod-gplate",
+            "usecase": "With Connect 2.0, the semi-permanent minimalist setup"
+          }
+        },
+        "p_gpuck": {
+          "type": "pair",
+          "settings": {
+            "product": "gpod-caddy",
+            "usecase": "Mount to a cart, rail or any metal surface"
+          }
+        },
+        "p_travel": {
+          "type": "pair",
+          "settings": {
+            "product": "gpod-travel-1",
+            "usecase": "Folds flat for travel and stands on hard ground"
+          }
+        }
+      },
+      "block_order": [
+        "pair_NbLVfD",
+        "p_base",
+        "p_connect",
+        "p_gplate",
+        "p_gpuck",
+        "p_travel"
+      ],
+      "settings": {
+        "applicable_collection": "monopods",
+        "kicker": "Complete your setup",
+        "heading": "Pairs well with",
+        "padding_top": 40,
+        "padding_bottom": 50
+      }
+    },
     "1742914022b79f91bc": {
       "type": "apps",
       "blocks": {
@@ -462,60 +524,6 @@
         "footnote": "<p>Still unsure? <a href=\"/pages/product-finder-quiz\">Take the 30-second product finder</a> or <a href=\"/pages/contact-us\">ask us directly</a>.</p>",
         "padding_top": 60,
         "padding_bottom": 60
-      }
-    },
-    "pdp_pairs": {
-      "type": "pdp-pairs-with",
-      "blocks": {
-        "p_base": {
-          "type": "pair",
-          "settings": {
-            "product": "indoor-base-for-gpod-gpod-mini",
-            "usecase": "Convert your monopod into a tripod for indoors and hard surfaces"
-          }
-        },
-        "p_connect": {
-          "type": "pair",
-          "settings": {
-            "product": "connect",
-            "usecase": "Use your GPOD as a training aid with an alignment stick"
-          }
-        },
-        "p_gplate": {
-          "type": "pair",
-          "settings": {
-            "product": "gpod-gplate",
-            "usecase": "With Connect 2.0, the semi-permanent minimalist setup"
-          }
-        },
-        "p_gpuck": {
-          "type": "pair",
-          "settings": {
-            "product": "gpod-caddy",
-            "usecase": "Mount to a cart, rail or any metal surface"
-          }
-        },
-        "p_travel": {
-          "type": "pair",
-          "settings": {
-            "product": "gpod-travel-1",
-            "usecase": "Folds flat for travel and stands on hard ground"
-          }
-        }
-      },
-      "block_order": [
-        "p_base",
-        "p_connect",
-        "p_gplate",
-        "p_gpuck",
-        "p_travel"
-      ],
-      "settings": {
-        "applicable_collection": "monopods",
-        "kicker": "Complete your setup",
-        "heading": "Pairs well with",
-        "padding_top": 40,
-        "padding_bottom": 50
       }
     },
     "section_product_features_6FAzHV": {
@@ -697,9 +705,9 @@
     "pdp_compat",
     "pdp_howto",
     "pdp_specs",
+    "pdp_pairs",
     "1742914022b79f91bc",
     "gpod_compare",
-    "pdp_pairs",
     "section_product_features_6FAzHV",
     "faq",
     "section_faq_h3p3ep",

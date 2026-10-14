@@ -17,7 +17,7 @@
         "text_TyGbDr": {
           "type": "text",
           "settings": {
-            "text": "<p><a href=\"/collections\" title=\"All collections\">Trusted by 75,000+ Golfers</a></p>",
+            "text": "<p><a href=\"/collections/all\" title=\"All products\">Trusted by 75,000+ Golfers</a></p>",
             "target_url_enabled": false,
             "target_url": "",
             "target_referrer_enabled": false,

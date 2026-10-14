@@ -17,7 +17,13 @@
   product image, so a card is never empty even where the collection has no
   image of its own (accessories and bundles currently do not).
 
-  Styles: assets/gpod.css under "Explore row".
+  Styles: assets/gpod.css under "Explore row"; the grid layout's are in the
+  stylesheet block at the end of this file.
+
+  Layout "Grid" and Heading tag "H1" exist for /collections
+  (templates/list-collections.json), where these cards are the whole page: a
+  scroller there would show a phone one card at a time, and the page needs an
+  h1. Both default to the homepage behaviour.
 {% endcomment %}
 
 {%- capture style -%}
@@ -26,10 +32,18 @@
   --explore-bg: {{ section.settings.background_color }};
   --explore-card-w: {{ section.settings.card_width }}px;
   --explore-ratio: {{ section.settings.image_ratio }};
+  --explore-cols: {{ section.blocks.size | at_most: 4 | at_least: 1 }};
 {%- endcapture -%}
 
+{%- liquid
+  assign heading_tag = 'h2'
+  if section.settings.heading_tag == 'h1'
+    assign heading_tag = 'h1'
+  endif
+-%}
+
 <section
-  class="gpod-explore"
+  class="gpod-explore{% if section.settings.layout == 'grid' %} gpod-explore--grid{% endif %}"
   data-section-id="{{ section.id }}"
   data-section-type="explore"
   style="{{ style }}"
@@ -38,7 +52,7 @@
     {%- if section.settings.heading != blank or section.settings.lede != blank -%}
       <div class="gpod-explore__head">
         {%- if section.settings.heading != blank -%}
-          <h2 class="gpod-explore__heading">{{ section.settings.heading | escape }}</h2>
+          <{{ heading_tag }} class="gpod-explore__heading">{{ section.settings.heading | escape }}</{{ heading_tag }}>
         {%- endif -%}
         {%- if section.settings.lede != blank -%}
           <div class="gpod-explore__lede rte">{{ section.settings.lede }}</div>
@@ -111,6 +125,53 @@
   </div>
 </section>
 
+{% stylesheet %}
+  /* Grid layout (setting Layout: Grid), used on /collections. There the
+     cards are the whole page, so every card is on screen at once: two across
+     on phones and tablets, one row of up to four on desktop. Row-layout styles
+     live in assets/gpod.css under "Explore row"; these selectors carry the
+     extra modifier class so they win regardless of load order. */
+  .gpod-explore--grid .gpod-explore__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .gpod-explore--grid .gpod-explore__card {
+    flex: none;
+    min-width: 0;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    .gpod-explore--grid .gpod-explore__row {
+      grid-template-columns: repeat(var(--explore-cols, 4), minmax(0, 1fr));
+      gap: 20px;
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    .gpod-explore--grid .gpod-explore__body {
+      padding: 12px;
+    }
+
+    .gpod-explore--grid .gpod-explore__title {
+      font-size: 1rem;
+    }
+
+    .gpod-explore--grid .gpod-explore__text {
+      font-size: 0.8125rem;
+    }
+
+    .gpod-explore--grid .gpod-explore__cta {
+      margin-top: 8px;
+    }
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "Explore products",
@@ -123,6 +184,17 @@
       "id": "heading",
       "label": "Heading",
       "default": "Explore our products"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading tag",
+      "default": "h2",
+      "options": [
+        { "label": "H2", "value": "h2" },
+        { "label": "H1 (page title)", "value": "h1" }
+      ],
+      "info": "Use H1 only when this section is the page's main heading, e.g. on the collections list page."
     },
     {
       "type": "richtext",
@@ -146,6 +218,17 @@
       "content": "Cards"
     },
     {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "row",
+      "options": [
+        { "label": "Row (scrolls sideways)", "value": "row" },
+        { "label": "Grid (all cards visible)", "value": "grid" }
+      ],
+      "info": "Grid shows two cards per row on phones and up to four on desktop."
+    },
+    {
       "type": "range",
       "id": "card_width",
       "label": "Card width (desktop)",
@@ -153,7 +236,8 @@
       "max": 400,
       "step": 10,
       "unit": "px",
-      "default": 300
+      "default": 300,
+      "info": "Row layout only. Grid cards share the width evenly."
     },
     {
       "type": "select",
