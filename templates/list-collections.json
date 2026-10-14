@@ -9,12 +9,129 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "list-collections",
-      "settings": {}
+    "shop": {
+      "type": "gpod-explore",
+      "blocks": {
+        "card_core": {
+          "type": "card",
+          "settings": {
+            "collection": "core-products",
+            "title": "Core Products",
+            "text": "Monopods, tripods and mounts — every GPOD that holds your phone on its own.",
+            "cutout_handle": "gpodx"
+          }
+        },
+        "card_bundles": {
+          "type": "card",
+          "settings": {
+            "collection": "bundles",
+            "title": "Bundles",
+            "text": "A pod and a base together, priced as a set.",
+            "cutout_handle": "g-bundle-two-gpod-x-with-gpod-base"
+          }
+        },
+        "card_accessories": {
+          "type": "card",
+          "settings": {
+            "collection": "accessories",
+            "title": "Accessories",
+            "text": "Bases, pucks, plates and the parts that connect them.",
+            "cutout_handle": "replacement-magnet-for-magsafe"
+          }
+        },
+        "card_all": {
+          "type": "card",
+          "settings": {
+            "collection": "frontpage",
+            "title": "All Products",
+            "text": "Everything we make, on one page.",
+            "cutout_handle": "gpodmagsafe"
+          }
+        }
+      },
+      "block_order": [
+        "card_core",
+        "card_bundles",
+        "card_accessories",
+        "card_all"
+      ],
+      "settings": {
+        "heading": "Shop GPOD",
+        "heading_tag": "h1",
+        "lede": "<p>Not sure which one fits? <a href=\"/pages/product-finder-quiz\" title=\"Product Finder Quiz\">Take the 30-second finder</a> or <a href=\"/pages/compare-gpod-models\" title=\"Compare GPOD models\">compare models</a>.</p>",
+        "cta_label": "Shop now",
+        "show_count": false,
+        "layout": "grid",
+        "card_width": 300,
+        "image_ratio": "1",
+        "background_color": "#ffffff",
+        "padding_top": 48,
+        "padding_bottom": 32
+      }
+    },
+    "situations": {
+      "type": "gpod-explore",
+      "blocks": {
+        "card_course": {
+          "type": "card",
+          "settings": {
+            "collection": "on-the-course",
+            "title": "On the Course",
+            "text": "Monopods that stake into the turf. Built for wind and quick setup between shots.",
+            "cutout_handle": "gpodmagsafe"
+          }
+        },
+        "card_indoor": {
+          "type": "card",
+          "settings": {
+            "collection": "indoor-simulator",
+            "title": "Indoor & Simulator",
+            "text": "For mats and sims where you can't stake into the ground: bases and freestanding tripods.",
+            "cutout_handle": "gpod-studio"
+          }
+        },
+        "card_coaching": {
+          "type": "card",
+          "settings": {
+            "collection": "coaching-studio",
+            "title": "Coaching & Studio",
+            "text": "Maximum stability and fast height changes for filming lessons every day.",
+            "cutout_handle": "gpod-pauly-p2"
+          }
+        },
+        "card_travel": {
+          "type": "card",
+          "settings": {
+            "collection": "travel-ready",
+            "title": "Travel Ready",
+            "text": "Collapsible monopods and our smallest tripods, sized for a golf bag or carry-on.",
+            "cutout_handle": "gpod-travel-1"
+          }
+        }
+      },
+      "block_order": [
+        "card_course",
+        "card_indoor",
+        "card_coaching",
+        "card_travel"
+      ],
+      "settings": {
+        "heading": "Shop by where you film",
+        "heading_tag": "h2",
+        "lede": "",
+        "cta_label": "Shop now",
+        "show_count": false,
+        "layout": "grid",
+        "card_width": 300,
+        "image_ratio": "1",
+        "background_color": "#ffffff",
+        "padding_top": 32,
+        "padding_bottom": 72
+      }
     }
   },
   "order": [
-    "main"
+    "shop",
+    "situations"
   ]
 }
