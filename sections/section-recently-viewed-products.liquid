@@ -48,6 +48,14 @@
     style="{{ style }}"></div>
 </section>
 
+{% stylesheet %}
+  /* theme.js fills #RecentlyViewed from browser history. A first visit has
+     none, which left a heading over nothing just above the footer. */
+  .related-products:has(#RecentlyViewed:empty) {
+    display: none;
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "Recently viewed",

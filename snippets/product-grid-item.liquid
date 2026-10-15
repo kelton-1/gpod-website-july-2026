@@ -92,7 +92,9 @@
       assign custom_badge_text = custom_badge_text[1] | split: ',' | first | replace: '_', ' '
     endif
 
-    if product_tags contains '_preorder'
+    # 'preorder-oct' is the tag the live pre-order runs on (see
+    # snippets/gpod-preorder-ship.liquid); '_preorder' is Modular's own.
+    if product_tags contains '_preorder' or product_tags contains 'preorder-oct'
       assign preorder = true
     endif
 

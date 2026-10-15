@@ -44,7 +44,7 @@
           "type": "item",
           "settings": {
             "title": "How much does the GPOD weigh? Will it fit in my golf bag?",
-            "answer": "<p>The original GPOD weighs about 8 ounces — a sleeve of 6 golf balls. Every monopod is designed to ride in a standard golf bag; the GPOD X collapses to 20 inches specifically for bag carry. Exact lengths and weights are on each product page and the <a href=\"/pages/compare-gpod-models\">compare page</a>.</p>"
+            "answer": "<p>The original GPOD weighs under 5 ounces, about the same as a sleeve of golf balls. Every monopod is designed to ride in a standard golf bag; the GPOD X collapses to 20 inches specifically for bag carry. Exact lengths and weights are on each product page and the <a href=\"/pages/compare-gpod-models\">compare page</a>.</p>"
           }
         },
         "item_5": {
@@ -112,7 +112,7 @@
         "item_11"
       ],
       "settings": {
-        "title": "FAQ'S",
+        "title": "FAQs",
         "subheading": "",
         "layout_split": true,
         "width": "container",
