@@ -26,17 +26,19 @@ the **Shopify Online Store 2.0 theme** for gpodgolf.com (Modular v4.1.3 base, he
 - **Live theme:** "Paul Dev (5-star cart rating)" `188905586856`, published by Paul on Oct 8 and
   built directly in Shopify. Mirrored into git at `fc39e17`; theme-editor edits since then
   mirrored up to Oct 14 17:23 UTC (`product.json`).
-- **Waiting to publish:** "Live + collections page fix (Oct 13)" `189053305000` = live + the curated
-  `/collections` page (decision log, 2026-10-14). If live changes before it is published, re-sync
-  the changed files into it first, or the publish will undo them.
+- **Waiting to publish:** "Live + collections fix + CRO round 1 (Oct 14)" `189086204072` = live + the
+  curated `/collections` page + CRO round 1 (decision log, 2026-10-14 and 2026-10-15;
+  `docs/cro-audit-2026-10.md`). It supersedes `189053305000` (collections only), which can be
+  deleted after publishing. If live changes before it is published, re-sync the changed files into
+  it first, or the publish will undo them.
 - **Main = live, plus these unpublished extras** (nothing else differs from live):
   - **Parked Tenscope home**, unused: `sections/home-{hero-proof,spotlight,product-rail,feature-cards,founder,tour,review-wall,versus,closing}.liquid`,
     `assets/gpod-ts.{css,js}`, two woff2 fonts, `snippets/ts-*`, the header "island" markup in
     `sections/header.liquid`, inert until `ts_links_menu` is set. The Tenscope `templates/index.json`
     is recoverable at `7de69c0`.
   - **Small finished fixes, never published:**
-    - footer stops loading 237 flag images (`snippets/cross-border.liquid`)
-    - hero video poster sizing (`sections/home-hero.liquid`)
+    - footer stops loading 237 flag images (`snippets/cross-border.liquid`) and hero video poster
+      sizing (`sections/home-hero.liquid`): both included in `189086204072`
     - buy-box quantity stepper removed (`product*.json`, `page.paid-landing.json`)
     - dark cart-badge numerals (`assets/gpod-cart-icon-fix.css`)
     - dormant "Complete your setup" cart module (`snippets/cart-upsells.liquid`, its `gpod.js`
@@ -104,7 +106,8 @@ social lands on `/`.
 CLAUDE.md                ← start here (keep it short; depth goes in docs/)
 docs/decision-log.md     ← every decision since 2026-07-06, append-only
 docs/customer-insights.md← customer FAQ analysis + catalog table
-docs/funnel-baseline.md  ← measured conversion baseline
+docs/funnel-baseline.md  ← measured conversion baseline (inflated by a junk Meta campaign; see cro-audit)
+docs/cro-audit-2026-10.md← Oct 2026 live CRO sweep: what shipped, what needs a person
 docs/sprint-plan.md      ← Aug mobile-conversion plan + Day One switch-flips
 docs/sprint-7-plan.md    ← Tenscope phone-first plan + Intelligems test (paused)
 docs/tenscope-design-review.md, docs/next-session.md, docs/tenscope/ ← agency board capture (Oct 1)
